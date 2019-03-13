@@ -2,111 +2,111 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on .NET Junkie - Weblog of a workaholic</title>
-    <link>http://blogs.cuttingedge.it/steven/tags/</link>
+    <link>https://blogs.cuttingedge.it/steven/tags/</link>
     <description>Recent content in Tags on .NET Junkie - Weblog of a workaholic</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 08 Mar 2019 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="http://blogs.cuttingedge.it/steven/tags/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://blogs.cuttingedge.it/steven/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>.Net General</title>
-      <link>http://blogs.cuttingedge.it/steven/tags/.net-general/</link>
+      <link>https://blogs.cuttingedge.it/steven/tags/.net-general/</link>
       <pubDate>Fri, 08 Mar 2019 00:00:00 +0000</pubDate>
       
-      <guid>http://blogs.cuttingedge.it/steven/tags/.net-general/</guid>
+      <guid>https://blogs.cuttingedge.it/steven/tags/.net-general/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Architecture</title>
-      <link>http://blogs.cuttingedge.it/steven/tags/architecture/</link>
+      <link>https://blogs.cuttingedge.it/steven/tags/architecture/</link>
       <pubDate>Fri, 08 Mar 2019 00:00:00 +0000</pubDate>
       
-      <guid>http://blogs.cuttingedge.it/steven/tags/architecture/</guid>
+      <guid>https://blogs.cuttingedge.it/steven/tags/architecture/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Asp.net</title>
-      <link>http://blogs.cuttingedge.it/steven/tags/asp.net/</link>
+      <link>https://blogs.cuttingedge.it/steven/tags/asp.net/</link>
       <pubDate>Wed, 14 May 2014 00:00:00 +0000</pubDate>
       
-      <guid>http://blogs.cuttingedge.it/steven/tags/asp.net/</guid>
+      <guid>https://blogs.cuttingedge.it/steven/tags/asp.net/</guid>
       <description></description>
     </item>
     
     <item>
       <title>C#</title>
-      <link>http://blogs.cuttingedge.it/steven/tags/c/</link>
+      <link>https://blogs.cuttingedge.it/steven/tags/c/</link>
       <pubDate>Fri, 08 Mar 2019 00:00:00 +0000</pubDate>
       
-      <guid>http://blogs.cuttingedge.it/steven/tags/c/</guid>
+      <guid>https://blogs.cuttingedge.it/steven/tags/c/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Dependency Injection</title>
-      <link>http://blogs.cuttingedge.it/steven/tags/dependency-injection/</link>
+      <link>https://blogs.cuttingedge.it/steven/tags/dependency-injection/</link>
       <pubDate>Fri, 08 Mar 2019 00:00:00 +0000</pubDate>
       
-      <guid>http://blogs.cuttingedge.it/steven/tags/dependency-injection/</guid>
+      <guid>https://blogs.cuttingedge.it/steven/tags/dependency-injection/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Dependency Simple Injector</title>
-      <link>http://blogs.cuttingedge.it/steven/tags/dependency-simple-injector/</link>
+      <link>https://blogs.cuttingedge.it/steven/tags/dependency-simple-injector/</link>
       <pubDate>Thu, 19 Jul 2012 00:00:00 +0000</pubDate>
       
-      <guid>http://blogs.cuttingedge.it/steven/tags/dependency-simple-injector/</guid>
+      <guid>https://blogs.cuttingedge.it/steven/tags/dependency-simple-injector/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Oop</title>
-      <link>http://blogs.cuttingedge.it/steven/tags/oop/</link>
+      <link>https://blogs.cuttingedge.it/steven/tags/oop/</link>
       <pubDate>Wed, 10 Aug 2016 00:00:00 +0000</pubDate>
       
-      <guid>http://blogs.cuttingedge.it/steven/tags/oop/</guid>
+      <guid>https://blogs.cuttingedge.it/steven/tags/oop/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Orm</title>
-      <link>http://blogs.cuttingedge.it/steven/tags/orm/</link>
+      <link>https://blogs.cuttingedge.it/steven/tags/orm/</link>
       <pubDate>Sat, 14 Apr 2012 00:00:00 +0000</pubDate>
       
-      <guid>http://blogs.cuttingedge.it/steven/tags/orm/</guid>
+      <guid>https://blogs.cuttingedge.it/steven/tags/orm/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Security</title>
-      <link>http://blogs.cuttingedge.it/steven/tags/security/</link>
+      <link>https://blogs.cuttingedge.it/steven/tags/security/</link>
       <pubDate>Wed, 05 May 2010 00:00:00 +0000</pubDate>
       
-      <guid>http://blogs.cuttingedge.it/steven/tags/security/</guid>
+      <guid>https://blogs.cuttingedge.it/steven/tags/security/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Simple Injector</title>
-      <link>http://blogs.cuttingedge.it/steven/tags/simple-injector/</link>
+      <link>https://blogs.cuttingedge.it/steven/tags/simple-injector/</link>
       <pubDate>Sun, 02 Apr 2017 00:00:00 +0000</pubDate>
       
-      <guid>http://blogs.cuttingedge.it/steven/tags/simple-injector/</guid>
+      <guid>https://blogs.cuttingedge.it/steven/tags/simple-injector/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Software Design</title>
-      <link>http://blogs.cuttingedge.it/steven/tags/software-design/</link>
+      <link>https://blogs.cuttingedge.it/steven/tags/software-design/</link>
       <pubDate>Wed, 10 Aug 2016 00:00:00 +0000</pubDate>
       
-      <guid>http://blogs.cuttingedge.it/steven/tags/software-design/</guid>
+      <guid>https://blogs.cuttingedge.it/steven/tags/software-design/</guid>
       <description></description>
     </item>
     

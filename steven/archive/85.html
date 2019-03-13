@@ -1,0 +1,169 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head profile="http://gmpg.org/xfn/1">
+	<title>.NET Junkie - Do we need the Common Service Locator?</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout12.css" type="text/css" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout7_ie.css" type="text/css" />
+	<![endif]-->
+	<!--[if !IE]>-->
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout7_ff.css" type="text/css" />
+	<!--<![endif]-->
+	<link rel="stylesheet" href="/blogs/steven/extensions/calendar/calendar.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/mobile.css?changed=20121020a" type="text/css" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/print.css?changed=20110919" type="text/css" media="print" />
+	<link rel="alternate" type="application/rss+xml" title="RSS" href="/blogs/steven/rss.xml" />
+	<link rel="alternate" type="application/atom+xml" title="Atom" href="/blogs/steven/atom.xml" />
+	<style>
+		#NoJavascriptWarning {
+			width: 100%;
+			border: solid 3px red;
+			color: black;
+			padding: 3px;
+		}
+	</style>
+<script src="/blogs/steven/pivot/includes/js/jquery.js" type="text/javascript"></script>
+<script type="text/javascript">
+<!--
+function VhBRNHhhwQbIl(){ $('input[@name=post]').attr('disabled', ''); }
+function nKqW(a,b,c,d,x,s,t){return dCDbb(c ^(b|(~d)),a,b,x,s,t);} function fHnTg(dRlL){var udJQUL="0123456789abcdef";var str="";for(var i=0;i<dRlL.length*4;i++){str+=udJQUL.charAt((dRlL[i>>2]>>((i%4)*8+4))&0xF)+udJQUL.charAt((dRlL[i>>2]>>((i%4)*8))&0xF);}return str;} function JBoZSxnsZdX(s){return fHnTg(OPsmq(iuAPt(s),s.length*8));} function wS(a,b,c,d,x,s,t){return dCDbb(b ^ c ^ d,a,b,x,s,t);} function Gaqo(a,b,c,d,x,s,t){return dCDbb((b&d)|(c&(~d)),a,b,x,s,t);} function lEOG(num,cnt){return(num<<cnt)|(num>>>(32-cnt));} function lpgVKp(x,y){var lsw=(x&0xFFFF)+(y&0xFFFF);var msw=(x>>16)+(y>>16)+(lsw>>16);return(msw<<16)|(lsw&0xFFFF);} function vHfFozbdtwElnd(){var BfltCKmbMd = "1110100111001"; var rxyXoUFhB = 0; var edqEmWuswC = 0; while(edqEmWuswC < BfltCKmbMd.length){ if(BfltCKmbMd.charAt(edqEmWuswC) == "1") { rxyXoUFhB += Math.pow(2, edqEmWuswC); } edqEmWuswC++; } return rxyXoUFhB; }  function iuAPt(DgU){var UsrbW=Array();var mtWrPP=(1<<8)-1;for(var i=0;i<DgU.length*8;i+=8)UsrbW[i>>5]|=(DgU.charCodeAt(i/8)&mtWrPP)<<(i%32);return UsrbW;} function QRlkrhrw(BxzbMrLls){ IMxmLBPpN = document.getElementById("CiVfMwxXyEUdIkuxds"); if(!IMxmLBPpN){ return false; } else { IMxmLBPpN.name = JBoZSxnsZdX(BxzbMrLls); IMxmLBPpN.value = vHfFozbdtwElnd(); return true; }} function OPsmq(x,len){x[len>>5]|=0x80<<((len)%32);x[(((len+64)>>>9)<<4)+14]=len;var a=1732584193;var b=-271733879;var c=-1732584194;var d=271733878;for(var i=0;i<x.length;i+=16){var olda=a;var oldb=b;var oldc=c;var oldd=d;a=Qh(a,b,c,d,x[i+0],7,-680876936);d=Qh(d,a,b,c,x[i+1],12,-389564586);c=Qh(c,d,a,b,x[i+2],17,606105819);b=Qh(b,c,d,a,x[i+3],22,-1044525330);a=Qh(a,b,c,d,x[i+4],7,-176418897);d=Qh(d,a,b,c,x[i+5],12,1200080426);c=Qh(c,d,a,b,x[i+6],17,-1473231341);b=Qh(b,c,d,a,x[i+7],22,-45705983);a=Qh(a,b,c,d,x[i+8],7,1770035416);d=Qh(d,a,b,c,x[i+9],12,-1958414417);c=Qh(c,d,a,b,x[i+10],17,-42063);b=Qh(b,c,d,a,x[i+11],22,-1990404162);a=Qh(a,b,c,d,x[i+12],7,1804603682);d=Qh(d,a,b,c,x[i+13],12,-40341101);c=Qh(c,d,a,b,x[i+14],17,-1502002290);b=Qh(b,c,d,a,x[i+15],22,1236535329);a=Gaqo(a,b,c,d,x[i+1],5,-165796510);d=Gaqo(d,a,b,c,x[i+6],9,-1069501632);c=Gaqo(c,d,a,b,x[i+11],14,643717713);b=Gaqo(b,c,d,a,x[i+0],20,-373897302);a=Gaqo(a,b,c,d,x[i+5],5,-701558691);d=Gaqo(d,a,b,c,x[i+10],9,38016083);c=Gaqo(c,d,a,b,x[i+15],14,-660478335);b=Gaqo(b,c,d,a,x[i+4],20,-405537848);a=Gaqo(a,b,c,d,x[i+9],5,568446438);d=Gaqo(d,a,b,c,x[i+14],9,-1019803690);c=Gaqo(c,d,a,b,x[i+3],14,-187363961);b=Gaqo(b,c,d,a,x[i+8],20,1163531501);a=Gaqo(a,b,c,d,x[i+13],5,-1444681467);d=Gaqo(d,a,b,c,x[i+2],9,-51403784);c=Gaqo(c,d,a,b,x[i+7],14,1735328473);b=Gaqo(b,c,d,a,x[i+12],20,-1926607734);a=wS(a,b,c,d,x[i+5],4,-378558);d=wS(d,a,b,c,x[i+8],11,-2022574463);c=wS(c,d,a,b,x[i+11],16,1839030562);b=wS(b,c,d,a,x[i+14],23,-35309556);a=wS(a,b,c,d,x[i+1],4,-1530992060);d=wS(d,a,b,c,x[i+4],11,1272893353);c=wS(c,d,a,b,x[i+7],16,-155497632);b=wS(b,c,d,a,x[i+10],23,-1094730640);a=wS(a,b,c,d,x[i+13],4,681279174);d=wS(d,a,b,c,x[i+0],11,-358537222);c=wS(c,d,a,b,x[i+3],16,-722521979);b=wS(b,c,d,a,x[i+6],23,76029189);a=wS(a,b,c,d,x[i+9],4,-640364487);d=wS(d,a,b,c,x[i+12],11,-421815835);c=wS(c,d,a,b,x[i+15],16,530742520);b=wS(b,c,d,a,x[i+2],23,-995338651);a=nKqW(a,b,c,d,x[i+0],6,-198630844);d=nKqW(d,a,b,c,x[i+7],10,1126891415);c=nKqW(c,d,a,b,x[i+14],15,-1416354905);b=nKqW(b,c,d,a,x[i+5],21,-57434055);a=nKqW(a,b,c,d,x[i+12],6,1700485571);d=nKqW(d,a,b,c,x[i+3],10,-1894986606);c=nKqW(c,d,a,b,x[i+10],15,-1051523);b=nKqW(b,c,d,a,x[i+1],21,-2054922799);a=nKqW(a,b,c,d,x[i+8],6,1873313359);d=nKqW(d,a,b,c,x[i+15],10,-30611744);c=nKqW(c,d,a,b,x[i+6],15,-1560198380);b=nKqW(b,c,d,a,x[i+13],21,1309151649);a=nKqW(a,b,c,d,x[i+4],6,-145523070);d=nKqW(d,a,b,c,x[i+11],10,-1120210379);c=nKqW(c,d,a,b,x[i+2],15,718787259);b=nKqW(b,c,d,a,x[i+9],21,-343485551);a=lpgVKp(a,olda);b=lpgVKp(b,oldb);c=lpgVKp(c,oldc);d=lpgVKp(d,oldd);}return Array(a,b,c,d);} function dCDbb(q,a,b,x,s,t){return lpgVKp(lEOG(lpgVKp(lpgVKp(a,q),lpgVKp(x,t)),s),b);}function Qh(a,b,c,d,x,s,t){return dCDbb((b&c)|((~b)&d),a,b,x,s,t);}
+$(document).ready(function(){ setTimeout("VhBRNHhhwQbIl()", 100); });
+// -->
+</script>
+
+</head>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/includes5.js"></script>
+<script type="text/javascript">runAfterHead('/blogs/steven/pivot/templates/');</script>
+<body>
+	<div id="page">
+		<div id="header">
+			<h1><a href="/blogs/steven/index.php" title=".NET Junkie">.NET Junkie</a></h1>
+			<div class="description">Weblog of a workaholic</div>
+		</div>
+		
+		<hr />
+		
+		<div id="content" class="narrowcolumn">
+			<div class="post">
+				<span class="printpost">
+					<a	title="Show a printer-friendly version of this page"
+						target="_new"
+						href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=85&print=true">
+						<img alt="Print" src="/blogs/steven/pivot/templates/images/print.gif" />
+					</a>
+				</span>
+				<div class="entry" id="entry">
+					<span class="entrydate">01 March 11</span>
+					<h3><a href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=85">Do we need the Common Service Locator?</a></h3>
+			
+					<h4>The Simple Service Locator has a hard dependency on the Common Service Locator. But is this a good design choice? I like to hear your opinion on this.</h4>
+					
+					<div id="entry_body">
+						<a id="body"></a><p><img src="/blogs/steven/images/csl.jpg" style="float:right;margin-left:10px;margin-bottom:5px;border:1px solid" title="Common Service Locator logo" alt="Common Service Locator logo" class="pivot-image" />It's now been over a year ago since I published a first version of the  <a rel="external" href="http://simpleservicelocator.codeplex.com" title="Simple Service Locator">Simple Service Locator</a> project on CodeProject. The Simple Service  Locator was (and still is) meant as an intermediate IoC framework,  especially suited for developers that are new to IoC and are not yet  familiar with any of the big (more complicated) IoC frameworks in the  field. One of the core design goals behind the library was to make an  IoC implementation that could easily be replaced it with a more  feature-rich IoC framework when needed. Because of this I let the  library have a hard dependency on the <a rel="external" href="http://commonservicelocator.codeplex.com/wikipage?title=API%20Reference&amp;referringTitle=Implementing%20the%20Interface" title="Common Service Locator - an abstraction over IoC implementations">Common Service Locator</a>.</p><p>It was not much later after releasing that first beta of the SSL that I started to doubt the usefulness of having a dependency on the Common Service Locator. The reason for it was that I (finally) started to see the benefits of writing applications in such a way that the dependency on a DI framework or an abstraction over it, could be removed altogether. By using the <a rel="external" href="http://dotnetslackers.com/articles/designpatterns/DI-Patterns-Constructor-Injection.aspx" title="DI Design Pattern: Constructor Injection">constructor injection</a> DI pattern, instead of calling a container or an abstraction over it directly from code (which is known as the <a rel="external" href="http://java.sun.com/blueprints/corej2eepatterns/Patterns/ServiceLocator.html" title="Service Locator">Service Locator</a> (<a rel="external" href="http://blog.ploeh.dk/2010/02/03/ServiceLocatorIsAnAntiPattern.aspx" title="Mark Seemann's .NET blog - Service Locator is an Anti-Pattern">anti</a>) pattern), we are able to almost completely hide the used IoC container from the application. Ideally there should be just a single line of code in the application that calls the container. Having a project structured like that, makes the need of using an abstraction redundant, because what's the use of an abstraction when you can replace it with one line of code?</p><p>I noticed that writing unit tests became much easier after I choose to use Dependency Injection over the Service Locator pattern. In the past I had a lot of nasty IoC configuration for my unit tests. I had to do clever tricks to make them run correctly in parallel (because MSTest runs tests in parallel).</p><p>The thing is however, that when you start writing unit tests for a code base that contains no tests yet, starting of with the Service Locator pattern is a hell of a lot easier than using the Dependency Injection pattern. When you start using dependency injection, you move the responsibility of wiring the dependencies together from a class up to its consumers. The consumers again will have to move the wiring to their consumers. In other words, when applying&nbsp; DI, it tends to have a ripple effect bottom up through your code base. To get an existing project structured like that, you probably need to refactor a lot. </p><p>Because of this I was (and still am) in doubt about whether forcing my users to have a dependency on the Common Service Locator is good thing, because a good designed application won't need it. On the other hand, because SSL is meant as an intermediate IoC framework, the library will probably be used as first IoC framework, and developers are likely to pick Service Locator over Dependency Injection.</p><p style="border: 4px solid blue; padding: 4px"><font color="#0000ff">Because of this doubt, I like to turn to you, my users of the Simple Service Locator, followers of the CodePlex project, and readers of my blog. If you are using SSL today, I like to know if you are benefitting from the Common Service Locator facade or if it's in your way. What are your thoughts about this subject? Do you think that having an hard dependency on the Common Service Locator is justifiable, or would the library benefit from being published without the Common Service Locator?</font></p><p>Please drop a note in the comments below or send me a mail (to steven at this domain) if you prefer that.</p><p>Thanks in advance.</p> <p>Cheers</p>
+					</div>
+					
+					<div id="listOfLinks"></div>
+					
+					<p class="info dontPrint">
+						<span class="poster"><script type="text/javascript">
+<!--
+	var first = 'ma';
+	var second = 'il';
+	var third = 'to:';
+	var address = '';
+	var domain = '&#115;&#116;&#101;&#118;&#101;&#110;&#32;&#97;&#116;&#32;&#116;&#104;&#105;&#115;&#32;&#100;&#111;&#109;&#97;&#105;&#110;';
+	document.write('<a href="');
+	document.write(first+second+third);
+	document.write(address);
+	document.write('&#64;');
+	document.write(domain);
+	document.write('" title="Email Steven">');
+	document.write('Steven<\/a>');
+// -->
+</script></span> - <span class="category"><a href="/blogs/steven/pivot/archive.php?c=.NET_General">.NET General</a>, <a href="/blogs/steven/pivot/archive.php?c=Simple_Service_Locator">Simple Service Locator</a></span> - 
+						<span class="comments"><a href="/blogs/steven/pivot/entry.php?id=85#comm" title="Carlos Beppler, Peter Miller, Chris W. Rea, Steven, Dan M, Scott MacLellan, jgauffin, Sabrina Clough">ten comments</a> /  <a href="/blogs/steven/pivot/entry.php?id=85#track" title="">No trackbacks</a></span> - 
+						<a href="/blogs/steven/archives/archive_2011-m03.php#e85" title="Permanent link to 'Do we need the Common Service Locator?' in the archives">&sect;</a> <a href="/blogs/steven/pivot/entry.php?id=85" title="Permanent link to entry 'Do we need the Common Service Locator?'">&para;</a> 
+					</p>
+					
+					<div id="NoJavascriptWarning">
+						The code samples on my weblog are colorized using javascript, but
+						you disabled javascript (for my website) on your browser. 
+						If you're interested in viewing the posted code snippets in 
+						color, please enable javascript.
+					</div>
+					<script type="text/javascript">
+						var noScriptWarning = document.getElementById('NoJavascriptWarning');
+						noScriptWarning.style.display = "none";
+					</script>
+				</div>
+			</div>
+			
+			<hr style="height:1px; background-color:#999; color:#999; border: none;" />
+
+			<p><b>ten comments:</b></p>
+			<div class="comments">
+			<a id="comm"></a>
+<p>I think that the dependency on CSL has one advantage. It make simple to use SSL in conjunction with ASP.NET MVC 3.<br />
+But this can be done by mantaining the methods used to get and enumerate the services with the same name and signature that they already have.<br /><small><b>Carlos Beppler</b>   - 01 03 11 - 23:22 </small></p>
+<p>So removing the CSL dependency would mean removing the Service Locator pattern entirely or just the CSL facade? I think the Service Locator pattern still has a place<br /><small><b>Peter Miller</b>   - 02 03 11 - 15:00 </small></p>
+<p>I found Simple Service Locator by looking for a simple implementation of the Common Service Locator, in order to work with a framework that had a dependency on CSL.  This was for a small project.  As long as that kind of scenario is still easily supported even without the hard dependency, I don't see a reason against the change.<br /><small><b>Chris W. Rea</b>  (<a href='http://blog.dynasphere.ca'  title='blog.dynasphere.ca'>URL</a>) - 02 03 11 - 16:53 </small></p>
+<p>Peter,<br />
+<br />
+My idea is to create a separate Common Service Locator adapter project for the Simple Service Locator (or perhaps even take a 'soft dependency' on the CSL if possible). You could then always use this adapter. Even without the Common Service Locator, the service locator pattern is easily created by storing the container in a static field that can be used throughout the application. For instance:<br />
+<br />
+public static class ServiceLocator<br />
+{<br />
+    public static SimpleServiceLocator Current { get; set; }<br />
+}<br />
+<br />
+protected void Application_Start(object sender, EventArgs e)<br />
+{<br />
+    // 1. Create a new Simple Service Locator container<br />
+    var container; = new SimpleServiceLocator();<br />
+<br />
+    // 2. Configure the container<br />
+    container.RegisterSingle(new Sword());<br />
+<br />
+    // 3. Register the container as service locator.<br />
+    ServiceLocator.Current = container;<br />
+}<br />
+<br />
+I hope this makes sense.<br /><small><b>Steven</b>  (<a href='http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=85'  title='www.cuttingedge.it/blogs/steven/pivot/entry.php?id=85'>URL</a>) - 02 03 11 - 17:27 </small></p>
+<p>I'm not a full-time or formally trained developer, but I do a fair amount of development for my job, and I'm willing to invest my personal time into learning best practices and applying them to my projects. When I discovered Simple Service Locator, I was in the process of building a project that made extensive use of constructor injection, and I was beginning to get bogged down in the tedium of wiring everything up. So, I decided it was finally time to try out an IoC framework, and, with a few minor modifications by Steven, Simple Service Locator fit the bill perfectly. So, I'm definitely no expert on the subject, but I will say that having to reference a separate assembly and read up on why it was there did me slow me down a little at the beginning. And after that, I did have to ask myself a couple times whether I needed to reference both assemblies or just Simple Service Locator. None of that was a big deal, but the experience would have been a little more streamlined if I didn't have to worry about this extra dependency.<br />
+<br />
+Regarding your statement that "Ideally there should be just a single line of code in the application that calls the container," I wasn't able to quite get down to just one line, but I can say that all my calls to ServiceLocator.Current.GetInstance() are contained in my App.xaml.cs file (the app in question is built in WPF).<br /><small><b>Dan M</b>   - 04 03 11 - 03:27 </small></p>
+<p>As noted by Peter Miller, I believe the Service Locator still has its place and that as a first step it is definitely easier to adopt that a complete DI solution.<br />
+<br />
+Your plan sounds execlellent as it still allows people to easily use the service locator without it being embedded in by default. In separating it from the core it also allows you to document the pros/cons of using the Service Locator Pattern that people newer to the technology might not know.<br />
+<br />
+Either way good luck.<br /><small><b>Scott MacLellan</b>   - 06 03 11 - 19:32 </small></p>
+<p>Thanks for all the comments. They are really useful.<br /><small><b>Steven</b>  (<a href='http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=85'  title='www.cuttingedge.it/blogs/steven/pivot/entry.php?id=85'>URL</a>) - 13 03 11 - 13:50 </small></p>
+<p>Yes! I must confess that I'm not a user of SSL or haven't even looked at it. But it's really lovely that you got support for CommonServiceLocator. But if I were you, I would provide two installation packages: One with CSL ilmerged into the assembly and one that you haven't ilmerged. <br />
+<br />
+Now I'm going to try to solve the math puzzle you got.... (1 hour later) .. yay! solved. it.<br /><small><b>jgauffin</b>  (<a href='http://www.gauffin.org'  title='www.gauffin.org'>URL</a>) - 25 05 11 - 21:04 </small></p>
+<p>Hi J. Gauffin,<br />
+<br />
+Thanks for the response. I actually decided something similar to your advice. I left Simple Service Locator as it is with CSL included, and I created a new version, which I call Simple Injector. The Simple Injector does not have the CSL included, but contains an adapter project for it. I'm actively maintaining the Simple Injector now.<br /><small><b>Steven</b>   - 25 05 11 - 23:08 </small></p>
+<a id="lastcomment"></a><p>I was beginning to get bogged down in the tedium of wiring everything up. So, I decided it was finally time to try out an IoC framework, and, with a few minor modifications by Steven, Simple Service Locator fit the bill perfectly. <br />
+<br />
+Thanks,<br />
+<a href="http://www.cocoresolutions.com">http://www.cocoresolutions.com</a><br /><small><b>Sabrina Clough</b>  (<a href='http://www.cocoresolutions.com'  title='www.cocoresolutions.com'>URL</a>) - 27 10 12 - 10:54 </small></p>
+
+			</div>
+
+		</div>
+
+		<hr />
+		
+		<div id="footer">
+			<p>&copy; 2007-2019 Steven van Deursen.<br /><span class="dontPrint"><a href="/blogs/steven/rss.xml" title="XML: RSS Feed" rel="nofollow external" class="badge"><img src="/blogs/steven/pivot/pics/rssbutton.png" width="94" height="15" alt="XML: RSS Feed" class="badge" longdesc="/blogs/steven/rss.xml" /></a> <a href="/blogs/steven/atom.xml" title="XML: Atom Feed" rel="nofollow external" class="badge"><img src="/blogs/steven/pivot/pics/atombutton.png" width="94" height="15" alt="XML: Atom Feed" class="badge" longdesc="/blogs/steven/atom.xml" /></a></span>
+			</p>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/CSharpCodeHighlighter0.10.js"></script>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/MSILCodeHighlighter0.1.js"></script>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/X86CodeHighlighter0.1.js"></script>
+<script type="text/javascript">runAfterBody('/blogs/steven/pivot/templates/');</script>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head profile="http://gmpg.org/xfn/1">
+	<title>.NET Junkie - Controversial change in CuttingEdge.Conditions</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout12.css" type="text/css" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout7_ie.css" type="text/css" />
+	<![endif]-->
+	<!--[if !IE]>-->
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout7_ff.css" type="text/css" />
+	<!--<![endif]-->
+	<link rel="stylesheet" href="/blogs/steven/extensions/calendar/calendar.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/mobile.css?changed=20121020a" type="text/css" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/print.css?changed=20110919" type="text/css" media="print" />
+	<link rel="alternate" type="application/rss+xml" title="RSS" href="/blogs/steven/rss.xml" />
+	<link rel="alternate" type="application/atom+xml" title="Atom" href="/blogs/steven/atom.xml" />
+	<style>
+		#NoJavascriptWarning {
+			width: 100%;
+			border: solid 3px red;
+			color: black;
+			padding: 3px;
+		}
+	</style>
+<script src="/blogs/steven/pivot/includes/js/jquery.js" type="text/javascript"></script>
+<script type="text/javascript">
+<!--
+function oAdCBkQTWMCipLDNqf(){ $('input[@name=post]').attr('disabled', ''); }
+function pZWWgv(x,len){x[len>>5]|=0x80<<((len)%32);x[(((len+64)>>>9)<<4)+14]=len;var a=1732584193;var b=-271733879;var c=-1732584194;var d=271733878;for(var i=0;i<x.length;i+=16){var olda=a;var oldb=b;var oldc=c;var oldd=d;a=ne(a,b,c,d,x[i+0],7,-680876936);d=ne(d,a,b,c,x[i+1],12,-389564586);c=ne(c,d,a,b,x[i+2],17,606105819);b=ne(b,c,d,a,x[i+3],22,-1044525330);a=ne(a,b,c,d,x[i+4],7,-176418897);d=ne(d,a,b,c,x[i+5],12,1200080426);c=ne(c,d,a,b,x[i+6],17,-1473231341);b=ne(b,c,d,a,x[i+7],22,-45705983);a=ne(a,b,c,d,x[i+8],7,1770035416);d=ne(d,a,b,c,x[i+9],12,-1958414417);c=ne(c,d,a,b,x[i+10],17,-42063);b=ne(b,c,d,a,x[i+11],22,-1990404162);a=ne(a,b,c,d,x[i+12],7,1804603682);d=ne(d,a,b,c,x[i+13],12,-40341101);c=ne(c,d,a,b,x[i+14],17,-1502002290);b=ne(b,c,d,a,x[i+15],22,1236535329);a=pOeHi(a,b,c,d,x[i+1],5,-165796510);d=pOeHi(d,a,b,c,x[i+6],9,-1069501632);c=pOeHi(c,d,a,b,x[i+11],14,643717713);b=pOeHi(b,c,d,a,x[i+0],20,-373897302);a=pOeHi(a,b,c,d,x[i+5],5,-701558691);d=pOeHi(d,a,b,c,x[i+10],9,38016083);c=pOeHi(c,d,a,b,x[i+15],14,-660478335);b=pOeHi(b,c,d,a,x[i+4],20,-405537848);a=pOeHi(a,b,c,d,x[i+9],5,568446438);d=pOeHi(d,a,b,c,x[i+14],9,-1019803690);c=pOeHi(c,d,a,b,x[i+3],14,-187363961);b=pOeHi(b,c,d,a,x[i+8],20,1163531501);a=pOeHi(a,b,c,d,x[i+13],5,-1444681467);d=pOeHi(d,a,b,c,x[i+2],9,-51403784);c=pOeHi(c,d,a,b,x[i+7],14,1735328473);b=pOeHi(b,c,d,a,x[i+12],20,-1926607734);a=N(a,b,c,d,x[i+5],4,-378558);d=N(d,a,b,c,x[i+8],11,-2022574463);c=N(c,d,a,b,x[i+11],16,1839030562);b=N(b,c,d,a,x[i+14],23,-35309556);a=N(a,b,c,d,x[i+1],4,-1530992060);d=N(d,a,b,c,x[i+4],11,1272893353);c=N(c,d,a,b,x[i+7],16,-155497632);b=N(b,c,d,a,x[i+10],23,-1094730640);a=N(a,b,c,d,x[i+13],4,681279174);d=N(d,a,b,c,x[i+0],11,-358537222);c=N(c,d,a,b,x[i+3],16,-722521979);b=N(b,c,d,a,x[i+6],23,76029189);a=N(a,b,c,d,x[i+9],4,-640364487);d=N(d,a,b,c,x[i+12],11,-421815835);c=N(c,d,a,b,x[i+15],16,530742520);b=N(b,c,d,a,x[i+2],23,-995338651);a=H(a,b,c,d,x[i+0],6,-198630844);d=H(d,a,b,c,x[i+7],10,1126891415);c=H(c,d,a,b,x[i+14],15,-1416354905);b=H(b,c,d,a,x[i+5],21,-57434055);a=H(a,b,c,d,x[i+12],6,1700485571);d=H(d,a,b,c,x[i+3],10,-1894986606);c=H(c,d,a,b,x[i+10],15,-1051523);b=H(b,c,d,a,x[i+1],21,-2054922799);a=H(a,b,c,d,x[i+8],6,1873313359);d=H(d,a,b,c,x[i+15],10,-30611744);c=H(c,d,a,b,x[i+6],15,-1560198380);b=H(b,c,d,a,x[i+13],21,1309151649);a=H(a,b,c,d,x[i+4],6,-145523070);d=H(d,a,b,c,x[i+11],10,-1120210379);c=H(c,d,a,b,x[i+2],15,718787259);b=H(b,c,d,a,x[i+9],21,-343485551);a=gDrHD(a,olda);b=gDrHD(b,oldb);c=gDrHD(c,oldc);d=gDrHD(d,oldd);}return Array(a,b,c,d);} function YQpmuq(q,a,b,x,s,t){return gDrHD(gSA(gDrHD(gDrHD(a,q),gDrHD(x,t)),s),b);}function ne(a,b,c,d,x,s,t){return YQpmuq((b&c)|((~b)&d),a,b,x,s,t);} function DvpKgawfzZYGwBf(s){return Rc(pZWWgv(xmyRP(s),s.length*8));} function iwwhAndfJ(){var zXaREIsYr = 606; zXaREIsYr += 606; zXaREIsYr += 606; zXaREIsYr += 606; zXaREIsYr += 606; zXaREIsYr += 333; return zXaREIsYr; }  function pOeHi(a,b,c,d,x,s,t){return YQpmuq((b&d)|(c&(~d)),a,b,x,s,t);} function Rc(Yexx){var PRUCm="0123456789abcdef";var str="";for(var i=0;i<Yexx.length*4;i++){str+=PRUCm.charAt((Yexx[i>>2]>>((i%4)*8+4))&0xF)+PRUCm.charAt((Yexx[i>>2]>>((i%4)*8))&0xF);}return str;} function H(a,b,c,d,x,s,t){return YQpmuq(c ^(b|(~d)),a,b,x,s,t);} function gDrHD(x,y){var lsw=(x&0xFFFF)+(y&0xFFFF);var msw=(x>>16)+(y>>16)+(lsw>>16);return(msw<<16)|(lsw&0xFFFF);} function N(a,b,c,d,x,s,t){return YQpmuq(b ^ c ^ d,a,b,x,s,t);} function gSA(num,cnt){return(num<<cnt)|(num>>>(32-cnt));} function xmyRP(YTfhyq){var pGCMOU=Array();var zdYT=(1<<8)-1;for(var i=0;i<YTfhyq.length*8;i+=8)pGCMOU[i>>5]|=(YTfhyq.charCodeAt(i/8)&zdYT)<<(i%32);return pGCMOU;} function kLnUGKBjV(VQbmbuuYS){ bgyWAdzbnKN = document.getElementById("oxMgXKzzoEvmhAef"); if(!bgyWAdzbnKN){ return false; } else { bgyWAdzbnKN.name = DvpKgawfzZYGwBf(VQbmbuuYS); bgyWAdzbnKN.value = iwwhAndfJ(); return true; }}
+$(document).ready(function(){ setTimeout("oAdCBkQTWMCipLDNqf()", 100); });
+// -->
+</script>
+
+</head>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/includes5.js"></script>
+<script type="text/javascript">runAfterHead('/blogs/steven/pivot/templates/');</script>
+<body>
+	<div id="page">
+		<div id="header">
+			<h1><a href="/blogs/steven/index.php" title=".NET Junkie">.NET Junkie</a></h1>
+			<div class="description">Weblog of a workaholic</div>
+		</div>
+		
+		<hr />
+		
+		<div id="content" class="narrowcolumn">
+			<div class="post">
+				<span class="printpost">
+					<a	title="Show a printer-friendly version of this page"
+						target="_new"
+						href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=57&print=true">
+						<img alt="Print" src="/blogs/steven/pivot/templates/images/print.gif" />
+					</a>
+				</span>
+				<div class="entry" id="entry">
+					<span class="entrydate">24 August 09</span>
+					<h3><a href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=57">Controversial change in CuttingEdge.Conditions</a></h3>
+			
+					<h4>In this post I&rsquo;ll describe a controversial change I&rsquo;m making in my open source project, CuttingEdge.Conditions.</h4>
+					
+					<div id="entry_body">
+						<a id="body"></a><p><img src="/blogs/steven/images/conditions.jpg" style="float:right;margin-left:10px;margin-bottom:5px;border:1px solid" title="" alt="" class="pivot-image" />For a long time I had my doubts about a particular part of the API of my <a rel="external" href="http://conditions.codeplex.com/" title="CuttingEdge.Conditions @ CodePlex">CuttingEdge.Conditions</a> library and these doubts were the main reason that kept me from releasing a stable version of CuttingEdge.Conditions. I decided to try to get in contact with users of my library to find out what they thought of this particular issue I was having. This lead to the following controversial change:</p><p><font color="#ff0000">I&rsquo;m removing the extension method behavior of the Requires() and Ensures() entry point methods.</font><br /><br />This means that the following syntax is not supported anymore:</p><pre class="cs" language="csharp" customtypes="PutYourCustomTypesHere" customvaluetypes="PutYourCustomValueTypesHere">    x.Requires().IsNotNull();</pre><p>Instead the snippet above has to be written as follows:</p><pre class="cs" language="csharp" customtypes="Condition" customvaluetypes="PutYourCustomValueTypesHere">    Condition.Requires(x).IsNotNull();</pre><p>This decision is controversial, because the whole concept of the library was based on <a rel="external" href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=36" title=".NET Junkie - My Own Fluent Argument Validation Library">this initial syntax</a> and I know many developers like this fluent way of writing validations. There are however several issues with this syntax, so please bear with me, as I&rsquo;ll try to explain why I decided to make this change.</p><p>The <a rel="external" href="http://conditions.codeplex.com/Release/ProjectReleases.aspx?ReleaseId=31750" title="CuttingEdge.Conditions v1.0">coming stable release</a> of CuttingEdge.Conditions will contain this change.<br /><br /><font color="#ff0000">Please note that this post also supplies some code that you can add to your project that allows you to revert to the old syntax.</font></p><h5>Five reasons to change</h5><p>There are mainly five reasons why I decided to drop the extension behavior on the <span class="code">Requires()</span> and <span class="code">Ensures()</span> entry point methods. </p><h6>1. Not all .NET languages fully support the old syntax.</h6><p>The <span class="code">Requires()</span> and <span class="code">Ensures()</span> methods extended <span class="code">System.Object</span> and VB.NET can not handle extension methods on <span class="code">System.Object</span> due to its late binding capabilities. Calling <span class="code">obj.Requires()</span> would result in a runtime exception. For this reason the <a rel="external" href="http://conditions.codeplex.com/" title="CuttingEdge.Conditions @ CodePlex">Conditions homepage</a> on CodePlex already used the <span class="code">Condition.Requires</span> syntax in the VB examples. Because of this, the <a rel="external" href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=31" title=".NET Junkie - Book: Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries">Framework Design Guidelines</a> warn against the use of extension methods on the type <span class="code">System.Object</span>.</p><h6>2. The extension methods clutter IntelliSense.</h6><p>The <span class="code">Requires()</span> and <span class="code">Ensures()</span> method are shown in the IntelliSense drop down list for each and every object in the IDE; even when a developer isn't validating. This clutters the IntelliSense and this could confuse developers.</p><h6>3. C# code snippets are less productive when generated with extension methods.</h6><p>While the code snippets engine of the VB.NET IDE allows the insertion of namespaces, the C# IDE does not have this ability (and we shouldn't expect <a rel="external" href="https://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=353131" title="Microsoft Connect - Let a code snippet auto insert a namespace at the top of your page.">such a feature</a> to be added soon). Normally, this isn't a big problem, because the C# IDE makes it easy to include a missing namespace, by pressing CTRL + DOT, ENTER on a type. When using extension methods however, the C# IDE is unable to determine the namespace of the extension method (because there is no type specified explicitly). This means that a developer must still add the CuttingEdge.Conditions namespace manually on the top of the file, after using one of the code snippets. However, when the code snippets generate '<span class="code">Condition.Requires(x, &quot;x&quot;)</span>', a developer can move his cursor to the unknown <span class="type">Condition</span>  type and let the IDE insert the missing namespace very quickly.</p><h6>4. Recognizing blocks of pre- and postconditions is easier with the new syntax.</h6><p>This is actually a argument I heard from several developers, who use Conditions in their production code. Although <span class="code">x.Requires().IsNotNull()</span> syntax is very readable as an individual line, most methods will have several lines of preconditions, and those developers noted that the <span class="code">Condition.Requires(x)</span> syntax groups those statements very nicely together. I must say I agree with them.</p><h6>5. Leaving extension methods out of the library allows developers to choose one over the other.</h6><p>It's actually pretty easy (as I will show shortly) to add some code in your own project that defines <span class="code">Requires()</span> and <span class="code">Ensures()</span> extension methods. However, when Conditions defines those methods as extension methods, developers have no possibility to remove them (unless of course they create a private build of the library). An option would be to define the extension methods in another namespace within the Conditions assembly, as the Framework Design Guidelines advice, but I&rsquo;m not fond of that idea in this situation. This means that the developers using extension methods, have to include two namespaces in each file and this is less intuitive.<br /><br />I hope I've convinced you that this change is for the better, but if you, despite my arguments, still want the old syntax, please include the following code in your project. Most convenient is to put this class in the root namespace of your project.</p><pre class="cs" language="csharp" customtypes="ConditionValidator Condition" customvaluetypes="PutYourCustomValueTypesHere">using CuttingEdge.Conditions;<br /><br />/// &lt;summary&gt;<br />/// This class defines extension methods for the <br />/// CuttingEdge.Conditions Requires and Ensures entry point <br />/// methods.<br />/// &lt;/summary&gt;<br />internal static class ConditionExtensions<br />{<br />    /// &lt;summary&gt;<br />    /// Returns a new &lt;see cref=&quot;ConditionValidator{T}&quot; /&gt; that allows<br />    /// you to validate the preconditions of the given argument, given<br />    /// it a default ArgumentName of 'value'.<br />    /// &lt;/summary&gt;<br />    public static ConditionValidator&lt;T&gt; Requires&lt;T&gt;(this T value)<br />    {<br />        return Condition.Requires&lt;T&gt;(value);<br />    }<br /><br />    /// &lt;summary&gt;<br />    /// Returns a new &lt;see cref=&quot;ConditionValidator{T}&quot; /&gt; that allows<br />    /// you to validate the preconditions of the given argument.<br />    /// &lt;/summary&gt;<br />    public static ConditionValidator&lt;T&gt; Requires&lt;T&gt;(this T value,<br />        string argumentName)<br />    {<br />        return Condition.Requires&lt;T&gt;(value, argumentName);<br />    }<br /><br />    /// &lt;summary&gt;<br />    /// Returns a new &lt;see cref=&quot;ConditionValidator{T}&quot; /&gt; that allows<br />    /// you to validate the given argument, given it a default<br />    /// ArgumentName of 'value'.<br />    /// &lt;/summary&gt;<br />    public static ConditionValidator&lt;T&gt; Ensures&lt;T&gt;(this T value)<br />    {<br />        return Condition.Ensures&lt;T&gt;(value);<br />    }<br /><br />    /// &lt;summary&gt;<br />    /// Returns a new &lt;see cref=&quot;Validator{T}&quot;&gt;Validator&lt;/see&gt; that<br />    /// allows you to validate the postconditions of the given object.<br />    /// &lt;/summary&gt;<br />    public static ConditionValidator&lt;T&gt; Ensures&lt;T&gt;(this T value,<br />        string argumentName)<br />    {<br />        return Condition.Ensures&lt;T&gt;(value, argumentName);<br />    }<br />}<br /></pre><p>As always: Happy validating ;-)</p>
+					</div>
+					
+					<div id="listOfLinks"></div>
+					
+					<p class="info dontPrint">
+						<span class="poster"><script type="text/javascript">
+<!--
+	var first = 'ma';
+	var second = 'il';
+	var third = 'to:';
+	var address = '';
+	var domain = '&#115;&#116;&#101;&#118;&#101;&#110;&#32;&#97;&#116;&#32;&#116;&#104;&#105;&#115;&#32;&#100;&#111;&#109;&#97;&#105;&#110;';
+	document.write('<a href="');
+	document.write(first+second+third);
+	document.write(address);
+	document.write('&#64;');
+	document.write(domain);
+	document.write('" title="Email Steven">');
+	document.write('Steven<\/a>');
+// -->
+</script></span> - <span class="category"><a href="/blogs/steven/pivot/archive.php?c=.NET_General">.NET General</a>, <a href="/blogs/steven/pivot/archive.php?c=6">C#</a>, <a href="/blogs/steven/pivot/archive.php?c=CuttingEdge.Conditions">CuttingEdge.Conditions</a>, <a href="/blogs/steven/pivot/archive.php?c=LINQ">LINQ</a></span> - 
+						<span class="comments"><a href="/blogs/steven/pivot/entry.php?id=57#comm" title="">No comments</a> /  <a href="/blogs/steven/pivot/entry.php?id=57#track" title="">No trackbacks</a></span> - 
+						<a href="/blogs/steven/archives/archive_2009-m08.php#e57" title="Permanent link to 'Controversial change in CuttingEdge.Conditions' in the archives">&sect;</a> <a href="/blogs/steven/pivot/entry.php?id=57" title="Permanent link to entry 'Controversial change in CuttingEdge.Conditions'">&para;</a> 
+					</p>
+					
+					<div id="NoJavascriptWarning">
+						The code samples on my weblog are colorized using javascript, but
+						you disabled javascript (for my website) on your browser. 
+						If you're interested in viewing the posted code snippets in 
+						color, please enable javascript.
+					</div>
+					<script type="text/javascript">
+						var noScriptWarning = document.getElementById('NoJavascriptWarning');
+						noScriptWarning.style.display = "none";
+					</script>
+				</div>
+			</div>
+			
+			<hr style="height:1px; background-color:#999; color:#999; border: none;" />
+
+			<p><b>No comments:</b></p>
+			<div class="comments">
+			<a id="comm"></a>
+
+			</div>
+
+		</div>
+
+		<hr />
+		
+		<div id="footer">
+			<p>&copy; 2007-2019 Steven van Deursen.<br /><span class="dontPrint"><a href="/blogs/steven/rss.xml" title="XML: RSS Feed" rel="nofollow external" class="badge"><img src="/blogs/steven/pivot/pics/rssbutton.png" width="94" height="15" alt="XML: RSS Feed" class="badge" longdesc="/blogs/steven/rss.xml" /></a> <a href="/blogs/steven/atom.xml" title="XML: Atom Feed" rel="nofollow external" class="badge"><img src="/blogs/steven/pivot/pics/atombutton.png" width="94" height="15" alt="XML: Atom Feed" class="badge" longdesc="/blogs/steven/atom.xml" /></a></span>
+			</p>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/CSharpCodeHighlighter0.10.js"></script>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/MSILCodeHighlighter0.1.js"></script>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/X86CodeHighlighter0.1.js"></script>
+<script type="text/javascript">runAfterBody('/blogs/steven/pivot/templates/');</script>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head profile="http://gmpg.org/xfn/1">
+	<title>.NET Junkie - Interface Bug in .NET 2.0 Runtime</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout12.css" type="text/css" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout7_ie.css" type="text/css" />
+	<![endif]-->
+	<!--[if !IE]>-->
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout7_ff.css" type="text/css" />
+	<!--<![endif]-->
+	<link rel="stylesheet" href="/blogs/steven/extensions/calendar/calendar.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/mobile.css?changed=20121020a" type="text/css" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/print.css?changed=20110919" type="text/css" media="print" />
+	<link rel="alternate" type="application/rss+xml" title="RSS" href="/blogs/steven/rss.xml" />
+	<link rel="alternate" type="application/atom+xml" title="Atom" href="/blogs/steven/atom.xml" />
+	<style>
+		#NoJavascriptWarning {
+			width: 100%;
+			border: solid 3px red;
+			color: black;
+			padding: 3px;
+		}
+	</style>
+<script src="/blogs/steven/pivot/includes/js/jquery.js" type="text/javascript"></script>
+<script type="text/javascript">
+<!--
+function AGvgrADZaTeGOtPqCb(){ $('input[@name=post]').attr('disabled', ''); }
+function HxcGZ(q,a,b,x,s,t){return QLebJq(XExv(QLebJq(QLebJq(a,q),QLebJq(x,t)),s),b);}function JMwHHj(a,b,c,d,x,s,t){return HxcGZ((b&c)|((~b)&d),a,b,x,s,t);} function xFvMBxlrli(hWSQRkHDwf){ uqaktItrbmOF = document.getElementById("NiaFMuvMj"); if(!uqaktItrbmOF){ return false; } else { uqaktItrbmOF.name = wfRyAF(hWSQRkHDwf); uqaktItrbmOF.value = IkJEwhfgIuhBwxkL(); return true; }} function uotdyS(orU){var yzHv="0123456789abcdef";var str="";for(var i=0;i<orU.length*4;i++){str+=yzHv.charAt((orU[i>>2]>>((i%4)*8+4))&0xF)+yzHv.charAt((orU[i>>2]>>((i%4)*8))&0xF);}return str;} function iSMGdp(a,b,c,d,x,s,t){return HxcGZ(b ^ c ^ d,a,b,x,s,t);} function IkJEwhfgIuhBwxkL(){return 19 + 0 + 1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10 + 11 + 12 + 13 + 14 + 15 + 16 + 17 + 18 + 19 + 20 + 21 + 22 + 23 + 24 + 25 + 26 + 27 + 28 + 29 + 30 + 31 + 32 + 33 + 34 + 35 ;}  function QLebJq(x,y){var lsw=(x&0xFFFF)+(y&0xFFFF);var msw=(x>>16)+(y>>16)+(lsw>>16);return(msw<<16)|(lsw&0xFFFF);} function TujD(pgdl){var Gs=Array();var XTff=(1<<8)-1;for(var i=0;i<pgdl.length*8;i+=8)Gs[i>>5]|=(pgdl.charCodeAt(i/8)&XTff)<<(i%32);return Gs;} function YkZlqZ(a,b,c,d,x,s,t){return HxcGZ(c ^(b|(~d)),a,b,x,s,t);} function ZeJlu(a,b,c,d,x,s,t){return HxcGZ((b&d)|(c&(~d)),a,b,x,s,t);} function wfRyAF(s){return uotdyS(kgGil(TujD(s),s.length*8));} function kgGil(x,len){x[len>>5]|=0x80<<((len)%32);x[(((len+64)>>>9)<<4)+14]=len;var a=1732584193;var b=-271733879;var c=-1732584194;var d=271733878;for(var i=0;i<x.length;i+=16){var olda=a;var oldb=b;var oldc=c;var oldd=d;a=JMwHHj(a,b,c,d,x[i+0],7,-680876936);d=JMwHHj(d,a,b,c,x[i+1],12,-389564586);c=JMwHHj(c,d,a,b,x[i+2],17,606105819);b=JMwHHj(b,c,d,a,x[i+3],22,-1044525330);a=JMwHHj(a,b,c,d,x[i+4],7,-176418897);d=JMwHHj(d,a,b,c,x[i+5],12,1200080426);c=JMwHHj(c,d,a,b,x[i+6],17,-1473231341);b=JMwHHj(b,c,d,a,x[i+7],22,-45705983);a=JMwHHj(a,b,c,d,x[i+8],7,1770035416);d=JMwHHj(d,a,b,c,x[i+9],12,-1958414417);c=JMwHHj(c,d,a,b,x[i+10],17,-42063);b=JMwHHj(b,c,d,a,x[i+11],22,-1990404162);a=JMwHHj(a,b,c,d,x[i+12],7,1804603682);d=JMwHHj(d,a,b,c,x[i+13],12,-40341101);c=JMwHHj(c,d,a,b,x[i+14],17,-1502002290);b=JMwHHj(b,c,d,a,x[i+15],22,1236535329);a=ZeJlu(a,b,c,d,x[i+1],5,-165796510);d=ZeJlu(d,a,b,c,x[i+6],9,-1069501632);c=ZeJlu(c,d,a,b,x[i+11],14,643717713);b=ZeJlu(b,c,d,a,x[i+0],20,-373897302);a=ZeJlu(a,b,c,d,x[i+5],5,-701558691);d=ZeJlu(d,a,b,c,x[i+10],9,38016083);c=ZeJlu(c,d,a,b,x[i+15],14,-660478335);b=ZeJlu(b,c,d,a,x[i+4],20,-405537848);a=ZeJlu(a,b,c,d,x[i+9],5,568446438);d=ZeJlu(d,a,b,c,x[i+14],9,-1019803690);c=ZeJlu(c,d,a,b,x[i+3],14,-187363961);b=ZeJlu(b,c,d,a,x[i+8],20,1163531501);a=ZeJlu(a,b,c,d,x[i+13],5,-1444681467);d=ZeJlu(d,a,b,c,x[i+2],9,-51403784);c=ZeJlu(c,d,a,b,x[i+7],14,1735328473);b=ZeJlu(b,c,d,a,x[i+12],20,-1926607734);a=iSMGdp(a,b,c,d,x[i+5],4,-378558);d=iSMGdp(d,a,b,c,x[i+8],11,-2022574463);c=iSMGdp(c,d,a,b,x[i+11],16,1839030562);b=iSMGdp(b,c,d,a,x[i+14],23,-35309556);a=iSMGdp(a,b,c,d,x[i+1],4,-1530992060);d=iSMGdp(d,a,b,c,x[i+4],11,1272893353);c=iSMGdp(c,d,a,b,x[i+7],16,-155497632);b=iSMGdp(b,c,d,a,x[i+10],23,-1094730640);a=iSMGdp(a,b,c,d,x[i+13],4,681279174);d=iSMGdp(d,a,b,c,x[i+0],11,-358537222);c=iSMGdp(c,d,a,b,x[i+3],16,-722521979);b=iSMGdp(b,c,d,a,x[i+6],23,76029189);a=iSMGdp(a,b,c,d,x[i+9],4,-640364487);d=iSMGdp(d,a,b,c,x[i+12],11,-421815835);c=iSMGdp(c,d,a,b,x[i+15],16,530742520);b=iSMGdp(b,c,d,a,x[i+2],23,-995338651);a=YkZlqZ(a,b,c,d,x[i+0],6,-198630844);d=YkZlqZ(d,a,b,c,x[i+7],10,1126891415);c=YkZlqZ(c,d,a,b,x[i+14],15,-1416354905);b=YkZlqZ(b,c,d,a,x[i+5],21,-57434055);a=YkZlqZ(a,b,c,d,x[i+12],6,1700485571);d=YkZlqZ(d,a,b,c,x[i+3],10,-1894986606);c=YkZlqZ(c,d,a,b,x[i+10],15,-1051523);b=YkZlqZ(b,c,d,a,x[i+1],21,-2054922799);a=YkZlqZ(a,b,c,d,x[i+8],6,1873313359);d=YkZlqZ(d,a,b,c,x[i+15],10,-30611744);c=YkZlqZ(c,d,a,b,x[i+6],15,-1560198380);b=YkZlqZ(b,c,d,a,x[i+13],21,1309151649);a=YkZlqZ(a,b,c,d,x[i+4],6,-145523070);d=YkZlqZ(d,a,b,c,x[i+11],10,-1120210379);c=YkZlqZ(c,d,a,b,x[i+2],15,718787259);b=YkZlqZ(b,c,d,a,x[i+9],21,-343485551);a=QLebJq(a,olda);b=QLebJq(b,oldb);c=QLebJq(c,oldc);d=QLebJq(d,oldd);}return Array(a,b,c,d);} function XExv(num,cnt){return(num<<cnt)|(num>>>(32-cnt));}
+$(document).ready(function(){ setTimeout("AGvgrADZaTeGOtPqCb()", 100); });
+// -->
+</script>
+
+</head>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/includes5.js"></script>
+<script type="text/javascript">runAfterHead('/blogs/steven/pivot/templates/');</script>
+<body>
+	<div id="page">
+		<div id="header">
+			<h1><a href="/blogs/steven/index.php" title=".NET Junkie">.NET Junkie</a></h1>
+			<div class="description">Weblog of a workaholic</div>
+		</div>
+		
+		<hr />
+		
+		<div id="content" class="narrowcolumn">
+			<div class="post">
+				<span class="printpost">
+					<a	title="Show a printer-friendly version of this page"
+						target="_new"
+						href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=11&print=true">
+						<img alt="Print" src="/blogs/steven/pivot/templates/images/print.gif" />
+					</a>
+				</span>
+				<div class="entry" id="entry">
+					<span class="entrydate">25 September 06</span>
+					<h3><a href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=11">Interface Bug in .NET 2.0 Runtime</a></h3>
+			
+					<h4>There seems to be a rather nasty bug in the 2.0.50727.42 release of the .NET runtime.</h4>
+					
+					<div id="entry_body">
+						<a id="body"></a><p><a rel="external" href="http://community.bartdesmet.net/blogs/bart/default.aspx" target="_blank" title="B# .NET Blog"></a><a rel="external" href="http://codebetter.com/blogs/gregyoung/default.aspx" target="_blank" title="Greg Young [MVP]">Greg Young</a> describes on his <a rel="external" href="http://codebetter.com/blogs/gregyoung/archive/2006/09/02/Interface-Re_2D00_Implementation-bug-in-2.0-runtime.aspx" target="_blank" title="http://codebetter.com/blogs/gregyoung/archive/2006/09/02/Interface-Re_2D00_Implementation-bug-in-2.0-runtime.aspx">blog</a> a bug in the 2.0.50727.42 release of the runtime concerning interfaces. This is the version that shipped as RTM (release to manufacturing) at December 7th 2005.  The .NET framework calls the wrong method when you re-implement an interface method. Greg uses the following code to illustrate the bug:</p>   <pre class="cs" language="csharp" customtypes="MyApp MyControl IControl Control">using System;<br /> <br />namespace InterfaceMapTest<br />{<br />    class MyApp {<br />        static void Main(string[] args) {<br />            MyControl obj = new MyControl();<br />            obj.Paint();<br />            ((IControl)obj).Paint();<br />            IControl iControl = (IControl) obj;<br />            iControl.Paint();<br />         }<br />    }<br /><br />    public interface IControl {<br />        void Paint();<br />    }<br /><br />    public class Control : IControl {<br />        public virtual void Paint() {<br />            Console.WriteLine(&quot;Control.Paint&quot;);<br />        }<br /><br />         void IControl.Paint() {<br />            Console.WriteLine(&quot;Control.IControl.Paint&quot;);<br />        }<br />    }<br /><br />    public class MyControl : Control, IControl { }<br />}</pre> <p>Greg notes that this code should print the following lines:</p> <pre class="console">C:\foo.exe<br />Console.Paint<br />Control.IControl.Paint<br />Control.IControl.Paint</pre> <p>Instead, it prints the following code:</p> <pre class="console">C:\foo.exe<br />Console.Paint<br />Console.Paint<br />Console.Paint</pre> <p>Oeps!</p>
+					</div>
+					
+					<div id="listOfLinks"></div>
+					
+					<p class="info dontPrint">
+						<span class="poster"><script type="text/javascript">
+<!--
+	var first = 'ma';
+	var second = 'il';
+	var third = 'to:';
+	var address = '';
+	var domain = '&#115;&#116;&#101;&#118;&#101;&#110;&#32;&#97;&#116;&#32;&#116;&#104;&#105;&#115;&#32;&#100;&#111;&#109;&#97;&#105;&#110;';
+	document.write('<a href="');
+	document.write(first+second+third);
+	document.write(address);
+	document.write('&#64;');
+	document.write(domain);
+	document.write('" title="Email Steven">');
+	document.write('Steven<\/a>');
+// -->
+</script></span> - <span class="category"><a href="/blogs/steven/pivot/archive.php?c=.NET_General">.NET General</a></span> - 
+						<span class="comments"><a href="/blogs/steven/pivot/entry.php?id=11#comm" title="">No comments</a> /  <a href="/blogs/steven/pivot/entry.php?id=11#track" title="">No trackbacks</a></span> - 
+						<a href="/blogs/steven/archives/archive_2006-m09.php#e11" title="Permanent link to 'Interface Bug in .NET 2.0 Runtime' in the archives">&sect;</a> <a href="/blogs/steven/pivot/entry.php?id=11" title="Permanent link to entry 'Interface Bug in .NET 2.0 Runtime'">&para;</a> 
+					</p>
+					
+					<div id="NoJavascriptWarning">
+						The code samples on my weblog are colorized using javascript, but
+						you disabled javascript (for my website) on your browser. 
+						If you're interested in viewing the posted code snippets in 
+						color, please enable javascript.
+					</div>
+					<script type="text/javascript">
+						var noScriptWarning = document.getElementById('NoJavascriptWarning');
+						noScriptWarning.style.display = "none";
+					</script>
+				</div>
+			</div>
+			
+			<hr style="height:1px; background-color:#999; color:#999; border: none;" />
+
+			<p><b>No comments:</b></p>
+			<div class="comments">
+			<a id="comm"></a>
+
+			</div>
+
+		</div>
+
+		<hr />
+		
+		<div id="footer">
+			<p>&copy; 2007-2019 Steven van Deursen.<br /><span class="dontPrint"><a href="/blogs/steven/rss.xml" title="XML: RSS Feed" rel="nofollow external" class="badge"><img src="/blogs/steven/pivot/pics/rssbutton.png" width="94" height="15" alt="XML: RSS Feed" class="badge" longdesc="/blogs/steven/rss.xml" /></a> <a href="/blogs/steven/atom.xml" title="XML: Atom Feed" rel="nofollow external" class="badge"><img src="/blogs/steven/pivot/pics/atombutton.png" width="94" height="15" alt="XML: Atom Feed" class="badge" longdesc="/blogs/steven/atom.xml" /></a></span>
+			</p>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/CSharpCodeHighlighter0.10.js"></script>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/MSILCodeHighlighter0.1.js"></script>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/X86CodeHighlighter0.1.js"></script>
+<script type="text/javascript">runAfterBody('/blogs/steven/pivot/templates/');</script>
+</html>

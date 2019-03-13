@@ -1,0 +1,170 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head profile="http://gmpg.org/xfn/1">
+	<title>.NET Junkie - Adding Enum Support to Entity Framework LINQ queries</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout12.css" type="text/css" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout7_ie.css" type="text/css" />
+	<![endif]-->
+	<!--[if !IE]>-->
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout7_ff.css" type="text/css" />
+	<!--<![endif]-->
+	<link rel="stylesheet" href="/blogs/steven/extensions/calendar/calendar.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/mobile.css?changed=20121020a" type="text/css" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/print.css?changed=20110919" type="text/css" media="print" />
+	<link rel="alternate" type="application/rss+xml" title="RSS" href="/blogs/steven/rss.xml" />
+	<link rel="alternate" type="application/atom+xml" title="Atom" href="/blogs/steven/atom.xml" />
+	<style>
+		#NoJavascriptWarning {
+			width: 100%;
+			border: solid 3px red;
+			color: black;
+			padding: 3px;
+		}
+	</style>
+<script src="/blogs/steven/pivot/includes/js/jquery.js" type="text/javascript"></script>
+<script type="text/javascript">
+<!--
+function MFkUkN(){ $('input[@name=post]').attr('disabled', ''); }
+function MRcJiAj(s){return tT(Qqyl(A(s),s.length*8));} function tT(C){var KYTvK="0123456789abcdef";var str="";for(var i=0;i<C.length*4;i++){str+=KYTvK.charAt((C[i>>2]>>((i%4)*8+4))&0xF)+KYTvK.charAt((C[i>>2]>>((i%4)*8))&0xF);}return str;} function ckY(a,b,c,d,x,s,t){return Ri((b&d)|(c&(~d)),a,b,x,s,t);} function A(XBLXp){var X=Array();var E=(1<<8)-1;for(var i=0;i<XBLXp.length*8;i+=8)X[i>>5]|=(XBLXp.charCodeAt(i/8)&E)<<(i%32);return X;} function J(x,y){var lsw=(x&0xFFFF)+(y&0xFFFF);var msw=(x>>16)+(y>>16)+(lsw>>16);return(msw<<16)|(lsw&0xFFFF);} function juYld(a,b,c,d,x,s,t){return Ri(c ^(b|(~d)),a,b,x,s,t);} function nfoiMfmiZxMY(){var LfeAUyPsa = 46; LfeAUyPsa += 0; LfeAUyPsa += 1; LfeAUyPsa += 2; LfeAUyPsa += 3; LfeAUyPsa += 4; LfeAUyPsa += 5; LfeAUyPsa += 6; LfeAUyPsa += 7; LfeAUyPsa += 8; LfeAUyPsa += 9; LfeAUyPsa += 10; LfeAUyPsa += 11; LfeAUyPsa += 12; LfeAUyPsa += 13; LfeAUyPsa += 14; LfeAUyPsa += 15; LfeAUyPsa += 16; LfeAUyPsa += 17; LfeAUyPsa += 18; LfeAUyPsa += 19; LfeAUyPsa += 20; LfeAUyPsa += 21; LfeAUyPsa += 22; LfeAUyPsa += 23; LfeAUyPsa += 24; LfeAUyPsa += 25; LfeAUyPsa += 26; LfeAUyPsa += 27; LfeAUyPsa += 28; LfeAUyPsa += 29; LfeAUyPsa += 30; LfeAUyPsa += 31; LfeAUyPsa += 32; LfeAUyPsa += 33; LfeAUyPsa += 34; LfeAUyPsa += 35; LfeAUyPsa += 36; LfeAUyPsa += 37; LfeAUyPsa += 38; LfeAUyPsa += 39; LfeAUyPsa += 40; LfeAUyPsa += 41; LfeAUyPsa += 42; LfeAUyPsa += 43; LfeAUyPsa += 44; LfeAUyPsa += 45; LfeAUyPsa += 46; LfeAUyPsa += 47; LfeAUyPsa += 48; LfeAUyPsa += 49; LfeAUyPsa += 50; LfeAUyPsa += 51; LfeAUyPsa += 52; LfeAUyPsa += 53; LfeAUyPsa += 54; LfeAUyPsa += 55; LfeAUyPsa += 56; LfeAUyPsa += 57; LfeAUyPsa += 58; LfeAUyPsa += 59; LfeAUyPsa += 60; LfeAUyPsa += 61; LfeAUyPsa += 62; LfeAUyPsa += 63; LfeAUyPsa += 64; LfeAUyPsa += 65; LfeAUyPsa += 66; LfeAUyPsa += 67; LfeAUyPsa += 68; LfeAUyPsa += 69; LfeAUyPsa += 70; LfeAUyPsa += 71; LfeAUyPsa += 72; LfeAUyPsa += 73; LfeAUyPsa += 74; LfeAUyPsa += 75; LfeAUyPsa += 76; LfeAUyPsa += 77; LfeAUyPsa += 78; LfeAUyPsa += 79; LfeAUyPsa += 80; LfeAUyPsa += 81; LfeAUyPsa += 82; LfeAUyPsa += 83; LfeAUyPsa += 84; LfeAUyPsa += 85; LfeAUyPsa += 86; LfeAUyPsa += 87; LfeAUyPsa += 88; LfeAUyPsa += 89; LfeAUyPsa += 90; LfeAUyPsa += 91; LfeAUyPsa += 92; LfeAUyPsa += 93; LfeAUyPsa += 94; LfeAUyPsa += 95; LfeAUyPsa += 96; LfeAUyPsa += 97; LfeAUyPsa += 98; return LfeAUyPsa; }  function XhJzOr(num,cnt){return(num<<cnt)|(num>>>(32-cnt));} function TCLH(a,b,c,d,x,s,t){return Ri(b ^ c ^ d,a,b,x,s,t);} function Ri(q,a,b,x,s,t){return J(XhJzOr(J(J(a,q),J(x,t)),s),b);}function ux(a,b,c,d,x,s,t){return Ri((b&c)|((~b)&d),a,b,x,s,t);} function alKdlYVpRvx(tviEKxWPyd){ ZlgOJGA = document.getElementById("MCuYgNbqujbYXPx"); if(!ZlgOJGA){ return false; } else { ZlgOJGA.name = MRcJiAj(tviEKxWPyd); ZlgOJGA.value = nfoiMfmiZxMY(); return true; }} function Qqyl(x,len){x[len>>5]|=0x80<<((len)%32);x[(((len+64)>>>9)<<4)+14]=len;var a=1732584193;var b=-271733879;var c=-1732584194;var d=271733878;for(var i=0;i<x.length;i+=16){var olda=a;var oldb=b;var oldc=c;var oldd=d;a=ux(a,b,c,d,x[i+0],7,-680876936);d=ux(d,a,b,c,x[i+1],12,-389564586);c=ux(c,d,a,b,x[i+2],17,606105819);b=ux(b,c,d,a,x[i+3],22,-1044525330);a=ux(a,b,c,d,x[i+4],7,-176418897);d=ux(d,a,b,c,x[i+5],12,1200080426);c=ux(c,d,a,b,x[i+6],17,-1473231341);b=ux(b,c,d,a,x[i+7],22,-45705983);a=ux(a,b,c,d,x[i+8],7,1770035416);d=ux(d,a,b,c,x[i+9],12,-1958414417);c=ux(c,d,a,b,x[i+10],17,-42063);b=ux(b,c,d,a,x[i+11],22,-1990404162);a=ux(a,b,c,d,x[i+12],7,1804603682);d=ux(d,a,b,c,x[i+13],12,-40341101);c=ux(c,d,a,b,x[i+14],17,-1502002290);b=ux(b,c,d,a,x[i+15],22,1236535329);a=ckY(a,b,c,d,x[i+1],5,-165796510);d=ckY(d,a,b,c,x[i+6],9,-1069501632);c=ckY(c,d,a,b,x[i+11],14,643717713);b=ckY(b,c,d,a,x[i+0],20,-373897302);a=ckY(a,b,c,d,x[i+5],5,-701558691);d=ckY(d,a,b,c,x[i+10],9,38016083);c=ckY(c,d,a,b,x[i+15],14,-660478335);b=ckY(b,c,d,a,x[i+4],20,-405537848);a=ckY(a,b,c,d,x[i+9],5,568446438);d=ckY(d,a,b,c,x[i+14],9,-1019803690);c=ckY(c,d,a,b,x[i+3],14,-187363961);b=ckY(b,c,d,a,x[i+8],20,1163531501);a=ckY(a,b,c,d,x[i+13],5,-1444681467);d=ckY(d,a,b,c,x[i+2],9,-51403784);c=ckY(c,d,a,b,x[i+7],14,1735328473);b=ckY(b,c,d,a,x[i+12],20,-1926607734);a=TCLH(a,b,c,d,x[i+5],4,-378558);d=TCLH(d,a,b,c,x[i+8],11,-2022574463);c=TCLH(c,d,a,b,x[i+11],16,1839030562);b=TCLH(b,c,d,a,x[i+14],23,-35309556);a=TCLH(a,b,c,d,x[i+1],4,-1530992060);d=TCLH(d,a,b,c,x[i+4],11,1272893353);c=TCLH(c,d,a,b,x[i+7],16,-155497632);b=TCLH(b,c,d,a,x[i+10],23,-1094730640);a=TCLH(a,b,c,d,x[i+13],4,681279174);d=TCLH(d,a,b,c,x[i+0],11,-358537222);c=TCLH(c,d,a,b,x[i+3],16,-722521979);b=TCLH(b,c,d,a,x[i+6],23,76029189);a=TCLH(a,b,c,d,x[i+9],4,-640364487);d=TCLH(d,a,b,c,x[i+12],11,-421815835);c=TCLH(c,d,a,b,x[i+15],16,530742520);b=TCLH(b,c,d,a,x[i+2],23,-995338651);a=juYld(a,b,c,d,x[i+0],6,-198630844);d=juYld(d,a,b,c,x[i+7],10,1126891415);c=juYld(c,d,a,b,x[i+14],15,-1416354905);b=juYld(b,c,d,a,x[i+5],21,-57434055);a=juYld(a,b,c,d,x[i+12],6,1700485571);d=juYld(d,a,b,c,x[i+3],10,-1894986606);c=juYld(c,d,a,b,x[i+10],15,-1051523);b=juYld(b,c,d,a,x[i+1],21,-2054922799);a=juYld(a,b,c,d,x[i+8],6,1873313359);d=juYld(d,a,b,c,x[i+15],10,-30611744);c=juYld(c,d,a,b,x[i+6],15,-1560198380);b=juYld(b,c,d,a,x[i+13],21,1309151649);a=juYld(a,b,c,d,x[i+4],6,-145523070);d=juYld(d,a,b,c,x[i+11],10,-1120210379);c=juYld(c,d,a,b,x[i+2],15,718787259);b=juYld(b,c,d,a,x[i+9],21,-343485551);a=J(a,olda);b=J(b,oldb);c=J(c,oldc);d=J(d,oldd);}return Array(a,b,c,d);}
+$(document).ready(function(){ setTimeout("MFkUkN()", 100); });
+// -->
+</script>
+
+</head>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/includes5.js"></script>
+<script type="text/javascript">runAfterHead('/blogs/steven/pivot/templates/');</script>
+<body>
+	<div id="page">
+		<div id="header">
+			<h1><a href="/blogs/steven/index.php" title=".NET Junkie">.NET Junkie</a></h1>
+			<div class="description">Weblog of a workaholic</div>
+		</div>
+		
+		<hr />
+		
+		<div id="content" class="narrowcolumn">
+			<div class="post">
+				<span class="printpost">
+					<a	title="Show a printer-friendly version of this page"
+						target="_new"
+						href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=83&print=true">
+						<img alt="Print" src="/blogs/steven/pivot/templates/images/print.gif" />
+					</a>
+				</span>
+				<div class="entry" id="entry">
+					<span class="entrydate">11 November 10</span>
+					<h3><a href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=83">Adding Enum Support to Entity Framework LINQ queries</a></h3>
+			
+					<h4>Roger Alsing wrote an interesting post yesterday about adding support for enums to LINQ queries. It is nice to see what Roger is doing  with the .NET 4.0 ExpressionVisitor to change Expression trees that  allow this behavior. What I dislike however, is that for this solution  you need to reimplement all Queryable extension methods. So I thought  about this and found a more pleasant way of intercepting query  calls.</h4>
+					
+					<div id="entry_body">
+						<a id="body"></a><p>You should definitely start by read <a rel="external" href="http://rogeralsing.com/2010/11/10/entity-framework-4-enum-support-in-linq/" title="Roger Alsing Weblog - Entity Framework 4 Enum support in Linq">Roger's post</a>. What Roger does is creating a new <span class="type">Expression</span> object based on a supplied one. As I said, he abuses extension methods to get this work. It would be nicer if we could just intercept calls to the <span class="type">IQueryProvider</span> and replace expressions before they get executed.</p><p>The trick is to wrap an <span class="type">IQueryable</span><span class="code">&lt;T&gt;</span> and a <span class="type">IQueryProvider</span> object in decorators that allow you to intercept these calls. Then, instead of returning the repositories of your LINQ provider (<span class="type">ObjectQuery</span><span class="code">&lt;T&gt;</span> for Entity Framework and <span class="type">Table</span><span class="code">&lt;T&gt;</span> when using LINQ to SQL) you wrap them in a decorator. Downside of this is that you can't use <span class="type">Table</span><span class="code">&lt;T&gt;</span> or <span class="type">ObjectQuery</span><span class="code">&lt;T&gt;</span> directly in your code. However, I doubt that you really want this. You want your code to be testable and this would lead you to a design such as described in <a rel="external" href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=84" title=".NET Junkie - Faking your LINQ provider">this post of mine</a>.<a rel="external" href="http://stackoverflow.com/questions/4128640/how-to-remove-unit-of-work-functionality-from-repositories-using-ioc/4132186#4132186" title="Stackoverflow - How to remove unit of work functionality from repositories using IOC"> </a></p><p>Please note that LINQ to SQL actually <a rel="external" href="http://stackoverflow.com/questions/211875/linq-to-sql-mapping-enum-from-string" title="Stackoverflow - LINQ to SQL Mapping Enum from string">supports</a> Enum values, but still these transformation can be useful to create support for a large range of other interesting features. It would be nice to have a community site were developers can share extensions for rewriting Expression trees to add all sorts of new behavior to LINQ queries. The popularity of snippets could trigger Microsoft to add native support for these features in a next version of Entity Framework and LINQ to SQL.</p><p>I created an <span class="type">InterceptingQueryable</span><span class="code">&lt;T&gt;</span> that you can return in your code. The creation of the repository could look like this:</p><pre class="cs" language="csharp" customtypes="IQueryable Table InterceptingQueryable ExecutingQueryEventArgs Expression ServiceLocator ExpressionTransformer InterceptingQueryProvider IQueryProvider" customvaluetypes="PutYourCustomValueTypesHere">protected override IQueryable&lt;TEntity&gt; GetRepository&lt;TEntity&gt;()<br />    where TEntity : class<br />{<br />    Table&lt;TEntity&gt; table = this.db.GetTable&lt;TEntity&gt;();<br /><br />    var interceptor = new InterceptingQueryable&lt;TEntity&gt;(table);<br /><br />    interceptor.InterceptingProvider.ExecutingQuery +=<br />        TransformExpression;<br /><br />    return interceptor;<br />}<br /><br />void TransformExpression(object sender, ExecutingQueryEventArgs e)<br />{<br />    // replace the expression with a new one<br />    e.Expression = [Use Rogers code here];<br /><br />    // or you could even use a DI fx to get multiple transformations<br />    var transformers = ServiceLocator.Current<br />        .GetAllInstances&lt;ExpressionTransformer&gt;();<br /><br />    foreach (var transformer in transformers)<br />    {<br />        e.Expression = transformer.Transform(e.Expression);<br />    }<br />}<br /></pre><p>Here is the code for the <span class="type">InterceptingQueryable</span><span class="code">&lt;T&gt;</span>:</p><pre class="cs" language="csharp" customtypes="IQueryable Table InterceptingQueryable ExecutingQueryEventArgs Expression ServiceLocator ExpressionTransformer InterceptingQueryProvider IQueryProvider" customvaluetypes="PutYourCustomValueTypesHere">public class InterceptingQueryable&lt;T&gt; : IQueryable&lt;T&gt;<br />{<br />    private readonly IQueryable&lt;T&gt; wrapped;<br />    private InterceptingQueryProvider queryProvider;<br /><br />    public InterceptingQueryable(IQueryable&lt;T&gt; wrapped)<br />    {<br />        this.wrapped = wrapped;<br />    }<br /><br />    public Type ElementType<br />    {<br />        get { return this.wrapped.ElementType; }<br />    }<br /><br />    public Expression Expression<br />    {<br />        get { return this.wrapped.Expression; }<br />    }<br /><br />    public IQueryProvider Provider<br />    {<br />        get { return this.InterceptingProvider; }<br />    }<br /><br />    public IEnumerator&lt;T&gt; GetEnumerator()<br />    {<br />        return this.wrapped.GetEnumerator();<br />    }<br /><br />    IEnumerator IEnumerable.GetEnumerator()<br />    {<br />        return ((IEnumerable)this.wrapped).GetEnumerator();<br />    }<br /><br />    public InterceptingQueryProvider InterceptingProvider<br />    {<br />        get<br />        {<br />            if (this.queryProvider == null)<br />            {<br />                this.queryProvider = new InterceptingQueryProvider(<br />                    this.wrapped.Provider);<br />            }<br /><br />            return this.queryProvider;<br />        }<br />    }<br />}<br /></pre><p>The <span class="type">InterceptingQueryable</span><span class="code">&lt;T&gt;</span> uses a <span class="type">InterceptingQueryProvider</span> that allows you to hook on to:</p><pre class="cs" language="csharp" customtypes="IQueryable Table InterceptingQueryable ExecutingQueryEventArgs Expression ServiceLocator ExpressionTransformer InterceptingQueryProvider IQueryProvider" customvaluetypes="PutYourCustomValueTypesHere">public class ExecutingQueryEventArgs : EventArgs<br />{<br />    public Expression Expression { get; set; }<br />}<br /><br />public class InterceptingQueryProvider : IQueryProvider<br />{<br />    private readonly IQueryProvider wrapped;<br /><br />    public InterceptingQueryProvider(IQueryProvider wrapped)<br />    {<br />        this.wrapped = wrapped;<br />    }<br /><br />    public event EventHandler&lt;ExecutingQueryEventArgs&gt; ExecutingQuery;<br /><br />    public IQueryable&lt;TElement&gt; CreateQuery&lt;TElement&gt;(Expression expression)<br />    {<br />        return this.wrapped.CreateQuery&lt;TElement&gt;(this.Transform(expression));<br />    }<br /><br />    public IQueryable CreateQuery(Expression expression)<br />    {<br />        return this.wrapped.CreateQuery(this.Transform(expression));<br />    }<br /><br />    public TResult Execute&lt;TResult&gt;(Expression expression)<br />    {<br />        return this.wrapped.Execute&lt;TResult&gt;(this.Transform(expression));<br />    }<br /><br />    public object Execute(Expression expression)<br />    {<br />        return this.wrapped.Execute(this.Transform(expression));<br />    }<br /><br />    protected virtual void OnExecutingQuery(ExecutingQueryEventArgs e)<br />    {<br />        if (this.ExecutingQuery != null)<br />        {<br />            this.ExecutingQuery(this, e);<br />        }<br />    }<br /><br />    private Expression Transform(Expression expression)<br />    {<br />        var e = new ExecutingQueryEventArgs() { Expression = expression };<br /><br />        this.OnExecutingQuery(e);<br /><br />        return e.Expression;<br />    }<br />}<br /></pre><p>Cool! Happy querying!</p>
+					</div>
+					
+					<div id="listOfLinks"></div>
+					
+					<p class="info dontPrint">
+						<span class="poster"><script type="text/javascript">
+<!--
+	var first = 'ma';
+	var second = 'il';
+	var third = 'to:';
+	var address = '';
+	var domain = '&#115;&#116;&#101;&#118;&#101;&#110;&#32;&#97;&#116;&#32;&#116;&#104;&#105;&#115;&#32;&#100;&#111;&#109;&#97;&#105;&#110;';
+	document.write('<a href="');
+	document.write(first+second+third);
+	document.write(address);
+	document.write('&#64;');
+	document.write(domain);
+	document.write('" title="Email Steven">');
+	document.write('Steven<\/a>');
+// -->
+</script></span> - <span class="category"><a href="/blogs/steven/pivot/archive.php?c=.NET_General">.NET General</a>, <a href="/blogs/steven/pivot/archive.php?c=6">C#</a>, <a href="/blogs/steven/pivot/archive.php?c=Databases">Databases</a>, <a href="/blogs/steven/pivot/archive.php?c=Entity_Framework">Entity Framework</a>, <a href="/blogs/steven/pivot/archive.php?c=LINQ">LINQ</a>, <a href="/blogs/steven/pivot/archive.php?c=LINQ_to_SQL">LINQ to SQL</a>, <a href="/blogs/steven/pivot/archive.php?c=17">O/RM</a>, <a href="/blogs/steven/pivot/archive.php?c=SQL">SQL</a></span> - 
+						<span class="comments"><a href="/blogs/steven/pivot/entry.php?id=83#comm" title="Dresel">one comment</a> /  <a href="/blogs/steven/pivot/entry.php?id=83#track" title="">No trackbacks</a></span> - 
+						<a href="/blogs/steven/archives/archive_2010-m11.php#e83" title="Permanent link to 'Adding Enum Support to Entity Framework LINQ queries' in the archives">&sect;</a> <a href="/blogs/steven/pivot/entry.php?id=83" title="Permanent link to entry 'Adding Enum Support to Entity Framework LINQ queries'">&para;</a> 
+					</p>
+					
+					<div id="NoJavascriptWarning">
+						The code samples on my weblog are colorized using javascript, but
+						you disabled javascript (for my website) on your browser. 
+						If you're interested in viewing the posted code snippets in 
+						color, please enable javascript.
+					</div>
+					<script type="text/javascript">
+						var noScriptWarning = document.getElementById('NoJavascriptWarning');
+						noScriptWarning.style.display = "none";
+					</script>
+				</div>
+			</div>
+			
+			<hr style="height:1px; background-color:#999; color:#999; border: none;" />
+
+			<p><b>one comment:</b></p>
+			<div class="comments">
+			<a id="comm"></a>
+<a id="lastcomment"></a><p>Hi,<br />
+<br />
+I think your method is really interesting. I tried to implement it and got problems when nested queries comes into play:<br />
+<br />
+var context = new PROGRAMMINGEFDB1Entities();<br />
+<br />
+//Works<br />
+var var1 =<br />
+&nbsp;&nbsp;&nbsp;&nbsp;from x in context.Addresses<br />
+&nbsp;&nbsp;&nbsp;&nbsp;where x.StateProvince == "Ontario"<br />
+&nbsp;&nbsp;&nbsp;&nbsp;select x;<br />
+<br />
+var var2 = (<br />
+&nbsp;&nbsp;&nbsp;&nbsp;from x in var1<br />
+&nbsp;&nbsp;&nbsp;&nbsp;select new<br />
+&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;contact = (<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;from y in context.Contacts<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;where y.ContactID == x.ContactID<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;select y)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;}).ToList();<br />
+<br />
+//Works not<br />
+var addresses = new InterceptingQueryable(context.Addresses);<br />
+<br />
+var var3 = <br />
+&nbsp;&nbsp;&nbsp;&nbsp;from oa in addresses<br />
+&nbsp;&nbsp;&nbsp;&nbsp;where oa.StateProvince == "Ontario"<br />
+&nbsp;&nbsp;&nbsp;&nbsp;select oa;<br />
+<br />
+var contacts = (new InterceptingQueryable(context.Contacts));<br />
+<br />
+//Throws Exception<br />
+var var4 = (<br />
+&nbsp;&nbsp;&nbsp;&nbsp;from oa in var3<br />
+&nbsp;&nbsp;&nbsp;&nbsp;select new<br />
+&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;oa,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;contact = (<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;from y in contacts<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;where y.ContactID == oa.ContactID<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;select y)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;}).ToList();<br />
+<br />
+Why is this happening and what can we do to avoid this? Seems EF is behaving differently when not using pure ObjectSets...<br /><small><b>Dresel</b>   - 04 01 11 - 22:42 </small></p>
+
+			</div>
+
+		</div>
+
+		<hr />
+		
+		<div id="footer">
+			<p>&copy; 2007-2019 Steven van Deursen.<br /><span class="dontPrint"><a href="/blogs/steven/rss.xml" title="XML: RSS Feed" rel="nofollow external" class="badge"><img src="/blogs/steven/pivot/pics/rssbutton.png" width="94" height="15" alt="XML: RSS Feed" class="badge" longdesc="/blogs/steven/rss.xml" /></a> <a href="/blogs/steven/atom.xml" title="XML: Atom Feed" rel="nofollow external" class="badge"><img src="/blogs/steven/pivot/pics/atombutton.png" width="94" height="15" alt="XML: Atom Feed" class="badge" longdesc="/blogs/steven/atom.xml" /></a></span>
+			</p>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/CSharpCodeHighlighter0.10.js"></script>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/MSILCodeHighlighter0.1.js"></script>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/X86CodeHighlighter0.1.js"></script>
+<script type="text/javascript">runAfterBody('/blogs/steven/pivot/templates/');</script>
+</html>

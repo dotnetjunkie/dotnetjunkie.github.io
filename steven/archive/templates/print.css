@@ -1,0 +1,80 @@
+body {
+	background-color: white;
+	color: black;
+	margin: 0;
+	padding: 0;
+	}
+
+#page {
+	background: none;
+	background-color: white;
+	width: 90%;
+	}
+	
+#header {
+	background: none;
+	background-color: white;
+	height: 75px;
+	}
+
+h1, h1 a, h1 a:hover, h1 a:visited, .description {
+	color: black;
+	}	
+	
+#footer {
+	background: none;
+	width: 100%;
+	}
+
+#sidebar {
+	display: none;
+	}
+
+#commentform {
+	display: none;
+	}
+	
+#form {
+	display: none;
+}
+	
+.post span.printpost {
+	display: none;
+}
+
+.dontPrint {
+	display: none;
+}
+
+.narrowcolumn {
+	float: center;
+	padding: 0px 0px 0px 0px;
+	width: 100%;
+	}
+
+.printOnly {
+	display: block;
+	border: solid 1px black;
+}
+
+.linkPrinterTable {
+	}
+	
+table.linkPrinterTable {
+	border: solid 1px black;
+}
+	
+td.linkPrinterTable {
+	vertical-align:top;
+	text-align: left;
+	font-size: xx-small;
+	}	
+
+pre.code, pre.cs
+{
+	background-color: white;
+}
+
+/* Overriding C# code color 'type' for printing, since the color is to light for printing. */
+span.type { color: #1A5868; }
+pre.cs span.type { color: #1A5868; }

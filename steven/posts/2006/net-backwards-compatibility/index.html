@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+		<title>
+				.NET Backwards compatibility, why should we? &middot; .NET Junkie - Weblog of a workaholic
+		</title>
+	
+		
+		<link rel="stylesheet" href="/steven/css/style.css">
+		<link rel="stylesheet" href="/steven/css/overrides.css">
+		<link rel="stylesheet" href="/steven/css/Libre_Baskerville_400_400i_700.css">
+		
+		<link rel="icon" type="image/png" sizes="32x32" href="/steven/images/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/steven/images/favicon-16x16.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="/steven/images/apple-touch-icon.png">
+	
+		
+		<link href="" rel="alternate" type="application/rss+xml" title=".NET Junkie - Weblog of a workaholic" />
+	</head>
+	
+    <body>
+        		<nav class="nav">
+			<div class="nav-container">
+				<a href="/steven/">
+					<h2 class="nav-title">.NET Junkie - Weblog of a workaholic</h2>
+				</a>
+				<ul>
+    <li><a href="/steven/about">About</a></li>
+    <li><a href="/steven/">Posts</a></li>
+</ul>
+			</div>
+		</nav>
+
+        
+
+<main>
+	<div class="post">
+		<div class="post-info">
+    <span>Written by</span>
+        Steven van Deursen
+        <br>
+        <span>on&nbsp;</span><time datetime="2006-05-23 00:00:00 &#43;0000 UTC">May 23, 2006</time>
+</div>
+		<h1 class="post-title">.NET Backwards compatibility, why should we?</h1>
+<div class="post-line"></div>
+
+		
+
+		
+
+<h3 id="microsofts-corporate-vice-present-of-the-developer-division-somasegar-wrote-on-his-weblog-about-the-backwards-compatibility-of-the-net-framework-version-2-0-but-his-readers-doubt-the-usefulness-of-this-compatibility-as-do-i">Microsofts corporate vice present of the Developer Division, Somasegar, wrote on his weblog about the backwards compatibility of the .NET framework version 2.0. But his readers doubt the usefulness of this compatibility, as do I.</h3>
+
+<h4 id="update-2010-this-post-was-written-in-2006-during-the-last-couple-of-years-i-worked-for-many-clients-and-found-that-the-backwards-compatibility-of-net-was-very-important-for-many-of-my-clients-because-it-allowed-them-to-migrate-slowly-from-one-version-to-the-next-without-making-very-big-investments-my-opinion-on-this-subject-therefore-has-changed-i-currently-support-microsoft-in-their-quest-to-keep-net-backwards-compatible-please-keep-this-in-mind-while-reading-this-article">UPDATE 2010: This post was written in 2006. During the last couple of years I worked for many clients and found that the backwards compatibility of .NET was very important for many of my clients, because it allowed them to migrate slowly from one version to the next without making very big investments. My opinion on this subject therefore has changed. I currently support Microsoft in their quest to keep .NET backwards compatible. Please keep this in mind while reading this article.</h4>
+
+<p>In his <a href="http://blogs.msdn.com/somasegar/default.aspx">blog</a> about the <a href="http://blogs.msdn.com/somasegar/archive/2006/05/18/601354.aspx">compatibility of the coming Orcas release</a> of the .NET Framework, Somasegar writes Microsoft is doing everything to ensure backwards compatibility. This means, compiled DLL&rsquo;s of version X should run (without recompiling) on version X+1. Some of his readers have commented on this and note the .NET framework is developed in a way that versions can live side-by-side. This, according to the commenters, means there is actually no need for backwards compatibility.</p>
+
+<p>I totally agree with the commenters. The .NET framework 2.0 has already got 90 Types and 1145 type members that are marked obsolete, but are left in for the sake of compatibility. Good example are the types in the System.Web.Mail namespace. They moved to the much more logical System.Net.Mail namespace. Microsoft should break the backwards compatibility with every new version of the framework to ensure that the new version has the best possible design. Like commenter John Galt writes: &ldquo;Drop all of the crap that isn&rsquo;t needed.&rdquo;. I say learn from your errors, fix them and communicate that to the developers.</p>
+
+<p>Of course this comes at a cost for developers. Forgetting about backwards compatibility allows more drastic changes to the framework. This could create more adaptation problems for developers, or increase time getting used to the new framework. (I say ‘framework’, because every new version then will be a new framework.) Besides, it is a great plus that existing ASP.NET 1.1 web applications can be ported to 2.0 with a simple mouseclick and immediately run much faster and are much more scalable than before.</p>
+
+<p>These costs however are a small price to pay for what we get in return, because like FullMetal comments: &ldquo;The product is new but you are already suffocating under the burden of legacy.&rdquo; So Microsoft, please please please reconsider your strategy for .NET version 3.0.</p>
+
+<h2 id="comments">Comments</h2>
+
+
+		<hr />
+
+<h2 id="wish-to-comment">Wish to comment?</h2>
+
+<p>Comments are currently turned off as I switched to a static site generator. I will enable commenting again in the future, most likely using pull requests. Stay tuned...</p>
+
+
+
+<hr />
+
+<h2 id="buy-my-book">Buy my book</h2>
+
+<p style="margin-right:7%">
+<a href="https://manning.com/seemann2"><img src="/steven/images/book%20cover%20smaller.png" style="float:left;margin-right:10px;margin-bottom:5px;border:0px solid" title="Dependency Injection Principles, Practices, and Patterns" alt="Dependency Injection Principles, Practices, and Patterns Cover Small" /></a>
+I coauthored the book <a href="https://manning.com/seemann2">Dependency Injection Principles, Practices, and Patterns</a>. If you're interested to learn more about DI and software design in general, consider reading my book.
+</p>
+	</div>
+
+	<div class="pagination">
+		<a href="/steven/posts/2006/welcome-to-my-blog/" class="left arrow">&#8592;</a>
+		<a href="/steven/posts/2007/readonlydictionary/" class="right arrow">&#8594;</a>
+
+		<a href="#" class="top">Top</a>
+	</div>
+</main>
+
+
+        		<footer>
+			<span>
+			&copy; <time datetime="2019-03-13 19:28:57.5872784 &#43;0100 CET m=&#43;0.218320001">2019</time> Steven van Deursen. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
+			</span>
+		</footer>
+
+    </body>
+</html>

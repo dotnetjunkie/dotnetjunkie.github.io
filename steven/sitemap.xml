@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>https://blogs.cuttingedge.it/steven/posts/2019/dependency-injection-principles-practices-and-patterns/</loc>
+    <lastmod>2019-03-08T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blogs.cuttingedge.it/steven/posts/2017/simple-injector-v4/</loc>
+    <lastmod>2017-04-02T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blogs.cuttingedge.it/steven/posts/2016/abstract-factories-are-a-code-smell/</loc>
+    <lastmod>2016-08-10T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blogs.cuttingedge.it/steven/posts/2015/code-smell-injecting-runtime-data-into-components/</loc>
+    <lastmod>2015-11-07T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blogs.cuttingedge.it/steven/posts/2014/dependency-injection-in-attributes-dont-do-it/</loc>
+    <lastmod>2014-05-14T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blogs.cuttingedge.it/steven/posts/2013/di-anti-pattern-multiple-constructors/</loc>
+    <lastmod>2013-06-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blogs.cuttingedge.it/steven/posts/2013/simple-injector-2-the-future-is-here/</loc>
+    <lastmod>2013-03-04T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blogs.cuttingedge.it/steven/posts/2012/writing-highly-maintainable-wcf-services/</loc>
+    <lastmod>2012-08-30T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blogs.cuttingedge.it/steven/posts/2012/primitive-dependencies-with-simple-injector/</loc>
+    <lastmod>2012-07-19T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blogs.cuttingedge.it/steven/posts/2012/returning-data-from-command-handlers/</loc>
+    <lastmod>2012-04-14T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blogs.cuttingedge.it/steven/posts/2011/meanwhile-on-the-query-side-of-my-architecture/</loc>
+    <lastmod>2011-12-18T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blogs.cuttingedge.it/steven/posts/2011/meanwhile-on-the-command-side-of-my-architecture/</loc>
+    <lastmod>2011-12-11T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blogs.cuttingedge.it/steven/posts/2011/adding-covariance-and-contravariance-to-simple-injector/</loc>
+    <lastmod>2011-10-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blogs.cuttingedge.it/steven/posts/2010/di-in-asp-net-web-forms/</loc>
+    <lastmod>2010-10-03T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blogs.cuttingedge.it/steven/posts/2010/breaking-changes-in-smtpclient-in-net40/</loc>
+    <lastmod>2010-05-06T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blogs.cuttingedge.it/steven/posts/2010/protecting-against-regex-dos-attacks/</loc>
+    <lastmod>2010-05-05T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blogs.cuttingedge.it/steven/posts/2009/protecting-against-xml-expansion-attacks/</loc>
+    <lastmod>2009-05-23T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blogs.cuttingedge.it/steven/posts/2008/the-death-of-linq-to-sql/</loc>
+    <lastmod>2008-11-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blogs.cuttingedge.it/steven/posts/2007/readonlydictionary/</loc>
+    <lastmod>2007-11-22T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blogs.cuttingedge.it/steven/posts/2006/net-backwards-compatibility/</loc>
+    <lastmod>2006-05-23T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blogs.cuttingedge.it/steven/posts/2006/welcome-to-my-blog/</loc>
+    <lastmod>2006-05-10T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blogs.cuttingedge.it/steven/</loc>
+    <lastmod>2019-03-08T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blogs.cuttingedge.it/steven/tags/.net-general/</loc>
+    <lastmod>2019-03-08T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blogs.cuttingedge.it/steven/about/</loc>
+  </url>
+  
+  <url>
+    <loc>https://blogs.cuttingedge.it/steven/tags/architecture/</loc>
+    <lastmod>2019-03-08T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blogs.cuttingedge.it/steven/tags/asp.net/</loc>
+    <lastmod>2014-05-14T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blogs.cuttingedge.it/steven/tags/c/</loc>
+    <lastmod>2019-03-08T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blogs.cuttingedge.it/steven/categories/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blogs.cuttingedge.it/steven/tags/dependency-injection/</loc>
+    <lastmod>2019-03-08T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blogs.cuttingedge.it/steven/tags/dependency-simple-injector/</loc>
+    <lastmod>2012-07-19T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blogs.cuttingedge.it/steven/tags/oop/</loc>
+    <lastmod>2016-08-10T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blogs.cuttingedge.it/steven/tags/orm/</loc>
+    <lastmod>2012-04-14T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blogs.cuttingedge.it/steven/posts/</loc>
+    <lastmod>2019-03-08T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blogs.cuttingedge.it/steven/tags/security/</loc>
+    <lastmod>2010-05-05T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blogs.cuttingedge.it/steven/tags/simple-injector/</loc>
+    <lastmod>2017-04-02T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blogs.cuttingedge.it/steven/tags/software-design/</loc>
+    <lastmod>2016-08-10T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blogs.cuttingedge.it/steven/tags/</loc>
+    <lastmod>2019-03-08T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+</urlset>

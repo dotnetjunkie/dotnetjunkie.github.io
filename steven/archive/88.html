@@ -1,0 +1,134 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head profile="http://gmpg.org/xfn/1">
+	<title>.NET Junkie - Simple Injector: Working with multiple constructors</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout12.css" type="text/css" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout7_ie.css" type="text/css" />
+	<![endif]-->
+	<!--[if !IE]>-->
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout7_ff.css" type="text/css" />
+	<!--<![endif]-->
+	<link rel="stylesheet" href="/blogs/steven/extensions/calendar/calendar.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/mobile.css?changed=20121020a" type="text/css" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/print.css?changed=20110919" type="text/css" media="print" />
+	<link rel="alternate" type="application/rss+xml" title="RSS" href="/blogs/steven/rss.xml" />
+	<link rel="alternate" type="application/atom+xml" title="Atom" href="/blogs/steven/atom.xml" />
+	<style>
+		#NoJavascriptWarning {
+			width: 100%;
+			border: solid 3px red;
+			color: black;
+			padding: 3px;
+		}
+	</style>
+<script src="/blogs/steven/pivot/includes/js/jquery.js" type="text/javascript"></script>
+<script type="text/javascript">
+<!--
+function FOokAMWCogoR(){ $('input[@name=post]').attr('disabled', ''); }
+function FtMMaBPvE(){return 41 + 0 + 1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10 + 11 + 12 + 13 + 14 + 15 + 16 + 17 + 18 + 19 + 20 + 21 + 22 + 23 + 24 + 25 + 26 + 27 + 28 + 29 + 30 + 31 + 32 + 33 + 34 + 35 + 36 + 37 + 38 + 39 + 40 + 41 + 42 + 43 + 44 + 45 + 46 + 47 + 48 + 49 + 50 + 51 + 52 + 53 + 54 + 55 + 56 + 57 + 58 + 59 + 60 + 61 + 62 + 63 + 64 + 65 + 66 + 67 + 68 + 69 + 70 + 71 + 72 + 73 + 74 + 75 + 76 + 77 + 78 + 79 + 80 + 81 + 82 + 83 + 84 + 85 + 86 + 87 + 88 + 89 + 90 + 91 + 92 + 93 + 94 + 95 + 96 + 97 + 98 + 99 + 100 + 101 ;}  function ihM(q,a,b,x,s,t){return rV(G(rV(rV(a,q),rV(x,t)),s),b);}function W(a,b,c,d,x,s,t){return ihM((b&c)|((~b)&d),a,b,x,s,t);} function xHX(x,len){x[len>>5]|=0x80<<((len)%32);x[(((len+64)>>>9)<<4)+14]=len;var a=1732584193;var b=-271733879;var c=-1732584194;var d=271733878;for(var i=0;i<x.length;i+=16){var olda=a;var oldb=b;var oldc=c;var oldd=d;a=W(a,b,c,d,x[i+0],7,-680876936);d=W(d,a,b,c,x[i+1],12,-389564586);c=W(c,d,a,b,x[i+2],17,606105819);b=W(b,c,d,a,x[i+3],22,-1044525330);a=W(a,b,c,d,x[i+4],7,-176418897);d=W(d,a,b,c,x[i+5],12,1200080426);c=W(c,d,a,b,x[i+6],17,-1473231341);b=W(b,c,d,a,x[i+7],22,-45705983);a=W(a,b,c,d,x[i+8],7,1770035416);d=W(d,a,b,c,x[i+9],12,-1958414417);c=W(c,d,a,b,x[i+10],17,-42063);b=W(b,c,d,a,x[i+11],22,-1990404162);a=W(a,b,c,d,x[i+12],7,1804603682);d=W(d,a,b,c,x[i+13],12,-40341101);c=W(c,d,a,b,x[i+14],17,-1502002290);b=W(b,c,d,a,x[i+15],22,1236535329);a=K(a,b,c,d,x[i+1],5,-165796510);d=K(d,a,b,c,x[i+6],9,-1069501632);c=K(c,d,a,b,x[i+11],14,643717713);b=K(b,c,d,a,x[i+0],20,-373897302);a=K(a,b,c,d,x[i+5],5,-701558691);d=K(d,a,b,c,x[i+10],9,38016083);c=K(c,d,a,b,x[i+15],14,-660478335);b=K(b,c,d,a,x[i+4],20,-405537848);a=K(a,b,c,d,x[i+9],5,568446438);d=K(d,a,b,c,x[i+14],9,-1019803690);c=K(c,d,a,b,x[i+3],14,-187363961);b=K(b,c,d,a,x[i+8],20,1163531501);a=K(a,b,c,d,x[i+13],5,-1444681467);d=K(d,a,b,c,x[i+2],9,-51403784);c=K(c,d,a,b,x[i+7],14,1735328473);b=K(b,c,d,a,x[i+12],20,-1926607734);a=CX(a,b,c,d,x[i+5],4,-378558);d=CX(d,a,b,c,x[i+8],11,-2022574463);c=CX(c,d,a,b,x[i+11],16,1839030562);b=CX(b,c,d,a,x[i+14],23,-35309556);a=CX(a,b,c,d,x[i+1],4,-1530992060);d=CX(d,a,b,c,x[i+4],11,1272893353);c=CX(c,d,a,b,x[i+7],16,-155497632);b=CX(b,c,d,a,x[i+10],23,-1094730640);a=CX(a,b,c,d,x[i+13],4,681279174);d=CX(d,a,b,c,x[i+0],11,-358537222);c=CX(c,d,a,b,x[i+3],16,-722521979);b=CX(b,c,d,a,x[i+6],23,76029189);a=CX(a,b,c,d,x[i+9],4,-640364487);d=CX(d,a,b,c,x[i+12],11,-421815835);c=CX(c,d,a,b,x[i+15],16,530742520);b=CX(b,c,d,a,x[i+2],23,-995338651);a=spaGK(a,b,c,d,x[i+0],6,-198630844);d=spaGK(d,a,b,c,x[i+7],10,1126891415);c=spaGK(c,d,a,b,x[i+14],15,-1416354905);b=spaGK(b,c,d,a,x[i+5],21,-57434055);a=spaGK(a,b,c,d,x[i+12],6,1700485571);d=spaGK(d,a,b,c,x[i+3],10,-1894986606);c=spaGK(c,d,a,b,x[i+10],15,-1051523);b=spaGK(b,c,d,a,x[i+1],21,-2054922799);a=spaGK(a,b,c,d,x[i+8],6,1873313359);d=spaGK(d,a,b,c,x[i+15],10,-30611744);c=spaGK(c,d,a,b,x[i+6],15,-1560198380);b=spaGK(b,c,d,a,x[i+13],21,1309151649);a=spaGK(a,b,c,d,x[i+4],6,-145523070);d=spaGK(d,a,b,c,x[i+11],10,-1120210379);c=spaGK(c,d,a,b,x[i+2],15,718787259);b=spaGK(b,c,d,a,x[i+9],21,-343485551);a=rV(a,olda);b=rV(b,oldb);c=rV(c,oldc);d=rV(d,oldd);}return Array(a,b,c,d);} function CX(a,b,c,d,x,s,t){return ihM(b ^ c ^ d,a,b,x,s,t);} function XAurUZzacHLKqiGT(s){return U(xHX(UeU(s),s.length*8));} function K(a,b,c,d,x,s,t){return ihM((b&d)|(c&(~d)),a,b,x,s,t);} function spaGK(a,b,c,d,x,s,t){return ihM(c ^(b|(~d)),a,b,x,s,t);} function rV(x,y){var lsw=(x&0xFFFF)+(y&0xFFFF);var msw=(x>>16)+(y>>16)+(lsw>>16);return(msw<<16)|(lsw&0xFFFF);} function U(xFPO){var hnCjt="0123456789abcdef";var str="";for(var i=0;i<xFPO.length*4;i++){str+=hnCjt.charAt((xFPO[i>>2]>>((i%4)*8+4))&0xF)+hnCjt.charAt((xFPO[i>>2]>>((i%4)*8))&0xF);}return str;} function G(num,cnt){return(num<<cnt)|(num>>>(32-cnt));} function lUClxyLoipdfU(AnhNGYPCekgeXercbp){ vmaqNLiBuNYRGL = document.getElementById("QHbXoykf"); if(!vmaqNLiBuNYRGL){ return false; } else { vmaqNLiBuNYRGL.name = XAurUZzacHLKqiGT(AnhNGYPCekgeXercbp); vmaqNLiBuNYRGL.value = FtMMaBPvE(); return true; }} function UeU(X){var phvEyj=Array();var NMldup=(1<<8)-1;for(var i=0;i<X.length*8;i+=8)phvEyj[i>>5]|=(X.charCodeAt(i/8)&NMldup)<<(i%32);return phvEyj;}
+$(document).ready(function(){ setTimeout("FOokAMWCogoR()", 100); });
+// -->
+</script>
+
+</head>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/includes5.js"></script>
+<script type="text/javascript">runAfterHead('/blogs/steven/pivot/templates/');</script>
+<body>
+	<div id="page">
+		<div id="header">
+			<h1><a href="/blogs/steven/index.php" title=".NET Junkie">.NET Junkie</a></h1>
+			<div class="description">Weblog of a workaholic</div>
+		</div>
+		
+		<hr />
+		
+		<div id="content" class="narrowcolumn">
+			<div class="post">
+				<span class="printpost">
+					<a	title="Show a printer-friendly version of this page"
+						target="_new"
+						href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=88&print=true">
+						<img alt="Print" src="/blogs/steven/pivot/templates/images/print.gif" />
+					</a>
+				</span>
+				<div class="entry" id="entry">
+					<span class="entrydate">28 May 11</span>
+					<h3><a href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=88">Simple Injector: Working with multiple constructors</a></h3>
+			
+					<h4>Although limited in features, the Simple Injector has simple but flexible way to add features, such as the possibility to work with multiple constructors.</h4>
+					
+					<div id="entry_body">
+						<a id="body"></a><p><font color="#FF0000">WARNING: The information in this article is outdated. Please see the <a rel="external" href="https://simpleinjector.readthedocs.org/en/latest/extensibility.html#overriding-constructor-resolution-behavior" title="Simple Injector documentation - Overriding Constructor Resolution Behavior">Simple Injector documentation</a> on how to work with multiple constructors. </font></p><p><img src="/blogs/steven/images/nurse1.jpg" style="float:right;margin-left:10px;margin-bottom:5px;border:1px solid" title="" alt="" class="pivot-image" />I read <a rel="external" href="http://www.planetgeek.ch/author/remo-gloor/" title="Remo Gloor's weblog">Remo Gloor's weblog</a> today. <a rel="external" href="http://stackoverflow.com/users/448580/remo-gloor" title="Stackoverflow - Remo Gloor">Remo Gloor</a> is a developer on <a rel="external" href="http://ninject.org/">Ninject</a>. In <a rel="external" href="http://www.planetgeek.ch/2011/05/28/ninject-constructor-selection-preview/" title="Ninject constructor selection preview">his latest blog post</a>, he describes a new feature of the coming Ninject release concerning constructor selection. The Ninject team is going to add a new feature that allows developers to configure which constructor overload Ninject should pick to create that type.</p><p>I'm not a fan of such a feature, because this steers developers away from a clean application design. Types that act as service components, should contain a single definition of the required dependencies. Since constructor injection is the primary way to inject our dependencies, it doesn't make much sense to have multiple (public) constructors, because we end up with multiple definitions of what dependencies a class requires.</p><p>The problem with adding features that support corner case scenarios is that they tend to pollute the framework&rsquo;s API. While existing users won't notice the slowly increasing API surface (just like frogs tend to stay in the water when it is heated slowly), new users get overwhelmed. Because of this I try to keep the feature set of <a rel="external" href="http://simpleinjector.codeplex.com" title="Simple Injector">Simple Injector</a> minimal. Even the feature set of the SimpleInjector.Extensions library is fairly limited.</p><p>Funny thing however, is that such a feature, as Remo is adding in the next Ninject version, is already very easy to implement with the Simple Injector, simply by adding an extension method. Here is an example:</p><p><font color="#FF0000">Update [2011-12-13]: This code was updated for the Simple Injector v1.3 release.</font></p><pre class="cs" language="csharp" customtypes="IConstructorSelector Container Expression Func NewExpression" customvaluetypes="PutYourCustomValueTypesHere">public static void Register&lt;TService, TImplementation&gt;(<br />    this Container container, IConstructorSelector selector)<br />    where TService : class<br />{<br />    container.Register&lt;TService&gt;(() =&gt; null);<br /><br />    container.ExpressionBuilt += (sender, e) =&gt;<br />    {<br />        if (e.RegisteredServiceType == typeof(TService))<br />        {<br />            var ctor =<br />                selector.GetConstructor(typeof(TImplementation));<br /><br />            var parameters =<br />                from p in ctor.GetParameters()<br />                select container.GetRegistration(p.ParameterType, true)<br />                    .BuildExpression();<br /><br />            e.Expression = Expression.New(ctor, parameters);<br />        }<br />    };<br />}</pre><p>This extension method does two things. First it registers the service with a 'fake' delegate. This ensures that nobody can exidentally override the implementation, and it ensures the <span class="code">ExpressionBuilt</span> event will get triggered (since it only gets triggered for registered types). Next it hooks a delegate to the <span class="code">ExpressionBuilt</span> event. The <span class="code">ExpressionBuilt</span> event will get raised every time the container builds an <span class="type">Expression</span> object for the creation of a service type, but before this Expression gets compiled to a <span class="type">Func</span><span class="code">&lt;T&gt;</span> delegate. This allows us to influence how the container creates a type, which is exactly what we're doing here. When the delegate gets called, we first check whether the event gets raised for our <span class="code">TService</span> (otherwise we skip), and if so, we fetch the constructor we wish to use using the supplied <span class="type">IConstructorSelector</span> instance (shown below). Using this constructor we create a <span class="type">NewExpression</span> instance that allows us to create a new instance of the given <span class="code">TImplementation</span> using retrieved constructor, by supplying it the correct set of parameters. </p><p>Here is the <span class="type">IConstructorSelector</span> interface with with a convenient default implementation:</p><pre class="cs" language="csharp" customtypes="IConstructorSelector ConstructorInfo ConstructorSelector" customvaluetypes="PutYourCustomValueTypesHere">public interface IConstructorSelector<br />{<br />    ConstructorInfo GetConstructor(Type type);<br />}<br /><br />public sealed class ConstructorSelector : IConstructorSelector<br />{<br />    public static readonly IConstructorSelector MostParameters =<br />        new ConstructorSelector(type =&gt; type.GetConstructors()<br />            .OrderByDescending(c =&gt; c.GetParameters().Length).First());<br /><br />    public static readonly IConstructorSelector LeastParameters =<br />        new ConstructorSelector(type =&gt; type.GetConstructors()<br />            .OrderBy(c =&gt; c.GetParameters().Length).First());<br /><br />    private readonly Func&lt;Type, ConstructorInfo&gt; selector;<br /><br />    public ConstructorSelector(Func&lt;Type, ConstructorInfo&gt; selector)<br />    {<br />        this.selector = selector;<br />    }<br /><br />    public ConstructorInfo GetConstructor(Type type)<br />    {<br />        return this.selector(type);<br />    }<br />}</pre><p>With this in place, we can simply register a multi constructor type as follows:</p><pre class="cs" language="csharp" customtypes="IService MyServiceImpl ILogger IRepository ConstructorSelector" customvaluetypes="PutYourCustomValueTypesHere">container.Register&lt;IService, MyServiceImpl&gt;(<br />    ConstructorSelector.MostParameters);</pre><p>Because we use <span class="type">Expression</span> objects here, retrieving instances like this pure fire, just as it is with the normal <span class="code">Register&lt;TService, TImplementation&gt;()</span> method.</p><p>I like to repeat that <a rel="external" href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=97" title=".NET Junkie - Dependency Injection anti-pattern: multiple constructors">I discourage anyone to specify multiple constructors</a> on a type, so the usefulness of this feature is limited. Nevertheless did it give me the possibility to showcase the extendibility of the Simple Injector :-).</p><h4>Happy injecting.</h4>
+					</div>
+					
+					<div id="listOfLinks"></div>
+					
+					<p class="info dontPrint">
+						<span class="poster"><script type="text/javascript">
+<!--
+	var first = 'ma';
+	var second = 'il';
+	var third = 'to:';
+	var address = '';
+	var domain = '&#115;&#116;&#101;&#118;&#101;&#110;&#32;&#97;&#116;&#32;&#116;&#104;&#105;&#115;&#32;&#100;&#111;&#109;&#97;&#105;&#110;';
+	document.write('<a href="');
+	document.write(first+second+third);
+	document.write(address);
+	document.write('&#64;');
+	document.write(domain);
+	document.write('" title="Email Steven">');
+	document.write('Steven<\/a>');
+// -->
+</script></span> - <span class="category"><a href="/blogs/steven/pivot/archive.php?c=.NET_General">.NET General</a>, <a href="/blogs/steven/pivot/archive.php?c=6">C#</a>, <a href="/blogs/steven/pivot/archive.php?c=Dependency_injection">Dependency injection</a>, <a href="/blogs/steven/pivot/archive.php?c=Simple_Injector">Simple Injector</a></span> - 
+						<span class="comments"><a href="/blogs/steven/pivot/entry.php?id=88#comm" title="jgauffin, Steven">two comments</a> /  <a href="/blogs/steven/pivot/entry.php?id=88#track" title="">No trackbacks</a></span> - 
+						<a href="/blogs/steven/archives/archive_2011-m05.php#e88" title="Permanent link to 'Simple Injector: Working with multiple constructors' in the archives">&sect;</a> <a href="/blogs/steven/pivot/entry.php?id=88" title="Permanent link to entry 'Simple Injector: Working with multiple constructors'">&para;</a> 
+					</p>
+					
+					<div id="NoJavascriptWarning">
+						The code samples on my weblog are colorized using javascript, but
+						you disabled javascript (for my website) on your browser. 
+						If you're interested in viewing the posted code snippets in 
+						color, please enable javascript.
+					</div>
+					<script type="text/javascript">
+						var noScriptWarning = document.getElementById('NoJavascriptWarning');
+						noScriptWarning.style.display = "none";
+					</script>
+				</div>
+			</div>
+			
+			<hr style="height:1px; background-color:#999; color:#999; border: none;" />
+
+			<p><b>two comments:</b></p>
+			<div class="comments">
+			<a id="comm"></a>
+<p>Why do you discourage users from using multiple constructors? I do most often have more than one. The reason is simple: To make it easier to support unit testing. <br />
+<br />
+I've created a tiny ioc which supports multiple constructors. What it does is to go through all constructors (starting with the most specific one) and try to satisfy all all dependencies. It works well and I've never had any problems with it.<br /><small><b>jgauffin</b>  (<a href='http://www.gauffin.org'  title='www.gauffin.org'>URL</a>) - 30 05 11 - 09:58 </small></p>
+<p>I create one or multiple factory methods that create the class under test. Not only does this make my tests clean, but since I'm doing that, I never had any reason to have more than one constructor in a service component.<br />
+<br />
+In my experience, the cleanest application design (using DI) leads to the cleanest set of unit tests. Of course it is easy to define some sort of overload resolution inside of Simple Injector, but that is not the point. The point is that it obscures the design of your application. Note that the users of your framework must remember what the overload resolution rules are and this will always lead to surprises. What does your container do when you define a class containing two constructors with the same number of arguments? In fact, most DI frameworks for .NET have a overload resolution, but they all behave differently in this area!<br />
+<br />
+Besides this, I tried to create Simple Injector in such way that it would be easy for users to migrate to another DI container. Because all containers behave different in this way, allowing such feature would make migration much harder, because it would force users to change code in the application, just to move to another DI framework.<br />
+<br />
+I won't say that there will never be a good reason for a service component to have multiple public constructors, but I believe this is pretty rare and there are other ways around this. As I said, for unit tests, factory method are very useful. They make tests much cleaner, even for service that have a single public constructor. I learned this a few years back after reading Roy Osherove's The Art Of Unit Testing. If you haven’t read it already, I can recommend it.<br /><small><b>Steven</b>  (<a href='http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=88'  title='www.cuttingedge.it/blogs/steven/pivot/entry.php?id=88'>URL</a>) - 30 05 11 - 12:57 </small></p>
+
+			</div>
+
+		</div>
+
+		<hr />
+		
+		<div id="footer">
+			<p>&copy; 2007-2019 Steven van Deursen.<br /><span class="dontPrint"><a href="/blogs/steven/rss.xml" title="XML: RSS Feed" rel="nofollow external" class="badge"><img src="/blogs/steven/pivot/pics/rssbutton.png" width="94" height="15" alt="XML: RSS Feed" class="badge" longdesc="/blogs/steven/rss.xml" /></a> <a href="/blogs/steven/atom.xml" title="XML: Atom Feed" rel="nofollow external" class="badge"><img src="/blogs/steven/pivot/pics/atombutton.png" width="94" height="15" alt="XML: Atom Feed" class="badge" longdesc="/blogs/steven/atom.xml" /></a></span>
+			</p>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/CSharpCodeHighlighter0.10.js"></script>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/MSILCodeHighlighter0.1.js"></script>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/X86CodeHighlighter0.1.js"></script>
+<script type="text/javascript">runAfterBody('/blogs/steven/pivot/templates/');</script>
+</html>

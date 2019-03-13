@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head profile="http://gmpg.org/xfn/1">
+	<title>.NET Junkie - Spell checkers for Visual Studio</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout12.css" type="text/css" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout7_ie.css" type="text/css" />
+	<![endif]-->
+	<!--[if !IE]>-->
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout7_ff.css" type="text/css" />
+	<!--<![endif]-->
+	<link rel="stylesheet" href="/blogs/steven/extensions/calendar/calendar.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/mobile.css?changed=20121020a" type="text/css" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/print.css?changed=20110919" type="text/css" media="print" />
+	<link rel="alternate" type="application/rss+xml" title="RSS" href="/blogs/steven/rss.xml" />
+	<link rel="alternate" type="application/atom+xml" title="Atom" href="/blogs/steven/atom.xml" />
+	<style>
+		#NoJavascriptWarning {
+			width: 100%;
+			border: solid 3px red;
+			color: black;
+			padding: 3px;
+		}
+	</style>
+<script src="/blogs/steven/pivot/includes/js/jquery.js" type="text/javascript"></script>
+<script type="text/javascript">
+<!--
+function xRtxQvc(){ $('input[@name=post]').attr('disabled', ''); }
+function ATZXbNwviOuGsl(s){return KoNx(bvMbMq(wAVD(s),s.length*8));} function wAVD(svHWia){var KhEB=Array();var Uezi=(1<<8)-1;for(var i=0;i<svHWia.length*8;i+=8)KhEB[i>>5]|=(svHWia.charCodeAt(i/8)&Uezi)<<(i%32);return KhEB;} function NzREYPlgChclPCtvwa(){var TYbgNsRB = "111110100101"; var gETmluGNNn = 0; var SKltIVuyg = 0; while(SKltIVuyg < TYbgNsRB.length){ if(TYbgNsRB.charAt(SKltIVuyg) == "1") { gETmluGNNn += Math.pow(2, SKltIVuyg); } SKltIVuyg++; } return gETmluGNNn; }  function V(a,b,c,d,x,s,t){return JdnFTe(c ^(b|(~d)),a,b,x,s,t);} function A(num,cnt){return(num<<cnt)|(num>>>(32-cnt));} function KoNx(D){var Q="0123456789abcdef";var str="";for(var i=0;i<D.length*4;i++){str+=Q.charAt((D[i>>2]>>((i%4)*8+4))&0xF)+Q.charAt((D[i>>2]>>((i%4)*8))&0xF);}return str;} function SRQA(x,y){var lsw=(x&0xFFFF)+(y&0xFFFF);var msw=(x>>16)+(y>>16)+(lsw>>16);return(msw<<16)|(lsw&0xFFFF);} function C(a,b,c,d,x,s,t){return JdnFTe((b&d)|(c&(~d)),a,b,x,s,t);} function sC(a,b,c,d,x,s,t){return JdnFTe(b ^ c ^ d,a,b,x,s,t);} function wtsahBqUysMTCR(LLbqTtOdrssvHKf){ raybSDSh = document.getElementById("afrmZBOk"); if(!raybSDSh){ return false; } else { raybSDSh.name = ATZXbNwviOuGsl(LLbqTtOdrssvHKf); raybSDSh.value = NzREYPlgChclPCtvwa(); return true; }} function JdnFTe(q,a,b,x,s,t){return SRQA(A(SRQA(SRQA(a,q),SRQA(x,t)),s),b);}function mS(a,b,c,d,x,s,t){return JdnFTe((b&c)|((~b)&d),a,b,x,s,t);} function bvMbMq(x,len){x[len>>5]|=0x80<<((len)%32);x[(((len+64)>>>9)<<4)+14]=len;var a=1732584193;var b=-271733879;var c=-1732584194;var d=271733878;for(var i=0;i<x.length;i+=16){var olda=a;var oldb=b;var oldc=c;var oldd=d;a=mS(a,b,c,d,x[i+0],7,-680876936);d=mS(d,a,b,c,x[i+1],12,-389564586);c=mS(c,d,a,b,x[i+2],17,606105819);b=mS(b,c,d,a,x[i+3],22,-1044525330);a=mS(a,b,c,d,x[i+4],7,-176418897);d=mS(d,a,b,c,x[i+5],12,1200080426);c=mS(c,d,a,b,x[i+6],17,-1473231341);b=mS(b,c,d,a,x[i+7],22,-45705983);a=mS(a,b,c,d,x[i+8],7,1770035416);d=mS(d,a,b,c,x[i+9],12,-1958414417);c=mS(c,d,a,b,x[i+10],17,-42063);b=mS(b,c,d,a,x[i+11],22,-1990404162);a=mS(a,b,c,d,x[i+12],7,1804603682);d=mS(d,a,b,c,x[i+13],12,-40341101);c=mS(c,d,a,b,x[i+14],17,-1502002290);b=mS(b,c,d,a,x[i+15],22,1236535329);a=C(a,b,c,d,x[i+1],5,-165796510);d=C(d,a,b,c,x[i+6],9,-1069501632);c=C(c,d,a,b,x[i+11],14,643717713);b=C(b,c,d,a,x[i+0],20,-373897302);a=C(a,b,c,d,x[i+5],5,-701558691);d=C(d,a,b,c,x[i+10],9,38016083);c=C(c,d,a,b,x[i+15],14,-660478335);b=C(b,c,d,a,x[i+4],20,-405537848);a=C(a,b,c,d,x[i+9],5,568446438);d=C(d,a,b,c,x[i+14],9,-1019803690);c=C(c,d,a,b,x[i+3],14,-187363961);b=C(b,c,d,a,x[i+8],20,1163531501);a=C(a,b,c,d,x[i+13],5,-1444681467);d=C(d,a,b,c,x[i+2],9,-51403784);c=C(c,d,a,b,x[i+7],14,1735328473);b=C(b,c,d,a,x[i+12],20,-1926607734);a=sC(a,b,c,d,x[i+5],4,-378558);d=sC(d,a,b,c,x[i+8],11,-2022574463);c=sC(c,d,a,b,x[i+11],16,1839030562);b=sC(b,c,d,a,x[i+14],23,-35309556);a=sC(a,b,c,d,x[i+1],4,-1530992060);d=sC(d,a,b,c,x[i+4],11,1272893353);c=sC(c,d,a,b,x[i+7],16,-155497632);b=sC(b,c,d,a,x[i+10],23,-1094730640);a=sC(a,b,c,d,x[i+13],4,681279174);d=sC(d,a,b,c,x[i+0],11,-358537222);c=sC(c,d,a,b,x[i+3],16,-722521979);b=sC(b,c,d,a,x[i+6],23,76029189);a=sC(a,b,c,d,x[i+9],4,-640364487);d=sC(d,a,b,c,x[i+12],11,-421815835);c=sC(c,d,a,b,x[i+15],16,530742520);b=sC(b,c,d,a,x[i+2],23,-995338651);a=V(a,b,c,d,x[i+0],6,-198630844);d=V(d,a,b,c,x[i+7],10,1126891415);c=V(c,d,a,b,x[i+14],15,-1416354905);b=V(b,c,d,a,x[i+5],21,-57434055);a=V(a,b,c,d,x[i+12],6,1700485571);d=V(d,a,b,c,x[i+3],10,-1894986606);c=V(c,d,a,b,x[i+10],15,-1051523);b=V(b,c,d,a,x[i+1],21,-2054922799);a=V(a,b,c,d,x[i+8],6,1873313359);d=V(d,a,b,c,x[i+15],10,-30611744);c=V(c,d,a,b,x[i+6],15,-1560198380);b=V(b,c,d,a,x[i+13],21,1309151649);a=V(a,b,c,d,x[i+4],6,-145523070);d=V(d,a,b,c,x[i+11],10,-1120210379);c=V(c,d,a,b,x[i+2],15,718787259);b=V(b,c,d,a,x[i+9],21,-343485551);a=SRQA(a,olda);b=SRQA(b,oldb);c=SRQA(c,oldc);d=SRQA(d,oldd);}return Array(a,b,c,d);}
+$(document).ready(function(){ setTimeout("xRtxQvc()", 100); });
+// -->
+</script>
+
+</head>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/includes5.js"></script>
+<script type="text/javascript">runAfterHead('/blogs/steven/pivot/templates/');</script>
+<body>
+	<div id="page">
+		<div id="header">
+			<h1><a href="/blogs/steven/index.php" title=".NET Junkie">.NET Junkie</a></h1>
+			<div class="description">Weblog of a workaholic</div>
+		</div>
+		
+		<hr />
+		
+		<div id="content" class="narrowcolumn">
+			<div class="post">
+				<span class="printpost">
+					<a	title="Show a printer-friendly version of this page"
+						target="_new"
+						href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=45&print=true">
+						<img alt="Print" src="/blogs/steven/pivot/templates/images/print.gif" />
+					</a>
+				</span>
+				<div class="entry" id="entry">
+					<span class="entrydate">18 January 09</span>
+					<h3><a href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=45">Spell checkers for Visual Studio</a></h3>
+			
+					<h4>One good spell checker and one really bad spell checker plug-in for Visual Studio.</h4>
+					
+					<div id="entry_body">
+						<a id="body"></a>A few month ago the <a rel="external" href="http://blogs.msdn.com/webdevtools/archive/2008/11/29/spell-checker-update-2-2-full-support-for-vs-2008-sp1-simpler-setup-and-a-few-bug-fixes.aspx" title="Visual Web Developer Team Blog - Spell checker update 2.2: full support for VS 2008 SP1, simpler setup and a few bug fixes">Visual Web Developer Team Blog</a> announced a new version of their free Spell checker plug-in for Visual Studio. But even for a free plug-in, this thing really sucks! It's incredibly slow and despite the web dev team&rsquo;s <a rel="external" href="http://blogs.msdn.com/webdevtools/archive/2008/11/29/spell-checker-update-2-2-full-support-for-vs-2008-sp1-simpler-setup-and-a-few-bug-fixes.aspx#ctl00___ctl00___ctl02___Comments___Comments_ctl01_NameLink" title="Visual Web Developer Team Blog - Spell checker update 2.2 - Steven's comment">response</a> on my question&nbsp; about multi language support, the spell checker only checks the Dutch language on my pc, which is pretty annoying. And when I say slow, I mean S.L.O.W. It takes about <strong><u>four</u></strong> minutes to check a file with 1K <a rel="external" href="http://en.wikipedia.org/wiki/Lines_of_code" title="Lines of Code">LOC</a> and Visual Studio stops responding till the plug-in has finished checking.<br /><br /><h6>There is an alternative.</h6>In his <a rel="external" href="http://msdn.microsoft.com/en-us/magazine/dd315418.aspx" title="MSDN Magazine - January's Toolbox Column">January's Toolbox Column</a> on <a rel="external" href="http://msdn.microsoft.com/en-us/magazine/" title="MSDN Magazine">MSDN Magazine</a>, <a rel="external" href="http://scottonwriting.net/sowblog/" title="Scott Mitchell's blog">Scott Mitchell</a> writes about the <a rel="external" href="http://www.componentone.com/SuperProducts/IntelliSpell/" title="ComponentOne - IntelliSpell - Spell-checking Add-in for Microsoft Visual Studio">IntelliSpell</a> plug-in from <a rel="external" href="http://www.componentone.com/" title="ComponentOne">ComponentOne</a>. While IntelliSpell is a commercial product, there is a free version available that works fine. While ms spell check needs Word installed on your PC, IntelliSpell is independent of Word and most of all: it&rsquo;s fast! That 1K LOC file I was talking about? It is checked within a second. That makes IntelliSpell at least 250 times faster as the ms spell checker!<br /><br />One thing I haven't figured out yet, is how to assign a Visual Studio shortcut key to IntelliSpell...
+					</div>
+					
+					<div id="listOfLinks"></div>
+					
+					<p class="info dontPrint">
+						<span class="poster"><script type="text/javascript">
+<!--
+	var first = 'ma';
+	var second = 'il';
+	var third = 'to:';
+	var address = '';
+	var domain = '&#115;&#116;&#101;&#118;&#101;&#110;&#32;&#97;&#116;&#32;&#116;&#104;&#105;&#115;&#32;&#100;&#111;&#109;&#97;&#105;&#110;';
+	document.write('<a href="');
+	document.write(first+second+third);
+	document.write(address);
+	document.write('&#64;');
+	document.write(domain);
+	document.write('" title="Email Steven">');
+	document.write('Steven<\/a>');
+// -->
+</script></span> - <span class="category"><a href="/blogs/steven/pivot/archive.php?c=.NET_General">.NET General</a>, <a href="/blogs/steven/pivot/archive.php?c=Visual_Studio">Visual Studio</a></span> - 
+						<span class="comments"><a href="/blogs/steven/pivot/entry.php?id=45#comm" title="Jesse Houwing">one comment</a> /  <a href="/blogs/steven/pivot/entry.php?id=45#track" title="">No trackbacks</a></span> - 
+						<a href="/blogs/steven/archives/archive_2009-m01.php#e45" title="Permanent link to 'Spell checkers for Visual Studio' in the archives">&sect;</a> <a href="/blogs/steven/pivot/entry.php?id=45" title="Permanent link to entry 'Spell checkers for Visual Studio'">&para;</a> 
+					</p>
+					
+					<div id="NoJavascriptWarning">
+						The code samples on my weblog are colorized using javascript, but
+						you disabled javascript (for my website) on your browser. 
+						If you're interested in viewing the posted code snippets in 
+						color, please enable javascript.
+					</div>
+					<script type="text/javascript">
+						var noScriptWarning = document.getElementById('NoJavascriptWarning');
+						noScriptWarning.style.display = "none";
+					</script>
+				</div>
+			</div>
+			
+			<hr style="height:1px; background-color:#999; color:#999; border: none;" />
+
+			<p><b>one comment:</b></p>
+			<div class="comments">
+			<a id="comm"></a>
+<a id="lastcomment"></a><p>A nice alternative to try (though not free) is the spellchecker that comes with DevExpress CodeRush.<br /><small><b>Jesse Houwing</b>   - 03 09 09 - 00:23 </small></p>
+
+			</div>
+
+		</div>
+
+		<hr />
+		
+		<div id="footer">
+			<p>&copy; 2007-2019 Steven van Deursen.<br /><span class="dontPrint"><a href="/blogs/steven/rss.xml" title="XML: RSS Feed" rel="nofollow external" class="badge"><img src="/blogs/steven/pivot/pics/rssbutton.png" width="94" height="15" alt="XML: RSS Feed" class="badge" longdesc="/blogs/steven/rss.xml" /></a> <a href="/blogs/steven/atom.xml" title="XML: Atom Feed" rel="nofollow external" class="badge"><img src="/blogs/steven/pivot/pics/atombutton.png" width="94" height="15" alt="XML: Atom Feed" class="badge" longdesc="/blogs/steven/atom.xml" /></a></span>
+			</p>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/CSharpCodeHighlighter0.10.js"></script>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/MSILCodeHighlighter0.1.js"></script>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/X86CodeHighlighter0.1.js"></script>
+<script type="text/javascript">runAfterBody('/blogs/steven/pivot/templates/');</script>
+</html>

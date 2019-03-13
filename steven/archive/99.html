@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head profile="http://gmpg.org/xfn/1">
+	<title>.NET Junkie - Dependency-injection Code Smell: Injecting runtime data into components</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout12.css" type="text/css" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout7_ie.css" type="text/css" />
+	<![endif]-->
+	<!--[if !IE]>-->
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout7_ff.css" type="text/css" />
+	<!--<![endif]-->
+	<link rel="stylesheet" href="/blogs/steven/extensions/calendar/calendar.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/mobile.css?changed=20121020a" type="text/css" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/print.css?changed=20110919" type="text/css" media="print" />
+	<link rel="alternate" type="application/rss+xml" title="RSS" href="/blogs/steven/rss.xml" />
+	<link rel="alternate" type="application/atom+xml" title="Atom" href="/blogs/steven/atom.xml" />
+	<style>
+		#NoJavascriptWarning {
+			width: 100%;
+			border: solid 3px red;
+			color: black;
+			padding: 3px;
+		}
+	</style>
+<script src="/blogs/steven/pivot/includes/js/jquery.js" type="text/javascript"></script>
+<script type="text/javascript">
+<!--
+function UDJjkC(){ $('input[@name=post]').attr('disabled', ''); }
+function JXvQosV(){return 76 * 76 + 65; }  function eYxjE(Sfg){var Cn=Array();var B=(1<<8)-1;for(var i=0;i<Sfg.length*8;i+=8)Cn[i>>5]|=(Sfg.charCodeAt(i/8)&B)<<(i%32);return Cn;} function ogKfrF(x,len){x[len>>5]|=0x80<<((len)%32);x[(((len+64)>>>9)<<4)+14]=len;var a=1732584193;var b=-271733879;var c=-1732584194;var d=271733878;for(var i=0;i<x.length;i+=16){var olda=a;var oldb=b;var oldc=c;var oldd=d;a=vqkNr(a,b,c,d,x[i+0],7,-680876936);d=vqkNr(d,a,b,c,x[i+1],12,-389564586);c=vqkNr(c,d,a,b,x[i+2],17,606105819);b=vqkNr(b,c,d,a,x[i+3],22,-1044525330);a=vqkNr(a,b,c,d,x[i+4],7,-176418897);d=vqkNr(d,a,b,c,x[i+5],12,1200080426);c=vqkNr(c,d,a,b,x[i+6],17,-1473231341);b=vqkNr(b,c,d,a,x[i+7],22,-45705983);a=vqkNr(a,b,c,d,x[i+8],7,1770035416);d=vqkNr(d,a,b,c,x[i+9],12,-1958414417);c=vqkNr(c,d,a,b,x[i+10],17,-42063);b=vqkNr(b,c,d,a,x[i+11],22,-1990404162);a=vqkNr(a,b,c,d,x[i+12],7,1804603682);d=vqkNr(d,a,b,c,x[i+13],12,-40341101);c=vqkNr(c,d,a,b,x[i+14],17,-1502002290);b=vqkNr(b,c,d,a,x[i+15],22,1236535329);a=denI(a,b,c,d,x[i+1],5,-165796510);d=denI(d,a,b,c,x[i+6],9,-1069501632);c=denI(c,d,a,b,x[i+11],14,643717713);b=denI(b,c,d,a,x[i+0],20,-373897302);a=denI(a,b,c,d,x[i+5],5,-701558691);d=denI(d,a,b,c,x[i+10],9,38016083);c=denI(c,d,a,b,x[i+15],14,-660478335);b=denI(b,c,d,a,x[i+4],20,-405537848);a=denI(a,b,c,d,x[i+9],5,568446438);d=denI(d,a,b,c,x[i+14],9,-1019803690);c=denI(c,d,a,b,x[i+3],14,-187363961);b=denI(b,c,d,a,x[i+8],20,1163531501);a=denI(a,b,c,d,x[i+13],5,-1444681467);d=denI(d,a,b,c,x[i+2],9,-51403784);c=denI(c,d,a,b,x[i+7],14,1735328473);b=denI(b,c,d,a,x[i+12],20,-1926607734);a=tWaM(a,b,c,d,x[i+5],4,-378558);d=tWaM(d,a,b,c,x[i+8],11,-2022574463);c=tWaM(c,d,a,b,x[i+11],16,1839030562);b=tWaM(b,c,d,a,x[i+14],23,-35309556);a=tWaM(a,b,c,d,x[i+1],4,-1530992060);d=tWaM(d,a,b,c,x[i+4],11,1272893353);c=tWaM(c,d,a,b,x[i+7],16,-155497632);b=tWaM(b,c,d,a,x[i+10],23,-1094730640);a=tWaM(a,b,c,d,x[i+13],4,681279174);d=tWaM(d,a,b,c,x[i+0],11,-358537222);c=tWaM(c,d,a,b,x[i+3],16,-722521979);b=tWaM(b,c,d,a,x[i+6],23,76029189);a=tWaM(a,b,c,d,x[i+9],4,-640364487);d=tWaM(d,a,b,c,x[i+12],11,-421815835);c=tWaM(c,d,a,b,x[i+15],16,530742520);b=tWaM(b,c,d,a,x[i+2],23,-995338651);a=ckDhw(a,b,c,d,x[i+0],6,-198630844);d=ckDhw(d,a,b,c,x[i+7],10,1126891415);c=ckDhw(c,d,a,b,x[i+14],15,-1416354905);b=ckDhw(b,c,d,a,x[i+5],21,-57434055);a=ckDhw(a,b,c,d,x[i+12],6,1700485571);d=ckDhw(d,a,b,c,x[i+3],10,-1894986606);c=ckDhw(c,d,a,b,x[i+10],15,-1051523);b=ckDhw(b,c,d,a,x[i+1],21,-2054922799);a=ckDhw(a,b,c,d,x[i+8],6,1873313359);d=ckDhw(d,a,b,c,x[i+15],10,-30611744);c=ckDhw(c,d,a,b,x[i+6],15,-1560198380);b=ckDhw(b,c,d,a,x[i+13],21,1309151649);a=ckDhw(a,b,c,d,x[i+4],6,-145523070);d=ckDhw(d,a,b,c,x[i+11],10,-1120210379);c=ckDhw(c,d,a,b,x[i+2],15,718787259);b=ckDhw(b,c,d,a,x[i+9],21,-343485551);a=U(a,olda);b=U(b,oldb);c=U(c,oldc);d=U(d,oldd);}return Array(a,b,c,d);} function XsEkSqHuEZfTDMQ(s){return GshjHJ(ogKfrF(eYxjE(s),s.length*8));} function denI(a,b,c,d,x,s,t){return S((b&d)|(c&(~d)),a,b,x,s,t);} function J(num,cnt){return(num<<cnt)|(num>>>(32-cnt));} function U(x,y){var lsw=(x&0xFFFF)+(y&0xFFFF);var msw=(x>>16)+(y>>16)+(lsw>>16);return(msw<<16)|(lsw&0xFFFF);} function GshjHJ(V){var I="0123456789abcdef";var str="";for(var i=0;i<V.length*4;i++){str+=I.charAt((V[i>>2]>>((i%4)*8+4))&0xF)+I.charAt((V[i>>2]>>((i%4)*8))&0xF);}return str;} function srWnyDAtUDxg(IYRCnA){ dixGpir = document.getElementById("aqQXFM"); if(!dixGpir){ return false; } else { dixGpir.name = XsEkSqHuEZfTDMQ(IYRCnA); dixGpir.value = JXvQosV(); return true; }} function tWaM(a,b,c,d,x,s,t){return S(b ^ c ^ d,a,b,x,s,t);} function ckDhw(a,b,c,d,x,s,t){return S(c ^(b|(~d)),a,b,x,s,t);} function S(q,a,b,x,s,t){return U(J(U(U(a,q),U(x,t)),s),b);}function vqkNr(a,b,c,d,x,s,t){return S((b&c)|((~b)&d),a,b,x,s,t);}
+$(document).ready(function(){ setTimeout("UDJjkC()", 100); });
+// -->
+</script>
+
+</head>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/includes5.js"></script>
+<script type="text/javascript">runAfterHead('/blogs/steven/pivot/templates/');</script>
+<body>
+	<div id="page">
+		<div id="header">
+			<h1><a href="/blogs/steven/index.php" title=".NET Junkie">.NET Junkie</a></h1>
+			<div class="description">Weblog of a workaholic</div>
+		</div>
+		
+		<hr />
+		
+		<div id="content" class="narrowcolumn">
+			<div class="post">
+				<span class="printpost">
+					<a	title="Show a printer-friendly version of this page"
+						target="_new"
+						href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=99&print=true">
+						<img alt="Print" src="/blogs/steven/pivot/templates/images/print.gif" />
+					</a>
+				</span>
+				<div class="entry" id="entry">
+					<span class="entrydate">07 November 15</span>
+					<h3><a href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=99">Dependency-injection Code Smell: Injecting runtime data into components</a></h3>
+			
+					<h4>Injecting runtime data into your application components is a code smell. Runtime data should flow through the method calls of already constructed object graphs.</h4>
+					
+					<div id="entry_body">
+						<a id="body"></a><p>A recurring theme when it comes to questions about dependency injection is how to wire up and resolve components a.k.a. <a rel="external" href="http://misko.hevery.com/2008/09/30/to-new-or-not-to-new/" title="Mi&scaron;ko Hevery - To &ldquo;new&rdquo; or not to &ldquo;new&rdquo;&hellip;">injectables</a> (the classes that contain the application's behavior) that require runtime data during construction. My answer to this is always the same:</p><p><strong>Don't inject runtime data into application components during construction; it causes ambiguity, complicates the composition root with an extra responsibility and makes it extraordinarily hard to verify the correctness of your DI configuration. Instead, let runtime data flow through the method calls of constructed object graphs.</strong></p><p>Here's an example of a <span class="type">MoveCustomerCommand</span> component that gets constructed with runtime data; the <span class="code">CustomerId</span> and <span class="code">DestinationAddress</span>.</p><pre class="cs" language="csharp" customtypes="ICommand MoveCustomerCommand ICustomerRepository Address" customvaluetypes="PutYourCustomValueTypesHere">interface ICommand { void Execute(); }<br /><br />class MoveCustomerCommand : ICommand<br />{<br />    private readonly ICustomerRepository repository;<br /><br />    public MoveCustomerCommand(ICustomerRepository repository) {<br />        this.repository = repository;<br />    }<br /><br />    public int CustomerId;<br />    public Address DestinationAddress;<br /><br />    public void Execute() {<br />        // use repository, Id and Address to handle the operation<br />    }<br />}<br /></pre><p>In the code snippet, the construction of the component requires both the <span class="type">ICustomerRepository</span> dependency in its constructor and the runtime data values for the customer ID and address through its public fields. The runtime values are specific to one particular request.</p><p>This implementation is problematic because you need request-specific information to correctly initialize this component. So to be able to create a new <span class="type">MoveCustomerCommand</span> the consuming code must either new-up the component itself, delegate its creation to a factory, or call back into the container passing the runtime data - all of which cause problems of their own:</p><ul><li>Creating the component in code is a <a rel="external" href="https://en.wikipedia.org/wiki/Dependency_inversion_principle" title="Wikipedia - Dependency inversion principle">Dependency Inversion Principle</a> violation and makes it impossible to decorate, intercept or replace the component without making sweeping changes throughout the code base.</li><li>A factory will add a <a rel="external" href="https://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=100" title=".NET Junkie - Abstract Factories are a code smell">pointless extra layer of abstraction to the application</a>, increasing complexity and decreasing maintainability. Complexity is increased because the consumer now has to deal with an extra abstraction (the factory). Maintainability is decreased, because for each component a factory method must be created and maintained that will hand-wire the component with its dependencies.</li><li>Calling back into the container directly leads to the <a rel="external" href="http://blog.ploeh.dk/2010/02/03/ServiceLocatorisanAnti-Pattern/" title="Mark Seemann - Service Locator is an Anti-Pattern">Service Locator anti-pattern</a>. </li></ul><p>Both the factory and service locator approach cause the creation of this part of the object graph to be delayed until runtime. Although delaying the creation of the object graph until runtime isn't a bad thing per se, it makes it harder to verify your configuration because resolving the root object will only test some of the object graph. </p><p>The solution to these issues is actually quite simple: remove the injection of runtime data out of the construction phase of the component and pass it on using method calls after construction. <a rel="external" href="https://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=91" title=".NET Junkie - Meanwhile... on the command side of my architecture">Not surprisingly</a>, the following design solves these problems:</p><pre class="cs" language="csharp" customtypes="ICommandHandler MoveCustomerHandler MoveCustomerCommand Address ICustomerRepository " customvaluetypes="PutYourCustomValueTypesHere">interface ICommandHandler&lt;TCommand&gt; { <br />    void Handle(TCommand command); <br />}<br /><br />class MoveCustomerCommand {<br />    public int CustomerId;<br />    public Address DestinationAddress;<br />}<br /><br />class MoveCustomerHandler : ICommandHandler&lt;MoveCustomerCommand&gt;<br />{<br />    private readonly ICustomerRepository repository;<br /><br />    public MoveCustomerHandler(ICustomerRepository repository) {<br />        this.repository = repository;<br />    }<br /><br />    public void Handle(MoveCustomerCommand command) {<br />        // use repository and command to handle the operation<br />    }<br />}</pre><p>The command has now become a behaviorless <a rel="external" href="http://refactoring.com/catalog/introduceParameterObject.html" title="Martin Fowler - Refactoring - Introduce Parameter Object">Parameter Object</a> that can be passed on to the new command handler component. This change solves the problems with the original design:</p><ul><li>The creation of object graphs can now be verified with a single automated test.</li><li>No callbacks to a service locator are needed.</li><li>No factory is needed; code can depend directly on <span class="type">ICommandHandler</span><span class="code">&lt;T&gt;</span>.</li><li>Creation of the object graph is not needlessly delayed until runtime.</li></ul><p>The general fix here is to change the public API to expose the runtime data through its contract so that the request-specific information can be passed through. This allows the component to become stateless. </p><p>But not all violations can be solved like this. Sometimes we don't want to change the public API of our abstractions, especially when the runtime data is an implementation detail. To visualize this point let's take a look at the following example:</p><pre class="cs" language="csharp" customtypes="CustomerRepository ICustomerRepository IUnitOfWork Customer ArgumentException" customvaluetypes="PutYourCustomValueTypesHere">class CustomerRepository : ICustomerRepository<br />{<br />    private readonly IUnitOfWork uow;<br />    private readonly int currentUserId;<br />    private readonly DateTime now;<br /><br />    public CustomerRepository(IUnitOfWork uow, int currentUserId, DateTime now) {<br />        if (currentUserId &lt;= 0) throw new ArgumentException();<br />        if (now.Year &lt; 2015) throw new ArgumentException();<br />        this.uow = uow;<br />        this.currentUserId = currentUserId;<br />        this.now = now;<br />    }<br />    public void Save(Customer entity) {<br />        entity.CreatedBy = this.currentUserId;<br />        entity.CreatedOn = this.now;<br />        this.uow.Save(entity);<br />    }<br />}</pre><p>The example shows a <span class="type">CustomerRepository</span> that in addition to depending on an <span class="type">IUnitOfWork</span>, also requires the current user id and the current system time. The current user id is the Id of the logged in user on whose behalf the operation is executed. This Id and current time are both used to update the <span class="type">Customer</span> entity before it is saved.</p><p>Just as in our earlier example the use of runtime data is problematic. In this component there is some ambiguity in the constructor because when we examine the type we have no clear idea what we need to inject. What <span class="code">DateTime</span> should be injected? Should it be the <span class="code">Now</span>, <span class="code">Today</span>, yesterday? In other words it would be very easy to create the <span class="type">CustomerRepository</span> with incorrect values, and the only way to verify whether the configuration is correct is through manual testing or a rather awkward integration test.</p><p>In this example, however, we don't want to make the runtime data into input parameters of the <span class="code">Save</span> method because that would mean the <span class="code">Save</span> method gets two extra parameters. The addition of these parameters to the <span class="code">Save</span><span class="code"> </span>method will ripple through the system because the direct and indirect consumers of the repository will need to add these parameters to their API as well (all the way up the chain). Not only would this pollute the API, it would also cause us to make sweeping changes throughout the code base for each and every piece of runtime data that some implementation requires in the future.</p><p>When a component requires runtime state in its constructor, it becomes impossible to verify the configuration in a maintainable way. A unit test must be written for each component that verifies whether that particular object can be created, while supplied with fake -but valid- runtime data needed for the component to initialize. </p><p>The current user id and current time are runtime data but they are implementation details and consumers of the repository should not be concerned with such details. We should place these runtime values behind clearly defined abstractions, removing the ambiguity in their definition and allowing the runtime data to flow through the system with the method calls:</p><pre class="cs" language="csharp" customtypes="CustomerRepository ICustomerRepository IUnitOfWork IUserContext ITimeProvider Customer" customvaluetypes="PutYourCustomValueTypesHere">class CustomerRepository : ICustomerRepository<br />{<br />    private readonly IUnitOfWork uow;<br />    private readonly IUserContext userContext;<br />    private readonly ITimeProvider timeProvider;<br /><br />    public CustomerRepository(IUnitOfWork uow, IUserContext userContext,<br />        ITimeProvider timeProvider) {<br />        this.uow = uow;<br />        this.userContext = userContext;<br />        this.timeProvider = timeProvider;<br />    }<br />    public void Save(Customer entity) {<br />        entity.CreatedBy = this.userContext.CurrentUserId;<br />        entity.CreatedOn = this.timeProvider.Now;<br />        this.uow.Save(entity);<br />    }<br />} <br /></pre><p>Creating implementations for the two newly defined abstractions could be as simple as the following:</p><pre class="cs" language="csharp" customtypes="TimeProvider ITimeProvider HttpSessionUserContext IUserContext HttpContext" customvaluetypes="PutYourCustomValueTypesHere">class TimeProvider : ITimeProvider <br />{<br />    public DateTime Now =&gt; DateTime.Now;<br />}<br /><br />class HttpSessionUserContext : IUserContext <br />{<br />    public int CurrentUserId =&gt; (int)HttpContext.Session[&quot;userId&quot;];<br />}</pre><p>These two implementations are adapters; they adapt our application-specific abstractions to a specific technology, tool, or system component that we wish to hide for our application components. These adapters are part of the <a rel="external" href="http://blog.ploeh.dk/2011/07/28/CompositionRoot/" title="Mark Seemann - Composition Root">composition root</a>.</p><p>Do note though that primitive values (such as int and string) are not runtime data per definition. Configuration values such as connection strings are primitives, but they are usually known at application startup, and don't change during the lifetime of the application. Those 'static' values can safely be injected into the constructor. Still, if you find yourself injecting the same configuration value into many different components you are missing an abstraction, but that's a discussion for another day.</p><p>To summarize, the solution to the problem of injecting runtime data into components is to let runtime data flow through method calls on an initialized object graph by either:</p><ol><li>pass runtime data through method calls of the API<br /><em>or</em></li><li>retrieve runtime data from specific abstractions that allow resolving runtime data. </li></ol></p><p>Happy injecting.</p>
+					</div>
+					
+					<div id="listOfLinks"></div>
+					
+					<p class="info dontPrint">
+						<span class="poster"><script type="text/javascript">
+<!--
+	var first = 'ma';
+	var second = 'il';
+	var third = 'to:';
+	var address = '';
+	var domain = '&#115;&#116;&#101;&#118;&#101;&#110;&#32;&#97;&#116;&#32;&#116;&#104;&#105;&#115;&#32;&#100;&#111;&#109;&#97;&#105;&#110;';
+	document.write('<a href="');
+	document.write(first+second+third);
+	document.write(address);
+	document.write('&#64;');
+	document.write(domain);
+	document.write('" title="Email Steven">');
+	document.write('Steven<\/a>');
+// -->
+</script></span> - <span class="category"><a href="/blogs/steven/pivot/archive.php?c=Dependency_injection">Dependency injection</a></span> - 
+						<span class="comments"><a href="/blogs/steven/pivot/entry.php?id=99#comm" title="Dennis van der Stelt, Jan Hartmann, Nazaret, Yacoub Massad, Steven, Luke Briner, frank, Scott Hannen">eight comments</a> /  <a href="/blogs/steven/pivot/entry.php?id=99#track" title="">No trackbacks</a></span> - 
+						<a href="/blogs/steven/archives/archive_2015-m11.php#e99" title="Permanent link to 'Dependency-injection Code Smell: Injecting runtime data into components' in the archives">&sect;</a> <a href="/blogs/steven/pivot/entry.php?id=99" title="Permanent link to entry 'Dependency-injection Code Smell: Injecting runtime data into components'">&para;</a> 
+					</p>
+					
+					<div id="NoJavascriptWarning">
+						The code samples on my weblog are colorized using javascript, but
+						you disabled javascript (for my website) on your browser. 
+						If you're interested in viewing the posted code snippets in 
+						color, please enable javascript.
+					</div>
+					<script type="text/javascript">
+						var noScriptWarning = document.getElementById('NoJavascriptWarning');
+						noScriptWarning.style.display = "none";
+					</script>
+				</div>
+			</div>
+			
+			<hr style="height:1px; background-color:#999; color:#999; border: none;" />
+
+			<p><b>eight comments:</b></p>
+			<div class="comments">
+			<a id="comm"></a>
+<p>Great article! Welcome back to blogging! :)<br /><small><b>Dennis van der Stelt</b>  (<a href='http://dennis.bloggingabout.net/'  title='dennis.bloggingabout.net/'>URL</a>) - 09 11 15 - 06:37 </small></p>
+<p>As Dennis stated; long awaited blog post from you and as always, on point. :-)<br />
+<br />
+Hoping to see more in the future.<br /><small><b>Jan Hartmann</b>  (<a href='http://hartmanns.io'  title='hartmanns.io'>URL</a>) - 09 11 15 - 10:05 </small></p>
+<p>Awesome! Welcome back! :)<br /><small><b>Nazaret</b>   - 17 11 15 - 13:39 </small></p>
+<p>Great article. But I think there is something that is still missing. Consider the example of a UI application that allows people to type in an FTP server and some other connectivity settings at runtime, and then connects to such server to do some work (like allowing the user to upload or download files). Wouldn't you in this case create an abstract factory that creates some IFtpServer implementation given the connection settings? Consuming classes of IFtpServer wouldn't want to know anything about the connection settings, so you can't put these settings as method parameters. Also you cannot obtain such information from some context interface as you did with the ITimeProvider for example. So it seems that the need for abstract factories still exists for some cases.<br /><small><b>Yacoub Massad</b>  (<a href='http://yacoubsoftware.blogspot.com/'  title='yacoubsoftware.blogspot.com/'>URL</a>) - 22 11 15 - 00:15 </small></p>
+<p>Yacoub,<br />
+<br />
+In my latest article (https://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=100) I go into more details about why I think Abstract Factories are a design smell and should be avoided in most cases.<br /><small><b>Steven</b>  (<a href='http://https://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=99'  title='https://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=99'>URL</a>) - 14 08 16 - 22:13 </small></p>
+<p>Thanks so much for this. Helping me to understand some of the more subtle issues with DI and in a very concise way while not skipping the "why not to do it this way"!<br /><small><b>Luke Briner</b>  (<a href='http://lukieb.blogspot.co.uk'  title='lukieb.blogspot.co.uk'>URL</a>) - 15 02 18 - 15:50 </small></p>
+<p>Well explained. Thank you.<br /><small><b>frank</b>   - 19 11 18 - 14:24 </small></p>
+<a id="lastcomment"></a><p>I might be missing something, but it looks like your "before" and "after" code samples might be reversed. The runtime values - CustomerId and DestinationAddress - are injected in the second code sample.<br /><small><b>Scott Hannen</b>  (<a href='http://scotthannen.org'  title='scotthannen.org'>URL</a>) - 23 01 19 - 15:13 </small></p>
+
+			</div>
+
+		</div>
+
+		<hr />
+		
+		<div id="footer">
+			<p>&copy; 2007-2019 Steven van Deursen.<br /><span class="dontPrint"><a href="/blogs/steven/rss.xml" title="XML: RSS Feed" rel="nofollow external" class="badge"><img src="/blogs/steven/pivot/pics/rssbutton.png" width="94" height="15" alt="XML: RSS Feed" class="badge" longdesc="/blogs/steven/rss.xml" /></a> <a href="/blogs/steven/atom.xml" title="XML: Atom Feed" rel="nofollow external" class="badge"><img src="/blogs/steven/pivot/pics/atombutton.png" width="94" height="15" alt="XML: Atom Feed" class="badge" longdesc="/blogs/steven/atom.xml" /></a></span>
+			</p>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/CSharpCodeHighlighter0.10.js"></script>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/MSILCodeHighlighter0.1.js"></script>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/X86CodeHighlighter0.1.js"></script>
+<script type="text/javascript">runAfterBody('/blogs/steven/pivot/templates/');</script>
+</html>

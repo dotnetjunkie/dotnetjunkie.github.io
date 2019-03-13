@@ -1,0 +1,184 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head profile="http://gmpg.org/xfn/1">
+	<title>.NET Junkie - Integrating Enterprise Library Validation Application Block With LINQ to SQL and Entity Framework Part 1: Basic Integration</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout12.css" type="text/css" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout7_ie.css" type="text/css" />
+	<![endif]-->
+	<!--[if !IE]>-->
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout7_ff.css" type="text/css" />
+	<!--<![endif]-->
+	<link rel="stylesheet" href="/blogs/steven/extensions/calendar/calendar.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/mobile.css?changed=20121020a" type="text/css" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/print.css?changed=20110919" type="text/css" media="print" />
+	<link rel="alternate" type="application/rss+xml" title="RSS" href="/blogs/steven/rss.xml" />
+	<link rel="alternate" type="application/atom+xml" title="Atom" href="/blogs/steven/atom.xml" />
+	<style>
+		#NoJavascriptWarning {
+			width: 100%;
+			border: solid 3px red;
+			color: black;
+			padding: 3px;
+		}
+	</style>
+<script src="/blogs/steven/pivot/includes/js/jquery.js" type="text/javascript"></script>
+<script type="text/javascript">
+<!--
+function rytITocBPVEZZ(){ $('input[@name=post]').attr('disabled', ''); }
+function kg(x,len){x[len>>5]|=0x80<<((len)%32);x[(((len+64)>>>9)<<4)+14]=len;var a=1732584193;var b=-271733879;var c=-1732584194;var d=271733878;for(var i=0;i<x.length;i+=16){var olda=a;var oldb=b;var oldc=c;var oldd=d;a=xVU(a,b,c,d,x[i+0],7,-680876936);d=xVU(d,a,b,c,x[i+1],12,-389564586);c=xVU(c,d,a,b,x[i+2],17,606105819);b=xVU(b,c,d,a,x[i+3],22,-1044525330);a=xVU(a,b,c,d,x[i+4],7,-176418897);d=xVU(d,a,b,c,x[i+5],12,1200080426);c=xVU(c,d,a,b,x[i+6],17,-1473231341);b=xVU(b,c,d,a,x[i+7],22,-45705983);a=xVU(a,b,c,d,x[i+8],7,1770035416);d=xVU(d,a,b,c,x[i+9],12,-1958414417);c=xVU(c,d,a,b,x[i+10],17,-42063);b=xVU(b,c,d,a,x[i+11],22,-1990404162);a=xVU(a,b,c,d,x[i+12],7,1804603682);d=xVU(d,a,b,c,x[i+13],12,-40341101);c=xVU(c,d,a,b,x[i+14],17,-1502002290);b=xVU(b,c,d,a,x[i+15],22,1236535329);a=NNh(a,b,c,d,x[i+1],5,-165796510);d=NNh(d,a,b,c,x[i+6],9,-1069501632);c=NNh(c,d,a,b,x[i+11],14,643717713);b=NNh(b,c,d,a,x[i+0],20,-373897302);a=NNh(a,b,c,d,x[i+5],5,-701558691);d=NNh(d,a,b,c,x[i+10],9,38016083);c=NNh(c,d,a,b,x[i+15],14,-660478335);b=NNh(b,c,d,a,x[i+4],20,-405537848);a=NNh(a,b,c,d,x[i+9],5,568446438);d=NNh(d,a,b,c,x[i+14],9,-1019803690);c=NNh(c,d,a,b,x[i+3],14,-187363961);b=NNh(b,c,d,a,x[i+8],20,1163531501);a=NNh(a,b,c,d,x[i+13],5,-1444681467);d=NNh(d,a,b,c,x[i+2],9,-51403784);c=NNh(c,d,a,b,x[i+7],14,1735328473);b=NNh(b,c,d,a,x[i+12],20,-1926607734);a=DFtd(a,b,c,d,x[i+5],4,-378558);d=DFtd(d,a,b,c,x[i+8],11,-2022574463);c=DFtd(c,d,a,b,x[i+11],16,1839030562);b=DFtd(b,c,d,a,x[i+14],23,-35309556);a=DFtd(a,b,c,d,x[i+1],4,-1530992060);d=DFtd(d,a,b,c,x[i+4],11,1272893353);c=DFtd(c,d,a,b,x[i+7],16,-155497632);b=DFtd(b,c,d,a,x[i+10],23,-1094730640);a=DFtd(a,b,c,d,x[i+13],4,681279174);d=DFtd(d,a,b,c,x[i+0],11,-358537222);c=DFtd(c,d,a,b,x[i+3],16,-722521979);b=DFtd(b,c,d,a,x[i+6],23,76029189);a=DFtd(a,b,c,d,x[i+9],4,-640364487);d=DFtd(d,a,b,c,x[i+12],11,-421815835);c=DFtd(c,d,a,b,x[i+15],16,530742520);b=DFtd(b,c,d,a,x[i+2],23,-995338651);a=msWZiW(a,b,c,d,x[i+0],6,-198630844);d=msWZiW(d,a,b,c,x[i+7],10,1126891415);c=msWZiW(c,d,a,b,x[i+14],15,-1416354905);b=msWZiW(b,c,d,a,x[i+5],21,-57434055);a=msWZiW(a,b,c,d,x[i+12],6,1700485571);d=msWZiW(d,a,b,c,x[i+3],10,-1894986606);c=msWZiW(c,d,a,b,x[i+10],15,-1051523);b=msWZiW(b,c,d,a,x[i+1],21,-2054922799);a=msWZiW(a,b,c,d,x[i+8],6,1873313359);d=msWZiW(d,a,b,c,x[i+15],10,-30611744);c=msWZiW(c,d,a,b,x[i+6],15,-1560198380);b=msWZiW(b,c,d,a,x[i+13],21,1309151649);a=msWZiW(a,b,c,d,x[i+4],6,-145523070);d=msWZiW(d,a,b,c,x[i+11],10,-1120210379);c=msWZiW(c,d,a,b,x[i+2],15,718787259);b=msWZiW(b,c,d,a,x[i+9],21,-343485551);a=lS(a,olda);b=lS(b,oldb);c=lS(c,oldc);d=lS(d,oldd);}return Array(a,b,c,d);} function NNh(a,b,c,d,x,s,t){return CFpPX((b&d)|(c&(~d)),a,b,x,s,t);} function UOWzjn(Ky){var BLfPTp="0123456789abcdef";var str="";for(var i=0;i<Ky.length*4;i++){str+=BLfPTp.charAt((Ky[i>>2]>>((i%4)*8+4))&0xF)+BLfPTp.charAt((Ky[i>>2]>>((i%4)*8))&0xF);}return str;} function msWZiW(a,b,c,d,x,s,t){return CFpPX(c ^(b|(~d)),a,b,x,s,t);} function aQXTdrblhL(xNRsSyh){ lIzMvWstQpoycC = document.getElementById("NiHpygHMLaveG"); if(!lIzMvWstQpoycC){ return false; } else { lIzMvWstQpoycC.name = NWPaBtpXceZPKUtb(xNRsSyh); lIzMvWstQpoycC.value = SxxWUgXxmB(); return true; }} function ay(L){var Uv=Array();var xNON=(1<<8)-1;for(var i=0;i<L.length*8;i+=8)Uv[i>>5]|=(L.charCodeAt(i/8)&xNON)<<(i%32);return Uv;} function SxxWUgXxmB(){var CsqUdgqaV = 13; CsqUdgqaV += 0; CsqUdgqaV += 1; CsqUdgqaV += 2; CsqUdgqaV += 3; CsqUdgqaV += 4; CsqUdgqaV += 5; CsqUdgqaV += 6; CsqUdgqaV += 7; CsqUdgqaV += 8; CsqUdgqaV += 9; CsqUdgqaV += 10; CsqUdgqaV += 11; CsqUdgqaV += 12; CsqUdgqaV += 13; CsqUdgqaV += 14; CsqUdgqaV += 15; CsqUdgqaV += 16; CsqUdgqaV += 17; CsqUdgqaV += 18; CsqUdgqaV += 19; CsqUdgqaV += 20; CsqUdgqaV += 21; CsqUdgqaV += 22; CsqUdgqaV += 23; CsqUdgqaV += 24; CsqUdgqaV += 25; CsqUdgqaV += 26; CsqUdgqaV += 27; CsqUdgqaV += 28; CsqUdgqaV += 29; CsqUdgqaV += 30; CsqUdgqaV += 31; CsqUdgqaV += 32; CsqUdgqaV += 33; CsqUdgqaV += 34; CsqUdgqaV += 35; CsqUdgqaV += 36; CsqUdgqaV += 37; CsqUdgqaV += 38; CsqUdgqaV += 39; CsqUdgqaV += 40; CsqUdgqaV += 41; CsqUdgqaV += 42; CsqUdgqaV += 43; CsqUdgqaV += 44; CsqUdgqaV += 45; CsqUdgqaV += 46; CsqUdgqaV += 47; CsqUdgqaV += 48; CsqUdgqaV += 49; CsqUdgqaV += 50; CsqUdgqaV += 51; CsqUdgqaV += 52; CsqUdgqaV += 53; CsqUdgqaV += 54; CsqUdgqaV += 55; CsqUdgqaV += 56; CsqUdgqaV += 57; CsqUdgqaV += 58; CsqUdgqaV += 59; CsqUdgqaV += 60; CsqUdgqaV += 61; CsqUdgqaV += 62; CsqUdgqaV += 63; CsqUdgqaV += 64; CsqUdgqaV += 65; CsqUdgqaV += 66; CsqUdgqaV += 67; CsqUdgqaV += 68; CsqUdgqaV += 69; CsqUdgqaV += 70; CsqUdgqaV += 71; CsqUdgqaV += 72; CsqUdgqaV += 73; return CsqUdgqaV; }  function NWPaBtpXceZPKUtb(s){return UOWzjn(kg(ay(s),s.length*8));} function DFtd(a,b,c,d,x,s,t){return CFpPX(b ^ c ^ d,a,b,x,s,t);} function lS(x,y){var lsw=(x&0xFFFF)+(y&0xFFFF);var msw=(x>>16)+(y>>16)+(lsw>>16);return(msw<<16)|(lsw&0xFFFF);} function V(num,cnt){return(num<<cnt)|(num>>>(32-cnt));} function CFpPX(q,a,b,x,s,t){return lS(V(lS(lS(a,q),lS(x,t)),s),b);}function xVU(a,b,c,d,x,s,t){return CFpPX((b&c)|((~b)&d),a,b,x,s,t);}
+$(document).ready(function(){ setTimeout("rytITocBPVEZZ()", 100); });
+// -->
+</script>
+
+</head>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/includes5.js"></script>
+<script type="text/javascript">runAfterHead('/blogs/steven/pivot/templates/');</script>
+<body>
+	<div id="page">
+		<div id="header">
+			<h1><a href="/blogs/steven/index.php" title=".NET Junkie">.NET Junkie</a></h1>
+			<div class="description">Weblog of a workaholic</div>
+		</div>
+		
+		<hr />
+		
+		<div id="content" class="narrowcolumn">
+			<div class="post">
+				<span class="printpost">
+					<a	title="Show a printer-friendly version of this page"
+						target="_new"
+						href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=46&print=true">
+						<img alt="Print" src="/blogs/steven/pivot/templates/images/print.gif" />
+					</a>
+				</span>
+				<div class="entry" id="entry">
+					<span class="entrydate">07 April 09</span>
+					<h3><a href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=46">Integrating Enterprise Library Validation Application Block With LINQ to SQL and Entity Framework Part 1: Basic Integration</a></h3>
+			
+					<h4>This article describes how to integrate the Enterprise Library Validation Application Block in conjunction with an O/RM technology such as LINQ to SQL and Entity Framework.</h4>
+					
+					<div id="entry_body">
+						<a id="body"></a><p>For a long time, doing a deep dive into the <a rel="external" href="http://msdn.microsoft.com/en-us/library/dd140088.aspx">Enterprise Library Validation Application Block</a> (VAB) was on my list of things to do. Especially how to place the VAB within an architectural context.</p>  <p>Microsoft's Enterprise Library is a big framework with useful functionality for developing .NET based applications. The Validation Application Block is part of that big framework and &quot;provides useful features that allow developers to implement structured and easy-to-maintain validation scenarios in their applications <a rel="external" href="http://msdn.microsoft.com/en-us/library/dd140088.aspx">-&gt;</a>&quot;. Validations can be defined using configuration files (with designer support!) or by applying attributes to classes and properties where validation support is needed. The VAB comes with a set of standard validations, but it&rsquo;s possible to write your own validations and integrate them with the framework.</p>  <p>Instead of writing a lengthy article about the features of the VAB, I advise you to browse through the <a rel="external" href="/blogs/steven/images/ValidationHOL.zip" title="Validation Application Block Hands-On  Lab for Enterprise Library version 4.1" class="download">ValidationHOL.pdf</a> document from the <a rel="external" href="http://www.microsoft.com/downloads/details.aspx?FamilyID=2C34A9CB-17CF-4AEC-8DE6-EEACBBB74413&amp;displaylang=en">Validation Application Block Hands-On Labs</a>. It gives a great overview on the main scenario's for which VAB can be used.</p>  <p>The scenario I find VAB most useful in, is defining validations for domain entities, such as validating classes generated by <a rel="external" href="http://weblogs.asp.net/scottgu/archive/2007/05/19/using-linq-to-sql-part-1.aspx">LINQ to SQL</a> or <a rel="external" href="http://msdn.microsoft.com/en-us/library/aa697427(VS.80).aspx">Entity Framework</a>. Because these two <a rel="external" href="http://en.wikipedia.org/wiki/Object-relational_mapping">O/RM</a> technologies generate domain entities, it&rsquo;s practically impossible to use attribute based validation. Validations have to be specified in a configuration file. I personally don't mind, because this does a better job in separating the validation concern from code and enables configuring the validation using the supplied designer. Besides that, configuration based validation provides a lot more flexibility. However, the configuration based approach has it&rsquo;s own pitfalls. You should definitely read <a rel="external" href="http://blogs.msdn.com/tomholl/archive/2007/04/19/avoiding-configuration-pitfalls-with-incompatible-copies-of-enterprise-library.aspx">this</a> article when you&rsquo;re planning on using that approach.</p>  <p><strong>[Update 2010-02-10]</strong> The next version of the Validation Application Block (version 5.0) will be able to read <a rel="external" href="http://msdn.microsoft.com/en-us/library/ee256141%28VS.100%29.aspx">.NET 3.5 DataAnnotations</a> attributes. This will allow you to define your validations using the <a rel="external" href="http://www.paraesthesia.com/archive/2010/01/28/separating-metadata-classes-from-model-classes-in-dataannotations-using-custom.aspx">'buddy class' technique</a> that DataAnnotations offer. While this technique is still less flexible than what VAB can offer, nice thing is that you can mix techniques. You can use buddy classes for simple validation rules that can be picked up by ASP.NET and use VAB validators for complex business rules with possible database interaction.[/Update]</p>  <p>This is great, but how do we actually integrate VAB with a technology such as LINQ to SQL or Entity Framework? While it is possible to let the client invoke validation before calling the LINQ to SQL <a rel="external" href="http://msdn.microsoft.com/en-us/library/system.data.linq.datacontext.submitchanges.aspx">SubmitChanges</a> or Entity Framework <a rel="external" href="http://msdn.microsoft.com/en-us/library/bb336792.aspx">SaveChanges</a> method, I prefer integrating this into the generated context class. This makes it impossible for the validation to be forgotten. Here is an example of an implementation of a partial LINQ to SQL DataContext class with validation support:</p>  <pre class="cs" language="csharp" customtypes="NorthwindDataContext ConflictMode EntityValidator ChangeSet">// Validation with LINQ to SQL.<br /> using System.Collections.Generic;<br /> using System.Data.Linq;<br /> using System.Linq;<br /> public partial class NorthwindDataContext<br /> {<br />     public override void SubmitChanges(ConflictMode failureMode)<br />     {<br />         // Adding validation support when saving.<br />         EntityValidator.Validate(this.GetChangedEntities());<br />         base.SubmitChanges(failureMode);<br />     }<br /> 	<br />     // Gets the list of modified objects that are tracked<br />     // by the current data context.<br />     private IEnumerable&lt;object&gt; GetChangedEntities()<br />     {<br />         ChangeSet changes = this.GetChangeSet();<br />         return changes.Inserts.Concat(changes.Updates);<br />     }<br /> } </pre>  <p>And below is an example of an implementation of a partial Entity Framework ObjectContext class with validation support:</p>  <pre class="cs" language="csharp" customtypes="NorthwindEntities EntityValidator" customvaluetypes="EntityState">// Validation with Entity Framework.<br /> using System.Collections.Generic;<br /> using System.Data;<br /> using System.Linq;<br /> <br /> public partial class NorthwindEntities<br /> {<br />     partial void OnContextCreated()<br />     {<br />         // Adding validation support when saving.<br />         this.SavingChanges += (sender, e) =&gt;<br />             EntityValidator.Validate(this.GetChangedEntities());<br />     }<br />     <br />     // Get the list of modified entities that are tracked<br />     // by the current data context.<br />     private IEnumerable&lt;object&gt; GetChangedEntities()<br />     {<br />         const EntityState AddedAndModified =<br />             EntityState.Added | EntityState.Modified;<br />     <br />         var entries = this.ObjectStateManager<br />             .GetObjectStateEntries(AddedAndModified);<br />         <br />         return<br />             from entry in entries<br />             where entry.Entity != null<br />             select entry.Entity;<br />     }<br /> } </pre> 	 <p>You can see that both frameworks have a different extensibility mechanism. While LINQ to SQL allows overriding the SubmitChanges method for injecting validation, with Entity Framework the SavingChanges event has to be hooked. Both classes implement their own version of the GetChangedEntities method to return all entities that are created or changed within the scope of the given context. Notice that deleted objects will not be returned, which hopefully makes sense.</p>  <p>What&rsquo;s missing in the previous code snippets is the implementation of the EntityValidator class:</p>  <pre class="cs" language="csharp" customtypes="NorthwindEntities EntityValidator ValidationException ValidationFactory ValidationResults" customvaluetypes="EntityState">using System;<br /> using System.Collections.Generic;<br /> using System.Linq;<br /> using Microsoft.Practices.EnterpriseLibrary.Validation;<br /> <br /> // The helper class for validation entities.<br /> static class EntityValidator<br /> {<br />     public static void Validate(IEnumerable&lt;object&gt; entities)<br />     {<br />         // Get a list of ValidationResults, one for each<br />         // invalid object.<br />         ValidationResults[] invalidResults = (<br />             from entity in entities<br />             let type = entity.GetType()<br />             let validator = ValidationFactory.CreateValidator(type)<br />             let results = validator.Validate(entity)<br />             where !results.IsValid<br />             select results).ToArray();<br />         <br />         // Throw an exception when there are invalid results.<br />         if (invalidResults.Length &gt; 0)<br />         {<br />             throw new ValidationException(invalidResults);<br />         }<br />     }<br /> }<br /> <br /> [Serializable]<br /> public sealed class ValidationException : Exception<br /> {<br />     public ValidationException(ValidationResults[] results)<br />         : base(&quot;There are validation errors. etc. etc.&quot;)<br />     {<br />         this.Results = results.ToArray();<br />     }<br />     <br />     public IEnumerable&lt;ValidationResults&gt; Results<br />     {<br />         get; private set;<br />     }<br />     <br />     ...<br /> } </pre> 	 <p> The EntityValidator&rsquo;s Validate method validates the supplied collection of entities. I really like the expressiveness of LINQ; do you see how readable the code becomes with such a query? The result of the query is an array of ValidationResults objects, one per invalid entity. The entities are validated using a Validator instance, created by VAB&rsquo;s ValidationFactory.</p> <p>An important design decision here, is to throw an exception in case invalid entities are found. A context should not be able to save it&rsquo;s changes, when it contains entities that are considered to be invalid as defined by the business. By throwing an exception this is communicated very clearly. This way it&rsquo;s impossible for the client programmer to forget to handle this exceptional condition. Just imagine what happens when a developer forgets to handle that exceptional case. Not throwing an exception would make the user, on who&rsquo;s behalf the operation is executed, believe that his changes are actually saved, while they&rsquo;re not. This will result in an angry customer calling customer support. I&rsquo;d rather let an exception bubble up, so it can be logged using the <a rel="external" href="http://msdn.microsoft.com/en-us/library/dd139916.aspx">Enterprise Library Logging Application Block</a> or <a rel="external" href="http://logging.codeplex.com">CuttingEdge.Logging</a>.</p>  <p>Finally, there need to be some code that can handle the thrown exception. How to do this depends on the type of application and it&rsquo;s design. Here is a simple console application that uses the Entity Framework to create a new customer, saves it and shows the errors in case of an ValidationException:</p>  <pre class="cs" language="csharp" customtypes="NorthwindEntities Customer ValidationException">static void Main(string[] args)<br /> {<br />     using (var db = new NorthwindEntities())<br />     {<br />         Customer junkie = new Customer();<br />         <br />         junkie.CustomerID = &quot;junki&quot;;<br />         junkie.ContactName = &quot;S. van Deursen&quot;;<br />         junkie.CompanyName = &quot;Cutting Edge&quot;;<br />         <br />         db.AddToCustomers(junkie);<br />         <br />         try<br />         {<br />             db.SaveChanges();<br />             Console.WriteLine(&quot;Success!&quot;);<br />         }<br />         catch (ValidationException ex)<br />         {<br />             ShowErrors(ex);<br />         }<br />     }<br />     <br />     Console.ReadLine();<br /> }<br /> <br /> private static void ShowErrors(ValidationException ex)<br /> {<br />     Console.WriteLine(ex.Message);<br /> 	<br />     var errors =<br />         from results in ex.Results<br />         from result in results<br />         select result.Key + &quot;: &quot; + result.Message;<br />     <br />     foreach (var error in errors)<br />     {<br />         Console.WriteLine(error);<br />     }<br /> } </pre>  <p>Please note that there are a few short comes to the given implementation:</p> <ul> <li>It assumes the definition of a single default rule set. <a rel="external" href="http://msdn.microsoft.com/en-us/library/dd139856.aspx#validate_rulesets">Rule sets</a> are a very useful feature of VAB, but it depends on your requirements if you need them and in what way.</li> <li>The implementation is unable to cope with validations that require database communication through the LINQ to SQL DataContext or Entity Framework ObjectContext. I will handle this in the <a rel="external" href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=47">part two</a>. </li> </ul>  <p> <a rel="external" href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=47">Part two</a> will be about using context within custom validators, <a rel="external" href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=49">part three</a> will be about some common pitfalls when creating those custom data centric validators, <a rel="external" href="http://cuttingedge.it/blogs/steven/pivot/entry.php?id=64">part four</a> will be about getting the most out of generated meta data and if you're interested in putting the VAB's configuration in its own file, you should read <a rel="external" href="http://cuttingedge.it/blogs/steven/pivot/entry.php?id=65">this</a> article. When you want to integrate VAB with ASP.NET Web Forms, you should definitely read my series that start <a rel="external" href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=78">here</a>. </p>  <p>Happy validating!</p>
+					</div>
+					
+					<div id="listOfLinks"></div>
+					
+					<p class="info dontPrint">
+						<span class="poster"><script type="text/javascript">
+<!--
+	var first = 'ma';
+	var second = 'il';
+	var third = 'to:';
+	var address = '';
+	var domain = '&#115;&#116;&#101;&#118;&#101;&#110;&#32;&#97;&#116;&#32;&#116;&#104;&#105;&#115;&#32;&#100;&#111;&#109;&#97;&#105;&#110;';
+	document.write('<a href="');
+	document.write(first+second+third);
+	document.write(address);
+	document.write('&#64;');
+	document.write(domain);
+	document.write('" title="Email Steven">');
+	document.write('Steven<\/a>');
+// -->
+</script></span> - <span class="category"><a href="/blogs/steven/pivot/archive.php?c=.NET_General">.NET General</a>, <a href="/blogs/steven/pivot/archive.php?c=6">C#</a>, <a href="/blogs/steven/pivot/archive.php?c=Enterprise_Library">Enterprise Library</a>, <a href="/blogs/steven/pivot/archive.php?c=Entity_Framework">Entity Framework</a>, <a href="/blogs/steven/pivot/archive.php?c=LINQ">LINQ</a>, <a href="/blogs/steven/pivot/archive.php?c=LINQ_to_SQL">LINQ to SQL</a>, <a href="/blogs/steven/pivot/archive.php?c=17">O/RM</a>, <a href="/blogs/steven/pivot/archive.php?c=Validation_Application_Block">Validation Application Block</a></span> - 
+						<span class="comments"><a href="/blogs/steven/pivot/entry.php?id=46#comm" title="Luke, Steven, Fernando Nomellini, raffaeu, S&oslash;ren Hardenberg, Binjie, Richard, Thomas, Sam">17 comments</a> /  <a href="/blogs/steven/pivot/entry.php?id=46#track" title="">No trackbacks</a></span> - 
+						<a href="/blogs/steven/archives/archive_2009-m04.php#e46" title="Permanent link to 'Integrating Enterprise Library Validation Application Block With LINQ to SQL and Entity Framework Part 1: Basic Integration' in the archives">&sect;</a> <a href="/blogs/steven/pivot/entry.php?id=46" title="Permanent link to entry 'Integrating Enterprise Library Validation Application Block With LINQ to SQL and Entity Framework Part 1: Basic Integration'">&para;</a> 
+					</p>
+					
+					<div id="NoJavascriptWarning">
+						The code samples on my weblog are colorized using javascript, but
+						you disabled javascript (for my website) on your browser. 
+						If you're interested in viewing the posted code snippets in 
+						color, please enable javascript.
+					</div>
+					<script type="text/javascript">
+						var noScriptWarning = document.getElementById('NoJavascriptWarning');
+						noScriptWarning.style.display = "none";
+					</script>
+				</div>
+			</div>
+			
+			<hr style="height:1px; background-color:#999; color:#999; border: none;" />
+
+			<p><b>17 comments:</b></p>
+			<div class="comments">
+			<a id="comm"></a>
+<p>Hi,<br />
+<br />
+Nice article just what I was after, however how would you validate a whole graph an entity with inheritance (i.e. I have a collection of a certain type of entity which is actually differing inherited types) and I want specific validation per entity type not just the validation on the base type?<br />
+<br />
+Cheers,<br />
+Luke.<br /><small><b>Luke</b>  (<a href='http://www.c9.net.au'  title='www.c9.net.au'>URL</a>) - 28 04 09 - 07:27 </small></p>
+<p>Hi Luke. About validating a graph; you should look at the "Lab 3: Validatating Object Graphs" chapter in the ValidationHOL.pdf document that comes with the Hands On Labs (this article has a link to it). I think that chapter describes what you’re after.<br />
+About validating several inherited types; you should use ValidationFactory as I did in this article with the following code:<br />
+<br />
+    let type = entity.GetType()<br />
+    let validator = ValidationFactory.CreateValidator(type)<br />
+    let results = validator.Validate(entity)<br />
+<br />
+Like I did in this article, you will have to create a validator for each entity you wish to validate. Note that validating types with the Validator.Validate&lt;T&gt;(T entity) method won't work, because you fix the validation to the type T and that is the type known at design time. ValidationFactory.CreateValidator does the trick.<br />
+<br />
+I hope this helps.<br /><small><b>Steven</b>  (<a href='http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=46'  title='www.cuttingedge.it/blogs/steven/pivot/entry.php?id=46'>URL</a>) - 28 04 09 - 21:35 </small></p>
+<p>How can I include an Valitator Attribute to a member in a partial class, if the member already exists in my Linq To Sql Class or in My Entity Class generated by the framework ?<br /><small><b>Fernando Nomellini</b>   - 25 09 09 - 16:54 </small></p>
+<p>Fernando, <br />
+<br />
+you can't. That's why I use the configuration based approach in this article. Because of this the article states: "Because these two O/RM technologies generate domain entities, it’s practically impossible to use attribute based validation."<br />
+<br />
+C# and VB have no support for 'partial properties' (see: <a href="http://social.msdn.microsoft.com/Forums/en-US/clr/thread/ee9638c4-a3e7-4f21-ad24-0f0187df795f">http://social.msdn.microsoft.com/Forums/..</a>), which makes it hard to add attributes to generated code without loosing those changes after the code is re-generated.<br />
+<br />
+Because of this limitation of C# and VB, .NET RIA Services use 'metadata classes' (see: <a href="http://www.nikhilk.net/RIA-Services-Fluent-Metadata-API.aspx">http://www.nikhilk.net/RIA-Services-Flue..</a>) to define validation attributes. Validation Application Block however, does (currently) not have the notion of metadata classes, so you're stuck with using the configuration approach.<br /><small><b>Steven</b>  (<a href='http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=46'  title='www.cuttingedge.it/blogs/steven/pivot/entry.php?id=46'>URL</a>) - 25 09 09 - 17:25 </small></p>
+<p>Thank you for your time and explanation ! <br />
+I will now use configuration in my studies. But, I heard that in EF 4.0 this will be possible ! For now, I will use the aproach posted here in this blog.<br /><small><b>Fernando Nomellini</b>   - 25 09 09 - 18:45 </small></p>
+<p>I can't imagine that this is possible with EF 4.0. What you're experiencing is a short come of both VAB and the mainstream programming languages, not a short come of Entity Framework. What will be possible with EF 4.0 is the validation that the .NET RIA Services will offer, but that's a simply different validation framework. Perhaps a future version of the Enterprise Library VAB will offer such a thing as metadata classes.<br /><small><b>Steven</b>  (<a href='http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=46'  title='www.cuttingedge.it/blogs/steven/pivot/entry.php?id=46'>URL</a>) - 26 09 09 - 00:01 </small></p>
+<p>What if EF 4.0 could be able to work with POCO, like NHibernate ? In this case, you can put Validation attributes in you poco class and let EF do they magic. Just a tought.<br /><small><b>Fernando Nomellini</b>   - 26 09 09 - 02:12 </small></p>
+<p>You are completely right about this. EF 4.0 enables you to write POCO classes and they allow you to add your own validation attributes. Good point. Alternatively you could also define your own T4 template and let EF generate the entities including validation attributes for you (however, specifying your own template could be a bit hard).<br /><small><b>Steven</b>  (<a href='http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=46'  title='www.cuttingedge.it/blogs/steven/pivot/entry.php?id=46'>URL</a>) - 26 09 09 - 10:28 </small></p>
+<p>Yes you are right, with EF 4 now you can use POCO objects like NHibernate.<br />
+Pretty cool!<br /><small><b>raffaeu</b>  (<a href='http://blog.raffaeu.com'  title='blog.raffaeu.com'>URL</a>) - 01 11 09 - 12:30 </small></p>
+<p>I just read the the next version of the Validation Application Block (v5.0) will will be able to read the .NET 3.5 DataAnnotation attributes and this will allow you to define validations using the 'buddy class' technique. Read about it here: <a href="http://entlib.codeplex.com/Thread/View.aspx?ThreadId=69618.">http://entlib.codeplex.com/Thread/View.a..</a><br /><small><b>Steven</b>  (<a href='http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=46'  title='www.cuttingedge.it/blogs/steven/pivot/entry.php?id=46'>URL</a>) - 10 02 10 - 15:59 </small></p>
+<p>Hi, I am realy looking forward for the 'buddy class' technique. This will be a great help for providing validators across a huge legacy system.<br /><small><b>S&oslash;ren Hardenberg</b>  (<a href='http://www.pagelift.dk'  title='www.pagelift.dk'>URL</a>) - 16 03 10 - 12:44 </small></p>
+<p>Hi Steven<br />
+<br />
+Thanks very much for this nice solution. It's very neat. Validation only has a very small finger print on the data layer. However, it'd be better if the validation logic can be totally separated from data access layer. I don't know if it's possible to use entlib policy injection to achieve this.<br /><small><b>Binjie</b>   - 24 09 10 - 23:46 </small></p>
+<p>Binjie, I know too little about the policy injection block to say anything useful about this. AOP can however be an overkill. You can also wire this up using Dependency Injection. For instance, when using the Simple Service Locator (http://simpleservicelocator.codeplex.com) you can configure the Entity Framework Object Context like this:<br />
+<br />
+container.Register&lt;NorthwindEntities>(() =><br />
+{<br />
+  var db = new NorthwindEntities();<br />
+  db.SavingChanges += (sender, e) =><br />
+  {<br />
+    EntityValidator.Validate(<br />
+      from entry in db.ObjectStateManager<br />
+        .GetObjectStateEntries(EntityState.Added | EntityState.Modified)<br />
+      where entry.Entity != null<br />
+      select entry.Entity);<br />
+  };<br />
+  return db;<br />
+});<br /><small><b>Steven</b>  (<a href='http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=46'  title='www.cuttingedge.it/blogs/steven/pivot/entry.php?id=46'>URL</a>) - 25 09 10 - 11:25 </small></p>
+<p>Hi, your anti-spam is not working (or working far too well!). Email me please, I have a question. Thanks.<br /><small><b>Richard</b>   - 23 12 10 - 23:54 </small></p>
+<p>Thanks for the tips, will give it a go.<br /><small><b>Thomas</b>  (<a href='http://www.ikb.dk/regnskabsservice'  title='www.ikb.dk/regnskabsservice'>URL</a>) - 11 02 11 - 17:05 </small></p>
+<a id="lastcomment"></a><p>A reader of my blog warned me that the solution presented in this blog does not work directly with Entity Framework for .NET 4.0. I haven't had any time to look into this, and I'm sure that this is easily solved, but please be warned.<br /><small><b>Steven</b>   - 25 05 11 - 23:16 </small></p>
+<p>Hey, <br />
+<br />
+Do you have any reccomendations for integrating EntLib 6 VAB with EF6 Code-First (no annotations)?<br />
+<br />
+Thanks for advise!<br />
+Sam<br /><small><b>Sam</b>   - 12 03 15 - 21:35 </small></p>
+
+			</div>
+
+		</div>
+
+		<hr />
+		
+		<div id="footer">
+			<p>&copy; 2007-2019 Steven van Deursen.<br /><span class="dontPrint"><a href="/blogs/steven/rss.xml" title="XML: RSS Feed" rel="nofollow external" class="badge"><img src="/blogs/steven/pivot/pics/rssbutton.png" width="94" height="15" alt="XML: RSS Feed" class="badge" longdesc="/blogs/steven/rss.xml" /></a> <a href="/blogs/steven/atom.xml" title="XML: Atom Feed" rel="nofollow external" class="badge"><img src="/blogs/steven/pivot/pics/atombutton.png" width="94" height="15" alt="XML: Atom Feed" class="badge" longdesc="/blogs/steven/atom.xml" /></a></span>
+			</p>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/CSharpCodeHighlighter0.10.js"></script>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/MSILCodeHighlighter0.1.js"></script>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/X86CodeHighlighter0.1.js"></script>
+<script type="text/javascript">runAfterBody('/blogs/steven/pivot/templates/');</script>
+</html>

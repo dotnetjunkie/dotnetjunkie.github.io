@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+		<title>
+				Protecting against XML Entity Expansion attacks &middot; .NET Junkie - Weblog of a workaholic
+		</title>
+	
+		
+		<link rel="stylesheet" href="/steven/css/style.css">
+		<link rel="stylesheet" href="/steven/css/overrides.css">
+		<link rel="stylesheet" href="/steven/css/Libre_Baskerville_400_400i_700.css">
+		
+		<link rel="icon" type="image/png" sizes="32x32" href="/steven/images/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/steven/images/favicon-16x16.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="/steven/images/apple-touch-icon.png">
+	
+		
+		<link href="" rel="alternate" type="application/rss+xml" title=".NET Junkie - Weblog of a workaholic" />
+	</head>
+	
+    <body>
+        		<nav class="nav">
+			<div class="nav-container">
+				<a href="/steven/">
+					<h2 class="nav-title">.NET Junkie - Weblog of a workaholic</h2>
+				</a>
+				<ul>
+    <li><a href="/steven/about">About</a></li>
+    <li><a href="/steven/">Posts</a></li>
+</ul>
+			</div>
+		</nav>
+
+        
+
+<main>
+	<div class="post">
+		<div class="post-info">
+    <span>Written by</span>
+        Steven van Deursen
+        <br>
+        <span>on&nbsp;</span><time datetime="2009-05-23 00:00:00 &#43;0000 UTC">May 23, 2009</time>
+</div>
+		<h1 class="post-title">Protecting against XML Entity Expansion attacks</h1>
+<div class="post-line"></div>
+
+		
+
+		
+
+<h3 id="tom-hollander-describes-on-his-blog-a-denial-of-service-attack-i-never-knew-the-existence-of-called-xml-entity-expansion-attack-tom-explains-how-to-bring-a-server-to-its-knees-when-allowing-any-type-of-xml-document-as-input-and-passing-it-directly-to-an-xmldocument-for-parsing">Tom Hollander describes on his blog a denial of service attack I never knew the existence of, called XML Entity Expansion attack. Tom explains how to bring a server to its knees when allowing any type of xml document as input and passing it directly to an XmlDocument for parsing.</h3>
+
+<p>Tom uses the following XML document of less than 1 KB to demonstrate the attack:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;!DOCTYPE foo [ 
+</span><span style="color:#75715e">&lt;!ENTITY a &#34;1234567890&#34; &gt;</span> 
+<span style="color:#75715e">&lt;!ENTITY b &#34;&amp;a;&amp;a;&amp;a;&amp;a;&amp;a;&amp;a;&amp;a;&amp;a;&#34; &gt;</span> 
+<span style="color:#75715e">&lt;!ENTITY c &#34;&amp;b;&amp;b;&amp;b;&amp;b;&amp;b;&amp;b;&amp;b;&amp;b;&#34; &gt;</span> 
+<span style="color:#75715e">&lt;!ENTITY d &#34;&amp;c;&amp;c;&amp;c;&amp;c;&amp;c;&amp;c;&amp;c;&amp;c;&#34; &gt;</span> 
+<span style="color:#75715e">&lt;!ENTITY e &#34;&amp;d;&amp;d;&amp;d;&amp;d;&amp;d;&amp;d;&amp;d;&amp;d;&#34; &gt;</span> 
+<span style="color:#75715e">&lt;!ENTITY f &#34;&amp;e;&amp;e;&amp;e;&amp;e;&amp;e;&amp;e;&amp;e;&amp;e;&#34; &gt;</span> 
+<span style="color:#75715e">&lt;!ENTITY g &#34;&amp;f;&amp;f;&amp;f;&amp;f;&amp;f;&amp;f;&amp;f;&amp;f;&#34; &gt;</span> 
+<span style="color:#75715e">&lt;!ENTITY h &#34;&amp;g;&amp;g;&amp;g;&amp;g;&amp;g;&amp;g;&amp;g;&amp;g;&#34; &gt;</span> 
+<span style="color:#75715e">&lt;!ENTITY i &#34;&amp;h;&amp;h;&amp;h;&amp;h;&amp;h;&amp;h;&amp;h;&amp;h;&#34; &gt;</span> 
+<span style="color:#75715e">&lt;!ENTITY j &#34;&amp;i;&amp;i;&amp;i;&amp;i;&amp;i;&amp;i;&amp;i;&amp;i;&#34; &gt;</span> 
+<span style="color:#75715e">&lt;!ENTITY k &#34;&amp;j;&amp;j;&amp;j;&amp;j;&amp;j;&amp;j;&amp;j;&amp;j;&#34; &gt;</span> 
+<span style="color:#75715e">&lt;!ENTITY l &#34;&amp;k;&amp;k;&amp;k;&amp;k;&amp;k;&amp;k;&amp;k;&amp;k;&#34; &gt;</span> 
+<span style="color:#75715e">&lt;!ENTITY m &#34;&amp;l;&amp;l;&amp;l;&amp;l;&amp;l;&amp;l;&amp;l;&amp;l;&#34; &gt;</span> 
+]&gt; 
+<span style="color:#f92672">&lt;foo&gt;</span>&amp;m;<span style="color:#f92672">&lt;/foo&gt;</span></code></pre></div>
+
+<p>See <a href="https://blogs.msdn.com/tomholl/archive/2009/05/21/protecting-against-xml-entity-expansion-attacks.aspx">his post</a> for more information and the proposed remedy.</p>
+
+<h2 id="comments">Comments</h2>
+
+
+		<hr />
+
+<h2 id="wish-to-comment">Wish to comment?</h2>
+
+<p>Comments are currently turned off as I switched to a static site generator. I will enable commenting again in the future, most likely using pull requests. Stay tuned...</p>
+
+
+
+<hr />
+
+<h2 id="buy-my-book">Buy my book</h2>
+
+<p style="margin-right:7%">
+<a href="https://manning.com/seemann2"><img src="/steven/images/book%20cover%20smaller.png" style="float:left;margin-right:10px;margin-bottom:5px;border:0px solid" title="Dependency Injection Principles, Practices, and Patterns" alt="Dependency Injection Principles, Practices, and Patterns Cover Small" /></a>
+I coauthored the book <a href="https://manning.com/seemann2">Dependency Injection Principles, Practices, and Patterns</a>. If you're interested to learn more about DI and software design in general, consider reading my book.
+</p>
+	</div>
+
+	<div class="pagination">
+		<a href="/steven/posts/2008/the-death-of-linq-to-sql/" class="left arrow">&#8592;</a>
+		<a href="/steven/posts/2010/protecting-against-regex-dos-attacks/" class="right arrow">&#8594;</a>
+
+		<a href="#" class="top">Top</a>
+	</div>
+</main>
+
+
+        		<footer>
+			<span>
+			&copy; <time datetime="2019-03-13 19:28:57.5802776 &#43;0100 CET m=&#43;0.211319201">2019</time> Steven van Deursen. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
+			</span>
+		</footer>
+
+    </body>
+</html>

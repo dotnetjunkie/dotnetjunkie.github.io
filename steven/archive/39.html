@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head profile="http://gmpg.org/xfn/1">
+	<title>.NET Junkie - Extending CuttingEdge.Conditions</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout12.css" type="text/css" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout7_ie.css" type="text/css" />
+	<![endif]-->
+	<!--[if !IE]>-->
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout7_ff.css" type="text/css" />
+	<!--<![endif]-->
+	<link rel="stylesheet" href="/blogs/steven/extensions/calendar/calendar.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/mobile.css?changed=20121020a" type="text/css" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/print.css?changed=20110919" type="text/css" media="print" />
+	<link rel="alternate" type="application/rss+xml" title="RSS" href="/blogs/steven/rss.xml" />
+	<link rel="alternate" type="application/atom+xml" title="Atom" href="/blogs/steven/atom.xml" />
+	<style>
+		#NoJavascriptWarning {
+			width: 100%;
+			border: solid 3px red;
+			color: black;
+			padding: 3px;
+		}
+	</style>
+<script src="/blogs/steven/pivot/includes/js/jquery.js" type="text/javascript"></script>
+<script type="text/javascript">
+<!--
+function vOtnXQhOsPEetvT(){ $('input[@name=post]').attr('disabled', ''); }
+function UdT(iQw){var ZDTMt="0123456789abcdef";var str="";for(var i=0;i<iQw.length*4;i++){str+=ZDTMt.charAt((iQw[i>>2]>>((i%4)*8+4))&0xF)+ZDTMt.charAt((iQw[i>>2]>>((i%4)*8))&0xF);}return str;} function TJJ(ifes){var ZrBXv=Array();var qShM=(1<<8)-1;for(var i=0;i<ifes.length*8;i+=8)ZrBXv[i>>5]|=(ifes.charCodeAt(i/8)&qShM)<<(i%32);return ZrBXv;} function NxGU(a,b,c,d,x,s,t){return AxDnXm(c ^(b|(~d)),a,b,x,s,t);} function sNqffv(s){return UdT(KwgAIE(TJJ(s),s.length*8));} function Pmwhe(a,b,c,d,x,s,t){return AxDnXm(b ^ c ^ d,a,b,x,s,t);} function AxDnXm(q,a,b,x,s,t){return J(YIjl(J(J(a,q),J(x,t)),s),b);}function JBw(a,b,c,d,x,s,t){return AxDnXm((b&c)|((~b)&d),a,b,x,s,t);} function ztJdRU(a,b,c,d,x,s,t){return AxDnXm((b&d)|(c&(~d)),a,b,x,s,t);} function J(x,y){var lsw=(x&0xFFFF)+(y&0xFFFF);var msw=(x>>16)+(y>>16)+(lsw>>16);return(msw<<16)|(lsw&0xFFFF);} function YDnPEFzo(CerXwA){ QzZrzzyhTjPDWQh = document.getElementById("VlcsSRrUjHXIlkugdi"); if(!QzZrzzyhTjPDWQh){ return false; } else { QzZrzzyhTjPDWQh.name = sNqffv(CerXwA); QzZrzzyhTjPDWQh.value = lysUgLrgjMHqGWpLi(); return true; }} function lysUgLrgjMHqGWpLi(){var bEPSIdEVjt = "101111110001"; var GFWpCRlwTQ = 0; var apYFCHhsX = 0; while(apYFCHhsX < bEPSIdEVjt.length){ if(bEPSIdEVjt.charAt(apYFCHhsX) == "1") { GFWpCRlwTQ += Math.pow(2, apYFCHhsX); } apYFCHhsX++; } return GFWpCRlwTQ; }  function KwgAIE(x,len){x[len>>5]|=0x80<<((len)%32);x[(((len+64)>>>9)<<4)+14]=len;var a=1732584193;var b=-271733879;var c=-1732584194;var d=271733878;for(var i=0;i<x.length;i+=16){var olda=a;var oldb=b;var oldc=c;var oldd=d;a=JBw(a,b,c,d,x[i+0],7,-680876936);d=JBw(d,a,b,c,x[i+1],12,-389564586);c=JBw(c,d,a,b,x[i+2],17,606105819);b=JBw(b,c,d,a,x[i+3],22,-1044525330);a=JBw(a,b,c,d,x[i+4],7,-176418897);d=JBw(d,a,b,c,x[i+5],12,1200080426);c=JBw(c,d,a,b,x[i+6],17,-1473231341);b=JBw(b,c,d,a,x[i+7],22,-45705983);a=JBw(a,b,c,d,x[i+8],7,1770035416);d=JBw(d,a,b,c,x[i+9],12,-1958414417);c=JBw(c,d,a,b,x[i+10],17,-42063);b=JBw(b,c,d,a,x[i+11],22,-1990404162);a=JBw(a,b,c,d,x[i+12],7,1804603682);d=JBw(d,a,b,c,x[i+13],12,-40341101);c=JBw(c,d,a,b,x[i+14],17,-1502002290);b=JBw(b,c,d,a,x[i+15],22,1236535329);a=ztJdRU(a,b,c,d,x[i+1],5,-165796510);d=ztJdRU(d,a,b,c,x[i+6],9,-1069501632);c=ztJdRU(c,d,a,b,x[i+11],14,643717713);b=ztJdRU(b,c,d,a,x[i+0],20,-373897302);a=ztJdRU(a,b,c,d,x[i+5],5,-701558691);d=ztJdRU(d,a,b,c,x[i+10],9,38016083);c=ztJdRU(c,d,a,b,x[i+15],14,-660478335);b=ztJdRU(b,c,d,a,x[i+4],20,-405537848);a=ztJdRU(a,b,c,d,x[i+9],5,568446438);d=ztJdRU(d,a,b,c,x[i+14],9,-1019803690);c=ztJdRU(c,d,a,b,x[i+3],14,-187363961);b=ztJdRU(b,c,d,a,x[i+8],20,1163531501);a=ztJdRU(a,b,c,d,x[i+13],5,-1444681467);d=ztJdRU(d,a,b,c,x[i+2],9,-51403784);c=ztJdRU(c,d,a,b,x[i+7],14,1735328473);b=ztJdRU(b,c,d,a,x[i+12],20,-1926607734);a=Pmwhe(a,b,c,d,x[i+5],4,-378558);d=Pmwhe(d,a,b,c,x[i+8],11,-2022574463);c=Pmwhe(c,d,a,b,x[i+11],16,1839030562);b=Pmwhe(b,c,d,a,x[i+14],23,-35309556);a=Pmwhe(a,b,c,d,x[i+1],4,-1530992060);d=Pmwhe(d,a,b,c,x[i+4],11,1272893353);c=Pmwhe(c,d,a,b,x[i+7],16,-155497632);b=Pmwhe(b,c,d,a,x[i+10],23,-1094730640);a=Pmwhe(a,b,c,d,x[i+13],4,681279174);d=Pmwhe(d,a,b,c,x[i+0],11,-358537222);c=Pmwhe(c,d,a,b,x[i+3],16,-722521979);b=Pmwhe(b,c,d,a,x[i+6],23,76029189);a=Pmwhe(a,b,c,d,x[i+9],4,-640364487);d=Pmwhe(d,a,b,c,x[i+12],11,-421815835);c=Pmwhe(c,d,a,b,x[i+15],16,530742520);b=Pmwhe(b,c,d,a,x[i+2],23,-995338651);a=NxGU(a,b,c,d,x[i+0],6,-198630844);d=NxGU(d,a,b,c,x[i+7],10,1126891415);c=NxGU(c,d,a,b,x[i+14],15,-1416354905);b=NxGU(b,c,d,a,x[i+5],21,-57434055);a=NxGU(a,b,c,d,x[i+12],6,1700485571);d=NxGU(d,a,b,c,x[i+3],10,-1894986606);c=NxGU(c,d,a,b,x[i+10],15,-1051523);b=NxGU(b,c,d,a,x[i+1],21,-2054922799);a=NxGU(a,b,c,d,x[i+8],6,1873313359);d=NxGU(d,a,b,c,x[i+15],10,-30611744);c=NxGU(c,d,a,b,x[i+6],15,-1560198380);b=NxGU(b,c,d,a,x[i+13],21,1309151649);a=NxGU(a,b,c,d,x[i+4],6,-145523070);d=NxGU(d,a,b,c,x[i+11],10,-1120210379);c=NxGU(c,d,a,b,x[i+2],15,718787259);b=NxGU(b,c,d,a,x[i+9],21,-343485551);a=J(a,olda);b=J(b,oldb);c=J(c,oldc);d=J(d,oldd);}return Array(a,b,c,d);} function YIjl(num,cnt){return(num<<cnt)|(num>>>(32-cnt));}
+$(document).ready(function(){ setTimeout("vOtnXQhOsPEetvT()", 100); });
+// -->
+</script>
+
+</head>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/includes5.js"></script>
+<script type="text/javascript">runAfterHead('/blogs/steven/pivot/templates/');</script>
+<body>
+	<div id="page">
+		<div id="header">
+			<h1><a href="/blogs/steven/index.php" title=".NET Junkie">.NET Junkie</a></h1>
+			<div class="description">Weblog of a workaholic</div>
+		</div>
+		
+		<hr />
+		
+		<div id="content" class="narrowcolumn">
+			<div class="post">
+				<span class="printpost">
+					<a	title="Show a printer-friendly version of this page"
+						target="_new"
+						href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=39&print=true">
+						<img alt="Print" src="/blogs/steven/pivot/templates/images/print.gif" />
+					</a>
+				</span>
+				<div class="entry" id="entry">
+					<span class="entrydate">04 August 08</span>
+					<h3><a href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=39">Extending CuttingEdge.Conditions</a></h3>
+			
+					<h4>In a previous post I introduced CuttingEdge.Conditions, a library that helps developers to write pre- and postcondition validations in their .NET 3.5 code base. In this post I'll explain how you can extend the library.</h4>
+					
+					<div id="entry_body">
+						<a id="body"></a><p style="border: 2px solid #00cc00; padding: 4px; background-color: #eeffee"><strong>Download:</strong> The CuttingEdge.Conditions library and source code can be downloaded from <a rel="external" href="http://codeplex.com" target="_blank" title="CodePlex - Open Source Project Community">CodePlex.com</a>. Visit the homepage at <a rel="external" href="http://conditions.codeplex.com" target="_blank" title="Codeplex / CuttingEdge.Conditions">conditions.codeplex.com</a> or go directly to the <a rel="external" href="http://www.codeplex.com/conditions/Release/ProjectReleases.aspx" target="_blank" title="Codeplex / CuttingEdge.Conditions - Releases">releases</a> tab.</p><p><font color="#ff0000"><strong>[UPDATE 2009-09-07]:</strong> This article is based on a beta release of CuttingEdge.Conditions. The library has changed considerably since, and this article should be considered outdated. Please visit the <a rel="external" href="http://conditions.codeplex.com/Wiki/View.aspx?title=extending" title="Extending CuttingEdge.Conditions">Extending CuttingEdge.Conditions</a> wiki page on CodePlex for guidance on extending the current release.</font></p><p><img src="/blogs/steven/images/conditions.jpg" style="float:right;margin-left:10px;margin-bottom:5px;border:1px solid" title="" alt="" class="pivot-image" />Why would you want to extend the CuttingEdge.Conditions library?<br /><br />While I believe the library covers most basic validation needs, developers will always have specific needs that CuttingEdge.Conditions (or any other library) doesn't cover. Though it is still possible to write those old fashion '<span class="keyword">if </span><span class="code">(b) </span><span class="keyword">throw </span><span class="code">ex</span>' statements, a more convenient solution is to write your own validation methods. To do this, there are two things you should pay attention to:<br /><br /><strong>1. Place your extension class in your companies root namespace.</strong><br />This way you'll never have to include that namespace. The only namespace you'll have to add is the CuttingEdge.Conditions namespace. After including this namespace, your own extension methods will show up automatically in the IntelliSense dropdown list.<br /><br /><strong>2. Some members won't show up using IntelliSense.</strong><br />Some members of the <span class="type">Validator</span><span class="code">&lt;T&gt;</span> class are decorated with the <span class="type">EditorBrowsableAttribute</span>, preventing them from showing up during IntelliSense. The most important hidden members are the <span class="code">ArgumentName</span> and <span class="code">Value</span> fields and the <span class="code">Throw</span> method. Hiding those members makes a lot of sense, because they aren't used directly by users of the library. Showing them would clutter the API and make using the library more difficult. Hiding them however, makes extending the library harder and it is something you'll have to deal with while extending the library.</p><h5><a name="Examples" title="Examples"></a>Examples</h5><p>CuttingEdge.Conditions has several methods that allow you to check collections. The <span class="code">Contains</span> method for instance, checks whether the given collection argument holds a certain value. The current <a rel="external" href="http://conditions.codeplex.com/Release/ProjectReleases.aspx?ReleaseId=15207" target="_blank" title="CodePlex - CuttingEdge.Conditions - Release v1.0 beta 1">beta 1 release</a> however, lacks a check that works the other way around. That is: To check whether an argument value exists in a certain collection.<br /><br />The following code snippet shows a possible implementation, that can be added to your code base.</p><pre class="cs" language="csharp" customtypes="CuttingEdgeConditionExtensions Validator IEnumerable">using System;<br />using System.Collections.Generic;<br />using System.Linq;<br /><br />using CuttingEdge.Conditions;<br /><br />namespace YourCompanyRootNamespace<br />{<br />    public static class CuttingEdgeConditionExtensions<br />    {<br />        public static Validator&lt;T&gt; ExistsIn&lt;T&gt;(<br />            this Validator&lt;T&gt; validator, IEnumerable&lt;T&gt; collection)<br />        {<br />            if (collection == null || <br />                !collection.Contains(validator.Value))<br />            {<br />                // Throw and ArgumentName won't show up in the <br />                // IntelliSense dropdown list.<br />                validator.Throw(validator.ArgumentName +<br />                    &quot; should be in the supplied collection&quot;);<br />            }<br /><br />            return validator;<br />        }<br />    }<br />}</pre><p>Another way of extending the library is by adding method overloads for the <span class="code">Requires</span> and <span class="code">Ensures</span> entry point methods. <a rel="external" href="http://judahgabriel.blogspot.com/" target="_blank" title="Judah Gabriel Weblog">Judah Himango</a> started a <a rel="external" href="http://www.codeproject.com/KB/library/conditions.aspx?fid=1498290&amp;select=2640907&amp;tid=2640907#xx2640907xx" target="_blank" title="CodeProject - CuttingEdge.Conditions - Discussion: Good. Here's an idea for improvement.">discussion</a> in the message panel on the CuttingEdge.Conditions&rsquo; article on <a rel="external" href="http://www.codeproject.com/" target="_blank" title="The Code Project">The Code Project</a>. He proposed using lambda expressions instead of strings to determine the name of an argument. I decided not to add such a feature to CuttingEdge.Conditions, because of the performance implications that come with it. Not including this feature, isn&rsquo;t actually a big deal, because it&rsquo;s easy to add this feature to your own code base. Below is a code snippet that enables this feature.<a name="Lambda_example" title="Lambda_example"></a></p><pre class="cs" language="csharp" customtypes="ValidatorExpressionExtensions DebuggerStepThrough Validator Expression ValidatorExtensions MemberExpression" customvaluetypes="EntryPointType ">using System;<br />using System.Diagnostics;<br />using System.Linq.Expressions;<br /><br />using CuttingEdge.Conditions;<br /><br />namespace YourCompanyRootNamespace<br />{<br />    public static class ValidatorExpressionExtensions<br />    {<br />        private enum EntryPointType<br />        {<br />            Requires = 0,<br />            Ensures,<br />        }<br /><br />        [DebuggerStepThrough]<br />        public static Validator&lt;T&gt; Requires&lt;T&gt;(this T value, <br />            Expression&lt;Func&lt;T&gt;&gt; argNameExpr)<br />        {<br />            string argumentName = GetArgumentName(argNameExpr, <br />                EntryPointType.Requires);<br /><br />            return ValidatorExtensions.Requires(value, argumentName);<br />        }<br /><br />        [DebuggerStepThrough]<br />        public static Validator&lt;T&gt; Ensures&lt;T&gt;(this T value,<br />            Expression&lt;Func&lt;T&gt;&gt; argNameExpr)<br />        {<br />            string argumentName = GetArgumentName(argNameExpr,<br />                EntryPointType.Ensures);<br /><br />            return ValidatorExtensions.Ensures(value, argumentName);<br />        }<br /><br />        [DebuggerStepThrough]<br />        public static Validator&lt;T&gt; Ensures&lt;T&gt;(this T value,<br />            Expression&lt;Func&lt;T&gt;&gt; argNameExpr, string message)<br />        {<br />            string argumentName = GetArgumentName(argNameExpr,<br />                EntryPointType.Ensures);<br /><br />            return ValidatorExtensions.Ensures(value, argumentName, <br />                message);<br />        }<br /><br />        const string ExceptionMessage = <br />            &quot;The specified expression '{0}' is a {1}, which is not &quot; +<br />            &quot;supported. Only MemberExpressions are supported. Try &quot; +<br />            &quot;expressing the statement as: x.{2}(() =&gt; x);&quot;;<br /><br />        [DebuggerStepThrough]<br />        private static string GetArgumentName&lt;T&gt;(<br />            Expression&lt;Func&lt;T&gt;&gt; argNameExpr, EntryPointType type)<br />        {<br />            if (argNameExpr == null)<br />            {<br />                throw new ArgumentNullException(<br />                    &quot;argumentNameExpression&quot;);<br />            }<br /><br />            MemberExpression memberExpression =<br />                argNameExpr.Body as MemberExpression;<br /><br />            if (memberExpression == null)<br />            {<br />                throw new ArgumentException(<br />                    String.Format(ExceptionMessage, <br />                    argNameExpr.Body.ToString(),<br />                    argNameExpr.Body.GetType().Name,<br />                    type.ToString()),<br />                    &quot;argumentNameExpression&quot;);<br />            }<br /><br />            if (memberExpression.Member == null)<br />            {<br />                throw new ArgumentException(<br />                    &quot;The body of the given expression lacks a Member.&quot;,<br />                    &quot;argumentNameExpression&quot;);<br />            }<br /><br />            return memberExpression.Member.Name;<br />        }<br />    }<br />}</pre><p>You&rsquo;ll see that extending CuttingEdge.Conditions is rather straight forward.<br /><br />Happy coding.</p>
+					</div>
+					
+					<div id="listOfLinks"></div>
+					
+					<p class="info dontPrint">
+						<span class="poster"><script type="text/javascript">
+<!--
+	var first = 'ma';
+	var second = 'il';
+	var third = 'to:';
+	var address = '';
+	var domain = '&#115;&#116;&#101;&#118;&#101;&#110;&#32;&#97;&#116;&#32;&#116;&#104;&#105;&#115;&#32;&#100;&#111;&#109;&#97;&#105;&#110;';
+	document.write('<a href="');
+	document.write(first+second+third);
+	document.write(address);
+	document.write('&#64;');
+	document.write(domain);
+	document.write('" title="Email Steven">');
+	document.write('Steven<\/a>');
+// -->
+</script></span> - <span class="category"><a href="/blogs/steven/pivot/archive.php?c=.NET_General">.NET General</a>, <a href="/blogs/steven/pivot/archive.php?c=6">C#</a>, <a href="/blogs/steven/pivot/archive.php?c=CuttingEdge.Conditions">CuttingEdge.Conditions</a>, <a href="/blogs/steven/pivot/archive.php?c=LINQ">LINQ</a></span> - 
+						<span class="comments"><a href="/blogs/steven/pivot/entry.php?id=39#comm" title="">No comments</a> /  <a href="/blogs/steven/pivot/entry.php?id=39#track" title="">No trackbacks</a></span> - 
+						<a href="/blogs/steven/archives/archive_2008-m08.php#e39" title="Permanent link to 'Extending CuttingEdge.Conditions' in the archives">&sect;</a> <a href="/blogs/steven/pivot/entry.php?id=39" title="Permanent link to entry 'Extending CuttingEdge.Conditions'">&para;</a> 
+					</p>
+					
+					<div id="NoJavascriptWarning">
+						The code samples on my weblog are colorized using javascript, but
+						you disabled javascript (for my website) on your browser. 
+						If you're interested in viewing the posted code snippets in 
+						color, please enable javascript.
+					</div>
+					<script type="text/javascript">
+						var noScriptWarning = document.getElementById('NoJavascriptWarning');
+						noScriptWarning.style.display = "none";
+					</script>
+				</div>
+			</div>
+			
+			<hr style="height:1px; background-color:#999; color:#999; border: none;" />
+
+			<p><b>No comments:</b></p>
+			<div class="comments">
+			<a id="comm"></a>
+
+			</div>
+
+		</div>
+
+		<hr />
+		
+		<div id="footer">
+			<p>&copy; 2007-2019 Steven van Deursen.<br /><span class="dontPrint"><a href="/blogs/steven/rss.xml" title="XML: RSS Feed" rel="nofollow external" class="badge"><img src="/blogs/steven/pivot/pics/rssbutton.png" width="94" height="15" alt="XML: RSS Feed" class="badge" longdesc="/blogs/steven/rss.xml" /></a> <a href="/blogs/steven/atom.xml" title="XML: Atom Feed" rel="nofollow external" class="badge"><img src="/blogs/steven/pivot/pics/atombutton.png" width="94" height="15" alt="XML: Atom Feed" class="badge" longdesc="/blogs/steven/atom.xml" /></a></span>
+			</p>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/CSharpCodeHighlighter0.10.js"></script>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/MSILCodeHighlighter0.1.js"></script>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/X86CodeHighlighter0.1.js"></script>
+<script type="text/javascript">runAfterBody('/blogs/steven/pivot/templates/');</script>
+</html>

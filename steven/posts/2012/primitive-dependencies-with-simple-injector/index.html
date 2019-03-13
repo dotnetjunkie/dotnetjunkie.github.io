@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+		<title>
+				Primitive Dependencies with Simple Injector &middot; .NET Junkie - Weblog of a workaholic
+		</title>
+	
+		
+		<link rel="stylesheet" href="/steven/css/style.css">
+		<link rel="stylesheet" href="/steven/css/overrides.css">
+		<link rel="stylesheet" href="/steven/css/Libre_Baskerville_400_400i_700.css">
+		
+		<link rel="icon" type="image/png" sizes="32x32" href="/steven/images/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/steven/images/favicon-16x16.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="/steven/images/apple-touch-icon.png">
+	
+		
+		<link href="" rel="alternate" type="application/rss+xml" title=".NET Junkie - Weblog of a workaholic" />
+	</head>
+	
+    <body>
+        		<nav class="nav">
+			<div class="nav-container">
+				<a href="/steven/">
+					<h2 class="nav-title">.NET Junkie - Weblog of a workaholic</h2>
+				</a>
+				<ul>
+    <li><a href="/steven/about">About</a></li>
+    <li><a href="/steven/">Posts</a></li>
+</ul>
+			</div>
+		</nav>
+
+        
+
+<main>
+	<div class="post">
+		<div class="post-info">
+    <span>Written by</span>
+        Steven van Deursen
+        <br>
+        <span>on&nbsp;</span><time datetime="2012-07-19 00:00:00 &#43;0000 UTC">July 19, 2012</time>
+</div>
+		<h1 class="post-title">Primitive Dependencies with Simple Injector</h1>
+<div class="post-line"></div>
+
+		
+
+		
+
+<h3 id="this-article-describes-how-to-extend-the-simple-injector-with-convension-based-configuration-for-primitive-constructor-arguments">This article describes how to extend the Simple Injector with convension based configuration for primitive constructor arguments.</h3>
+
+<h4 id="update-april-2017-for-a-simple-injector-v4-compatible-version-of-these-code-samples-please-see-here-https-github-com-simpleinjector-simpleinjector-blob-v4-0-x-src-simpleinjector-codesamples-parameterconventionextensions-cs"><strong>UPDATE April 2017:</strong> For a Simple Injector v4 compatible version of these code samples, please see <a href="https://github.com/simpleinjector/SimpleInjector/blob/v4.0.x/src/SimpleInjector.CodeSamples/ParameterConventionExtensions.cs">here</a>.</h4>
+
+<p>When working with dependency injection, services (classes that contain behavior) depend on other services. The general idea is to inject those services into the constructor of the consuming service. Primitive types are no services, since they contain no behavior, and I normally advice not to mix primitive types and services in a single constructor. My advice would normally be:</p>
+
+<ol>
+<li>Extract and group the primitives in their own &lsquo;configuration&rsquo; type and inject that type into the service, or</li>
+<li>Move those primitives to properties and use property injection.</li>
+</ol>
+
+<p>I find property injection nice, since those primitives are almost always system configuration values and removing them from the constructor (and thus separating them from the required service dependencies) seems very clean. It does however lead to <a href="https://blog.ploeh.dk/2011/05/24/DesignSmellTemporalCoupling/">temporal coupling</a>.</p>
+
+<p>The general consensus about property injection is however that it is supposed to be used for optional dependencies. This means that not injecting such dependency should allow the system to keep running. A connection string however is hardly ever optional, since without a connection string, it will be impossible to connect to the database. But since I don&rsquo;t really see those configuration values as &lsquo;real&rsquo; dependencies, I personally don&rsquo;t mind using property injection.</p>
+
+<p>Still, mixing primitives and services in the constructor can have a benefit, as explained by <a href="https://blog.ploeh.dk/">Mark Seemann</a> in <a href="https://blog.ploeh.dk/2012/07/02/PrimitiveDependencies/">his blog post about Primitive Dependencies</a>. In that post, Mark shows how to use <a href="https://en.wikipedia.org/wiki/Convention_over_configuration">convention over configuration</a> on primitive dependencies. For instance, by naming a string dependency &lsquo;xxxConnectionString&rsquo;, we can load the value by name &lsquo;xxx&rsquo; directly from the <code>&lt;connectionStrings&gt;</code> section of the application&rsquo;s configuration file. Or an primitive dependency, who&rsquo;s name ends with &lsquo;AppSettings&rsquo;, can be retrieved directly from the <code>&lt;appSettings&gt;</code> section.</p>
+
+<p>Personally, I&rsquo;m not sure whether I would like these types of conventions, because the name of the value in the configuration file, will be tightly coupled with your code. Besides, since the DI configuration takes a hard dependency on the configuration system, it becomes much harder to have some integration tests that verify the correctness of your DI configuration. Though, I must admit that it can make the container’s configuration simpler, because you won&rsquo;t have to create a new configuration type, use property injection, or fallback to using a lambda expression in registering the type. So let&rsquo;s see how we can implement such convention over configuration feature for <a href="https://simpleinjector.org/">Simple Injector</a>.</p>
+
+<p>Simple Injector contains extension points for changing the way constructor injection works. By default, Simple Injector disallows registering and injecting value types and strings, which is a good default, since this would promote ambiguity. The trick is to change the parameter parameter verification behavior (defined by the IConstructorVerificationBehavior interface) and the constructor injection behavior (defined by the IConstructorInjectionBehavior).</p>
+
+<p>By replacing the default implementations of these abstractions, we can extend Simple Injector to allow convention over configuration.</p>
+
+<p>Let&rsquo;s start by defining an abstraction for conventions on constructor parameters:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> IParameterConvention
+{
+    <span style="color:#66d9ef">bool</span> CanResolve(InjectionTargetInfo target);
+    Expression BuildExpression(InjectionConsumerInfo consumer);
+}</code></pre></div>
+
+<p>This interface implements the tester-doer pattern. We can ask the convention whether it can resolve the supplied injection target, and if it can, <code>BuildExpression</code> allows us to create an <code>Expression</code> object that defines the constructor argument. Simple Injector works with expression trees under the covers, which allows it to compile delegates with performance that is very close to newing types up manually. By letting a convention return an <code>Expression</code>, we will have best performance, and most flexibility in what and how a parameter must be injected.</p>
+
+<p>Mark Seemann uses a convention for connection strings and app settings. Let&rsquo;s stick with that example and those two conventions. Let&rsquo;s start with the <code>ConnectionStringsConvention</code>:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ConnectionStringsConvention</span> : IParameterConvention
+{
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">string</span> ConnectionStringPostFix = <span style="color:#e6db74">&#34;ConnectionString&#34;</span>;<span style="color:#a6e22e">
+</span><span style="color:#a6e22e">
+</span><span style="color:#a6e22e">    [DebuggerStepThrough]</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">bool</span> CanResolve(InjectionTargetInfo target)
+    {
+        <span style="color:#66d9ef">bool</span> resolvable =
+            target.TargetType == <span style="color:#66d9ef">typeof</span>(<span style="color:#66d9ef">string</span>) &amp;&amp;
+            target.Name.EndsWith(ConnectionStringPostFix) &amp;&amp;
+            target.Name.LastIndexOf(ConnectionStringPostFix) &gt; <span style="color:#ae81ff">0</span>;
+
+        <span style="color:#66d9ef">return</span> resolvable
+            ? <span style="color:#66d9ef">this</span>.VerifyConfigurationFile(target)
+            : resolvable;
+    }<span style="color:#a6e22e">
+</span><span style="color:#a6e22e">
+</span><span style="color:#a6e22e">    [DebuggerStepThrough]</span>
+    <span style="color:#66d9ef">public</span> Expression BuildExpression(
+        InjectionConsumerInfo consumer)
+    {
+        <span style="color:#66d9ef">string</span> connectionString =
+            GetConnectionString(consumer.Target);
+
+        <span style="color:#66d9ef">return</span> Expression.Constant(connectionString,
+            <span style="color:#66d9ef">typeof</span>(<span style="color:#66d9ef">string</span>));
+    }<span style="color:#a6e22e">
+</span><span style="color:#a6e22e">
+</span><span style="color:#a6e22e">    [DebuggerStepThrough]</span>
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> VerifyConfigurationFile(
+        InjectionTargetInfo target)
+    {
+        GetConnectionString(target);
+    }<span style="color:#a6e22e">
+</span><span style="color:#a6e22e">
+</span><span style="color:#a6e22e">    [DebuggerStepThrough]</span>
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">string</span> GetConnectionString(
+        InjectionTargetInfo target)
+    {
+        <span style="color:#66d9ef">string</span> name = target.Name.Substring(<span style="color:#ae81ff">0</span>,
+            target.Name.LastIndexOf(ConnectionStringPostFix));
+
+        <span style="color:#66d9ef">var</span> settings =
+            ConfigurationManager.ConnectionStrings<span style="color:#a6e22e">[name]</span>;
+
+        <span style="color:#66d9ef">if</span> (settings == <span style="color:#66d9ef">null</span>)
+        {
+            <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ActivationException(
+                <span style="color:#e6db74">$&#34;No connection string with name &#39;{name}&#39;&#34;</span> +
+                <span style="color:#e6db74">&#34;could be found in the application&#39;s &#34;</span> + 
+                <span style="color:#e6db74">&#34;configuration file.&#34;</span>);
+        }
+
+        <span style="color:#66d9ef">return</span> settings.ConnectionString;
+    }
+}</code></pre></div>
+
+<p>This <code>ConnectionStringsConvention</code> does a few interesting things. Its <code>CanResolve</code> method checks to see if the supplied injection target is of type <code>string</code> and its name ends with &lsquo;ConnectionString&rsquo;. If not, <code>CanResolve</code> returns <code>false</code> immediately, which means that we can fall back on Simple Injector’s default validation behavior (or any behavior that is has been defined previously). If the target matches, <code>CanResolve</code> will check if the value can be found in the <code>&lt;connectionStrings&gt;</code> section of the application&rsquo;s configuration file. An exception will be thrown when this is not the case. The <code>CanResolve</code> will get called during the registration process, and throwing an exception therefore allows us to let the application fail immediately when an invalid registration is made.</p>
+
+<p>Compared to the <code>CanResolve</code>, the <code>BuildExpression</code> method pretty simple. It retrieves the connection string value from the configuration file, wraps it in an expression and returns that expression. Since the configuration file can&rsquo;t change during the lifetime of an application (changes either have no effect, or in case of a web application, will cause the application to be restarted), it would be useless to reread the value every time a new instance of the depending type is created. The value is constant, and we can safely return a <code>ConstantExpression</code>. This also yields optimal performance.</p>
+
+<p>The <code>AppSettingsConvention</code> looks similar to the previous <code>ConnectionStringsConvention</code>. It too checks to see if the value exists in the configuration file. However, while the <code>ConnectionStringsConvention</code> would only deal with strings, the <code>AppSettingsConvention</code> can work with strings and any arbitrary value type that can be converted from a string (using .NET’s built-in <code>TypeConverter</code> system):</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AppSettingsConvention</span> : IParameterConvention
+{
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">string</span> AppSettingsPostFix = <span style="color:#e6db74">&#34;AppSetting&#34;</span>;<span style="color:#a6e22e">
+</span><span style="color:#a6e22e">
+</span><span style="color:#a6e22e">    [DebuggerStepThrough]</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">bool</span> CanResolve(InjectionTargetInfo target)
+    {
+        Type type = target.TargetType;
+
+        <span style="color:#66d9ef">bool</span> resolvable =
+            (type.IsValueType || type == <span style="color:#66d9ef">typeof</span>(<span style="color:#66d9ef">string</span>)) &amp;&amp;
+            target.Name.EndsWith(AppSettingsPostFix) &amp;&amp;
+            target.Name.LastIndexOf(AppSettingsPostFix) &gt; <span style="color:#ae81ff">0</span>;
+
+        <span style="color:#66d9ef">if</span> (resolvable)
+        {
+            <span style="color:#66d9ef">this</span>.VerifyConfigurationFile(target);
+        }
+
+        <span style="color:#66d9ef">return</span> resolvable;
+    }<span style="color:#a6e22e">
+</span><span style="color:#a6e22e">
+</span><span style="color:#a6e22e">    [DebuggerStepThrough]</span>
+    <span style="color:#66d9ef">public</span> Expression BuildExpression(InjectionConsumerInfo consumer)
+    {
+        <span style="color:#66d9ef">object</span> valueToInject = GetAppSettingValue(consumer.Target);
+        <span style="color:#66d9ef">return</span> Expression.Constant(valueToInject, consumer.Target.TargetType);
+    }<span style="color:#a6e22e">
+</span><span style="color:#a6e22e">
+</span><span style="color:#a6e22e">    [DebuggerStepThrough]</span>
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> VerifyConfigurationFile(InjectionTargetInfo target)
+    {
+        GetAppSettingValue(target);
+    }<span style="color:#a6e22e">
+</span><span style="color:#a6e22e">
+</span><span style="color:#a6e22e">    [DebuggerStepThrough]</span>
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">object</span> GetAppSettingValue(InjectionTargetInfo target)
+    {
+        <span style="color:#66d9ef">string</span> key = target.Name.Substring(<span style="color:#ae81ff">0</span>,
+            target.Name.LastIndexOf(AppSettingsPostFix));
+
+        <span style="color:#66d9ef">string</span> configurationValue = ConfigurationManager.AppSettings<span style="color:#a6e22e">[key]</span>;
+
+        <span style="color:#66d9ef">if</span> (configurationValue != <span style="color:#66d9ef">null</span>)
+        {
+            <span style="color:#66d9ef">var</span> converter = TypeDescriptor.GetConverter(target.TargetType);
+
+            <span style="color:#66d9ef">return</span> converter.ConvertFromString(
+                <span style="color:#66d9ef">null</span>,
+                CultureInfo.InvariantCulture,
+                configurationValue);
+        }
+
+        <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ActivationException(
+            <span style="color:#e6db74">&#34;No application setting with key &#39;{key}&#39; could be &#34;</span> +
+            <span style="color:#e6db74">&#34;found in the application&#39;s configuration file.&#34;</span>);
+    }
+}</code></pre></div>
+
+<p>Now we&rsquo;ve got two <code>IParameterConvention</code> implementations, we need to allow plugging these implementations in the Simple Injector 3 auto-wiring pipeline. All we need to do is to create a fairly trivial <code>IDependencyInjectionBehavior</code> implementation:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">internal</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ConventionDependencyInjectionBehavior</span>
+    : IDependencyInjectionBehavior
+{
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IDependencyInjectionBehavior decoratee;
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IParameterConvention convention;
+
+    <span style="color:#66d9ef">public</span> ConventionDependencyInjectionBehavior(
+        IDependencyInjectionBehavior decoratee,
+        IParameterConvention convention)
+    {
+        <span style="color:#66d9ef">this</span>.decoratee = decoratee;
+        <span style="color:#66d9ef">this</span>.convention = convention;
+    }<span style="color:#a6e22e">
+</span><span style="color:#a6e22e">
+</span><span style="color:#a6e22e">    [DebuggerStepThrough]</span>
+    <span style="color:#66d9ef">public</span> Expression BuildExpression(InjectionConsumerInfo consumer)
+    {
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>.convention.CanResolve(consumer.Target)
+            ? <span style="color:#66d9ef">this</span>.convention.BuildExpression(consumer)
+            : <span style="color:#66d9ef">this</span>.decoratee.BuildExpression(consumer);
+    }<span style="color:#a6e22e">
+</span><span style="color:#a6e22e">            
+</span><span style="color:#a6e22e">    [DebuggerStepThrough]</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Verify(InjectionConsumerInfo consumer)
+    {
+        <span style="color:#66d9ef">if</span> (!<span style="color:#66d9ef">this</span>.convention.CanResolve(consumer.Target))
+        {
+            <span style="color:#66d9ef">this</span>.decoratee.Verify(consumer);
+        }
+    }
+}</code></pre></div>
+
+<p>This <code>ConventionDependencyInjectionBehavior</code> is a decorator. It extends the container&rsquo;s original behavior with convention support. By extending the original behavior, it allows us to apply multiple conventions, or even mix it with other plug-ins that changed the default behavior of the container.</p>
+
+<p>Just one thing is missing, and that is a convenient extension method, that makes registering a new <code>IParameterConvention</code> a simple one-liner:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> RegisterParameterConvention(
+    <span style="color:#66d9ef">this</span> ContainerOptions options, IParameterConvention convention)
+{
+    options.DependencyInjectionBehavior =
+        <span style="color:#66d9ef">new</span> ConventionDependencyInjectionBehavior(
+            options.DependencyInjectionBehavior, 
+            convention);
+}</code></pre></div>
+
+<p>This extension method works over the <code>ContainerOptions</code> class and replaces the ContainerOptions&rsquo; original <code>DependencyInjectionBehavior</code> with our specially crafted version, while wrapping the original implementation. With this in place, we can use these conventions as follows:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> container = <span style="color:#66d9ef">new</span> Container();
+
+<span style="color:#75715e">// Add the parameter convensions:
+</span><span style="color:#75715e"></span>container.Options.RegisterParameterConvention(
+    <span style="color:#66d9ef">new</span> ConnectionStringsConvention());
+container.Options.RegisterParameterConvention(
+    <span style="color:#66d9ef">new</span> AppSettingsConvention());
+
+<span style="color:#75715e">// Registrations here
+</span><span style="color:#75715e"></span>container.Register&lt;IDbContext, MyDbContext&gt;();</code></pre></div>
+
+<p>And there you have it. Convention support for primitive dependencies with the Simple Injector 3.</p>
+
+<p>Happy injecting!</p>
+
+<h2 id="comments">Comments</h2>
+
+
+		<hr />
+
+<h2 id="wish-to-comment">Wish to comment?</h2>
+
+<p>Comments are currently turned off as I switched to a static site generator. I will enable commenting again in the future, most likely using pull requests. Stay tuned...</p>
+
+
+
+<hr />
+
+<h2 id="buy-my-book">Buy my book</h2>
+
+<p style="margin-right:7%">
+<a href="https://manning.com/seemann2"><img src="/steven/images/book%20cover%20smaller.png" style="float:left;margin-right:10px;margin-bottom:5px;border:0px solid" title="Dependency Injection Principles, Practices, and Patterns" alt="Dependency Injection Principles, Practices, and Patterns Cover Small" /></a>
+I coauthored the book <a href="https://manning.com/seemann2">Dependency Injection Principles, Practices, and Patterns</a>. If you're interested to learn more about DI and software design in general, consider reading my book.
+</p>
+	</div>
+
+	<div class="pagination">
+		<a href="/steven/posts/2012/returning-data-from-command-handlers/" class="left arrow">&#8592;</a>
+		<a href="/steven/posts/2012/writing-highly-maintainable-wcf-services/" class="right arrow">&#8594;</a>
+
+		<a href="#" class="top">Top</a>
+	</div>
+</main>
+
+
+        		<footer>
+			<span>
+			&copy; <time datetime="2019-03-13 19:28:57.5382781 &#43;0100 CET m=&#43;0.169319701">2019</time> Steven van Deursen. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
+			</span>
+		</footer>
+
+    </body>
+</html>

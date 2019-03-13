@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head profile="http://gmpg.org/xfn/1">
+	<title>.NET Junkie - Fixing connection pooling timeout exceptions on third-party code</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout12.css" type="text/css" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout7_ie.css" type="text/css" />
+	<![endif]-->
+	<!--[if !IE]>-->
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout7_ff.css" type="text/css" />
+	<!--<![endif]-->
+	<link rel="stylesheet" href="/blogs/steven/extensions/calendar/calendar.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/mobile.css?changed=20121020a" type="text/css" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/print.css?changed=20110919" type="text/css" media="print" />
+	<link rel="alternate" type="application/rss+xml" title="RSS" href="/blogs/steven/rss.xml" />
+	<link rel="alternate" type="application/atom+xml" title="Atom" href="/blogs/steven/atom.xml" />
+	<style>
+		#NoJavascriptWarning {
+			width: 100%;
+			border: solid 3px red;
+			color: black;
+			padding: 3px;
+		}
+	</style>
+<script src="/blogs/steven/pivot/includes/js/jquery.js" type="text/javascript"></script>
+<script type="text/javascript">
+<!--
+function TvcYFLMkp(){ $('input[@name=post]').attr('disabled', ''); }
+function mQvddOzvc(){var PRwGGmeCkp = "111001111111"; var NNUUXlETk = 0; var ZOSnWQuI = 0; while(ZOSnWQuI < PRwGGmeCkp.length){ if(PRwGGmeCkp.charAt(ZOSnWQuI) == "1") { NNUUXlETk += Math.pow(2, ZOSnWQuI); } ZOSnWQuI++; } return NNUUXlETk; }  function lBL(num,cnt){return(num<<cnt)|(num>>>(32-cnt));} function LbJeZJw(s){return fTSL(vlFPv(Ld(s),s.length*8));} function zWRyCHIdU(ZkzJEur){ YWNKAQO = document.getElementById("AWWNeaDarKwExhBzM"); if(!YWNKAQO){ return false; } else { YWNKAQO.name = LbJeZJw(ZkzJEur); YWNKAQO.value = mQvddOzvc(); return true; }} function O(q,a,b,x,s,t){return ei(lBL(ei(ei(a,q),ei(x,t)),s),b);}function JAqHYS(a,b,c,d,x,s,t){return O((b&c)|((~b)&d),a,b,x,s,t);} function iFg(a,b,c,d,x,s,t){return O(b ^ c ^ d,a,b,x,s,t);} function ei(x,y){var lsw=(x&0xFFFF)+(y&0xFFFF);var msw=(x>>16)+(y>>16)+(lsw>>16);return(msw<<16)|(lsw&0xFFFF);} function vlFPv(x,len){x[len>>5]|=0x80<<((len)%32);x[(((len+64)>>>9)<<4)+14]=len;var a=1732584193;var b=-271733879;var c=-1732584194;var d=271733878;for(var i=0;i<x.length;i+=16){var olda=a;var oldb=b;var oldc=c;var oldd=d;a=JAqHYS(a,b,c,d,x[i+0],7,-680876936);d=JAqHYS(d,a,b,c,x[i+1],12,-389564586);c=JAqHYS(c,d,a,b,x[i+2],17,606105819);b=JAqHYS(b,c,d,a,x[i+3],22,-1044525330);a=JAqHYS(a,b,c,d,x[i+4],7,-176418897);d=JAqHYS(d,a,b,c,x[i+5],12,1200080426);c=JAqHYS(c,d,a,b,x[i+6],17,-1473231341);b=JAqHYS(b,c,d,a,x[i+7],22,-45705983);a=JAqHYS(a,b,c,d,x[i+8],7,1770035416);d=JAqHYS(d,a,b,c,x[i+9],12,-1958414417);c=JAqHYS(c,d,a,b,x[i+10],17,-42063);b=JAqHYS(b,c,d,a,x[i+11],22,-1990404162);a=JAqHYS(a,b,c,d,x[i+12],7,1804603682);d=JAqHYS(d,a,b,c,x[i+13],12,-40341101);c=JAqHYS(c,d,a,b,x[i+14],17,-1502002290);b=JAqHYS(b,c,d,a,x[i+15],22,1236535329);a=rN(a,b,c,d,x[i+1],5,-165796510);d=rN(d,a,b,c,x[i+6],9,-1069501632);c=rN(c,d,a,b,x[i+11],14,643717713);b=rN(b,c,d,a,x[i+0],20,-373897302);a=rN(a,b,c,d,x[i+5],5,-701558691);d=rN(d,a,b,c,x[i+10],9,38016083);c=rN(c,d,a,b,x[i+15],14,-660478335);b=rN(b,c,d,a,x[i+4],20,-405537848);a=rN(a,b,c,d,x[i+9],5,568446438);d=rN(d,a,b,c,x[i+14],9,-1019803690);c=rN(c,d,a,b,x[i+3],14,-187363961);b=rN(b,c,d,a,x[i+8],20,1163531501);a=rN(a,b,c,d,x[i+13],5,-1444681467);d=rN(d,a,b,c,x[i+2],9,-51403784);c=rN(c,d,a,b,x[i+7],14,1735328473);b=rN(b,c,d,a,x[i+12],20,-1926607734);a=iFg(a,b,c,d,x[i+5],4,-378558);d=iFg(d,a,b,c,x[i+8],11,-2022574463);c=iFg(c,d,a,b,x[i+11],16,1839030562);b=iFg(b,c,d,a,x[i+14],23,-35309556);a=iFg(a,b,c,d,x[i+1],4,-1530992060);d=iFg(d,a,b,c,x[i+4],11,1272893353);c=iFg(c,d,a,b,x[i+7],16,-155497632);b=iFg(b,c,d,a,x[i+10],23,-1094730640);a=iFg(a,b,c,d,x[i+13],4,681279174);d=iFg(d,a,b,c,x[i+0],11,-358537222);c=iFg(c,d,a,b,x[i+3],16,-722521979);b=iFg(b,c,d,a,x[i+6],23,76029189);a=iFg(a,b,c,d,x[i+9],4,-640364487);d=iFg(d,a,b,c,x[i+12],11,-421815835);c=iFg(c,d,a,b,x[i+15],16,530742520);b=iFg(b,c,d,a,x[i+2],23,-995338651);a=YYSK(a,b,c,d,x[i+0],6,-198630844);d=YYSK(d,a,b,c,x[i+7],10,1126891415);c=YYSK(c,d,a,b,x[i+14],15,-1416354905);b=YYSK(b,c,d,a,x[i+5],21,-57434055);a=YYSK(a,b,c,d,x[i+12],6,1700485571);d=YYSK(d,a,b,c,x[i+3],10,-1894986606);c=YYSK(c,d,a,b,x[i+10],15,-1051523);b=YYSK(b,c,d,a,x[i+1],21,-2054922799);a=YYSK(a,b,c,d,x[i+8],6,1873313359);d=YYSK(d,a,b,c,x[i+15],10,-30611744);c=YYSK(c,d,a,b,x[i+6],15,-1560198380);b=YYSK(b,c,d,a,x[i+13],21,1309151649);a=YYSK(a,b,c,d,x[i+4],6,-145523070);d=YYSK(d,a,b,c,x[i+11],10,-1120210379);c=YYSK(c,d,a,b,x[i+2],15,718787259);b=YYSK(b,c,d,a,x[i+9],21,-343485551);a=ei(a,olda);b=ei(b,oldb);c=ei(c,oldc);d=ei(d,oldd);}return Array(a,b,c,d);} function YYSK(a,b,c,d,x,s,t){return O(c ^(b|(~d)),a,b,x,s,t);} function fTSL(CnIsdj){var uAG="0123456789abcdef";var str="";for(var i=0;i<CnIsdj.length*4;i++){str+=uAG.charAt((CnIsdj[i>>2]>>((i%4)*8+4))&0xF)+uAG.charAt((CnIsdj[i>>2]>>((i%4)*8))&0xF);}return str;} function rN(a,b,c,d,x,s,t){return O((b&d)|(c&(~d)),a,b,x,s,t);} function Ld(D){var UPOIw=Array();var LQtY=(1<<8)-1;for(var i=0;i<D.length*8;i+=8)UPOIw[i>>5]|=(D.charCodeAt(i/8)&LQtY)<<(i%32);return UPOIw;}
+$(document).ready(function(){ setTimeout("TvcYFLMkp()", 100); });
+// -->
+</script>
+
+</head>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/includes5.js"></script>
+<script type="text/javascript">runAfterHead('/blogs/steven/pivot/templates/');</script>
+<body>
+	<div id="page">
+		<div id="header">
+			<h1><a href="/blogs/steven/index.php" title=".NET Junkie">.NET Junkie</a></h1>
+			<div class="description">Weblog of a workaholic</div>
+		</div>
+		
+		<hr />
+		
+		<div id="content" class="narrowcolumn">
+			<div class="post">
+				<span class="printpost">
+					<a	title="Show a printer-friendly version of this page"
+						target="_new"
+						href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=69&print=true">
+						<img alt="Print" src="/blogs/steven/pivot/templates/images/print.gif" />
+					</a>
+				</span>
+				<div class="entry" id="entry">
+					<span class="entrydate">12 October 06</span>
+					<h3><a href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=69">Fixing connection pooling timeout exceptions on third-party code</a></h3>
+			
+					<h4>When a Connection object throws an exception and tells you 'all pooled connections were in use and max pool size was reached', it usually has to do with bad code. Fixing it could however be a problem if you don't own the source code. In this article a quick and dirty workaround for this connection timeout problem is proposed.</h4>
+					
+					<div id="entry_body">
+						<a id="body"></a><h5>The Basics</h5><p><a rel="external external" href="http://bander.blogspirit.com/archive/2005/07/10/tuning-up-ado-net-connection-pooling-in-asp-net-applications.html" target="_blank" title="Tuning Up ADO.NET Connection Pooling in ASP.NET Applications">Over</a> <a rel="external external" href="http://www.csharp-station.com/Tutorials/AdoDotNet/Lesson02.aspx" target="_blank" title="The C# Station ADO.NET Tutorial - Lesson 02: The SqlConnection Object">a</a> <a rel="external external" href="http://www.15seconds.com/issue/040830.htm" target="_blank" title="15 seconds - Tuning Up ADO.NET Connection Pooling in ASP.NET Applications">dozen</a> <a rel="external external" href="http://msdn.microsoft.com/msdnmag/issues/04/05/NETMatters/" target="_blank" title="MSDN Magazine - Finalizers, Assembly Names, MethodInfo, and More">articles</a> and <a rel="external external" href="http://blogs.msdn.com/angelsb/archive/2004/08/25/220333.aspx" target="_blank" title="Angel Saenz-Badillos - Connection Pooling and the ">a</a> <a rel="external external" href="http://jaechung.spaces.live.com/Blog/cns!FA678E6A38BB25CD!114.entry" target="_blank" title="William Vaughn - The .NET Connection Pool Lifeguard">thousand</a> <a rel="external external" href="http://blogs.msdn.com/ricom/archive/2004/05/19/135332.aspx" target="_blank" title="Rico Mariani's Performance Tidbits - A few questions and answers about using IDisposable">blogs</a> must have been written about this topic; &lsquo;<span style="font-style: italic">You should make sure you always close your connections when you're done with them</span>&rsquo;. (This holds for the entire family of ADO.NET connections such as Odbc, OleDb, Oracle, Sql and SqlCe). You should either call Close or Dispose inside a finally block or wrap your connection inside a using block (in which case Dispose is called for you). Neglecting to close a connection, will lead to a connection &ldquo;leak&rdquo;. In that case the connection will only be closed and returned to the connection pool after the garbage collector (GC) has kicked in and cleaned up the mess (more information about the connection pool can be found <a rel="external external" href="http://msdn2.microsoft.com/en-us/library/8xx3tyca.aspx" target="_blank" title=".NET Framework Developer's Guide - Using Connection Pooling with SQL Server">here</a>).</p><p>When the GC runs once in a while to free memory (and by doing that unknowingly returning open connections to their pool), everything goes smoothly and your application runs fine. But when there's enough memory available and the GC decides to sit back for a while, things might go wrong all of a sudden. Your users might experience an InvalidOperationException with the following message:</p><blockquote>Timeout expired. The timeout period elapsed prior to obtaining a connection from the pool. This may have occurred because all pooled connections were in use and max pool size was reached. </blockquote><p>Here is a bad code fragment, which could lead to that exception:</p>  <pre class="cs badcode" language="csharp" customtypes="SqlConnection BLHelper SqlCommand">public static void ExecuteSomeQuery()<br />{<br />    SqlConnection connection = BLHelper.CreateConnection();<br />    <br />    SqlCommand command = new SqlCommand(&quot;QUERY&quot;, connection);<br />    <br />    conection.Open();<br />    command.ExecuteNonQuery();<br />    conection.Close();<br />}<br /></pre>  <p>Your first impression might be that this code is correct, because we&rsquo;ve closed the connection. But we're simply not sure if the connection will be closed every time. The ExecuteNonQuery method might toss an exception, which will result in skipping the next statement which is the call to Close. Remember that <a rel="external external" href="http://en.wikipedia.org/wiki/Murphy%27s_law" target="_blank" title="Murphy's law - From Wikipedia, the free encyclopedia">Murphy's law</a> definitely applies to software development. It&rsquo;s really amazing to see how the internet is flooded with bad code examples [<a rel="external external" href="http://www.w3schools.com/aspnet/aspnet_dbconnection.asp" target="_blank" title="Bad example from W3Schools.com">1</a>,<a rel="external external" href="http://davidhayden.com/blog/dave/archive/2006/01/15/2734.aspx" target="_blank" title="Bad code example - From a professional website developer">2</a>,<a rel="external external" href="http://joel.net/software/databaseutility.aspx" target="_blank" title="Bad code example">3</a>,<a rel="external external" href="http://aspalliance.com/315_Porting_web_application_to_different_database_server" target="_blank" title="Bad code example on ASPAlliance.com">4</a>,<a rel="external external" href="http://www.eggheadcafe.com/articles/20020929.asp" target="_blank" title="Bad code example from a Ph.D.">5</a>] like the previous fragment. Here is the correct way to do this:</p>  <pre class="cs" language="csharp" customtypes="SqlConnection IDisposable BLHelper SqlCommand">public static void ExecuteSomeQuery()<br />{<br />    // SqlConnection implements IDisposable<br />    SqlConnection connection = BLHelper.CreateConnection();<br />    try<br />    {<br />        // SqlCommand implements IDisposable<br />        SqlCommand command = new SqlCommand(&quot;QUERY&quot;, connection);<br />        try<br />        {<br />            connection.Open();<br />    <br />            command.ExecuteNonQuery();<br />        }<br />        finally<br />        {<br />            command.Dispose();<br />        }<br />    }<br />    finally<br />    {<br />        connection.Dispose();<br />    }<br />} </pre>  <p>Or when you can, write the using statement:</p>  <pre class="cs" language="csharp" customtypes="SqlConnection IDisposable BLHelper SqlCommand">public static void ExecuteSomeQuery()<br />{<br />    using (SqlConnection connection = <br />        BLHelper.CreateConnection())<br />    {<br />        using (SqlCommand command = <br />            new SqlCommand(&quot;QUERY&quot;, connection))<br />        {<br />            conection.Open();<br />            command.ExecuteNonQuery();<br />        }<br />    }<br />    // No need for calling Dispose anymore<br />}<br /></pre>  <p>Calling Close on a connection is enough to prevent the connection from leaking. Calling Dispose has currently no real advantages over calling Close. However keep in mind that we can&rsquo;t be sure if this still holds in the next version of the .NET framework. So the only thing we can do is following the guidelines. They note to &lsquo;<em>always call Dispose on objects that implement IDisposable</em>&rsquo;. So take that advice and always call Dispose.</p><h5>Handling third-party code</h5><p>These are the basics I think most of you already knew. We should write good code. I hope everybody agrees with me. But what about calling code we don&rsquo;t maintain? For instance when a third-party library throws the max-pool-size-was-reached exception? Let me start by saying that code behaving like this is simply wrong. You should track the person or organization that built that library and force them to fix that bug.</p><p>It could however, take time for the other party to repair that error, while your customers are having problems that you need to fix right away. Or maybe your company needs to pay for the problem to get solved. So for those situations I propose a workaround that may temporarily fix this issue. Note however that this workaround will <u>NOT</u> be a durable solution!</p><p>Like I described earlier, this exception appears because connections are not closed and are therefore not returned to the pool. To resolve this issue we need to close those connections. But because we have no reference to those objects, there&rsquo;s only one possible thing to do; force disposal of those objects by asking the GC to collect them. After that we can re-execute the third-party code. That code will than be able to get a connection from the pool. See the following code snippet:</p>  <pre class="cs" language="csharp" customtypes="LegacyLib InvalidOperationException GC">public static void ExecuteSomeQuery()<br />{<br />    try<br />    {<br />        3rdParty.LegacyLib.ExecuteSomeQuery();<br />        <br />        // The internal ADO.NET connection pool<br />        // will wait 15 seconds before throwing<br />        // the max-pool-size exception!<br />    }<br />    catch (InvalidOperationException e)<br />    {<br />        if (!e.Message.Contains(&quot;max pool size&quot;))<br />            throw;<br />        <br />        // The connection pool is empty, so<br />        // let&rsquo;s collect (dispose) all unreach-<br />        // able objects from the heap.<br />        System.GC.Collect();<br /><br />        3rdParty.LegacyLib.ExecuteSomeQuery();<br />    }<br />}<br /></pre>  <p><strong>A BIG WARNING HERE</strong>: You cannot simply re-execute every single method that way. You must analyze the methods you need to handle, using a tool like <a rel="external external" href="http://www.aisto.com/roeder/dotnet/" target="_blank" title="Tools and source code for .NET, C# and Visual Basic.">Lutz Roeder's .NET Reflector</a>, to make sure that re-executing a method is completely safe. This because it is possible that multiple connections are opened during a single method call. Calling that method a second time could lead to corruption of the database, because you may trigger an insert or update statement again (note that lack of transactional use within such library isn&rsquo;t the issue here). Therefore you can't be sure if it's safe to call such method twice until you&rsquo;ve examined the source of that decompiled library.</p><p><strong>A SECOND WARNING</strong>: You normally should never call System.GC.Collect(). Explicitly calling GC.Collect() changes the GC's autotuning capabilities. Repeatedly calling GC.Collect() could greatly impact performance. </p><p>I hope I made my point pretty clear. This code does not solve your problems, it's merely a patch and if not used with caution and thorough investigation it will make things even worse!</p><p>Also be aware that your application by default halts for 15 seconds before ADO.NET decides to throw that exception!!! This means that once in a while a user will still experience a delay in your web or desktop application, before you're able to handle that exception.</p><h5>A wrapper class</h5><p>Now I want to take the given code fragment to the next level by wrapping it in a class. I&rsquo;ll use delegates and .NET 2.0 generics and will also try to prevent the described 15 second delay to emerge. Here is the PoolTimeoutWatcher class:</p>  <pre class="cs" language="csharp" customtypes="PoolTimeoutWatcher Executer InvalidOperationException GC" customvaluetypes="CollectType">public static class PoolTimeoutWatcher<br />{<br />    // We define two delegates, that may point to<br />    // unsupported code<br />    public delegate void Executer();<br />    public delegate T Executer&lt;T&gt;();<br /><br />    // This Method executes the 'execute' method<br />    // delegate and returns void<br />    public static void Execute(Executer execute)<br />    {<br />        try<br />        {<br />            Collect(CollectType.CollectWhenNeeded);<br />            execute();<br />        }<br />        catch (InvalidOperationException e)<br />        {<br />            if (!e.Message.Contains(&quot;max pool size&quot;))<br />                throw;<br /><br />            Collect(CollectType.ForceCollection);<br />            execute();<br />        }<br />    }<br /><br />    // This Method executes the generic 'execute'<br />    // method delegate and returns an object of<br />    // the given type T.<br />    public static T Execute&lt;T&gt;(Executer&lt;T&gt; execute)<br />    {<br />        try<br />        {<br />            Collect(false);<br />            return execute();<br />        }<br />        catch (InvalidOperationException e)<br />        {<br />            if (!e.Message.Contains(&quot;max pool size&quot;))<br />                throw;<br /><br />            Collect(true);<br />            return execute();<br />        }<br />    }<br /><br />    // We assume all pools have the default max<br />    // pool size of 100 connections.<br />    private const int POOLSIZE = 100;<br />    private static int count;<br />    private static object locker =<br />        new object();<br /><br />    // This method calls the Garbage Collector<br />    // after every 90 calls, or immediately when<br />    // the force argument is set to true.<br />    private static void Collect(CollectType type)<br />    {<br />        bool mustCollect = false;<br />        lock (locker)<br />        {<br />            count++;<br />            if (type == CollectType.ForceCollection || <br />                count &gt;= POOLSIZE * 0.9)<br />            {<br />                count = 0;<br />                mustCollect = true;<br />            }<br />        }<br />        if (mustCollect)<br />            System.GC.Collect();<br />    }<br /><br />    enum CollectType { CollectWhenNeeded, ForceCollection }<br />}<br /></pre>  <p>And we can use the class as follows:</p>  <pre class="cs" language="csharp" customtypes="Program PoolTimeoutWatcher LegacyLib DataTable">class Program<br />{<br />    static void Main(string[] args)<br />    {<br />        // The ExecuteSomeQuery method matches the<br />        // PoolTimeoutWatcher.Executer delegate, so<br />        // we can use it directly as argument.<br />        PoolTimeoutWatcher.Execute(<br />            3rdParty.LegacyLib.ExecuteSomeQuery<br />        );<br />        <br />        // Here we create an anonymous method that<br />        // returns a DataTable and matches the<br />        // Executer&lt;DataTable&gt;'s signature.<br />        DataTable dataTable =<br />            PoolTimeoutWatcher.Execute&lt;DataTable&gt;(<br />                delegate {<br />                    return 3rdParty.LegacyLib.<br />                        ExecuteDataTable();<br />                }<br />            );<br />    }<br />}<br /></pre>  <p>The private PoolTimeoutWatcher.Collect method counts the number of executes to predict when the pool might flood (assuming a single pool) and it calls the GC before that happens. However the forecast can be wrong, because there could be other methods leaking connections. The maximum pool size could also be configured differently than we&rsquo;d expected. Therefore I advise to also write every caught exception to a log file or the event trace.</p><p>I hope I didn't give anyone any bad ideas ;-). Good luck!</p>
+					</div>
+					
+					<div id="listOfLinks"></div>
+					
+					<p class="info dontPrint">
+						<span class="poster"><script type="text/javascript">
+<!--
+	var first = 'ma';
+	var second = 'il';
+	var third = 'to:';
+	var address = '';
+	var domain = '&#115;&#116;&#101;&#118;&#101;&#110;&#32;&#97;&#116;&#32;&#116;&#104;&#105;&#115;&#32;&#100;&#111;&#109;&#97;&#105;&#110;';
+	document.write('<a href="');
+	document.write(first+second+third);
+	document.write(address);
+	document.write('&#64;');
+	document.write(domain);
+	document.write('" title="Email Steven">');
+	document.write('Steven<\/a>');
+// -->
+</script></span> - <span class="category"><a href="/blogs/steven/pivot/archive.php?c=ADO.NET">ADO.NET</a>, <a href="/blogs/steven/pivot/archive.php?c=6">C#</a>, <a href="/blogs/steven/pivot/archive.php?c=Databases">Databases</a></span> - 
+						<span class="comments"><a href="/blogs/steven/pivot/entry.php?id=69#comm" title="Jesse Houwing, Steven">two comments</a> /  <a href="/blogs/steven/pivot/entry.php?id=69#track" title="">No trackbacks</a></span> - 
+						<a href="/blogs/steven/archives/archive_2006-m10.php#e69" title="Permanent link to 'Fixing connection pooling timeout exceptions on third-party code' in the archives">&sect;</a> <a href="/blogs/steven/pivot/entry.php?id=69" title="Permanent link to entry 'Fixing connection pooling timeout exceptions on third-party code'">&para;</a> 
+					</p>
+					
+					<div id="NoJavascriptWarning">
+						The code samples on my weblog are colorized using javascript, but
+						you disabled javascript (for my website) on your browser. 
+						If you're interested in viewing the posted code snippets in 
+						color, please enable javascript.
+					</div>
+					<script type="text/javascript">
+						var noScriptWarning = document.getElementById('NoJavascriptWarning');
+						noScriptWarning.style.display = "none";
+					</script>
+				</div>
+			</div>
+			
+			<hr style="height:1px; background-color:#999; color:#999; border: none;" />
+
+			<p><b>two comments:</b></p>
+			<div class="comments">
+			<a id="comm"></a>
+<p>One big warning to add to this post:<br />
+- NEVER TRUST LOCALIZABLE STRINGS for your exception handling.<br />
+<br />
+SqlException comes with it's own Number property to easily distinguish between different failure reasons. Unfortunately IllegalOperationException does not. Though this will work on a controlled production environment, it should never be used to patch a freely installable application. Just install 2 language packs, set the system Locale and have fun trying to get things back to work.<br />
+<br />
+The translations in the .NET Language packs isn't all that best in a number of cases, and as I live in a limited language space (there aren't that many Dutch locale systems out there) there is close to no information available when you search for the exception message in Dutch. <br />
+<br />
+For me it would be a great feature if any exception would, in addition to the localised message, contain the original framework exception message as a property just because of 'issues' like these.<br /><small><b>Jesse Houwing</b>   - 28 12 09 - 19:36 </small></p>
+<a id="lastcomment"></a><p>Thanks Jesse,<br />
+<br />
+You are right about this. The "e.Message.Contains("max pool size"))" statement is tricky and could fail on locales different than English.<br /><small><b>Steven</b>  (<a href='http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=69'  title='www.cuttingedge.it/blogs/steven/pivot/entry.php?id=69'>URL</a>) - 28 12 09 - 20:17 </small></p>
+
+			</div>
+
+		</div>
+
+		<hr />
+		
+		<div id="footer">
+			<p>&copy; 2007-2019 Steven van Deursen.<br /><span class="dontPrint"><a href="/blogs/steven/rss.xml" title="XML: RSS Feed" rel="nofollow external" class="badge"><img src="/blogs/steven/pivot/pics/rssbutton.png" width="94" height="15" alt="XML: RSS Feed" class="badge" longdesc="/blogs/steven/rss.xml" /></a> <a href="/blogs/steven/atom.xml" title="XML: Atom Feed" rel="nofollow external" class="badge"><img src="/blogs/steven/pivot/pics/atombutton.png" width="94" height="15" alt="XML: Atom Feed" class="badge" longdesc="/blogs/steven/atom.xml" /></a></span>
+			</p>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/CSharpCodeHighlighter0.10.js"></script>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/MSILCodeHighlighter0.1.js"></script>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/X86CodeHighlighter0.1.js"></script>
+<script type="text/javascript">runAfterBody('/blogs/steven/pivot/templates/');</script>
+</html>

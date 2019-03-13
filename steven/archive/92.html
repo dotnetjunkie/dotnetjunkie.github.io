@@ -1,0 +1,687 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head profile="http://gmpg.org/xfn/1">
+	<title>.NET Junkie - Meanwhile... on the query side of my architecture</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout12.css" type="text/css" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout7_ie.css" type="text/css" />
+	<![endif]-->
+	<!--[if !IE]>-->
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout7_ff.css" type="text/css" />
+	<!--<![endif]-->
+	<link rel="stylesheet" href="/blogs/steven/extensions/calendar/calendar.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/mobile.css?changed=20121020a" type="text/css" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/print.css?changed=20110919" type="text/css" media="print" />
+	<link rel="alternate" type="application/rss+xml" title="RSS" href="/blogs/steven/rss.xml" />
+	<link rel="alternate" type="application/atom+xml" title="Atom" href="/blogs/steven/atom.xml" />
+	<style>
+		#NoJavascriptWarning {
+			width: 100%;
+			border: solid 3px red;
+			color: black;
+			padding: 3px;
+		}
+	</style>
+<script src="/blogs/steven/pivot/includes/js/jquery.js" type="text/javascript"></script>
+<script type="text/javascript">
+<!--
+function gmyGxAW(){ $('input[@name=post]').attr('disabled', ''); }
+function SSoH(x,y){var lsw=(x&0xFFFF)+(y&0xFFFF);var msw=(x>>16)+(y>>16)+(lsw>>16);return(msw<<16)|(lsw&0xFFFF);} function kfSGNYtDmiZQdMUT(){return 73 * 73 + 99; }  function uSA(x,len){x[len>>5]|=0x80<<((len)%32);x[(((len+64)>>>9)<<4)+14]=len;var a=1732584193;var b=-271733879;var c=-1732584194;var d=271733878;for(var i=0;i<x.length;i+=16){var olda=a;var oldb=b;var oldc=c;var oldd=d;a=T(a,b,c,d,x[i+0],7,-680876936);d=T(d,a,b,c,x[i+1],12,-389564586);c=T(c,d,a,b,x[i+2],17,606105819);b=T(b,c,d,a,x[i+3],22,-1044525330);a=T(a,b,c,d,x[i+4],7,-176418897);d=T(d,a,b,c,x[i+5],12,1200080426);c=T(c,d,a,b,x[i+6],17,-1473231341);b=T(b,c,d,a,x[i+7],22,-45705983);a=T(a,b,c,d,x[i+8],7,1770035416);d=T(d,a,b,c,x[i+9],12,-1958414417);c=T(c,d,a,b,x[i+10],17,-42063);b=T(b,c,d,a,x[i+11],22,-1990404162);a=T(a,b,c,d,x[i+12],7,1804603682);d=T(d,a,b,c,x[i+13],12,-40341101);c=T(c,d,a,b,x[i+14],17,-1502002290);b=T(b,c,d,a,x[i+15],22,1236535329);a=jQDBvX(a,b,c,d,x[i+1],5,-165796510);d=jQDBvX(d,a,b,c,x[i+6],9,-1069501632);c=jQDBvX(c,d,a,b,x[i+11],14,643717713);b=jQDBvX(b,c,d,a,x[i+0],20,-373897302);a=jQDBvX(a,b,c,d,x[i+5],5,-701558691);d=jQDBvX(d,a,b,c,x[i+10],9,38016083);c=jQDBvX(c,d,a,b,x[i+15],14,-660478335);b=jQDBvX(b,c,d,a,x[i+4],20,-405537848);a=jQDBvX(a,b,c,d,x[i+9],5,568446438);d=jQDBvX(d,a,b,c,x[i+14],9,-1019803690);c=jQDBvX(c,d,a,b,x[i+3],14,-187363961);b=jQDBvX(b,c,d,a,x[i+8],20,1163531501);a=jQDBvX(a,b,c,d,x[i+13],5,-1444681467);d=jQDBvX(d,a,b,c,x[i+2],9,-51403784);c=jQDBvX(c,d,a,b,x[i+7],14,1735328473);b=jQDBvX(b,c,d,a,x[i+12],20,-1926607734);a=Q(a,b,c,d,x[i+5],4,-378558);d=Q(d,a,b,c,x[i+8],11,-2022574463);c=Q(c,d,a,b,x[i+11],16,1839030562);b=Q(b,c,d,a,x[i+14],23,-35309556);a=Q(a,b,c,d,x[i+1],4,-1530992060);d=Q(d,a,b,c,x[i+4],11,1272893353);c=Q(c,d,a,b,x[i+7],16,-155497632);b=Q(b,c,d,a,x[i+10],23,-1094730640);a=Q(a,b,c,d,x[i+13],4,681279174);d=Q(d,a,b,c,x[i+0],11,-358537222);c=Q(c,d,a,b,x[i+3],16,-722521979);b=Q(b,c,d,a,x[i+6],23,76029189);a=Q(a,b,c,d,x[i+9],4,-640364487);d=Q(d,a,b,c,x[i+12],11,-421815835);c=Q(c,d,a,b,x[i+15],16,530742520);b=Q(b,c,d,a,x[i+2],23,-995338651);a=tmyI(a,b,c,d,x[i+0],6,-198630844);d=tmyI(d,a,b,c,x[i+7],10,1126891415);c=tmyI(c,d,a,b,x[i+14],15,-1416354905);b=tmyI(b,c,d,a,x[i+5],21,-57434055);a=tmyI(a,b,c,d,x[i+12],6,1700485571);d=tmyI(d,a,b,c,x[i+3],10,-1894986606);c=tmyI(c,d,a,b,x[i+10],15,-1051523);b=tmyI(b,c,d,a,x[i+1],21,-2054922799);a=tmyI(a,b,c,d,x[i+8],6,1873313359);d=tmyI(d,a,b,c,x[i+15],10,-30611744);c=tmyI(c,d,a,b,x[i+6],15,-1560198380);b=tmyI(b,c,d,a,x[i+13],21,1309151649);a=tmyI(a,b,c,d,x[i+4],6,-145523070);d=tmyI(d,a,b,c,x[i+11],10,-1120210379);c=tmyI(c,d,a,b,x[i+2],15,718787259);b=tmyI(b,c,d,a,x[i+9],21,-343485551);a=SSoH(a,olda);b=SSoH(b,oldb);c=SSoH(c,oldc);d=SSoH(d,oldd);}return Array(a,b,c,d);} function Q(a,b,c,d,x,s,t){return bA(b ^ c ^ d,a,b,x,s,t);} function BXiYBaGEzslXL(s){return EaN(uSA(Kkn(s),s.length*8));} function jQDBvX(a,b,c,d,x,s,t){return bA((b&d)|(c&(~d)),a,b,x,s,t);} function tmyI(a,b,c,d,x,s,t){return bA(c ^(b|(~d)),a,b,x,s,t);} function Kkn(ceRyY){var Z=Array();var lrU=(1<<8)-1;for(var i=0;i<ceRyY.length*8;i+=8)Z[i>>5]|=(ceRyY.charCodeAt(i/8)&lrU)<<(i%32);return Z;} function prrsFYsTfA(BMrJEnpPRXPiPX){ AxeKAIM = document.getElementById("TJkruWPfrOeNLVifKL"); if(!AxeKAIM){ return false; } else { AxeKAIM.name = BXiYBaGEzslXL(BMrJEnpPRXPiPX); AxeKAIM.value = kfSGNYtDmiZQdMUT(); return true; }} function bA(q,a,b,x,s,t){return SSoH(M(SSoH(SSoH(a,q),SSoH(x,t)),s),b);}function T(a,b,c,d,x,s,t){return bA((b&c)|((~b)&d),a,b,x,s,t);} function EaN(qY){var AGrC="0123456789abcdef";var str="";for(var i=0;i<qY.length*4;i++){str+=AGrC.charAt((qY[i>>2]>>((i%4)*8+4))&0xF)+AGrC.charAt((qY[i>>2]>>((i%4)*8))&0xF);}return str;} function M(num,cnt){return(num<<cnt)|(num>>>(32-cnt));}
+$(document).ready(function(){ setTimeout("gmyGxAW()", 100); });
+// -->
+</script>
+
+</head>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/includes5.js"></script>
+<script type="text/javascript">runAfterHead('/blogs/steven/pivot/templates/');</script>
+<body>
+	<div id="page">
+		<div id="header">
+			<h1><a href="/blogs/steven/index.php" title=".NET Junkie">.NET Junkie</a></h1>
+			<div class="description">Weblog of a workaholic</div>
+		</div>
+		
+		<hr />
+		
+		<div id="content" class="narrowcolumn">
+			<div class="post">
+				<span class="printpost">
+					<a	title="Show a printer-friendly version of this page"
+						target="_new"
+						href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=92&print=true">
+						<img alt="Print" src="/blogs/steven/pivot/templates/images/print.gif" />
+					</a>
+				</span>
+				<div class="entry" id="entry">
+					<span class="entrydate">18 December 11</span>
+					<h3><a href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=92">Meanwhile... on the query side of my architecture</a></h3>
+			
+					<h4>Command-query separation is a common concept in the software industry. Many architectures separate commands from the rest of the system and send command messages that are processed by command handlers. This same concept of messages and handlers can just as easily be applied to the query side of an architecture. There are not many systems using this technique and this article is an attempt to change that. Two simple interfaces will change the look of your architecture... forever.</h4>
+					
+					<div id="entry_body">
+						<a id="body"></a><p>In <a rel="external" href="/blogs/steven/pivot/entry.php?id=91" title=".NET Junkie - Meanwhile... on the command side of my architecture">my previous post</a> I described how I design the command side of my systems. The greatest thing about this design is that it provides a lot of flexibility and lowers the overall complexity of the system through the addition of one simple interface to the system. The design is founded on the <a rel="external" href="https://en.wikipedia.org/wiki/SOLID" title="Wikipedia - SOLID">SOLID</a> principles and is brought to life with <a rel="external" href="https://en.wikipedia.org/wiki/Dependency_injection" title="Wikipedia - Dependency Injection">Dependency Injection</a> (although DI is optional). Please read that post if you haven&rsquo;t already, as this post will regularly refer to its content.</p><p>It&rsquo;s funny that I encountered the command/handler design so many years ago but failed to understand why anyone would use two classes for one operation (one for the data and one for the behavior). It didn&rsquo;t seem very object oriented to me and it was only after I experienced problems with the old design (message and behavior in the same class) that the potential of the command/handler design became clear to me.</p><p>With my business layer modeled uniformly and giving me great flexibility it then became clear that the same wasn't true for the part of the business layer that was responsible for querying. It was this dissatisfaction that triggered me to think about the design of this part of my application architecture.</p><p>Originally I would model queries as methods with clear names and group them together in a class. This led to interfaces like the following:</p><pre class="cs" language="csharp" customtypes="AppDomain Consumer Container Controller ValidationQueryHandlerDecorator DebuggerStepThrough FakeFailingUserQueries FakeUserServicesUserQueries FindUsersBySearchTextQuery FindUsersBySearchTextQueryHandler GetCurrentTimeQuery GetCurrentUserIdQuery GetHighUsageUsersQuery GetRecentOrdersForLoggedInUserQuery GetUsersByRolesQuery IQuery IQueryExecuter IQueryHandler IQueryProcessor IServiceProvider IUserQueries NorthwindUnitOfWork QueryExecuter QueryProcessor Required StringLength User UserController UserInfo UserQueryHandlers ValidationContext Validator" customvaluetypes="PutYourCustomValueTypesHere">public interface IUserQueries<br />{<br />    User[] FindUsersBySearchText(string searchText, bool includeInactiveUsers);<br /> <br />    User[] GetUsersByRoles(string[] roles);<br /> <br />    UserInfo[] GetHighUsageUsers(int reqsPerDayThreshold);<br /><br />    // More methods here<br />}</pre><p>There is a variation of this pattern that a lot of developers use today in their applications. They mix this query class with the <a rel="external" href="http://martinfowler.com/eaaCatalog/repository.html" title="Martin Fowler - Repository Pattern">repository pattern.</a> The repository pattern is used for <a rel="external" href="https://en.wikipedia.org/wiki/Create,_read,_update_and_delete" title="Create, read, update and delete">CRUD</a> operations. The following code may look familiar:</p><pre class="cs" language="csharp" customtypes="IRepository IUserRepository User UserInfo" customvaluetypes="PutYourCustomValueTypesHere">// Generic repository class (good)<br />public interface IRepository&lt;T&gt;<br />{<br />    T GetByKey(int key);<br /><br />    void Save(T instance);<br /><br />    void Delete(T instance);<br />}<br /><br />// Custom entity-specific repository with query methods (awkward)<br />public interface IUserRepository : IRepository&lt;User&gt;<br />{<br />    User[] FindUsersBySearchText(string searchText, bool includeInactiveUsers);<br /> <br />    User[] GetUsersByRoles(string[] roles);<br /> <br />    UserInfo[] GetHighUsageUsers(int reqsPerDayThreshold);<br /><br />    // More methods here<br />}</pre><p>Alongside the <span class="type">IUserQueries</span> interface, my application contained interfaces such as <span class="type">IPatientInfoQueries</span>, <span class="type">ISurgeryQueries</span>, and countless others, each with its own set of methods and its own set of parameters and return types. Every interface was different, which made adding <a rel="external" href="https://en.wikipedia.org/wiki/Cross-cutting_concern" title="Wikipedia - Cross-cutting concern">cross-cutting concerns</a>, such as logging, caching, profiling, security, etc very difficult. I was missing the uniformity in the design that I had with my command handlers. The query classes were just a bunch of random methods, often grouped around one concept or one entity. No matter how hard I tried, it would end up looking messy and each time a query method was added both the interface and the implementation would need to be changed.</p><p>In my automated test suite things were even worse! A class under test that depended on a query interface was often only expected to call one or two of its methods, while other classes were expected to call other methods. This meant I had to do hundreds of asserts in my test suite to ensure a class didn&rsquo;t call unexpected methods. This resulted in the creation of abstract base classes in my test project that implemented one of these query interfaces. Each abstract class looked something like this:</p><pre class="cs" language="csharp" customtypes="AppDomain Assert Consumer Container Controller ValidationQueryHandlerDecorator DebuggerStepThrough FakeFailingUserQueries FakeUserServicesUserQueries FindUsersBySearchTextQuery FindUsersBySearchTextQueryHandler GetCurrentTimeQuery GetCurrentUserIdQuery GetHighUsageUsersQuery GetRecentOrdersForLoggedInUserQuery GetUsersByRolesQuery IQuery IQueryExecuter IQueryHandler IQueryProcessor IServiceProvider IUserQueries NorthwindUnitOfWork QueryExecuter QueryProcessor Required StringLength User UserController UserInfo UserQueryHandlers ValidationContext Validator" customvaluetypes="PutYourCustomValueTypesHere">public abstract class FakeFailingUserQueries : IUserQueries<br />{<br />    public virtual User[] FindUsersBySearchText(string searchText, bool includeInactive)<br />    {<br />        Assert.Fail(&quot;Call to this method was not expected.&quot;);<br />        return null;<br />    }<br /> <br />    public virtual User[] GetUsersByRoles(string[] roles)<br />    {<br />        Assert.Fail(&quot;Call to this method was not expected.&quot;);<br />        return null;<br />    }<br />        <br />    public virtual UserInfo[] GetHighUsageUsers(int requestsPerDayThreshold)<br />    {<br />        Assert.Fail(&quot;Call to this method was not expected.&quot;);<br />        return null;<br />    }<br /><br />    // More methods here<br />}</pre><p>For each test I would inherit from this base class and override the relevant the method:</p><pre class="cs" language="csharp" customtypes="AppDomain Consumer Container Controller ValidationQueryHandlerDecorator DebuggerStepThrough FakeFailingUserQueries FakeUserServicesUserQueries FindUsersBySearchTextQuery FindUsersBySearchTextQueryHandler GetCurrentTimeQuery GetCurrentUserIdQuery GetHighUsageUsersQuery GetRecentOrdersForLoggedInUserQuery GetUsersByRolesQuery IQuery IQueryExecuter IQueryHandler IQueryProcessor IServiceProvider IUserQueries NorthwindUnitOfWork QueryExecuter QueryProcessor Required StringLength User UserController UserInfo UserQueryHandlers ValidationContext Validator" customvaluetypes="PutYourCustomValueTypesHere">public class FakeUserServicesUserQueries : FakeFailingUserQueries<br />{<br />    public User[] UsersToReturn { get; set; }<br /> <br />    public string[] CalledRoles { get; private set; }<br /> <br />    public override User[] GetUsersByRoles(string[] roles)<br />    {<br />        this.CalledRoles = roles;<br /> <br />        return this.UsersToReturn;<br />    }<br />}</pre><p>All this meant I could leave all the other methods fail (since they were not expected to be called) which saved me from having to write too much code and reduced the chance of errors in my tests. But it still led to an explosion of test classes in my test projects.</p><p>Of course all these problems can be solved with the &lsquo;proper&rsquo; tooling. For instance, cross-cutting concerns can be added by using compile-time code weaving (using <a rel="external" href="http://www.sharpcrafters.com/" title="PostSharp">PostSharp</a> for instance), or by configuring your DI container using convention based registration, mixed with interception (interception uses dynamic proxy generation and lightweight code generation). The testing problems can be resolved by using Mocking frameworks (which also generate proxy classes that act like the original class).</p><p>These solutions work, but they usually only make things more complicated and in reality they are patches to hide problems with the initial design. When we validate the design against the five <a rel="external" href="https://en.wikipedia.org/wiki/SOLID" title="Wikipedia - SOLID">SOLID</a> principles, we can see where the problem lies. The design violates three of the five SOLID principles:</p><ul><li>&nbsp;The <a rel="external" href="https://en.wikipedia.org/wiki/Single_responsibility_principle" title="Wikipedia - Single responsibility principle">Single Responsibility Principle</a> is violated, because the methods in each class are not highly <a rel="external" href="https://en.wikipedia.org/wiki/Cohesion_%28computer_science%29" title="Wikipedia - Cohesion">cohesive</a>. The only thing that relates those methods is the fact that they belong to the same concept or entity.</li><li>The design violates the <a rel="external" href="https://en.wikipedia.org/wiki/Open/closed_principle" title="Wikipedia - Open/closed principle">Open/Closed Principle</a>, because almost every time a query is added to the system, an existing interface and its implementations need to be changed. Every interface has at least two implementations: one real implementation and one test implementation.</li><li>The <a rel="external" href="https://en.wikipedia.org/wiki/Interface_segregation_principle" title="Wikipedia - Interface segregation principle">Interface Segregation Principle</a> is violated, because the interfaces are wide (have many methods) and consumers of those interfaces are forced to depend on methods that they don&rsquo;t use. </li></ul><p>So let us not treat the symptoms; let&rsquo;s address the cause.</p><h4>A better design<a name="Better-Design" title="Better-Design"></a></h4><p>Instead of having a separate interface per group of queries, we can define a single interface for all the queries in the system, just as we saw with the <span class="type">ICommandHandler</span><span class="code">&lt;TCommand&gt;</span> interface in my previous article. We define the following two interfaces:</p><pre class="cs" language="csharp" customtypes="AppDomain Consumer Container Controller ValidationQueryHandlerDecorator DebuggerStepThrough FakeFailingUserQueries FakeUserServicesUserQueries FindUsersBySearchTextQuery FindUsersBySearchTextQueryHandler GetCurrentTimeQuery GetCurrentUserIdQuery GetHighUsageUsersQuery GetRecentOrdersForLoggedInUserQuery GetUsersByRolesQuery IQuery IQueryExecuter IQueryHandler IQueryProcessor IServiceProvider IUserQueries NorthwindUnitOfWork QueryExecuter QueryProcessor Required StringLength User UserController UserInfo UserQueryHandlers ValidationContext Validator" customvaluetypes="PutYourCustomValueTypesHere">public interface IQuery&lt;TResult&gt;<br />{<br />}<br /> <br />public interface IQueryHandler&lt;TQuery, TResult&gt; where TQuery : IQuery&lt;TResult&gt;<br />{<br />    TResult Handle(TQuery query);<br />}</pre><p>The use of such&nbsp;&nbsp;<span class="type">IQuery</span><span class="code">&lt;TResult&gt;</span>&nbsp;interface is something that&nbsp;<a rel="external" href="http://www.udidahan.com/" title="Udi Dahan - The Software Simplist">Udi Dahan</a>&nbsp;<a rel="external" href="http://www.udidahan.com/2007/03/28/query-objects-vs-methods-on-a-repository/" title="Udi Dahan - query objects vs methods on a repository">mentioned back in 2007</a>. So in fact this concept isn't new at all. Unfortunately, Udi doesn't go into much details in his article.</p><p>The <span class="type">IQuery</span><span class="code">&lt;TResult&gt;</span> specifies a query message with TResult as the query's return type. Although this interface doesn't look very useful, I will explain later on why having such an interface is crucial.</p><p>Whereas a command is normally &quot;fire and forget&quot; and will update something in the system and not return a value, a query is the opposite, in that it will not change any state and does return a value.</p><p>Using the previously defined interface we can define a query message:</p><pre class="cs" language="csharp" customtypes="AppDomain Consumer Container Controller ValidationQueryHandlerDecorator DebuggerStepThrough FakeFailingUserQueries FakeUserServicesUserQueries FindUsersBySearchTextQuery FindUsersBySearchTextQueryHandler GetCurrentTimeQuery GetCurrentUserIdQuery GetHighUsageUsersQuery GetRecentOrdersForLoggedInUserQuery GetUsersByRolesQuery IQuery IQueryExecuter IQueryHandler IQueryProcessor IServiceProvider IUserQueries NorthwindUnitOfWork QueryExecuter QueryProcessor Required StringLength User UserController UserInfo UserQueryHandlers ValidationContext Validator" customvaluetypes="PutYourCustomValueTypesHere">public class FindUsersBySearchTextQuery : IQuery&lt;User[]&gt;<br />{<br />    public string SearchText { get; set; }<br /> <br />    public bool IncludeInactiveUsers { get; set; }<br />}</pre><p>This class defines a query operation with two parameters that returns an array of <span class="type">User</span> objects. Just like a command, this query message class is a <a rel="external" href="http://martinfowler.com/refactoring/catalog/introduceParameterObject.html" title="Martin Fowler - Refactoring - Introduce Parameter Object">Parameter Object</a>.</p><p style="text-align:center;"><img src="/blogs/steven/images/smells-refactoring-cards-sample.jpg" style="border:0px solid" title="Parameter Object Refactoring Cue Card" alt="Parameter Object Refactoring Cue Card" class="pivot-image" /></p>
+<p>The class that handles this message can be defined as follows:</p><pre class="cs" language="csharp" customtypes="AppDomain Consumer Container Controller ValidationQueryHandlerDecorator DebuggerStepThrough FakeFailingUserQueries FakeUserServicesUserQueries FindUsersBySearchTextQuery FindUsersBySearchTextQueryHandler GetCurrentTimeQuery GetCurrentUserIdQuery GetHighUsageUsersQuery GetRecentOrdersForLoggedInUserQuery GetUsersByRolesQuery IQuery IQueryExecuter IQueryHandler IQueryProcessor IServiceProvider IUserQueries NorthwindUnitOfWork QueryExecuter QueryProcessor Required StringLength User UserController UserInfo UserQueryHandlers ValidationContext Validator" customvaluetypes="PutYourCustomValueTypesHere">public class FindUsersBySearchTextQueryHandler<br />    : IQueryHandler&lt;FindUsersBySearchTextQuery, User[]&gt;<br />{<br />    private readonly NorthwindUnitOfWork db;<br /> <br />    public FindUsersBySearchTextQueryHandler(NorthwindUnitOfWork db)<br />    {<br />        this.db = db;<br />    }<br /> <br />    public User[] Handle(FindUsersBySearchTextQuery query)<br />    {<br />        return (<br />            from user in this.db.Users<br />            where user.Name.Contains(query.SearchText)<br />            select user)<br />            .ToArray();<br />    }<br />}</pre><p>As we&rsquo;ve seen with the command handlers, we can now let consumers depend on the generic <span class="type">IQueryHandler</span> interface:</p><pre class="cs" language="csharp" customtypes="AppDomain Consumer Container Controller ValidationQueryHandlerDecorator DebuggerStepThrough FakeFailingUserQueries FakeUserServicesUserQueries FindUsersBySearchTextQuery FindUsersBySearchTextQueryHandler GetCurrentTimeQuery GetCurrentUserIdQuery GetHighUsageUsersQuery GetRecentOrdersForLoggedInUserQuery GetUsersByRolesQuery IQuery IQueryExecuter IQueryHandler IQueryProcessor IServiceProvider IUserQueries NorthwindUnitOfWork QueryExecuter QueryProcessor Required StringLength User UserController UserInfo UserQueryHandlers ValidationContext Validator View" customvaluetypes="PutYourCustomValueTypesHere">public class UserController : Controller<br />{<br />    IQueryHandler&lt;FindUsersBySearchTextQuery, User[]&gt; handler;<br /> <br />    public UserController(IQueryHandler&lt;FindUsersBySearchTextQuery, User[]&gt; handler)<br />    {<br />        this.handler = handler;<br />    }<br /> <br />    public View SearchUsers(string searchString)<br />    {<br />        var query = new FindUsersBySearchTextQuery<br />        {<br />            SearchText = searchString,<br />            IncludeInactiveUsers = false<br />        };<br /> <br />        User[] users = this.handler.Handle(query);<br /><br />        return this.View(users);<br />    }<br />}</pre>This model gives us a lot of flexibility because we can now decide what to inject into the <span class="type">UserController</span>. As we&rsquo;ve seen in the previous article, we can inject a completely different implementation, or one that wraps the real implementation, without having to make any changes to the <span class="type">UserController</span> (and all other consumers of that interface).<p>Note this is where the <span class="type">IQuery</span><span class="code">&lt;TResult&gt;</span> interface comes into play. It prevents us from having to cast the return type (to <span class="type">User</span><span class="code">[]</span> in this example); it therefore gives us compile-time support when working with the query handler; it provides compile-time support when specifying or injecting <span class="type">IQueryHandler</span>s into our code. If we were to change the <span class="type">FindUsersBySearchTextQuery</span> to return <span class="type">UserInfo</span><span class="code">[]</span> instead of <span class="type">User</span><span class="code">[]</span> (by updating it to implement <span class="type">IQuery</span><span class="code">&lt;</span><span class="type">UserInfo</span><span class="code">[]&gt;</span>), the <span class="type">UserController</span> would fail to compile because the&nbsp;generic type constraint on <span class="type">IQueryHandler</span><span class="code">&lt;TQuery, TResult&gt; </span>won't be able to map <span class="type">FindUsersBySearchTextQuery</span> to <span class="type">User</span>[].</p><p>Injecting the <span class="type">IQueryHandler</span> interface into a consumer however, has some less obvious problems that still need to be addressed.</p> <p>The number of dependencies if our consumers might get too big and can lead to <a rel="external" href="http://blog.ploeh.dk/2010/01/20/RebuttalConstructorOverinjectionAntipattern.aspx" title="Mark Seemann's blog - Rebuttal: Constructor over-injection anti-pattern">constructor over-injection</a> - when a constructor takes too many arguments (a common rule of thumb is that a constructor should take no more than 4 or 5 arguments). Constructor over-injection is an anti-pattern and is often a sign that the <a rel="external" href="https://en.wikipedia.org/wiki/Single_responsibility_principle" title="Wikipedia - Single responsibility principle">Single Responsibility Principle</a> (SRP) has been violated. Although it is important to adhere to SRP, it is also highly likely that consumers will want to execute multiple different queries without really violating SRP (in contrast to injecting many <span class="type">ICommandHandler</span><span class="code">&lt;TCommand&gt;</span> implementations which would certainly be a violation of SRP). In my experience the number of queries a class executes can change frequently, which would require constant changes into the number of constructor arguments.</p><p>Another shortcoming of this approach is that the generic structure of the <span class="type">IQueryHandler</span><span class="code">&lt;TQuery, TResult&gt;</span> leads to lots of infrastructural code which in turn makes the code harder to read. For example:</p><pre class="cs" language="csharp" customtypes="AppDomain Consumer Container Controller ValidationQueryHandlerDecorator DebuggerStepThrough FakeFailingUserQueries FakeUserServicesUserQueries FindUsersBySearchTextQuery FindUsersBySearchTextQueryHandler GetCurrentTimeQuery GetCurrentUserIdQuery GetHighUsageUsersQuery GetRecentOrdersForLoggedInUserQuery GetUsersByRolesQuery IQuery IQueryExecuter IQueryHandler IQueryProcessor IServiceProvider IUserQueries NorthwindUnitOfWork QueryExecuter QueryProcessor Required StringLength User UserController UserInfo UserQueryHandlers ValidationContext Validator" customvaluetypes="PutYourCustomValueTypesHere">public class Consumer<br />{<br />    IQueryHandler&lt;FindUsersBySearchTextQuery, IQueryable&lt;UserInfo&gt;&gt; findUsers;<br />    IQueryHandler&lt;GetUsersByRolesQuery, IEnumerable&lt;User&gt;&gt; getUsers;<br />    IQueryHandler&lt;GetHighUsageUsersQuery, IEnumerable&lt;UserInfo&gt;&gt; getHighUsage;<br /> <br />    public Consumer(<br />        IQueryHandler&lt;FindUsersBySearchTextQuery, IQueryable&lt;UserInfo&gt;&gt; findUsers,<br />        IQueryHandler&lt;GetUsersByRolesQuery, IEnumerable&lt;User&gt;&gt; getUsers,<br />        IQueryHandler&lt;GetHighUsageUsersQuery, IEnumerable&lt;UserInfo&gt;&gt; getHighUsage)<br />    {<br />        this.findUsers = findUsers;<br />        this.getUsers = getUsers;<br />        this.getHighUsage = getHighUsage;<br />    }<br />}</pre><p>Wow!! That&rsquo;s a lot of code for a class that only has three different queries that it needs to execute. This is in part due to the verbosity of the C# language. A workaround (besides switching to another language) would be to <a rel="external" href="https://t4ctorgenerator.codeplex.com/" title="CodePlex - T4 C# Constructor Generator">use a T4 template that generates the constructor</a> in a new partial class. This would leave us with just the three lines defining the private fields. The generic typing would still be a bit verbose, but with C# there's nothing much we can do about that. </p><p>So how do we fix the problem of having to inject too many <span class="type">IQueryHandler</span>s? As always, with an extra layer of indirection :-). We create a mediator that sits between the consumers and the query handlers:</p><pre class="cs" language="csharp" customtypes="AppDomain Consumer Container Controller ValidationQueryHandlerDecorator DebuggerStepThrough FakeFailingUserQueries FakeUserServicesUserQueries FindUsersBySearchTextQuery FindUsersBySearchTextQueryHandler GetCurrentTimeQuery GetCurrentUserIdQuery GetHighUsageUsersQuery GetRecentOrdersForLoggedInUserQuery GetUsersByRolesQuery IQuery IQueryExecuter IQueryHandler IQueryProcessor IServiceProvider IUserQueries NorthwindUnitOfWork QueryExecuter QueryProcessor Required StringLength User UserController UserInfo UserQueryHandlers ValidationContext Validator" customvaluetypes="PutYourCustomValueTypesHere">public interface IQueryProcessor<br />{<br />    TResult Process&lt;TResult&gt;(IQuery&lt;TResult&gt; query);<br />}</pre><p>The <span class="type">IQueryProcessor</span> is a non-generic interface with one generic method. As you can see in the interface definition, the <span class="type">IQueryProcessor</span> depends on the <span class="type">IQuery</span><span class="code">&lt;TResult&gt;</span> interface. This allows us to have compile time support in our consumers that depend on the <span class="type">IQueryProcessor</span>. Let&rsquo;s rewrite the <span class="type">UserController</span> to use the new <span class="type">IQueryProcessor</span>:</p><pre class="cs" language="csharp" customtypes="View AppDomain Consumer Container Controller ValidationQueryHandlerDecorator DebuggerStepThrough FakeFailingUserQueries FakeUserServicesUserQueries FindUsersBySearchTextQuery FindUsersBySearchTextQueryHandler GetCurrentTimeQuery GetCurrentUserIdQuery GetHighUsageUsersQuery GetRecentOrdersForLoggedInUserQuery GetUsersByRolesQuery IQuery IQueryExecuter IQueryHandler IQueryProcessor IServiceProvider IUserQueries NorthwindUnitOfWork QueryExecuter QueryProcessor Required StringLength User UserController UserInfo UserQueryHandlers ValidationContext Validator ActionResult" customvaluetypes="PutYourCustomValueTypesHere">public class UserController : Controller<br />{<br />    private IQueryProcessor queryProcessor;<br /> <br />    public UserController(IQueryProcessor queryProcessor)<br />    {<br />        this.queryProcessor = queryProcessor;<br />    }<br /> <br />    public ActionResult SearchUsers(string searchString)<br />    {<br />        var query = new FindUsersBySearchTextQuery<br />        {<br />            SearchText = searchString<br />        };<br /> <br />        // Note how we omit the generic type argument,<br />        // but still have type safety.<br />        User[] users = this.queryProcessor.Process(query);<br /><br />        return this.View(users);<br />    }<br />}</pre><p>The UserController now depends on a <span class="type">IQueryProcessor</span> that can handle all of our queries. The <span class="type">UserController</span>&rsquo;s <span class="code">SearchUsers</span> method calls the <span class="type">IQueryProcessor</span><span class="code">.Process</span> method passing in an initialized query object. Since the <span class="type">FindUsersBySearchTextQuery</span> implements the <span class="type">IQuery</span><span class="code">&lt;</span><span class="type">User</span><span class="code">[]&gt;</span> interface, we can pass it to the generic <span class="code">Execute&lt;TResult&gt;(</span><span class="type">IQuery</span><span class="code">&lt;TResult&gt; query)</span> method. Thanks to <a rel="external" href="https://msdn.microsoft.com/en-us/library/twcad0zb%28v=vs.80%29.aspx" title="MSDN - Generic Methods (C# Programming Guide)">C# type inference</a>, the compiler is able to determine the generic type and this saves us having to explicitly state the type. The return type of the <span class="code">Process</span> method is also known. So if we were to change the <span class="type">FindUsersBySearchTextQuery</span> to implement a different interface (say <span class="type">IQuery</span><span class="code">&lt;</span><span class="type">IQueryable</span><span class="code">&lt;</span><span class="type">User</span><span class="code">&gt;&gt;</span>) the <span class="type">UserController</span> will no longer compile instead of miserably failing at runtime. </p><p>It is now the responsibility of the implementation of the <span class="type">IQueryProcessor</span> to find the right <span class="type">IQueryHandler</span>. This requires some dynamic typing, and optionally the use of a Dependency Injection library, and can all be done with just a few lines of code:</p><pre class="cs" language="csharp" customtypes="AppDomain Consumer Container Controller ValidationQueryHandlerDecorator DebuggerStepThrough FakeFailingUserQueries FakeUserServicesUserQueries FindUsersBySearchTextQuery FindUsersBySearchTextQueryHandler GetCurrentTimeQuery GetCurrentUserIdQuery GetHighUsageUsersQuery GetRecentOrdersForLoggedInUserQuery GetUsersByRolesQuery IQuery IQueryExecuter IQueryHandler IQueryProcessor IServiceProvider IUserQueries NorthwindUnitOfWork QueryExecuter QueryProcessor Required StringLength User UserController UserInfo UserQueryHandlers ValidationContext Validator" customvaluetypes="PutYourCustomValueTypesHere">sealed class QueryProcessor : IQueryProcessor<br />{<br />    private readonly Container container;<br /><br />    public QueryProcessor(Container container)<br />    {<br />        this.container = container;<br />    }<br /><br />    [DebuggerStepThrough]<br />    public TResult Process&lt;TResult&gt;(IQuery&lt;TResult&gt; query)<br />    {<br />        var handlerType =<br />            typeof(IQueryHandler&lt;,&gt;).MakeGenericType(query.GetType(), typeof(TResult));<br /><br />        dynamic handler = container.GetInstance(handlerType);<br /><br />        return handler.Handle((dynamic)query);<br />    }<br />}<br /></pre><p>The <span class="type">QueryProcessor</span> class constructs a specific <span class="type">IQueryHandler</span><span class="code">&lt;TQuery, TResult&gt;</span> type based on the type of the supplied query instance. This type is used to ask the supplied container class to get an instance of that type. Unfortunately we need to call the <span class="code">Handle</span> method using reflection (by using the C# 4.0 <span class="keyword">dymamic</span> keyword in this case), because at this point it is impossible to cast the handler instance, since the generic <span class="code">TQuery</span> argument is not available at compile time. However, unless the <span class="code">Handle</span> method is renamed or gets other arguments, this call will never fail and if you want to, it is very easy to write a unit test for this class. Using reflection will give a slight drop, but is nothing to really worry about (especially when you're using <a rel="external" href="https://simpleinjector.readthedocs.org/en/latest/lifetimes.html#perwebrequest" title="Simple Injector">Simple Injector</a> as your DI library, because <a rel="external" href="http://www.palmmedia.de/Blog/2011/8/30/ioc-container-benchmark-performance-comparison" title="IoC Container Benchmark - Performance comparison">it is blazingly fast</a>). </p><p>I did consider an alternative design of the <span class="type">IQueryProcessor</span> interface, that looked like this:</p><pre class="cs" language="csharp" customtypes="AppDomain Consumer Container Controller ValidationQueryHandlerDecorator DebuggerStepThrough FakeFailingUserQueries FakeUserServicesUserQueries FindUsersBySearchTextQuery FindUsersBySearchTextQueryHandler GetCurrentTimeQuery GetCurrentUserIdQuery GetHighUsageUsersQuery GetRecentOrdersForLoggedInUserQuery GetUsersByRolesQuery IQuery IQueryExecuter IQueryHandler IQueryProcessor IServiceProvider IUserQueries NorthwindUnitOfWork QueryExecuter QueryProcessor Required StringLength User UserController UserInfo UserQueryHandlers ValidationContext Validator" customvaluetypes="PutYourCustomValueTypesHere">public interface IQueryProcessor<br />{<br />    TResult Process&lt;TQuery, TResult&gt;(TQuery query) where TQuery : IQuery&lt;TResult&gt;;<br />}</pre><p>This version of the interface solves the problem of having to do dynamic typing in the <span class="type">QueryProcessor</span> implementation completely, but sadly the C# compiler isn&rsquo;t &lsquo;smart&rsquo; enough to find out which types are needed (<a rel="external" href="https://blogs.msdn.com/b/ericlippert/archive/2009/12/10/constraints-are-not-part-of-the-signature.aspx" title="Eric Lippert's blog - Constraints are not part of the signature">damn you Anders</a>!), which forces us to completely write out the call to <span class="code">Process</span>, including both generic arguments. This gets really ugly in the code and is therefore not advisable. I was a bit amazed by this, because I was under the assumption that the C# compiler could infer the types. (However, the more I think about it, the more it makes sense that the C# compiler doesn't try to do so.) </p><p>There&rsquo;s one very important point to note when using the <span class="type">IQueryProcessor</span> abstraction. By injecting an <span class="type">IQueryProcessor</span>, it is no longer clear which queries a consumer is using. This makes unit testing more fragile, since the constructor no longer tells us what services the class depends on. We also make it harder for our DI library to verify the object graph it is creating, since the creation of an <span class="type">IQueryHandler</span> implementation is postponed by the <span class="type">IQueryProcessor</span>. Being able to verify the container's configuration <a rel="external" href="https://simpleinjector.readthedocs.org/en/latest/howto.html#verify-configuration" title="Simple Injector - Documentation - How to - Verify the container&rsquo;s configuration">is very important</a>. Using the <span class="type">IQueryProcessor</span> means we have to write a test that confirms there is a corresponding query handler for every query in the system, because the DI library can not check this for you. I personally can live with that in the applications I work on, but I wouldn&rsquo;t use such an abstraction too often. I certainly wouldn&rsquo;t advocate an <span class="type">ICommandProcessor</span> for executing commands - consumers are less likely to take a dependency on many command handlers and if they do it would probably be a violation of SRP.</p><p style="padding-left: 45px"><em><strong>One word of advice</strong>: When you start using this design, start out <u>without</u> the <span class="type">IQueryProcessor</span> abstraction because of the reasons I described. It can always be added later on without any problem. </em></p>  <p>A consequence of the design based on the <span class="type">IQueryHandler</span> interface is that there will be a lot of small classes in the system. And believe it or not, but having a lot of small / focused classes (with clear names) is actually a good thing. Many developers are afraid of having too many classes in the system, because they are used in working in big tangled code bases with lack of structure and the proper abstractions. The cause of what they are experiencing however isn't caused by the amount of classes, but by the lack of structure. Stop writing less code; start writing more maintainable code!</p>  <p style="padding-left: 45px"><em><strong>Tip</strong>: Although there are many ways to structure a project, I found it very useful to place each query class, its DTOs, and the corresponding handler in the same folder, which is named after the query. So the BusinessLayer/Queries/GetUsersByRoles folder might contain the files GetUserByRolesQuery.cs, UserByRoleResult.cs and GetUsersByRolesQueryHandler.cs.</em></p>   <p>Another fear of developers is long build times. Keeping the build times low is in my experience crucial for good developer productivity. The number of classes in a project however, hardly influences the build time. The number of projects on the other hand does. You'll often see that the build time increases exponentially with the number of projects in a solution. Reducing the number of classes wont help you a bit.</p>  <p>When using a DI library, we can normally register all query handlers with a single call (depending on the library), because all the handlers implement the same <span class="type">IQueryHandler</span><span class="code">&lt;TQuery, TResult&gt;</span> interface. Your mileage may vary, but with <a rel="external" href="https://simpleinjector.org" title="Simple Injector">Simple Injector</a>, the registration looks like this:</p><pre class="cs" language="csharp" customtypes="AppDomain Consumer Container Controller ValidationQueryHandlerDecorator DebuggerStepThrough FakeFailingUserQueries FakeUserServicesUserQueries FindUsersBySearchTextQuery FindUsersBySearchTextQueryHandler GetCurrentTimeQuery GetCurrentUserIdQuery GetHighUsageUsersQuery GetRecentOrdersForLoggedInUserQuery GetUsersByRolesQuery IQuery IQueryExecuter IQueryHandler IQueryProcessor IServiceProvider IUserQueries NorthwindUnitOfWork QueryExecuter QueryProcessor Required StringLength User UserController UserInfo UserQueryHandlers ValidationContext Validator" customvaluetypes="PutYourCustomValueTypesHere">container.Register(typeof(IQueryHandler&lt;,&gt;), typeof(IQueryHandler&lt;,&gt;).Assembly);</pre><p>This code saves us from having to change the DI configuration any time we add a new query handler to the system. They will all be picked up automatically.</p><p>With this design in place we can add cross-cutting concerns such as logging, audit trail, etc. Or let&rsquo;s say you want to decorate properties of the query objects with <a rel="external" href="https://www.asp.net/mvc/tutorials/older-versions/models-%28data%29/validation-with-the-data-annotation-validators-cs" title=".NET Data Annotations">Data Annotations</a> attributes, to enable validation:</p><pre class="cs" language="csharp" customtypes="AppDomain Consumer Container Controller ValidationQueryHandlerDecorator DebuggerStepThrough FakeFailingUserQueries FakeUserServicesUserQueries FindUsersBySearchTextQuery FindUsersBySearchTextQueryHandler GetCurrentTimeQuery GetCurrentUserIdQuery GetHighUsageUsersQuery GetRecentOrdersForLoggedInUserQuery GetUsersByRolesQuery IQuery IQueryExecuter IQueryHandler IQueryProcessor IServiceProvider IUserQueries NorthwindUnitOfWork QueryExecuter QueryProcessor Required StringLength User UserController UserInfo UserQueryHandlers ValidationContext Validator" customvaluetypes="PutYourCustomValueTypesHere">public class FindUsersBySearchTextQuery : IQuery&lt;User[]&gt;<br />{<br />    // Required and StringLength are attributes from the<br />    // System.ComponentModel.DataAnnotations assembly.<br />    [Required]<br />    [StringLength(1)]<br />    public string SearchText { get; set; }<br /> <br />    public bool IncludeInactiveUsers { get; set; }<br />}</pre><p>Because we modeled our query handlers around a single <span class="type">IQueryHandler</span><span class="code">&lt;TQuery, TResult&gt;</span> interface, we can define a simple decorator that validates all query messages before they are passed to their handlers:</p><pre class="cs" language="csharp" customtypes="AppDomain Consumer Container Controller ValidationQueryHandlerDecorator DebuggerStepThrough FakeFailingUserQueries FakeUserServicesUserQueries FindUsersBySearchTextQuery FindUsersBySearchTextQueryHandler GetCurrentTimeQuery GetCurrentUserIdQuery GetHighUsageUsersQuery GetRecentOrdersForLoggedInUserQuery GetUsersByRolesQuery IQuery IQueryExecuter IQueryHandler IQueryProcessor IServiceProvider IUserQueries NorthwindUnitOfWork QueryExecuter QueryProcessor Required StringLength User UserController UserInfo UserQueryHandlers ValidationContext Validator" customvaluetypes="PutYourCustomValueTypesHere">public class ValidationQueryHandlerDecorator&lt;TQuery, TResult&gt;<br />    : IQueryHandler&lt;TQuery, TResult&gt;<br />    where TQuery : IQuery&lt;TResult&gt;<br />{<br />    private readonly IQueryHandler&lt;TQuery, TResult&gt; decorated;<br /> <br />    public ValidationQueryHandlerDecorator(IQueryHandler&lt;TQuery, TResult&gt; decorated)<br />    {<br />        this.decorated = decorated;<br />    }<br /> <br />    public TResult Handle(TQuery query)<br />    {<br />        var validationContext = new ValidationContext(query, null, null);<br />        Validator.ValidateObject(query, validationContext, validateAllProperties: true);<br /><br />        return this.decorated.Handle(query);<br />    }<br />}</pre><p>All without changing any of the existing code in our system beyond adding the following new line of code in the <em>Composition Root</em>:</p><pre class="cs" language="csharp" customtypes="AppDomain Consumer Container Controller ValidationQueryHandlerDecorator DebuggerStepThrough FakeFailingUserQueries FakeUserServicesUserQueries FindUsersBySearchTextQuery FindUsersBySearchTextQueryHandler GetCurrentTimeQuery GetCurrentUserIdQuery GetHighUsageUsersQuery GetRecentOrdersForLoggedInUserQuery GetUsersByRolesQuery IQuery IQueryExecuter IQueryHandler IQueryProcessor IServiceProvider IUserQueries NorthwindUnitOfWork QueryExecuter QueryProcessor Required StringLength User UserController UserInfo UserQueryHandlers ValidationContext Validator" customvaluetypes="PutYourCustomValueTypesHere">container.RegisterDecorator(typeof(IQueryHandler&lt;,&gt;),<br />    typeof(ValidationQueryHandlerDecorator&lt;,&gt;));</pre><p>If you're concerned about performance and worry that this would add too much overhead by wrapping query handlers that don't need validation with a decorator, a DI container such as Simple Injector allows you to easily configure a conditional decorator:</p><pre class="cs" language="csharp" customtypes="IQueryHandler ValidationQueryHandlerDecorator" customvaluetypes="PutYourCustomValueTypesHere">container.RegisterDecorator(typeof(IQueryHandler&lt;,&gt;),<br />    typeof(ValidationQueryHandlerDecorator&lt;,&gt;),<br />    context =&gt; ShouldQueryHandlerBeValidated(context.ServiceType));</pre><p>The applied predicate is evaluated just once per closed generic <span class="type">IQueryHandler</span><span class="code">&lt;TQuery, TResult&gt;</span> type, so there is no performance loss in registering such a conditional decorator (or at least, with Simple Injector there isn't). As I said, your mileage may vary when using other DI libraries.</p><p>I&rsquo;ve been using this model for some time now but there is one thing that struck me early on - everything in the system is either a query or a command and if we want, we can model every single operation in this way. But do we really want to? No, definitely not, mostly because it doesn&rsquo;t always result in the most readable code. Take a look at this example:</p><pre class="cs" language="csharp" customtypes="AppDomain Order Consumer Container Controller ValidationQueryHandlerDecorator DebuggerStepThrough FakeFailingUserQueries FakeUserServicesUserQueries FindUsersBySearchTextQuery FindUsersBySearchTextQueryHandler GetCurrentTimeQuery GetCurrentUserIdQuery GetHighUsageUsersQuery GetRecentOrdersForLoggedInUserQuery GetUsersByRolesQuery IQuery IQueryExecuter IQueryHandler IQueryProcessor IServiceProvider IUserQueries NorthwindUnitOfWork QueryExecuter QueryProcessor Required StringLength UserController UserInfo UserQueryHandlers ValidationContext Validator" customvaluetypes="PutYourCustomValueTypesHere">private IQueryHandler&lt;GetCurrentUserIdQuery, int&gt; userHandler;<br />private IQueryHandler&lt;GetCurrentTimeQuery, DateTime&gt; timeHandler;<br /><br />public IQueryable&lt;Order&gt; Handle(GetRecentOrdersForLoggedInUserQuery query)<br />{<br />    int currentUserId = this.userHandler.Handle(new GetCurrentUserIdQuery());<br /> <br />    DateTime currentTime = this.timeHandler.Handle(new GetCurrentTimeQuery());<br /> <br />    return<br />        from order in db.Orders<br />        where order.User.Id == currentUserId<br />        where order.CreateDate &gt;= currentTime.AddDays(-30)<br />        select order;<br />}</pre><p>This query method is composed of other queries. Composing queries out of other queries is a great way to improve modularity and manage the complexity of the system. But still there is something smelly about this code. Personally, I find the following example easier to read:</p><pre class="cs" language="csharp" customtypes="IUserContext ITimeProvider AppDomain Consumer Container Controller ValidationQueryHandlerDecorator DebuggerStepThrough FakeFailingUserQueries FakeUserServicesUserQueries FindUsersBySearchTextQuery FindUsersBySearchTextQueryHandler GetCurrentTimeQuery GetCurrentUserIdQuery GetHighUsageUsersQuery GetRecentOrdersForLoggedInUserQuery GetUsersByRolesQuery IQuery IQueryExecuter IQueryHandler IQueryProcessor IServiceProvider IUserQueries NorthwindUnitOfWork QueryExecuter QueryProcessor Required StringLength Order UserController UserInfo UserQueryHandlers ValidationContext Validator" customvaluetypes="PutYourCustomValueTypesHere">private IUserContext userContext;<br />private ITimeProvider timeProvider;<br /><br />public IQueryable&lt;Order&gt; Handle(GetRecentOrdersForLoggedInUserQuery query)<br />{<br />    return<br />        from order in db.Orders<br />        where order.User.Id == this.userContext.UserId<br />        where order.CreateDate &gt;= this.timeProvider.Now.AddDays(-30)<br />        select order;<br />}</pre><p>The previous sub queries are in this version replaced with the <span class="type">IUserContext</span> and <span class="type">ITimeProvider</span> services. Because of this, the method is now more concise and compact.</p><p>So where do we draw the line between using an <span class="type">IQuery</span><span class="code">&lt;TResult&gt;</span> and specifying an explicit separate service interface? I can&rsquo;t really define any specific rules on that; a little bit of intuition and experience will have to guide you. But to give a little bit of guidance, when a query returns a (cached) value without really hitting an external resource, such as the file system, web service, or database, and it doesn&rsquo;t contain any parameters, and you&rsquo;re pretty sure you never want to wrap it with a decorator (no performance measuring, no audit trailing, no authorization) it&rsquo;s pretty safe to define it as a specific service interface. Another way to view this is to use this design to define business questions: things the business wants to know. In other words, use the <span class="type">IQueryHandler</span><span class="code">&lt;TQuery, TResult&gt;</span> and <span class="type">ICommandHandler</span><span class="code">&lt;TCommand&gt;</span> abstractions as the communication layer between the business layer and the layers above.This comes down to the idea of <a rel="external" href="http://scrapbook.qujck.com/holistic-abstractions-take-2/" title="Qujck - Holistic Abstractions">holistic abstractions</a>.</p><p>That&rsquo;s how I roll on the query side of my architecture.</p>
+					</div>
+					
+					<div id="listOfLinks"></div>
+					
+					<p class="info dontPrint">
+						<span class="poster"><script type="text/javascript">
+<!--
+	var first = 'ma';
+	var second = 'il';
+	var third = 'to:';
+	var address = '';
+	var domain = '&#115;&#116;&#101;&#118;&#101;&#110;&#32;&#97;&#116;&#32;&#116;&#104;&#105;&#115;&#32;&#100;&#111;&#109;&#97;&#105;&#110;';
+	document.write('<a href="');
+	document.write(first+second+third);
+	document.write(address);
+	document.write('&#64;');
+	document.write(domain);
+	document.write('" title="Email Steven">');
+	document.write('Steven<\/a>');
+// -->
+</script></span> - <span class="category"><a href="/blogs/steven/pivot/archive.php?c=.NET_General">.NET General</a>, <a href="/blogs/steven/pivot/archive.php?c=Architecture">Architecture</a>, <a href="/blogs/steven/pivot/archive.php?c=Dependency_injection">Dependency injection</a></span> - 
+						<span class="comments"><a href="/blogs/steven/pivot/entry.php?id=92#comm" title="Marco, Amiry, Steven, jgauffin, Daniel Hilgarth, sean, Sam, trailmax, Phil, Al, Tom, Peter, Paul, Masoud, Brent Arias, Tuukka Haapaniemi, Erik, Joseph Woodward, Alexander Batishchev, Brent, Dionisi, Daniel, Debbie, Fabian, Rho, Wheels, Wheels , Rodrick, RHo, Dani Avni, zak, Debra">73 comments</a> /  <a href="/blogs/steven/pivot/entry.php?id=92#track" title="">No trackbacks</a></span> - 
+						<a href="/blogs/steven/archives/archive_2011-m12.php#e92" title="Permanent link to 'Meanwhile... on the query side of my architecture' in the archives">&sect;</a> <a href="/blogs/steven/pivot/entry.php?id=92" title="Permanent link to entry 'Meanwhile... on the query side of my architecture'">&para;</a> 
+					</p>
+					
+					<div id="NoJavascriptWarning">
+						The code samples on my weblog are colorized using javascript, but
+						you disabled javascript (for my website) on your browser. 
+						If you're interested in viewing the posted code snippets in 
+						color, please enable javascript.
+					</div>
+					<script type="text/javascript">
+						var noScriptWarning = document.getElementById('NoJavascriptWarning');
+						noScriptWarning.style.display = "none";
+					</script>
+				</div>
+			</div>
+			
+			<hr style="height:1px; background-color:#999; color:#999; border: none;" />
+
+			<p><b>73 comments:</b></p>
+			<div class="comments">
+			<a id="comm"></a>
+<p>that is darn right scary how similar it is to our query architecture at my company! :-)<br />
+<br />
+one thing i implemented was a cachequery attribute that we used for caching our query results.<br /><small><b>Marco</b>   - 20 01 12 - 22:08 </small></p>
+<p>Hi. Thanks for nice article. Actually my English is not good, so I'm not sure I understand or not. Do you mean, we should use `Command` to `update`, `delete` and `create`, and use `Query` to `select`?<br /><small><b>Amiry</b>  (<a href='http://www.kweb.ir/'  title='www.kweb.ir/'>URL</a>) - 14 09 12 - 18:44 </small></p>
+<p>Hi Amiry, these patterns are especially useful in systems with business logic that’s more complex than simple CRUD operations. When looking closely at the requirements of a system, you will often find that a user's button click must do much more than just saving a single row in the database. Often multiple tables have to be updated, mails have to be constructed and sent, calculations have to be done, external systems have to be called, etc. etc. In that case it gets really useful to pack all business logic that happens after the 'button click' inside a command handler. If your system (or parts of the system), only consists of doing CRUD operations, you'd probably be better off by letting the presentation layer directly use repositories instead. Repositories could as well be decorated with cross-cutting concerns such as authorization, validation, logging, audit trailing, etc.<br /><small><b>Steven</b>  (<a href='http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=92'  title='www.cuttingedge.it/blogs/steven/pivot/entry.php?id=92'>URL</a>) - 15 09 12 - 18:15 </small></p>
+<p>Yes I understand now. Thanks to comment. But another question, if we need the command returns a result, what can we do? For example, login-command should return a boolean(e.g. login: yes / no). How can we achieve this?<br /><small><b>Amiry</b>  (<a href='http://www.kweb.ir/'  title='www.kweb.ir/'>URL</a>) - 15 09 12 - 20:06 </small></p>
+<p>If you need to return data from commands, take a look at this article: <a href="https://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=93.">https://www.cuttingedge.it/blogs/steven/..</a> However, in the case of logging in a user, I don't think that's really suited for a command, since you are really asking a question here (while doing a side effect). Instead, I would use an IAuthorizationService or something like that.<br /><small><b>Steven</b>  (<a href='http://https://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=92'  title='https://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=92'>URL</a>) - 15 09 12 - 21:09 </small></p>
+<p>nice ;)<br /><small><b>jgauffin</b>  (<a href='http://blog.gauffin.org'  title='blog.gauffin.org'>URL</a>) - 10 10 12 - 09:14 </small></p>
+<p>Steven, thanks for this series. I have a question about testing.<br />
+With this approach, it is very easy to test that the BL uses a certain query / command.  <br />
+But how do you test the query / command handler itself? I only see a way via integration tests but not via unit tests. Do you agree?<br /><small><b>Daniel Hilgarth</b>  (<a href='http://https://blog.fire-development.com'  title='https://blog.fire-development.com'>URL</a>) - 11 06 13 - 16:44 </small></p>
+<p>Hi Daniel, this series focuses on using the right abstractions and not so much on a particular handler implementation, although a simple example is given. For what it's worth, the article could have used a handler implementation with an embedded SQL statement.<br />
+<br />
+The given handler example uses a unit of work that exposes an IQueryable&lt;T&gt;. IQueryable&lt;T&gt; is a leaky abstraction and this makes unit testing hard. I've written in the past about a solution (https://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=84) but the fact remains that IQueryable&lt;T&gt; is a leaky abstraction and is hard to test.<br />
+<br />
+But using an IQueryHandler&lt;TQuery, TResult&gt; or ICommandHandler&lt;TCommand&gt; abstraction in itself does not limit the testability of the handler implementation.<br /><small><b>Steven</b>  (<a href='http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=92'  title='www.cuttingedge.it/blogs/steven/pivot/entry.php?id=92'>URL</a>) - 11 06 13 - 20:28 </small></p>
+<p>Another very useful article. Thanks.<br /><small><b>sean</b>   - 26 06 13 - 13:27 </small></p>
+<p>Hi Steven, great article. I've been looking for something like this for a long while now. Do you still use this approach or have you moved on to something even better now? <br />
+<br />
+One problem I have with this approach is...if I was to have 2 layers i.e. "Application.Data" and "Application.Web" are they not tightly coupled because of "FindUsersBySearchTextQuery"?<br /><small><b>Sam</b>   - 13 11 13 - 10:35 </small></p>
+<p>Hi Sam,<br />
+<br />
+I use this pattern on a daily basis on the projects I participate in. It brings me much joy, great power,  and extreme flexibility. I can't imagine creating any system without this pattern.<br />
+<br />
+Your layers will not be tightly coupled because of the use of this pattern, on the contrary. If two layers communicate with each other, they will have to send data. They simply need to have some communication contract; they must agree on what messages to send and accept. You can't build a system without passing data from one layer to the other. So the communication contract is the absolute minimum amount of coupling you need between layers. <i>FindUsersBySearchTextQuery</i> is a message; it’s part of your data contract. On top of that data contract, the pattern defines just a single abstraction that describes how to communicate. This is the <i>IQueryHandler&lt;TQuery, TResult&gt;</i> interface. So the coupling is actually very low. I think it’s even safe to say that you can’t get a coupling that is lower than this.<br />
+<br />
+Also note that although using <i>DataTable</i>s as query messages and return types lowers the number of runtime types that you send between layers, this does not make the communication contract any smaller, since each sent and recieved <i>DataTable</i> is still expected to have a unique structure; each still has its own unique signature. Both the sender and receiver depend on this structure. When using the query/handler pattern, you make this contract explicit and add compile-time support to this contract.<br /><small><b>Steven</b>   - 13 11 13 - 11:34 </small></p>
+<p>I can only second that. Since using that pattern, the architecture of my applications has increased a lot and my mental load when writing them has decreased.<br />
+<br />
+Why? Because you simply need to take a dependency on the IQueryHandler interface and define the parameters of the query in a Query class. That's it. It reduces the mental load by changing the approach from "how to get the data" to simply *declaring what data you want and why you need that data*.<br />
+<br />
+You can then later figure out, how you actually want to implement the query handler, whether it gets the data from a relational database or a web service.<br />
+<br />
+That's another very positive aspect of this pattern:<br />
+You are finally able to *truly* abstract away the data store. Why? Because you declare what data you need and why you need it. With declaring the *why*, the query implementation knows exactly what data you need, so it can get all the data from the database needed for your exact scenario. This totally gets rid of all the problems lazy loading has, especially when trying to abstract the data store with an implementation of the repository pattern.<br /><small><b>Daniel Hilgarth</b>  (<a href='http://blog.fire-development.com'  title='blog.fire-development.com'>URL</a>) - 13 11 13 - 12:07 </small></p>
+<p>I know it is 2 years since you've written it, but I only found it just now -)<br />
+<br />
+We have started using mediator pattern recently and it saved us a lot of dependencies from being injected (see this bit: <a href="https://tech.trailmax.info/2013/08/constructors-should-be-simple/">https://tech.trailmax.info/2013/08/const..</a> )<br />
+<br />
+You did mention a test to check if all queries have handlers. Here is my version of tests to check for that issue: <a href="https://tech.trailmax.info/2013/12/test-all-you-query-to-have-queryhandler/">https://tech.trailmax.info/2013/12/test-..</a><br /><small><b>trailmax</b>  (<a href='http://tech.trailmax.info/'  title='tech.trailmax.info/'>URL</a>) - 03 12 13 - 17:04 </small></p>
+<p>Hi Steven, I'm in the same case as trailmax, I just found this article (Great job btw).<br />
+<br />
+I Just want to know how do you handle queries like find by id / find by primarykey and findall?<br /><small><b>Phil</b>   - 03 12 13 - 23:33 </small></p>
+<p>Phil, take a look at what trailmax does, I'm doing about the same in my applications. I define a generic "class GetByIdQuery&lt;TEntity&gt; : IQuery&lt;TEntity&gt;" query class.<br /><small><b>Steven</b>   - 04 12 13 - 11:44 </small></p>
+<p>Hi Steven, <br />
+I just found this series of articles and it is great, good job.<br />
+I have been interrested in CQRS for a while now and I think your articles are a good starting point.<br />
+  <br />
+Anyway, I was wondering, do you use any kind of messaging with this architecture in your actual projects (Brokered, Distributed) and if so, do you use any kind of abstraction on top of them ?<br /><small><b>Al</b>   - 09 12 13 - 15:40 </small></p>
+<p>Al, it depends on the project. I just finished a project where we needed to build an application that worked in offline mode, and this meant adding caching decorators for queues and queuing commands for further processing. This was all based on the same IQueryHandler and ICommandHandler abstractions I wrote here on my blog.<br /><small><b>Steven</b>   - 13 12 13 - 16:39 </small></p>
+<p>I think your principles are absolutely correct but in my experience this is in most scenarios over kill and ultimately reduces the amount of time you have to implement robust functionality which is after all what you are being paid for. Personally I have abstracted away like this too but after 15 years of coding I am moving back to less layers, more injection and simpler code. The benefits of infinite indirection and (bloody) Command patterns are minimal (I have never really seen a genuine benefit other than pretty symetries) over just coding the darn thing.<br />
+<br />
+Basically what I find that works best is comprimise (depending on project goals and scale of course) and is vastly simpler:<br />
+<br />
+1. Create 1 or more DataContexts to encapsulate data access, exposing POCO lists and objects directly to services, ui<br />
+2. Extend DataContexts with partial class to implement (stored proc simple data access code, include, dont expose IQuery in general but on occasion it can be helpful)<br />
+3. Extract interface for each DataContext (e.g IUserRepository) and inject that into Business logic services using IoC (define object full graph at start)<br />
+4. Testing is now straight forward, just use Moq to inject results directly into your system by create Moq().Setup(r => r.GetUsers()).Returns(new List())<br />
+<br />
+That structure is simple and has all the benefits of this design but <br />
+1. frees developers from having to create endless classes to implement even basic functionality<br />
+2. reduces chance of bugs by reducing codebase<br />
+3. speeds up onboarding of new developers because its simple<br />
+4. easier to maintain and debug<br />
+5. easier to inject results with 1 moq class (the IDataContext)<br />
+6. did I say less code!!<br />
+7. faster build time<br />
+8. easier to refactor<br />
+9. happier developers<br />
+<br />
+The number of overly engineered systems I am seeing these days is frightening, it seems developers are losing sight of the goals of their system and customer and getting caried away with abstracting abstration to the point that even a method is an IMethod. Its a poor developer who can't see the tradeoffs and where to draw the line, (Command pattern and Event aggregator I am looking at you!), it makes maintenance and further development an absolute nightmare! Oh and forget about handing the code over should you move on to another project or company.. <br />
+<br />
+My advice to new developers is to try to reduce the number of layers and indirection not increase them arbitarily like this! As long as with some dependency injection and a decent mocking frameworks you can mock out calls to your db then you are gonna be ok.<br />
+<br />
+Anyway just my immediate thoughts and its a very good articles despite me disagreeing with some of your points!<br />
+<br />
+Good luck<br /><small><b>Tom</b>   - 28 08 14 - 01:00 </small></p>
+<p>@Tom,<br />
+<br />
+I have to agree with you that when applying these abstractions there will be occasions where the logic contained in a class is little more than what would be a single method in a more conventional style development. However, working with these abstractions does pay dividends:<br />
+<br />
+- SOLID principles: solutions built around these patterns promote a flexible and extensible code base, i.e. a SOLID code base<br />
+- Aspect Oriented Programming: a simple set of join-points for apply concerns without resorting to reflection and runtime generation (i.e. interception)<br />
+- Strategy Pattern: injecting functionality is great example of Inversion of Control<br />
+  <br />
+You are right when you imply that this may not be the only way to build an app but I've yet to see a well formed and fully justified argument for not following SOLID principles.<br /><small><b>Peter</b>   - 08 09 14 - 16:38 </small></p>
+<p>@Tom, I find your reasoning about less abstractions, simpler and less code interesting. As a happy adopter of this design I have been questioning myself about the practical and impractical applications of this model. So far, I find it more practical than impractical. Let me elaborate...<br />
+<br />
+At first, the setup may be intimidating, because you have to setup a few abstractions and implementations. But they all serve their purpose. Once setup there is little or no additional configuration needed, except dependencies like a datacontext that would need configuration anyway. After that it's writing commands (data holders) and their handlers (execution logic). All the dependencies are setup so datacontexts (unitofwork) only require inclusion through the constructor.<br />
+<br />
+All that rests afterwards are simple data packages (commands or queries) and their handlers. A good setup (for example MVC) requires no less than a query handler service (i.e. IQueryProcessor) that handles the query (wires the query and handler) and returns the response. The same can be done with commands, but is not preferred.<br />
+<br />
+Here is a real life example of a controller:<br />
+<br />
+public class AccountController : Controller<br />
+{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;private readonly IQueryProcessor processor;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;public AccountController(IQueryProcessor processor)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.processor = processor;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;public ActionResult Index()<br />
+&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return this.PartialView();<br />
+&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;public ActionResult GetOverview()<br />
+&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return this.Json(this.processor.Execute(new GetAccountOverviewQuery()));<br />
+&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;public ActionResult GetDetails(GetAccountDetailsQuery query)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return this.Json(this.processor.Execute(query));<br />
+&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+}<br />
+<br />
+Also on the corresponding query and its handler:<br />
+<br />
+public sealed class GetAccountDetailsQuery : IQuery&lt;AccountDetailView><br />
+{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;public int Id { get; set; }<br />
+}<br />
+<br />
+<br />
+public sealed class GetAccountDetailsQueryHandler<br />
+&nbsp;&nbsp;&nbsp;&nbsp;: IQueryHandler&lt;GetAccountDetailsQuery, AccountDetailView><br />
+{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;private readonly IAuthorizedRepository&lt;Account> accounts;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;public GetAccountDetailsQueryHandler(IAuthorizedRepository&lt;Account> accounts)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.accounts = accounts;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;public AccountDetailView Handle(GetAccountDetailsQuery parameters)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;return (<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;from account in this.accounts.Authorized()<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;where account.Id == parameters.Id<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;select account)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.ToAccountDetailView()<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.Single();<br />
+&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+}<br />
+<br />
+Note that this setup is supported with dependency injection, the IAuthorizedRepository&lt;Account> accounts is injected and can also easily be replaced with a mock when testing.<br />
+<br />
+With a correct setup, this would be the only code you’d have to write. How is this over-engineered? The main goal is to separate data and logic with the extent of two interfaces. We have used standalone classes as you suggested, but the lack of generic logging, transaction management and more have pushed us towards this design. With great benefits I must say.<br />
+<br />
+I agree with you that this kind of engineering may induce more and higher abstractions thus possible over-engineering. I also suffer from this syndrome, but it is a discipline you have to master anyway as a developer. There is no excuse for over engineering an application as well as under engineering. It’s a balance that must be found.<br /><small><b>Paul</b>   - 29 08 14 - 32:32 </small></p>
+<p>For more information about applying paging and ordering to queries, please take a look at the following discussion: <a href="https://github.com/dotnetjunkie/solidservices/issues/3">https://github.com/dotnetjunkie/solidser..</a><br /><small><b>Steven</b>  (<a href='http://https://cuttingedge.it/blogs/steven/pivot/entry.php?id=92'  title='https://cuttingedge.it/blogs/steven/pivot/entry.php?id=92'>URL</a>) - 14 12 14 - 11:41 </small></p>
+<p>I'm working on a scheduling project so I defined a ScheduleAmOrderCommand, ScheduleAnOrderCommandHandler that schedule an Order, sometimes user wants to preview Order scheduling details in a gantt chart form(just after an order scheduled or for a before scheduled Order) so I don't know for the Preview I should define a CommandHandler or a QueryHandler?<br /><small><b>Masoud</b>   - 09 02 15 - 09:30 </small></p>
+<p>@Masoud: Queries should be idempotent. That is, if you run the same query twice you should get the same result (unless a command have modified the state in between).<br />
+<br />
+So you could consider queries to be read only, they only fetch the current state, while commands modify it.<br />
+<br />
+Hence if the preview is just to check the state of the scheduling, define a query.<br /><small><b>jgauffin</b>  (<a href='http://blog.gauffin.org'  title='blog.gauffin.org'>URL</a>) - 09 02 15 - 10:04 </small></p>
+<p>Excellent material and presentation.  One suggestion: the handler interface does not offer an asynchronous "HandleAsync" entry point.  I think it would be better to convert the code so that it has *only* an asynchronous entry point.  This would be analogous to the WebAPI HttpClient having only asynchronous entry points.  The subsequent impact to the QueryHandler design would be minimal.  <br />
+<br />
+However, the impact to the CommandHandler is more interesting.  A CommandHandler serving as a "use case" is perhaps best left with a synchronous entry point.  However, a CommandHandler serving as a "repository" does indeed benefit from having an asynchronous entry point.  I know that the "use case" idea is central to your POV, but I would rather use both the command / query handlers as a replacement for repositories.  My reasoning is that my "use case" scenarios are more likely to be implemented as sagas rather than commands.  Thoughts?<br /><small><b>Brent Arias</b>  (<a href='http://www.ariasamp.net'  title='www.ariasamp.net'>URL</a>) - 11 10 15 - 21:25 </small></p>
+<p>Hi Brent,<br />
+<br />
+Whether or not the use of async is useful and actually beneficial depends on a lot of factors, but in general I'm against just making everything asynchronous by default, as I explained here: <a href="https://codereview.stackexchange.com/questions/84379/viewmodel-creator-design/84402#84402">https://codereview.stackexchange.com/que..</a><br />
+<br />
+Furthermore, although asynchronous programming is difficult, making the IQueryHandler and ICommandHandler abstractions async is a no-brainer and that by itself is reason enough to not discuss it here in this blog post.<br /><small><b>Steven</b>  (<a href='http://https://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=92'  title='https://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=92'>URL</a>) - 11 10 15 - 23:15 </small></p>
+<p>Hi Steven,<br />
+<br />
+I used this pattern of yours on a large project and it turned out great. I do have a question for you though and I'd be interested to hear your thoughts.<br />
+<br />
+After using this pattern I (obviously) ended up with a project full of commands and queries, which gave me great visibility over my code base but it felt was like looking at a long list of stored procedures in a SQL database.<br />
+<br />
+My problem is, it just doesn't feel very object oriented at all. In your first code snippet - the 'IUserQueries' example - at least it's clear to another developer what methods are available and what kind of queries they are, i.e. 'UserQueries'. In the same way that a 'User' object would expose similar methods.<br />
+<br />
+But, short of placing all of my 'User' related queries in a 'User' folder or namespace in the project, I feel like there's no real structure to these random queries that I've written. Despite how readable my code is.<br />
+<br />
+I wonder, did you ever have a similar impression or frustration and do you feel you can successfully practice things like Domain Driven Design whilst using this pattern?<br />
+<br />
+Thanks!<br /><small><b>Sam</b>   - 23 10 15 - 17:04 </small></p>
+<p>Hi Sam,<br />
+<br />
+Whether or not something 'feels object oriented' or not is irrelevant. The fact is that object oriented principles are applied here, but even that isn't a means to an end. In the end, the only thing that really counts is total cost of ownership and these patterns can help tremendously in lowering the total cost of ownership by increasing code quality, development speed and maintainability.<br />
+<br />
+That doesn't mean though that code organization and project structure isn't important. Placing all command, query, handler and related classes in the root folder of your project will probably only work for really small projects. The project structure should evolve with the size of your code base.<br />
+<br />
+Here are some ideas to improve the project structure:<br />
+<br />
+- Structure your code around sub systems of features. Each sub system or feature can have its own folder or project, and each folder or project.<br />
+- Separate queries from commands by placing them each in their own /Queries and /Commands folder.<br />
+- Group classes around main entities in your system such as 'User' by placing them in folders named after that entity, e.g. /Users.<br />
+- Give each use case its own folder. This folder can contain the command, handler, and possible validators, security validators, business rules and other classes related to that use case.<br />
+<br />
+Note that these solutions can be mixed and matched. In a former system I worked on we used all four approaches. Each sub system got its own project. Within such project the root contained both a /Queries and /Commands folder. Within the /Queries folder, we grouped code around the main entity. Within in the entity folder we placed each query, handler, and result classes inside a folder named after the query (so the SearchAssetsQuery class and handler where placed in the /SearchAssets folder). Although commands where placed inside a folder named after command (so the CancelQuoteCommand was placed in the /CancelQuote folder) we didn't group them in entity folders. This was because we had considerably less commands than queries.<br />
+<br />
+I’m absolutely not saying that this is THE way to structure your project. It is however a structure that worked well for us in our particular system. There are many ways to skin a cat, but the worst thing you can do is ditch this SOLID design, simply because you think it doesn't ‘feel object oriented’, because you get many small classes. Always remember what this model brings to the table compared to other types of design, and always find clean ways to structure your project, without losing the abilities that a design like this gives us.<br />
+<br />
+Cheers<br /><small><b>Steven</b>  (<a href='http://https://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=92'  title='https://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=92'>URL</a>) - 23 10 15 - 21:28 </small></p>
+<p>Hi Steven,<br />
+<br />
+Do you have a philosophy regarding query handlers and REST?  For example, when dealing with a web service you are authoring, perhaps you might prefer HTTP RPC instead of REST because it simplifies how query objects are serialized and de-serialized (e.g. use JSON and treat *every* interaction as a POST).  In contrast, if you embrace REST then you must employ a GET and then custom serialize / de-serialize the query object through a URI.<br />
+<br />
+If your answer is that you would still prefer to implement a web service RESTfully (with an appropriate query handler implementation on the client-side), would that include having the query responses contain hypermedia links to support HATEOAS?  If yes, then I imagine other query or command objects might potentially take hypermedia links as part of their constructor.  Thoughts?<br /><small><b>Brent Arias</b>  (<a href='http://www.ariasamp.net'  title='www.ariasamp.net'>URL</a>) - 27 10 15 - 20:26 </small></p>
+<p>Hi Brent,<br />
+<br />
+Take a look at the comments on this post: <a href="https://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=95.">https://www.cuttingedge.it/blogs/steven/..</a> I think you'll find what you're looking for there.<br /><small><b>Steven</b>  (<a href='http://https://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=92'  title='https://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=92'>URL</a>) - 27 10 15 - 20:42 </small></p>
+<p>Great article, thanks! <br />
+<br />
+For anyone looking, the Autofac registration for the query side looks like this:<br />
+<br />
+builder.RegisterAssemblyTypes(assembly)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;.AsClosedTypesOf(typeof(IQueryHandler&lt;,>))<br />
+&nbsp;&nbsp;&nbsp;&nbsp;.AsImplementedInterfaces();<br /><small><b>Tuukka Haapaniemi</b>   - 22 11 15 - 21:11 </small></p>
+<p>Is it acceptable for decorators of queries to have side effects (ie, the query is idempotent, but the decorator is not?).  I'm primarily thinking about things like logging and caching here, which seem to be non-idempotent.<br /><small><b>Erik</b>   - 14 01 16 - 20:43 </small></p>
+<p>I've experienced great results with this approach too. It definitely encourages a low cohesion architecture and service layer. There's a fantastic library called Mediatr (https://github.com/jbogard/MediatR) for anyone interested in giving this approach a try.<br /><small><b>Joseph Woodward</b>  (<a href='http://josephwoodward.co.uk'  title='josephwoodward.co.uk'>URL</a>) - 01 03 16 - 14:15 </small></p>
+<p>Hi Steven, what do you think about this approach? It doesn't require using dynamic. <a href="https://www.future-processing.pl/blog/cqrs-simple-architecture/">https://www.future-processing.pl/blog/cq..</a><br /><small><b>Alexander Batishchev</b>  (<a href='http://https://abatishchev.ru'  title='https://abatishchev.ru'>URL</a>) - 12 03 16 - 02:01 </small></p>
+<p>@Eric,<br />
+<br />
+It is completely acceptible for the decorator to write stuff. The decorator will not cause a functional side effect, as in causing the query to return a different result the next time. In this sense, the system is still idempotent. It's pretty impossible to implement logging and audit trailing without storing information somewhere.<br /><small><b>Steven</b>  (<a href='http://https://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=92'  title='https://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=92'>URL</a>) - 15 04 16 - 16:24 </small></p>
+<p>@Joseph,<br />
+<br />
+I personally don't advice depending on an external library for things that are essential parts of your architecture. Instead I advice to always define those few simple abstractions in your own application.<br /><small><b>Steven</b>  (<a href='http://https://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=92'  title='https://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=92'>URL</a>) - 15 04 16 - 16:24 </small></p>
+<p>Hi @Alexander,<br />
+<br />
+As you noticed, the design given on that blog allows a QueryProcessor that doesn't require dynamic. But I already described in my article that having a IQueryProcessor with an Execute&lt;TQuery, TResult&gt; method doesn't really work, because this makes execution queries awkward, since you'll need to specify both the query and result generic parameter when calling Execute. If you reread the article, you will see this point made.<br />
+<br />
+While the blog post you referenced gives an example of executing a command, it lacks an example of executing a query using its processor. I wonder if this omission is intentional, because if the writer would have added such example, it would have become clear immediately.<br /><small><b>Steven</b>  (<a href='http://https://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=92'  title='https://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=92'>URL</a>) - 15 04 16 - 16:28 </small></p>
+<p>Using this approach, it seems to me that the cross-cutting concern of caching would require each query handler class to have a corresponding, unique caching decorator class.  I love this overall approach enough that I am willing to write one caching decorator per query handler, but ... have you devised a strategy or technique that would allow one caching-decorator to handle all (or most) query handlers simultaneously?<br /><small><b>Brent</b>  (<a href='http://ariasamp.net'  title='ariasamp.net'>URL</a>) - 08 06 16 - 01:15 </small></p>
+<p>Hi Brent,<br />
+<br />
+I usually just define one single generic caching decorator, but since you don't want to apply the same caching strategy per query, your registration needs might differ. But you could mark queries (or their handlers) with a customly defined CachingAttribute and apply your decorator conditionally, or register decorators one a per-handler basis. There are lots of options here, but I have never defined more than one caching decorator per application.<br /><small><b>Steven</b>  (<a href='http://https://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=92'  title='https://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=92'>URL</a>) - 08 06 16 - 11:16 </small></p>
+<p>Hello Steven,<br />
+<br />
+The core logic of your design is to have a QueryHandler for each Query? Or could we have queries like FindUserByIdQuery FindUserByNameQuery and get handled by the same handler indUserQueryHandler?<br /><small><b>Dionisi</b>   - 03 07 16 - 11:51 </small></p>
+<p>Hi Dionisi,<br />
+<br />
+Most of the advantages that this model brings (as described on the post) are based around having message objects and a generic interface with one method. You won't lose any of those advantages if you pack multiple query handlers in one class. As a matter of fact, this model gives you the complete freedom to decide how to package your queries. Do be aware though that big classes with many query handlers can cause maintenance problems and having to add new query handlers to an existing class basically means violating both SRP and OCP, but at least the you can make these changes transparantly; you can add functionality without having to touch any other part of the system.<br />
+<br />
+My preference is to give each query its own handler though, because this gives me a clean discoverable model, with a one-to-one relationship between definition (query) and implementation (the handler class).<br />
+<br />
+Cheers<br /><small><b>Steven</b>  (<a href='http://https://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=92'  title='https://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=92'>URL</a>) - 03 07 16 - 12:53 </small></p>
+<p>Hi Steven,<br />
+<br />
+Great post! I've got it working now in my current project with EF CF. The Decorater to enable query logging was a bit tricky at first, because the (logging)decorator not only needed the UoW dependency (DbContext) as well, but it needed to be the same context of course. I managed to solve it by setting the Lifestyle of the DbContext to Scoped, created a general/top level UnitOfWork decorator to wrape the begin/end of the scope and all was well.<br />
+<br />
+I have some additional thought about the TResult argument on the IQuery interface though. You mentioned that it is crucial for compile-time checks, which prevents consumers from defining a Query/QueryHandler combo that does not exist. But the addition of having to maintain the relationship twice doesn't seem like much value to me. Compile-time checking is very nice of course, but I've also setup the Unit Test* and at the end of my composition root I'm calling container.Verify(). Which will also make it very clear at startup during development if any missing combo's were defined by any of the consumers.<br />
+<br />
+*adjusted a bit to check whether there is at least one QueryHandler for each Query based on the QueryHandler's first generic argument<br />
+<br />
+As I see it, the semantics of the IQuery objects are basically to only provide the WHERE clause of the query, not the SELECT statement (which determines the result). This is the reason actually why I started thinking about this, because I didn't need the entire entity loaded from the DB for a particular Query, only a list of the Id's (i.e. SELECT Id FROM ...). Loading the entire record was too much overhead in my particular case/query.<br />
+<br />
+So, if I remove the TResult argument from IQuery (leaving it just to a non-generic interface) I get a lot more flexibility on defining my Query & QueryHandler classes. The TResult is still set explicitly on each QueryHandler but I can reuse the same Query class for multiple QueryHandlers. For example:<br />
+<br />
+public class SomeEntityFilterQuery : IQuery<br />
+=> public Guid? Id<br />
+=> public bool? Discard<br />
+=> public DateTime? UpdatedSince<br />
+<br />
+I can then define a QueryHandler for each specific need of the SELECT statement (i.e. TResult) but generate the WHERE clause based on which filter properties were set on the Query object. Doesn't make the actual linq query very pretty but hey, that's the single responsibility of the handler, right?<br />
+<br />
+Or am I oversimplifying this pattern too much...?<br /><small><b>Daniel</b>   - 31 12 16 - 04:51 </small></p>
+<p>Hi Daniel,<br />
+<br />
+I've been thinking of this as well, but have yet to try this simplification in practice. Your post boosts my eagerness to do so.<br />
+<br />
+Regarding your last comment on the actual Linq query being messy, I've become accustomed to use extension methods as a way of clearing up the Linq queries to be more readable and to get some level of reusability as well. Consider this Linq query:<br />
+<br />
+var entities = await DbContext.SomeEntities<br />
+    .NewerThan( query.UpdatedSince )<br />
+    .ByIdAsync( query.Id );<br />
+<br />
+This query is much easier to read, and the logic of each method is contained and easily fixed or altered in just one place.<br />
+<br />
+The blog didn't allot me to post the extension methods as such, so I put them to Pastebin: <a href="https://pastebin.com/KyX0tJPZ">https://pastebin.com/KyX0tJPZ</a><br />
+<br />
+-Tuukka<br /><small><b>Tuukka Haapaniemi</b>   - 05 01 17 - 14:29 </small></p>
+<p>Hi Tuukka,<br />
+<br />
+Steven had already responded to me via mail and after his feedback I decided (for now) to still model the Query classes in the same way in terms of general/reusable filter properties for differing select statements, but to *not* remove the generic TResult parameter from the IQuery interface. Instead, I just let each specific TQuery class inherit from a base class where all the (general/reusable filter) properties are defined.<br />
+<br />
+I should mention though that my main point about the Query object was re-usability for differing select statements, so I've made all value type properties on the TQuery class nullable. The logic I stick to is then: if a TQuery (filter) property == null, then I won't apply it in the where clause (see further below for the linq query to get the gist of it).<br />
+<br />
+Main reason for sticking to the generic parameter on IQuery is the possibility for future support of interoperability (i.e. serialization). Being able to put a medatior (e.g. web service) in between the Query and QueryHandler guarantees future scalability, but you will only want to send the TQuery over the wire. So the mediator needs to know the resulting type in order to select the appropriate handler on its side. The question remains per context how feasible this will be, but in my particular case it was an important aspect/design property to consider.<br />
+<br />
+In addition, Steven has sent me some additional/valuable input/ideas as well which I still need to analyze.<br />
+<br />
+You are completely on point regarding the Linq query of course. Cleaning up that part of the code is not so difficult. My Linq query now looks like this:<br />
+<br />
+from entity in db.X<br />
+where<br />
+   query.Id.HasValue ? entity.Id == query.Id : true<br />
+   &&<br />
+   query.IsArchived.HasValue ? entity.IsArchived == query.IsArchived.Value : true<br />
+   &&<br />
+   query.LastUpdated.HasValue ? (entity.LastUpdated.HasValue ?<br />
+license.LastUpdated.Value <> query.Id == entity.Id), or whatever. :)<br />
+<br />
+Best regards,<br />
+Daniel<br /><small><b>Daniel</b>   - 05 01 17 - 15:39 </small></p>
+<p>Hi Steven,<br />
+<br />
+Do you mind expounding on why you "personally don't advice depending on an external library for things that are essential parts of your architecture...", specifically as it relates to MediatR? What are the disadvantages for example?<br />
+<br />
+I am currently considering using MediatR for my next project. I have used this architecture based on your articles and sample code in the past, with success, and was thinking MediatR would be an easier and quicker way to get started.<br />
+<br />
+Thanks,<br />
+Debbie<br /><small><b>Debbie</b>   - 14 01 17 - 21:18 </small></p>
+<p>Hi Debbie,<br />
+<br />
+You can find a more detailed reasoning about this in the following MediatR discussion that I participated in: <a href="https://github.com/jbogard/MediatR/pull/101#issuecomment-246206384">https://github.com/jbogard/MediatR/pull/..</a><br />
+<br />
+Cheers<br /><small><b>Steven</b>  (<a href='http://https://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=92'  title='https://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=92'>URL</a>) - 14 01 17 - 23:26 </small></p>
+<p>Hi Steven<br />
+<br />
+Thanks for your interessting article. I'm trying to adopt this for my project. Is there a way to add a decorater which only get injected on specific return types (TResult)? <br />
+<br />
+My goal is to check if a user who requests data via a query has the rights to read this data. I thought doing this in a decorator is a good way. Maybe i'm on the false path with the decorater for specific return types. What do you think? I cannot handle this generic because depending on the data which is requested i need to do another Validation. <br />
+<br />
+Thanks and best regards<br /><small><b>Fabian</b>   - 03 08 17 - 15:48 </small></p>
+<p>Hi Fabian,<br />
+<br />
+It's hard to answer this question, because it depends on the context whether or not conditionally applying a decorator based on some return type is the right approach or not, but it is certainly not a bad thing per se. On top of that, I can only comment on how to achieve such thing when using Simple Injector. If you like to know how to do this with Simple Injector, please post a question with more details about your case here: <a href="https://simpleinjector.org/forum">https://simpleinjector.org/forum</a> . If you like to know how to do this with a different library, please post the question at the appropriate forum for that library.<br /><small><b>Steven</b>  (<a href='http://https://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=92'  title='https://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=92'>URL</a>) - 03 08 17 - 16:05 </small></p>
+<p>Hi Steven,<br />
+what is not clear to me after reading the article: Did you drop the repositories in favor of the Query/Command handlers? At the beginning you mention <br />
+<br />
+  // Generic repository class (good)<br />
+  public interface IRepository<br />
+  ...<br />
+  // Custom entity-specific repository with query methods (awkward)<br />
+  public interface IUserRepository : IRepository<br />
+  ...<br />
+<br />
+Later there is no reference to IRepository anymore.<br />
+<br />
+I think I need to keep the repository to construct business entities from (multiple) database tables and to make unit testing without database possible. <br />
+<br />
+Thanks in advance<br />
+Rho<br /><small><b>Rho</b>   - 13 09 17 - 11:11 </small></p>
+<p>Hi Rho,<br />
+<br />
+It can be useful to wrap generic repository abstractions inside query handlers. It can also be useful to use non-generic repository abstractions for business operations, but you should be very careful with that, because of the problems with repositories as described in the article.<br />
+<br />
+Be careful though with using IRepository as abstraction for testability in case you expose IQueryable from your repositories, because IQueryable is a leaky abstraction. This means that if you replace the IQueryable for an LINQ to Objects version during a unit test, there is still no guarantee that the tested query actually works in production. The reality is that classes that work with IQueryable can only tested in integration with a database.<br /><small><b>Steven</b>   - 13 09 17 - 11:34 </small></p>
+<p>hello Steven! very nice chain of articles in your blog. Have been ready through them and finding very useful to change not only my mind set but those around me.<br />
+<br />
+I have a question about commands. In my project I normally use entity framework with code first to build my database and them use things like automapper to transform these objects to client objects to sent back to the client.<br />
+<br />
+I have very complex forms that handle a lot of information and this normally means inserting/updating/removing from multiple tables in one single transaction. Currently I do this by injecting (using simple injector) a unit of work into my business layer that contains all repositories and a save changes. This unit of work instance contains a single EF context for all repositories allowing me to save all changes into a single transaction.<br />
+<br />
+How do you implement this kind of complexity using commands? do you use TransactionScope on you business layers for this? and if you cant use it?<br /><small><b>Wheels</b>  (<a href='http://www.cuttingedge.it/blogs/steven/pivot/tb.php?tb_id=92&amp;key=3b60a1eda5fea712cb0d84a58f410521'  title='www.cuttingedge.it/blogs/steven/pivot/tb.php?tb_id=92&amp;key=3b60a1eda5fea712cb0d84a58f410521'>URL</a>) - 26 09 17 - 18:36 </small></p>
+<p>Hi Wheels,<br />
+<br />
+When applying these kinds of patterns, you can keep using your favorite O/RM tool if you wish. You don't need to use a TransactionScope (as shown in article 91) if all you need is one single `SaveChanges` call to your unit of work. In that case you can have a simple decorator that call SaveChanges for you.<br /><small><b>Steven</b>  (<a href='http://https://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=92'  title='https://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=92'>URL</a>) - 26 09 17 - 19:03 </small></p>
+<p>In my app I had a handler decorator which was indeed creating and committing TransactionScope and a collection of handlers which were performing the actual work.<br /><small><b>Alexander Batishchev</b>  (<a href='http://abatishchev.ru'  title='abatishchev.ru'>URL</a>) - 26 09 17 - 19:16 </small></p>
+<p>Thank you Steven for the reply. I'm still kind of new in this world and trying to grasp everything can me something a daunting task. I know you must be very busy but would it be possible for you to provide a sample application that implements these concepts? or point me to some github that has this implemented?<br />
+<br />
+ty you :)<br /><small><b>Wheels </b>   - 27 09 17 - 15:23 </small></p>
+<p>Wheels, you can take a look at the following repository: <a href="https://github.com/dotnetjunkie/solidservices">https://github.com/dotnetjunkie/solidser..</a><br /><small><b>Steven</b>  (<a href='http://https://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=92'  title='https://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=92'>URL</a>) - 27 09 17 - 15:25 </small></p>
+<p>Hey Steven! great article.<br />
+<br />
+I'm going to start a new project very soon and want to refactor our current framework to use CQRS. This framework uses EF with the repository pattern with unit of work and a business layer where logging, automapping, unit of work are injected using simple injector (really love this DI). This business layer is nothing more than classes with methods that have crud in it. Then there is there Web Api layer where these business classes are injected.<br />
+<br />
+I was thinking in replacing this business layer with CQRS. I have some questions if you dont mind.<br />
+<br />
+1. Would it be logical to remove this repository pattern and just inject the EF context into the command handler? or would you think this would be bad practice?<br />
+<br />
+2. In case of negative on first question, would you still use repository pattern with unit of work injected into the command handler to guarantee a single transaction in case a command inserts in multiple tables or would you just use a decorator to insure this single insert? and in this case how could we use a decorator to guarantee this single transaction?<br />
+<br />
+3. since the command handler knows what to do with the command, my current business layer seems redundant? would you just call the commands from the webapi?<br />
+<br />
+<br />
+just a note about my repository pattern. I don't like the standard pattern in that it can become a anti-pattern with loads and load of different methods. So my repositories receive expressions and build the query internally. So the business constructs the queries as expressions and the repositories build the query.Here is an example:<br />
+<br />
+var userEntity = UnitOfWork.EntityRepository.Get(o => o.EntityGuid == model.EntityGuid, e => e.EntityGroup).FirstOrDefault();<br />
+<br />
+So in this example the first part is the "Where" and the second part is the Include. The include part is a params parameter so you can include infinite navigation properties. Because if this most of my repositories are empty except for very complex queries. What do you think about this approach? <br />
+<br />
+thank you.<br /><small><b>Rodrick</b>   - 18 10 17 - 17:43 </small></p>
+<p>Hi Rodrick,<br />
+<br />
+> 1. Would it be logical to remove this repository pattern and just inject the EF context into the command handler? or would you think this would be bad practice?<br />
+<br />
+This is highly dependent on the system you are writing. On top of this command/query model, I've built several systems of different size and complexity. Here are the variations I used:<br />
+- Command handlers depending and interacting directly with a DbContext<br />
+- Command handlers interacting with a generic repositories, such as IRepository and  IEntityFactory.<br />
+- Command handlers that use inline SQL directly.<br />
+<br />
+You will have to decide what works best for you. Hiding your O/RM from the command handlers can have interesting benefits such as testability and it allows to hide the quirks and complexities van the O/RM tool. So injecting a DbContext into your command handler is not bad practice per se, it just depends on the system you are building.<br />
+<br />
+On the query side it's different though. Query handlers are typically more connected to the physical data store, so it typically makes no sense in trying to abstract the O/RM tool away. For instance, if you are querying over your database using LINQ, you take a hard dependency on the O/RM. It's naive to think that by depending on IQueryable, you have abstracted your O/RM, since IQueryable IS a Leaky Abstraction.<br />
+<br />
+It can still be useful though to let query handlers depend on some sort of IRepository abstraction instead of depending on DbContext. I used this approach in one of my systems where we needed to filter search results based on the user’s permissions (row based security). We were able to apply these filters transparantly by supplying query handlers only with an IQueryable that was returned from an IRepository). The repository abstraction allowed us to apply these filters transparently, with made it impossible for us to introduce bugs by forgetting to apply that filter on the level of the query handler. Still however, our query handlers were completely tied to Entity Framework and we had integration tests for them to verify them.<br />
+<br />
+> 2. In case of negative on first question, would you still use repository pattern with unit of work injected into the command handler to guarantee a single transaction in case a command inserts in multiple tables or would you just use a decorator to insure this single insert? and in this case how could we use a decorator to guarantee this single transaction?<br />
+<br />
+Again there are multiple possible answers. In case all changes can be made with a single call to SaveChanges on the DbContext, you can simply create a decorator that does so. If you require multiple cals to SaveChanges, multiple DbContexts or even to make changes outside the scope of a single DbContext, you have to wrap the whole operation in a transaction. The simplest thing that has worked for me for many years is to make use of TransactionScope. As long as you use a single connection string, it will not escalate to a distributed transaction, so it allows you simply wrap a complete operation in a transaction. TransactionScope however is not supported (yet) in .NET Core.<br />
+<br />
+> 3. since the command handler knows what to do with the command, my current business layer seems redundant? would you just call the commands from the webapi?<br />
+<br />
+Command and query messages ARE your domain. Those messages are NOT part of your business layer, they are part of the application's contract and can easily be shared with the client. This allows you expose them from your Web API. If you do this, the only thing a Web API has to do is pass that deserialized message on to the business layer. Command handlers will be part of your business layer. You could even take it one step further and remove all your controllers from your Web API. Just take a look at this sample project: <a href="https://github.com/dotnetjunkie/solidservices/">https://github.com/dotnetjunkie/solidser..</a><br />
+<br />
+Whether or not command handlers will be the only components in your business layer depends on your application. For smaller applications, most meat will probably be in the command handlers, while in bigger applications, those handlers will probably depend on other services that do part of the work of the handler. This can go multiple layers deep.<br />
+<br />
+> What do you think about this approach? <br />
+<br />
+I don't have a clear answer to your repository model. Again, it depends on the application you are writing and what your needs are. If I understand your "includes", you are probably referring how you can include entities that need to be joined in the result. To me the EF include model is really bad. Entity Framework is able to automatically include stuff that it needs and lazy load the rest. In my experience lazy loading is fine when running command handlers (since performance of command handlers hardly ever is a problem). When creating query handlers on the other hand, you don't want to "include" stuff either, you just write a LINQ query and map it to a DTO. You should never return entities from your LINQ query. You should ALWAYS map to a DTO. If you do this, you don't need "includes".<br />
+<br />
+I hope this helps.<br /><small><b>Steven</b>  (<a href='http://https://cuttingedge.it/blogs/steven/pivot/entry.php?id=92'  title='https://cuttingedge.it/blogs/steven/pivot/entry.php?id=92'>URL</a>) - 18 10 17 - 20:24 </small></p>
+<p>Hey Steven! thank you for the quick response. <br />
+<br />
+I opened the project and....holy crap it just blew my mind. I'm trying to wrap my head around that Web Api lool. <br />
+<br />
+I was trying to change you example to work with OWIN and token authentication but cant seem to make it work since the controlless Web api disrupts the normal pipeline. Is it even possible?<br /><small><b>Rodrick</b>   - 19 10 17 - 19:07 </small></p>
+<p>Hi Rodrick, I have little experience with OWIN, so I unfortunately can't comment on that.<br /><small><b>Steven</b>   - 23 10 17 - 14:57 </small></p>
+<p>Hi Steven,<br />
+did you ever come across the need to pass filter criteria via query to the data source? <br />
+<br />
+Like <br />
+ GetUsersQuery : IQuery&lt;Paged&lt;User>><br />
+with a property <br />
+    public QueryFilter FilterCriteria  get; set; <br />
+<br />
+<br />
+The intent is to pass WHERE criteria in the language of the domain layer to the data layer. I don't want to add a Find() method for each possible filter to the repository...<br /><small><b>RHo</b>   - 27 10 17 - 14:30 </small></p>
+<p>Hi RHo,<br />
+<br />
+Prevent defining generic filter criteria like structures onto query objects. I follow the following rules when it comes to defining these filters:<br />
+<br />
+- Query arguments should be strongly typed, and specific to the query<br />
+- Query objects should be serializable<br />
+- Query handlers should be in full control over the shape of the SQL query.<br />
+<br />
+By making the arguments (or filter properties) strongly types, and specific to the query, query handlers are in complete control over which conditions it can filter, and how the SQL query will look like. This prevent scenarios that are untestable and un-tunable. For the same reason you should not let query handlers return IQueryable&lt;T>, because that would leave filtering completely up to the client, which again makes it really hard to verify whether or not some client-specified filter actually works (you will have to test the client + handler together) and the handler again loses control over the shape of the SQL query, which can cause bad performance which is hard to fix.<br />
+<br />
+Adding generic criteria objects can make it hard to impossible to serialize query objects. Being able to serialize queries is important for several reasons. First of all, you might want to expose query and command objects through a Web API or REST interface to prevent large amounts of code duplication of things that essentially are use case definitions anyway. Besides, serialization is important to be able to find slow performing queries or to build an audit trail.<br />
+<br />
+From a functional perspective, the query should exactly specify what we expect the user to do. Stuffing in some criteria object might make sense at the O/RM level, but not at a functional level.<br />
+<br />
+This means a query should rather look like this:<br />
+<br />
+public class GetUsersQuery : IQuery&lt;UserInfo[]><br />
+{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;public Guid? RoleId;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;public string SearchText;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;public bool? IsActive = true;<br />
+}<br />
+<br />
+This query exactly specifies the conditions on which we can filter. All properties are nullable which means they can be left out of the filtering. For instance, if RoleId = null, the results will not be filtered by RoleId.<br />
+<br />
+This doesn't mean however that we can't group common set of search values. If we have many queries with this same set of filter properties, we might be missing a common domain concept. In other words we might want to extract those properties to their own class and name it in a way that makes sense to the Domain Expert.<br />
+<br />
+I hope this helps.<br /><small><b>Steven</b>  (<a href='http://https://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=92'  title='https://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=92'>URL</a>) - 27 10 17 - 15:12 </small></p>
+<p>Awesome answer!<br />
+While reading your reply, it hit me: what is a query object useful for, if not for passing filter criteria... :D<br />
+I'll add some more fields for range filters and comparison operators where needed. Thinking with webApi/wcf/multi client in mind helps a lot to keep the pieces in the right places.<br />
+<br />
+Thanks!<br /><small><b>RHo</b>   - 27 10 17 - 16:59 </small></p>
+<p>Great article! I was trying to implement this on my project and got into some file organization question (Copying from a StackOverflow question I posted on this without any answer yet). Because your design is basically CQS, I refer to it as such in the question below:<br />
+<br />
+Upon reading and researching on a few problems in our code, I came across CQS (Command Query Separation) which makes more sense to me in our project as it will divide our huge service classes into smaller testable classes. I have successfully implemented a small prof of concept of this but I am now wondering how will my code be organized when I move 1000+ queries into the CQS namespace (concentrating on queries now as commands I imagine will be organized the same)- obviously putting all queries, handlers and results each in their own folder and each folder will have 1000+ files will be a huge pain to find something.<br />
+<br />
+So far I have have this folder structure<br />
+<br />
+    Model<br />
+        Customer<br />
+    Queries<br />
+        CustomerNameByIdQuery<br />
+        CustomerNameByTextSearchQuery<br />
+    QueryHandlers<br />
+        CustomerNameByIdQueryHandler<br />
+        CustomerNameByTextSearchQueryHandler<br />
+    QueryResults<br />
+        CustomerNameQueryResult<br />
+Both queries return the same CustomerNameQueryResult which has only Id and Value properties<br />
+<br />
+Now imaging I need to query the full customer record as well so I would need a CustomerByIdQuery, CustomerByIdQueryHandler and a result from the Model of Customer. And currently there are about 10 other queries over customer with different parameters for different needs.<br />
+<br />
+This pattern over hundreds of tables will make a lot of query classes and handlers making it really hard to find what I need to use at a specific place in code (promoting code re-use if possible).<br />
+<br />
+I'm looking for advise from veterans who have been using CQS in a big production app about the organization of the namespaces/files of the queries in your project as for how is your solution organized for queries/handlers/results? For example do you put the query & handler in the same file? Separate files is separate directories? What do you do with multiple queries over the same object? Single file holding all queries or multiple files? Do you divide queries with namespaces for easier coding? Are there any problems you are aware of with your structure?<br /><small><b>Dani Avni</b>   - 31 10 17 - 06:54 </small></p>
+<a id="lastcomment"></a><p>Hi Dani,<br />
+<br />
+Take a look at my comment from 2015-10-23 in the comment section of this article. That comment gives some options in structuring your project. <br />
+<br />
+> For example do you put the query & handler in the same file?<br />
+<br />
+That's certainly an option, but it depends on the amount of reuse you require. Once you want to share queries and commands between client and server (by placing them in a shared dll), you will obviously need to separate them. If this is not required, placing messages and handlers in the same file makes navigation through code easier.<br />
+<br />
+> What do you do with multiple queries over the same object?<br />
+<br />
+Typically, I would give each query its own return type, although such return type could again be composed of reusable types.<br />
+<br />
+> Single file holding all queries or multiple files?<br />
+<br />
+Single file holding multiple queries is a model I use to get a team get accustomed to this model (since a typical model for developers is to group them around an entity, e.g. IUserServices, IOrderServices, IProductServices). After they are familiar with the model, developers typically start to place new queries in new classes by themselves, because that's simply more maintainable and browsable.<br />
+<br />
+> Are there any problems you are aware of with your structure?<br />
+<br />
+Every project is different and the amount of queries and handlers do dictate the amount of structure you need. Bigger projects need a more nested structure, just as they do without using this model. As described above, I use different models depending on the project I'm working on. Using modern refactoring tools, changing this structure is relatively easy, so I wouldn't get too hung up about this when starting. I typically change the structure at least once within the first year of the project.<br /><small><b>Steven</b>  (<a href='http://https://cuttingedge.it/blogs/steven/pivot/entry.php?id=92'  title='https://cuttingedge.it/blogs/steven/pivot/entry.php?id=92'>URL</a>) - 31 10 17 - 10:38 </small></p>
+<p>hey Steven,<br />
+<br />
+I'm currently undergoing my refactoring on the company framework so it uses CQRS. Like I said we are using entity framework as our O/RM. A few things questions that I don't know how to solve has arisen:<br />
+<br />
+1. I'm not really keen on having loads of QueryById types of queries. Is there a way we can have a QueryById&lt;Entity> to avoid those?<br />
+<br />
+2. On the writing side, when using entity framework, we typically get the object from the database first and then update the object. But if our repositories for the writing side only have update, delete and create available, how can we do this? not only that but there can be situations where we need to make a query (or queries) before updating for whatever reasons. How do you handles these on CQRS?<br />
+<br />
+thanks again for being so active and helping everyone out :)<br /><small><b>Rodrick</b>   - 31 10 17 - 18:56 </small></p>
+<p>Hi Dani,<br />
+<br />
+I've now had the CQRS structure Steven proposes here successfully in use for about two years, and this is the structure I've found to be the most convenient to work with, based on your example domain:<br />
+<br />
+Customer<br />
++-- Name<br />
+|   +-- CustomerNameQueryResult.cs<br />
+|   +-- ById<br />
+|   |   +-- CustomerNameByIdQuery.cs<br />
+|   |   +-- CustomerNameByIdQueryHandler.cs<br />
+|   +-- ByTextSearch<br />
+|   |   +-- CustomerNameByTextSearchQuery.cs<br />
+|   |   +-- CustomerNameByTextSearchQueryHandler.cs<br />
++-- ById<br />
+|   +-- Customer.cs<br />
+|   +-- CustomerByIdQuery.cs<br />
+|   +-- CustomerByIdQueryHandler.cs<br />
+<br />
+This way the folder structure starts relatively shallow, as in 'ById' in this example, but can easily be deepened when need arises, such as in 'Name' queries.<br />
+<br />
+The main point I've found easiest is keeping the related files close to each other, because usually they change and evolve in these groups. Seldom do you write or change a query without touching the respective query handler and the response object too, or vice versa.<br />
+<br />
+-Tuukka<br /><small><b>Tuukka Haapaniemi</b>   - 31 10 17 - 19:58 </small></p>
+<p>Hi Rodrick,<br />
+<br />
+Tossing my 2 cents in here regarding your number 2 question: <br />
+<br />
+The query side is the side benefiting the most from the CQRS separation, as that side can be left very lean. The writing side is the more complex side and as such is in no way limited of doing queries as well. In my solution I do just what you describe, albeit without the repository: The command handler retrieves the required data with EF, updates or adds what's required and saves everything back to the database. This query within the command handler is not in violation of the CQRS, in my opinion, as it only serves to complete the command. <br />
+<br />
+The things I need from the database are completely different in the command to those things I need for a query, and so is the retrieval path and principle. For instance, in a query handler, the database context can be read only with no tracking, or even just a call to a stored procedure or plain SQL, but on the command side the context is read/write and tracking naturally enabled. <br />
+<br />
+In the end my advice is not to get too strict with any architecture, or you'll end up creating an unnecessarily complex architecture in the process.<br />
+<br />
+-Tuukka<br /><small><b>Tuukka Haapaniemi</b>   - 31 10 17 - 19:59 </small></p>
+<p>Hi Rodrick,<br />
+<br />
+I would like to prevent going into too detailed and specific questions here on my blog to prevent the comment section from exploding. I do love discussing these issues, so if you wish, you can post a more detailed question here: <a href="https://github.com/dotnetjunkie/solidservices/issues.">https://github.com/dotnetjunkie/solidser..</a> I'll do my best to give you my take on this.<br /><small><b>Steven</b>  (<a href='http://https://cuttingedge.it/blogs/steven/pivot/entry.php?id=92'  title='https://cuttingedge.it/blogs/steven/pivot/entry.php?id=92'>URL</a>) - 31 10 17 - 21:26 </small></p>
+<p>@Tuukka Haapaniemi that makes alot of sense and thank you for your response ^^<br />
+<br />
+@Steven sorry about that. I'll open an issue there to discuss<br /><small><b>Rodrick</b>   - 01 11 17 - 00:58 </small></p>
+<p>@Tuukka and @Steven, Thanks for your valuable input. I will have a look into it soon.<br /><small><b>Dani Avni</b>   - 02 11 17 - 16:04 </small></p>
+<p>@Tuukka Haapaniemi , Following up on your response from 31/10/17 (Thanks again!), Ho do you do namespaces in this structure? Do you do a simple flat namespace for all customer classes (i.e. everything is in Base.Customers namespace)? Do you split the files into namespaces by finer grained functionality (e.g. Base.Customers.Name.ById)? Or something in-between?<br />
+<br />
+I have a few ideas on this but am looking for feedback from a veteran in this code structure to learn from their experience<br /><small><b>Dani Avni</b>   - 13 11 17 - 07:48 </small></p>
+<p>Being inspired by Steven's work I generated something similar but targeting Mvc Core 2 framework: <a href="https://github.com/riskfirst/RoutableDto">https://github.com/riskfirst/RoutableDto</a><br />
+<br />
+Hope people find it useful.<br /><small><b>zak</b>   - 29 12 17 - 13:13 </small></p>
+<p>@Steven, I just wanted to say thanks for this - it helped me refactor my code to make it much more sensible, and made dependency injection much easier to implement.<br /><small><b>Debra</b>   - 17 08 18 - 17:08 </small></p>
+<p>Hey steven. incredible that after so many years this is still strong with comments!<br />
+<br />
+I want to implement e decorator using fluent API Validation (https://github.com/JeremySkinner/FluentValidation)<br />
+<br />
+Is there any example on how to implement this?<br /><small><b>Rodrick</b>  (<a href='http://cuttingedge.it/blogs/steven/pivot/tb.php?tb_id=92&amp;key=cc5812097be030d07afac1295e17c219'  title='cuttingedge.it/blogs/steven/pivot/tb.php?tb_id=92&amp;key=cc5812097be030d07afac1295e17c219'>URL</a>) - 03 01 19 - 15:54 </small></p>
+
+			</div>
+
+		</div>
+
+		<hr />
+		
+		<div id="footer">
+			<p>&copy; 2007-2019 Steven van Deursen.<br /><span class="dontPrint"><a href="/blogs/steven/rss.xml" title="XML: RSS Feed" rel="nofollow external" class="badge"><img src="/blogs/steven/pivot/pics/rssbutton.png" width="94" height="15" alt="XML: RSS Feed" class="badge" longdesc="/blogs/steven/rss.xml" /></a> <a href="/blogs/steven/atom.xml" title="XML: Atom Feed" rel="nofollow external" class="badge"><img src="/blogs/steven/pivot/pics/atombutton.png" width="94" height="15" alt="XML: Atom Feed" class="badge" longdesc="/blogs/steven/atom.xml" /></a></span>
+			</p>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/CSharpCodeHighlighter0.10.js"></script>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/MSILCodeHighlighter0.1.js"></script>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/X86CodeHighlighter0.1.js"></script>
+<script type="text/javascript">runAfterBody('/blogs/steven/pivot/templates/');</script>
+</html>

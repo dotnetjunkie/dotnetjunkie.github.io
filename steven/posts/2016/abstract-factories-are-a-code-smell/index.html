@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+		<title>
+				Abstract Factories are a Code Smell &middot; .NET Junkie - Weblog of a workaholic
+		</title>
+	
+		
+		<link rel="stylesheet" href="/steven/css/style.css">
+		<link rel="stylesheet" href="/steven/css/overrides.css">
+		<link rel="stylesheet" href="/steven/css/Libre_Baskerville_400_400i_700.css">
+		
+		<link rel="icon" type="image/png" sizes="32x32" href="/steven/images/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/steven/images/favicon-16x16.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="/steven/images/apple-touch-icon.png">
+	
+		
+		<link href="" rel="alternate" type="application/rss+xml" title=".NET Junkie - Weblog of a workaholic" />
+	</head>
+	
+    <body>
+        		<nav class="nav">
+			<div class="nav-container">
+				<a href="/steven/">
+					<h2 class="nav-title">.NET Junkie - Weblog of a workaholic</h2>
+				</a>
+				<ul>
+    <li><a href="/steven/about">About</a></li>
+    <li><a href="/steven/">Posts</a></li>
+</ul>
+			</div>
+		</nav>
+
+        
+
+<main>
+	<div class="post">
+		<div class="post-info">
+    <span>Written by</span>
+        Steven van Deursen
+        <br>
+        <span>on&nbsp;</span><time datetime="2016-08-10 00:00:00 &#43;0000 UTC">August 10, 2016</time>
+</div>
+		<h1 class="post-title">Abstract Factories are a Code Smell</h1>
+<div class="post-line"></div>
+
+		
+
+		
+
+<h3 id="when-it-comes-to-writing-lob-applications-abstract-factories-are-a-code-smell-as-they-increase-the-complexity-of-the-consumer-instead-of-reducing-it-this-article-describes-why-and-offers-alternatives">When it comes to writing LOB applications, abstract factories are a code smell as they increase the complexity of the consumer instead of reducing it. This article describes why and offers alternatives.</h3>
+
+<p>An <a href="https://en.wikipedia.org/wiki/Abstract_factory_pattern">Abstract Factory</a> decouples the creation of a family of objects from usage. Compared to injecting a service into a constructor, a factory allow objects to be created lazily, instead of up front during object graph composition. Many applications make use of the Abstract Factory pattern extensively to create all sorts of objects. When Abstract Factories are used to return application services, however, application complexity starts to increase. When developing Line of Business applications (LOB), the usefulness of this type of Abstract Factory is limited and should in general be prevented.</p>
+
+<p><strong>Note:</strong> <em>This article specifically targets factory abstractions that return application <em>service abstractions</em> and are consumed by application components; any other type of factory is fine and out of the context of this article. The kind of factory that you should reconsider is the factory abstraction that builds and returns application services.</em></p>
+
+<p>Here’s a simple example of such a problematic Abstract Factory:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> IServiceFactory
+{
+    IService Create();
+}</code></pre></div>
+
+<p>When you consider the consumer of such factory, a factory is hardly ever the right abstraction. Instead of lowering complexity for the consumer, a factory increases complexity, because instead of having just a dependency on the service abstraction <code>IService</code>, the consumer now requires a dependency on both <code>IService</code> and the Abstract Factory <code>IServiceFactory</code>. Although some find this increase to be insignificant, the increase in complexity can be felt instantly when unit testing such classes. Not only does this force you to test the interaction the consumer has with the service, you have to test the interaction with the factory as well.</p>
+
+<p>Generally, the use of a factory abstraction is not a design that considers its consumers. According to the <a href="https://en.wikipedia.org/wiki/Dependency_inversion_principle">Dependency Injection Principle</a> (DIP), abstractions should be defined by their clients, and since a factory increases the number of dependencies a client is forced to depend upon, the abstraction is clearly not created in favor of the client and we can therefore consider this to be in violation of the DIP.</p>
+
+<p>To generalize this even more, we can state</p>
+
+<blockquote>
+<p>Service abstractions should not expose other service abstractions in their definition</p>
+</blockquote>
+
+<p>This means that a service abstraction should not accept other service types as input, nor should it have service abstractions as output parameters or as a return type. Application services that depend on other application services force their clients to know about both abstractions. The problem is therefore broader than just factories, but for the rest of the article I’ll solely focus on the Abstract Factory.</p>
+
+<p>Instead of having an <code>IServiceFactory</code> abstraction returning <code>IService</code>, at least two alternatives exist:</p>
+
+<ul>
+<li>Define a different abstraction (a <a href="https://en.wikipedia.org/wiki/Facade_pattern">façade</a> or <a href="https://en.wikipedia.org/wiki/Adapter_pattern">adapter</a>) that forwards the call to the service and returns the result that the service produces.</li>
+<li>Let the consumer use the service abstraction directly, and have a special implementation (such as a <a href="https://en.wikipedia.org/wiki/Composite_pattern">composite</a>, <a href="https://en.wikipedia.org/wiki/Mediator_pattern">mediator</a> or <a href="https://en.wikipedia.org/wiki/Proxy_pattern">proxy</a>) that forwards the call to the real implementation.</li>
+</ul>
+
+<h2 id="defining-an-adapter">Defining an adapter</h2>
+
+<p>Take for instance the following class:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">sealed</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ShipmentController</span>
+{
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> ICommandHandlerFactory factory;
+    
+    <span style="color:#66d9ef">public</span> ShipmentController(ICommandHandlerFactory factory)
+    {
+        <span style="color:#66d9ef">this</span>.factory = factory ?? <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ArgumentNullException(<span style="color:#e6db74">&#34;factory&#34;</span>);
+    }
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> ShipOrder(ShipOrder cmd)
+    {
+        ICommandHandler&lt;ShipOrder&gt; handler = factory.Create&lt;ShipOrder&gt;();
+		
+        handler.Handle(cmd);
+    }
+}</code></pre></div>
+
+<p>The code snippet shows the <code>ShipmentController</code> class that depends on the <code>ICommandHandlerFactory</code>, which is used to create an <code>ICommandHandler&lt;ShipOrder&gt;</code>. The returned handler is invoked by calling its <code>Handle</code> method to execute the command. In other words, <code>ShipmentController</code> depends on both <code>ICommandHandlerFactory</code> and <code>ICommandHandler&lt;T&gt;</code>. Compare that to the alternative design using an adapter:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">sealed</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ShipmentController</span>
+{
+    <span style="color:#75715e">// Constructor argument. Removed the constructor for brevity.
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> ICommandDispatcher dispatcher;
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> ShipOrder(ShipOrder cmd) =&gt; <span style="color:#66d9ef">this</span>.dispatcher.Dispatch(cmd);
+}</code></pre></div>
+
+<p>By creating the <code>ICommandDispatcher</code> abstraction , you effectively halved the complexity of the controller. In this case the complexity is reduced to the point that you probably could consider removing controllers altogether and replacing them with a single dispatcher (or Front Controller). But that’s a story for another day.</p>
+
+<p>Inside your <a href="https://freecontent.manning.com/dependency-injection-in-net-2nd-edition-understanding-the-composition-root/">Composition Root</a> you can create an implementation of <code>ICommandDispatcher</code> that forwards commands to a created command handler. When using a DI container, your <code>CommandDispatcher</code> could look as follows:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#75715e">// Part of your Composition Root.
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">sealed</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CommandDispatcher</span> : ICommandDispatcher
+{
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> Container container;
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Dispatch(<span style="color:#66d9ef">dynamic</span> cmd) =&gt; GetHandler(cmd.GetType()).Handle(cmd);
+
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">dynamic</span> GetHandler(Type type) =&gt;
+        container.GetInstance(<span style="color:#66d9ef">typeof</span>(ICommandHandler&lt;&gt;).MakeGenericType(type));
+}</code></pre></div>
+
+<h2 id="defining-a-proxy">Defining a Proxy</h2>
+
+<p>Instead of introducing a new abstraction such as the previous <code>ICommandDispatcher</code>, you might as well let the consumer depend on the service abstraction directly. This is useful in cases where no (extra) runtime data is required to make the decision which component to dispatch to. Imagine a scenario where your <code>ShipmentController</code> must be a long-lived object, while command handlers themselves must have a shorter lifetime. In this scenario you can&rsquo;t inject the <code>ShipOrderCommandHandler</code> implementation directly into the controller because that would cause the handler to become a <a href="http://blog.ploeh.dk/2014/06/02/captive-dependency/">Captive Dependency</a>. Instead of injecting a factory, however, you are better off creating a proxy implementation that delays the creation of the command handler until the moment its <code>Handle</code> method is called. Your <code>ShipmentController</code> becomes the following:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">sealed</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ShipmentController</span>
+{
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> ICommandHandler&lt;ShipOrder&gt; handler;
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> ShipOrder(ShipOrder command) =&gt; <span style="color:#66d9ef">this</span>.handler.Handle(command);
+}</code></pre></div>
+
+<p>You define a proxy that wraps the original instance while allowing it creation to be delayed:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#75715e">// Part of your Composition Root.
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">sealed</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DelayedCommandHandlerProxy</span>&lt;T&gt; : ICommandHandler&lt;T&gt;
+{
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> Func&lt;ICommandHandler&lt;T&gt;&gt; handlerFactory;
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Handle(T command) =&gt; <span style="color:#66d9ef">this</span>.handlerFactory().Handle(command);
+}</code></pre></div>
+
+<p>You probably already noticed the <code>handlerFactory</code> dependency. Whether or not you defined a proper abstraction like <code>ICommandHandlerFactory</code> or simply use a <code>Func&lt;T&gt;</code> is irrelevant to the question whether it is a factory—this is a factory. But note that <code>DelayedCommandHandlerProxy&lt;T&gt;</code> is an infrastructural component, located in your Composition Root. Because the Composition Root has intrinsic knowledge about building the object graphs (it can be considered to be a big factory itself), it is perfectly fine to depend on this <code>Func&lt;T&gt;</code> here, just as the previous <code>CommandDispatcher</code> depends on your DI container.</p>
+
+<p>Without the use of a DI container, the construction of our <code>ShipmentController</code> using this proxy would become something similar to the following:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">new</span> ShipmentController(
+    <span style="color:#66d9ef">new</span> DelayedCommandHandlerProxy&lt;ShipOrder&gt;(
+        () =&gt; <span style="color:#66d9ef">new</span> ShipOrderCommandHandler()));</code></pre></div>
+
+<p>Here you inject a lambda expression into the proxy class that effectively delays the creation of the real handler. When your Composition Root is structured correctly, it is usually trivial to add such proxy.</p>
+
+<p>Using your favorite DI container, registering the proxy would be as easy as:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">container.RegisterDecorator(
+    <span style="color:#66d9ef">typeof</span>(ICommandHandler&lt;&gt;),
+    <span style="color:#66d9ef">typeof</span>(DelayedCommandHandlerProxy&lt;&gt;),
+    Lifestyle.Singleton);</code></pre></div>
+
+<p>The previous code snippet shows the registration API of <a href="https://simpleinjector.org">Simple Injector</a>. Where Simple Injector is concerned, your proxy class is a <a href="https://en.wikipedia.org/wiki/Decorator_pattern">Decorator</a>. Simple Injector’s decorator sub system has special support for handling <code>Func&lt;T&gt;</code> dependencies that produce the decoratee. It handles this natively and the code that is compiled by Simple Injector for this object graph will be identical to the previous manually constructed object graph.</p>
+
+<p>Using the proxy, the consumer was oblivious to the implementation detail of this delayed creation, which is what you should strive for. In other words, the use of a proxy allows keeping this and other consumers as simple as possible by moving the responsibility of object creation into the Composition Root. This prevents you from having to make sweeping changes throughout the code base, as the proxy can be added transparently.</p>
+
+<p>The dispatchers, facades, adapters, and proxies you define might still create objects themselves—they might still behave as factories internally and this is perfectly fine. The factory-like behavior of these infrastructural components is an implementation detail encapsulated in the Composition Root, and instead of exposing instances through their contract, those components act on the given service and return their result. (Do note that both void and exceptions can be considered results as well.)</p>
+
+<p>You obviously still need to have this factory-like behavior; removing the factory abstractions from your application does not immediately remove the need to create components. But like all code that creates components, this code should be part of your Composition Root.</p>
+
+<h2 id="using-abstract-factories-for-delayed-object-creation">Using Abstract Factories for Delayed Object Creation</h2>
+
+<p>There are obviously cases where the delayed creation of services makes sense, the prevention of Captive Dependencies being one of them, and in case you dispatch to a wide range of implementations it’s sometimes not very practical to build them up front, especially when such proxy can forward the call to a wide range of underlying implementations. Creating those dependencies all of the time won’t be a problem when there are just a dozen, but when the number of dependencies to dispatch to becomes big (as you can easily experience when dispatching commands), things start to change.</p>
+
+<p>Although the previous reasons are valid, there are at least as many <em>invalid</em> reasons for delaying the creation of services as there are valid reasons like those you have just seen.</p>
+
+<p>One such invalid reason for delayed creation is when services require runtime data during construction. Application components should not require runtime data during initialization. This is a code smell and this is something I <a href="/steven/p/runtime-data">discussed before</a>.</p>
+
+<p>Another <em>invalid</em> reason for delaying creation is when components require heavy initialization. Heavy initialization however is an implementation detail. Introducing a factory because some component is costly to create means the implementation detail is leaking into the consumer, and doing so would violate the DIP. Introducing a factory to delay the creation of an existing component, leading to needless refactoring of the application. This is a violation of the <a href="https://en.wikipedia.org/wiki/Open/closed_principle">Open/Closed Principle</a>, which states that you must be able to make changes without having to do <a href="https://en.wikipedia.org/wiki/Shotgun_surgery">shotgun surgery</a>.</p>
+
+<p>You could avoid sweeping changes by injecting factories for all your service up front. Although this would work, doing so would obviously be madness. It would make the application very hard to maintain and test. Other developers will hate you for doing this and they are right, because implementation details should not leak through abstractions.</p>
+
+<p>Instead you should wrap the component with a proxy class that is able to delay the creation, as you’ve seen previously:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#75715e">// Part of your Composition Root.
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">sealed</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">LazyServiceProxy</span> : IService
+{
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> Lazy&lt;IService&gt; lazyService;
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> DoSomething() =&gt; <span style="color:#66d9ef">this</span>.lazyService.Value.DoSomething();
+}</code></pre></div>
+
+<p>An even more compelling argument against creating a factory for expensive components is that those components shouldn’t exist in the first place. Constructors of your components should do nothing more than storing the incoming dependencies. In other words, <a href="http://blog.ploeh.dk/2011/03/03/InjectionConstructorsshouldbesimple/">injection constructors should be simple and fast</a>. This diminishes the need for delayed creation.</p>
+
+<p>Sometimes, however, you are dealing with third-party components that require heavy initialization. You obviously can’t change those components, but at the same time, application code should not depend on third-party components or their abstractions directly. Doing so is, again, a violation of the DIP, because those third-party components/abstractions are not defined by your application. You should, instead, define application-specific abstractions that hide the existence of these components from the application. To connect our application to a third-party component an adapter should be created as part of your Composition Root that forwards or translates calls from the abstraction to the third-party component. With this practice, it becomes trivial to solve the problem of such expensive third-party component—refactoring to deal with heavy initialization is then simply a matter of changing the adapter and you’re done. Again, no application code needs to be harmed.</p>
+
+<h2 id="using-abstract-factories-for-lifetime-management">Using Abstract Factories for Lifetime Management</h2>
+
+<p>Yet another common reason why developers invalidly add factories is to allow application code to explicitly manage the lifetime of a component. They introduce a factory abstraction that is in control of the creation of a component and passes on the ownership and management of the created component to the caller. The caller becomes responsible of ending the component’s lifetime; which is usually ended by calling <code>Dispose</code>.</p>
+
+<p>Application code, however, should not be responsible for the management of the lifetime of objects. Putting this responsibility inside the application code means you increase complexity of that particular class and make it more complicated to test and maintain. You’ll often see this lifetime management logic get duplicated across the application, instead of being centralized, which is what you should be aiming for.</p>
+
+<p>Clients will obviously only be able to dispose of a factory-created service when that service abstraction implements <code>IDisposable</code>. Implementing <code>IDisposable</code> on abstractions however is—you might have guessed it—a <a href="https://stackoverflow.com/a/2635733/264697">DIP violation</a>. It’s always easy to come up with an example of an implementation of such service that doesn’t require deterministic disposal. If you can come up with an implementation that doesn’t require disposal it means your abstraction is defined with a specific implementation in mind, hence a DIP violation.</p>
+
+<p>For instance, such a component can be wrapped with a decorator that implements some cross-cutting concern, e.g. logging. It’s easy to imagine a logging decorator implementation that doesn’t require resource clean-up. Neither should it forward the <code>Dispose</code> call to the wrapped component, because the decorator can’t reasonably know if it’s allowed to dispose of its decorated dependency, since that dependency might be intended to outlive the decorator. Disposing of the dependency will lead to problems when the dependency is a longer-lived component or when it becomes in some future point in time, becasue the decorator would dispose a component that the application still intends to use. This would inevitably lead to an <code>ObjectDisposedException</code>.</p>
+
+<p>Removing the <code>IDisposable</code> interface from a service abstraction (and moving it to the implementation) means a consumer can’t be responsible for managing the lifetime of the object. YOu elevate this responsibility back to the Composition Root. A common way for the Composition Root to manage the lifetime of such a dependency is by defining it as ‘scoped’, where the scope can be both explicitly or implicitly defined.</p>
+
+<p>Scopes are often defined implicitly when working in web applications. Most DI containers wrap the web request inside such a scope and this ensures your dependencies will be disposed of at the end of each web request. Other DI containers or other application types however expect you to explicitly wrap the request with a scope.</p>
+
+<p>Sometimes, however, you need the scope to be more fine-grained and this requires you to manage the lifestyles explicitly. But instead of doing this in application code, you want to do this management in an infrastructural component that is part of your Composition Root. The following example shows a proxy class that wraps the resolution of a service into an explicitly defined scope:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#75715e">// Part of your Composition Root.
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">sealed</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ScopedCommandHandlerProxy</span>&lt;T&gt; : ICommandHandler&lt;T&gt;
+{
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> Container container;
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> Func&lt;ICommandHandler&lt;T&gt;&gt; handlerFactory;
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Handle(T command)
+    {
+        <span style="color:#66d9ef">using</span> (ThreadScopedLifestyle.BeginScope(<span style="color:#66d9ef">this</span>.container))
+        {
+            ICommandHandler&lt;T&gt; handler = <span style="color:#66d9ef">this</span>.handlerFactory();
+            handler.Handle(command);
+        }
+    }
+}</code></pre></div>
+
+<p>If the service (in this case the command handler) depends on any component that has a scoped lifestyle, the previous using block will ensure that the lifetime of that scoped component will end when the using block ends. This allows managing the lifestyle of your components in a very fine-grained manner, without having to complicate application code while maintaining maximum flexibility.</p>
+
+<h2 id="abstract-factories-in-frameworks">Abstract Factories in Frameworks</h2>
+
+<p>This article specifically targets LOB applications, where the discussed factory abstractions often make little sense. While designing frameworks, however, defining abstract factory abstractions often makes a lot of sense, because frameworks allow application developers to intercept the creation of the framework’s main types. Still, you won’t see any application code take a dependency on such framework-defined Abstract Factory. You will typically see the factory abstraction being overridden inside the Composition Root, while application code stays oblivious of this. In this case the framework is the consumer of the Abstract Factory; your Composition Root merely implements it.</p>
+
+<p>As a last note I would like to stress that this article targets Abstract Factories that return application services. Abstract factories can be used for the creation of lots of other types of objects, such as data centered objects (such as DTOs or Unit of Work objects) or resources such as database connections. These types of factories are very useful, because they don’t expose other application abstractions from their definition.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>When it comes to writing LOB applications, abstract factories are a code smell, because they increase the complexity of the consumer instead of reducing it. You are better off either replacing the factory abstraction with an adapter or proxy, because this avoids increasing the complexity of the consumer. Proxies are especially great because they prevent having to make sweeping changes later in the development process.</p>
+
+<p>A more elaborate discussion of this topic can be found in section 6.2 of <a href="https://manning.com/seemann2">my book</a>.</p>
+
+<h2 id="comments">Comments</h2>
+
+<hr />
+
+<h4 id="laksh-23-august-16">Laksh - 23 August 16</h4>
+
+<p>So based on your reply <a href="https://stackoverflow.com/questions/39048122">here</a> I was looking at &lsquo;façade&rsquo; option since I have to get service instance based on runtime value.</p>
+
+<p>Inside composition root, the <code>CommandDispatcher</code> implementation has reference to IOC container. But we also have to register <code>CommandDispatcher</code> with IOC container so that it can inject dispatcher into controller. So its like <code>CommandDispatcher</code> is referencing container and container also has reference to <code>CommandDispatcher</code>. Is this okay?</p>
+
+<hr />
+
+<h4 id="steven-24-august-16">Steven - 24 August 16</h4>
+
+<p>Hi Laksh,</p>
+
+<p>It is perfectly fine to reference the container from anywhere within your Composition Root. Your CommandDispatcher should be part of your Composition Root and in that case you&rsquo;re okay.</p>
+
+<hr />
+
+<h4 id="gica-galbenu-30-august-16">Gica Galbenu - 30 August 16</h4>
+
+<p>Hi Steven,
+I&rsquo;m trying to use a <strong>strict</strong> layered architecture with UI, API, Domain and Infrastructure for a PHP Web Application. So, UI uses API to acces Domain data and must have no access to any entity or domain service. In my architecture API is an anti-corruption layer.</p>
+
+<p>This being the case, how should Entity objects be available on API?</p>
+
+<p>API is injected in UI by some container; should entities be injected in API as well? What about entities, API services or Domain services that must <em>create</em> other entities, should I apply the Prototype Pattern and clone an injected entity prototype?</p>
+
+<p>P.S. I&rsquo;m a big fan of yours. Thanks for your blogs! Keep helping us, please! :)</p>
+
+<hr />
+
+<h4 id="steven-30-august-16">Steven - 30 August 16</h4>
+
+<p>Hi Gica Galbenu,</p>
+
+<p>I have no experience with PHP whatsoever so I can&rsquo;t really comment on this. In general however, entities should not be injected; entities are data, returned by method calls on domain services. Neither should domain entities be exposed through your API; you expose simple DTOs through your API and keep your domain entities internal.</p>
+
+<hr />
+
+<h4 id="sia-16-september-16">Sia - 16 September 16</h4>
+
+<p>Excellent articles! Thank you! I wish I could work for you, that will be a huge learning opportunity! :-)</p>
+
+<hr />
+
+<h4 id="felix-27-october-16">Felix - 27 October 16</h4>
+
+<p>Hi Steven,</p>
+
+<p>the composite root is typically the entry point of the application, and often as a solution grows, more composite roots get added. For example, I may have a Web Api composite root, a message queue Worker composite root and a web socket composite root.</p>
+
+<p>All your suggestions revolve around moving knowledge of implementation details to the composite root, which makes perfect sense as the composite root by nature already has intimate knowledge of the entire application &ndash; with the exception of other composite roots.</p>
+
+<p>So that wrinkle raises a new question: What is your recommendation for re-using your suggestions across multiple composite roots that are independent of each other?</p>
+
+<p>The only thing I could think of is a new project that has intimate knowledge of the entire application ( minus the composite roots ) that gets re-used by the composite roots? But that then goes against your advice of placing them in the composite root. Curious to hear your thoughts.</p>
+
+<p>Thank you, very helpful article!</p>
+
+<hr />
+
+<h4 id="steven-27-october-16">Steven - 27 October 16</h4>
+
+<p>Hi Felix,</p>
+
+<p>Typically, Composition Roots are not reused, as explained by Mark Seemann and me <a href="https://freecontent.manning.com/dependency-injection-in-net-2nd-edition-understanding-the-composition-root/">here</a>.</p>
+
+<p>You will typically only have reuse in case you have multiple applications that share a lot of the exact same functionality (e.g. both an MVC application and Web API that allow clients to execute the same use cases). In that case you will extract duplicate parts of your Composition Roots into a shared location. This shared code however is still part of your Composition Root, so my advice still holds: you place this in the Composition Root.</p>
+
+<hr />
+
+<h4 id="dan-14-july-17">Dan - 14 July 17</h4>
+
+<p>Quick question. I use a factory to create instances of a specific <code>DbContext</code> because when we do validation and want to run multiple rules at the same time multithreaded, we can&rsquo;t run those at the same time with a single <code>DbContext</code> instance. Thus, I have to create multiple instances. Is that okay?</p>
+
+<hr />
+
+<h4 id="steven-14-july-17">Steven - 14 July 17</h4>
+
+<p>Hi Dan,</p>
+
+<p>As the beginning of the article states, this article specially targets &ldquo;factory abstractions that return application service abstractions and are consumed by application components&rdquo;. A <code>DbContext</code> is not an application component; it is a bag of runtime data. This means that this article does not apply to a factory that returns a <code>DbContext</code>.</p>
+
+<p>Whether it is okay to have a factory for DbContexts however is a different, and perhaps more difficult to answer question. It certainly isn&rsquo;t my first preference, as you can read in <a href="https://stackoverflow.com/a/10588594/264697">this Stackoverflow answer</a>. A factory implies a new instance is returned on every call, which means application code becomes responsible of managing the <code>DbContext</code>, which might not always be the best solution.</p>
+
+<p>A more reasonable design (IMO) would to have a provider (where the <code>CreateContext()</code> method is replaced with a <code>GetContext()</code> method or <code>CurrentContext</code> property), that allows access to an existing <code>DbContext</code>, where that <code>DbContext</code> is reused within a certain container.</p>
+
+<hr />
+
+<h4 id="dan-14-july-17-1">Dan - 14 July 17</h4>
+
+<p>That makes the assumption that the command isn&rsquo;t doing anything async on multiple threads at the same time. If you do this and want to run validation rules or the command needs to load data from totally unrelated tables to complete itself, you&rsquo;d be forced to wait if you were in the context of only one DbContext per command. Also, not every command is going to need a DbContext, so you&rsquo;d be running code that never does anything for some commands (i.e. SaveChanges would be 0), but you&rsquo;d be taking up possible resources creating it. The command really should be responsible for dealing with the database logic itself. If you need to connect to multiple databases across the application, then your decorator solution gets convoluted and running code that ends up never used.</p>
+
+<p>I do understand what you are saying about the Method injection being a possible issue. No one likes passing the context around. That being said, you can always make the Factory have either CreateNew or GetCurrent (which calls New if one isn&rsquo;t there) and make the factory per web request or whatever. Then its up to each individual class to determine if it should be joining the command&rsquo;s context or it should use its own. Does that seem okay?</p>
+
+<hr />
+
+<h4 id="steven-15-july-17">Steven - 15 July 17</h4>
+
+<p>Hi Dan,</p>
+
+<p>I must disagree on almost all your points here. What I am proposing works fine when doing async or multi-threaded code, doesn&rsquo;t require a <code>DbContext</code> to be created and managed when it isn&rsquo;t used, and I personally never saw my decorators got convoluted because of this. But even if decorators get convoluted, that&rsquo;s still better than spreading and duplicating this kind of logic throughout the application.</p>
+
+<p>That said, the <code>GetCurrent</code> method on the Factory you are talking about is what I call a Provider. Where a factory always creates a new one, a Provider provides you with an existing instance (where it might create it on the fly when it is requested for the first time). The application can just call <code>provider.GetInstance()</code> and it is up to the infrastructure to decide whether or not a new instance is created or not. Typically this means that the infrastructure manages the Scope in which code runs. For instance, when you wish to run validations of a command in parallel, this is something you can manage in the decorator, where the creation of each validator is done on its own thread, where the resolve is wrapped in its own scope. The results can be merged back to a single result.</p>
+
+<p>If you are having trouble to figure out how to do this with Simple Injector while using the command/handler and query/handlers designs that I talked about in the past on this blog, feel free to post a question to <a href="https://github.com/dotnetjunkie/solidservices/issues/new">this Github repository</a>. This is the place to have these kinds of architectural discussions. Github makes it much easier to show some code. Without discussing some actual code, chances are high that we are simply talking about different things and don&rsquo;t understand each other.</p>
+
+<hr />
+
+<h4 id="dan-17-july-17">Dan - 17 July 17</h4>
+
+<p>No, I understand the whole decorator thing and am already using/loving it. I&rsquo;d rather not create a bunch of classes for each individual validation as that could get greatly tedious if you have dozens of them. Each individual validation that needs database access can&rsquo;t join the current context. If they did, it would crash. They need their own separate instance of DbContext since it is all running multi-threaded. I&rsquo;m guessing you are proposing any validations that have to access the database need to be their own class so they get their own instance of DbContext? I suppose you could do that, but I&rsquo;d rather have my validation of a command all together if possible, though my decorator does allow multile IValidators.</p>
+
+<p>I was just saying that you don&rsquo;t want to manage DbContext in a decorator itself since there is no guarantee a command would use it or even create a TransactionScope or something. The command itself should deal with that since it knows what is going to happen.</p>
+
+<p>Wouldn&rsquo;t it be better to just have the command take your IDbContext or whatever that is Scoped and then any supporting classes that work with the &ldquo;Current&rdquo; would inject that same interface while all the others would inject the Factory to create a new one?</p>
+
+
+		<hr />
+
+<h2 id="wish-to-comment">Wish to comment?</h2>
+
+<p>Comments are currently turned off as I switched to a static site generator. I will enable commenting again in the future, most likely using pull requests. Stay tuned...</p>
+
+
+
+<hr />
+
+<h2 id="buy-my-book">Buy my book</h2>
+
+<p style="margin-right:7%">
+<a href="https://manning.com/seemann2"><img src="/steven/images/book%20cover%20smaller.png" style="float:left;margin-right:10px;margin-bottom:5px;border:0px solid" title="Dependency Injection Principles, Practices, and Patterns" alt="Dependency Injection Principles, Practices, and Patterns Cover Small" /></a>
+I coauthored the book <a href="https://manning.com/seemann2">Dependency Injection Principles, Practices, and Patterns</a>. If you're interested to learn more about DI and software design in general, consider reading my book.
+</p>
+	</div>
+
+	<div class="pagination">
+		<a href="/steven/posts/2015/code-smell-injecting-runtime-data-into-components/" class="left arrow">&#8592;</a>
+		<a href="/steven/posts/2017/simple-injector-v4/" class="right arrow">&#8594;</a>
+
+		<a href="#" class="top">Top</a>
+	</div>
+</main>
+
+
+        		<footer>
+			<span>
+			&copy; <time datetime="2019-03-13 19:28:57.5102784 &#43;0100 CET m=&#43;0.141320001">2019</time> Steven van Deursen. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
+			</span>
+		</footer>
+
+    </body>
+</html>

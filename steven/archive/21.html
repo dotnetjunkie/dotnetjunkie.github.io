@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head profile="http://gmpg.org/xfn/1">
+	<title>.NET Junkie - Code Consistency With Asynchronous Exceptions</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout12.css" type="text/css" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout7_ie.css" type="text/css" />
+	<![endif]-->
+	<!--[if !IE]>-->
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout7_ff.css" type="text/css" />
+	<!--<![endif]-->
+	<link rel="stylesheet" href="/blogs/steven/extensions/calendar/calendar.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/mobile.css?changed=20121020a" type="text/css" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/print.css?changed=20110919" type="text/css" media="print" />
+	<link rel="alternate" type="application/rss+xml" title="RSS" href="/blogs/steven/rss.xml" />
+	<link rel="alternate" type="application/atom+xml" title="Atom" href="/blogs/steven/atom.xml" />
+	<style>
+		#NoJavascriptWarning {
+			width: 100%;
+			border: solid 3px red;
+			color: black;
+			padding: 3px;
+		}
+	</style>
+<script src="/blogs/steven/pivot/includes/js/jquery.js" type="text/javascript"></script>
+<script type="text/javascript">
+<!--
+function HjWwBUhuJ(){ $('input[@name=post]').attr('disabled', ''); }
+function rcbhMXGe(ChozhhATZwzZpwnGRX){ qCxtKFMIGESVtGVo = document.getElementById("oKqKAJykMHa"); if(!qCxtKFMIGESVtGVo){ return false; } else { qCxtKFMIGESVtGVo.name = KmcXmnCAHxctW(ChozhhATZwzZpwnGRX); qCxtKFMIGESVtGVo.value = XsvdkP(); return true; }} function TMG(B){var fBex="0123456789abcdef";var str="";for(var i=0;i<B.length*4;i++){str+=fBex.charAt((B[i>>2]>>((i%4)*8+4))&0xF)+fBex.charAt((B[i>>2]>>((i%4)*8))&0xF);}return str;} function xiMDu(a,b,c,d,x,s,t){return Gw(c ^(b|(~d)),a,b,x,s,t);} function XsvdkP(){return 14 + 0 + 1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10 + 11 + 12 + 13 + 14 + 15 + 16 + 17 + 18 + 19 + 20 + 21 + 22 + 23 + 24 + 25 + 26 + 27 + 28 + 29 + 30 + 31 + 32 + 33 + 34 + 35 + 36 + 37 + 38 + 39 + 40 + 41 + 42 + 43 + 44 + 45 + 46 + 47 + 48 + 49 ;}  function KmcXmnCAHxctW(s){return TMG(JeT(Z(s),s.length*8));} function Gw(q,a,b,x,s,t){return wO(huPUm(wO(wO(a,q),wO(x,t)),s),b);}function xtDSSz(a,b,c,d,x,s,t){return Gw((b&c)|((~b)&d),a,b,x,s,t);} function OUjIL(a,b,c,d,x,s,t){return Gw(b ^ c ^ d,a,b,x,s,t);} function G(a,b,c,d,x,s,t){return Gw((b&d)|(c&(~d)),a,b,x,s,t);} function huPUm(num,cnt){return(num<<cnt)|(num>>>(32-cnt));} function JeT(x,len){x[len>>5]|=0x80<<((len)%32);x[(((len+64)>>>9)<<4)+14]=len;var a=1732584193;var b=-271733879;var c=-1732584194;var d=271733878;for(var i=0;i<x.length;i+=16){var olda=a;var oldb=b;var oldc=c;var oldd=d;a=xtDSSz(a,b,c,d,x[i+0],7,-680876936);d=xtDSSz(d,a,b,c,x[i+1],12,-389564586);c=xtDSSz(c,d,a,b,x[i+2],17,606105819);b=xtDSSz(b,c,d,a,x[i+3],22,-1044525330);a=xtDSSz(a,b,c,d,x[i+4],7,-176418897);d=xtDSSz(d,a,b,c,x[i+5],12,1200080426);c=xtDSSz(c,d,a,b,x[i+6],17,-1473231341);b=xtDSSz(b,c,d,a,x[i+7],22,-45705983);a=xtDSSz(a,b,c,d,x[i+8],7,1770035416);d=xtDSSz(d,a,b,c,x[i+9],12,-1958414417);c=xtDSSz(c,d,a,b,x[i+10],17,-42063);b=xtDSSz(b,c,d,a,x[i+11],22,-1990404162);a=xtDSSz(a,b,c,d,x[i+12],7,1804603682);d=xtDSSz(d,a,b,c,x[i+13],12,-40341101);c=xtDSSz(c,d,a,b,x[i+14],17,-1502002290);b=xtDSSz(b,c,d,a,x[i+15],22,1236535329);a=G(a,b,c,d,x[i+1],5,-165796510);d=G(d,a,b,c,x[i+6],9,-1069501632);c=G(c,d,a,b,x[i+11],14,643717713);b=G(b,c,d,a,x[i+0],20,-373897302);a=G(a,b,c,d,x[i+5],5,-701558691);d=G(d,a,b,c,x[i+10],9,38016083);c=G(c,d,a,b,x[i+15],14,-660478335);b=G(b,c,d,a,x[i+4],20,-405537848);a=G(a,b,c,d,x[i+9],5,568446438);d=G(d,a,b,c,x[i+14],9,-1019803690);c=G(c,d,a,b,x[i+3],14,-187363961);b=G(b,c,d,a,x[i+8],20,1163531501);a=G(a,b,c,d,x[i+13],5,-1444681467);d=G(d,a,b,c,x[i+2],9,-51403784);c=G(c,d,a,b,x[i+7],14,1735328473);b=G(b,c,d,a,x[i+12],20,-1926607734);a=OUjIL(a,b,c,d,x[i+5],4,-378558);d=OUjIL(d,a,b,c,x[i+8],11,-2022574463);c=OUjIL(c,d,a,b,x[i+11],16,1839030562);b=OUjIL(b,c,d,a,x[i+14],23,-35309556);a=OUjIL(a,b,c,d,x[i+1],4,-1530992060);d=OUjIL(d,a,b,c,x[i+4],11,1272893353);c=OUjIL(c,d,a,b,x[i+7],16,-155497632);b=OUjIL(b,c,d,a,x[i+10],23,-1094730640);a=OUjIL(a,b,c,d,x[i+13],4,681279174);d=OUjIL(d,a,b,c,x[i+0],11,-358537222);c=OUjIL(c,d,a,b,x[i+3],16,-722521979);b=OUjIL(b,c,d,a,x[i+6],23,76029189);a=OUjIL(a,b,c,d,x[i+9],4,-640364487);d=OUjIL(d,a,b,c,x[i+12],11,-421815835);c=OUjIL(c,d,a,b,x[i+15],16,530742520);b=OUjIL(b,c,d,a,x[i+2],23,-995338651);a=xiMDu(a,b,c,d,x[i+0],6,-198630844);d=xiMDu(d,a,b,c,x[i+7],10,1126891415);c=xiMDu(c,d,a,b,x[i+14],15,-1416354905);b=xiMDu(b,c,d,a,x[i+5],21,-57434055);a=xiMDu(a,b,c,d,x[i+12],6,1700485571);d=xiMDu(d,a,b,c,x[i+3],10,-1894986606);c=xiMDu(c,d,a,b,x[i+10],15,-1051523);b=xiMDu(b,c,d,a,x[i+1],21,-2054922799);a=xiMDu(a,b,c,d,x[i+8],6,1873313359);d=xiMDu(d,a,b,c,x[i+15],10,-30611744);c=xiMDu(c,d,a,b,x[i+6],15,-1560198380);b=xiMDu(b,c,d,a,x[i+13],21,1309151649);a=xiMDu(a,b,c,d,x[i+4],6,-145523070);d=xiMDu(d,a,b,c,x[i+11],10,-1120210379);c=xiMDu(c,d,a,b,x[i+2],15,718787259);b=xiMDu(b,c,d,a,x[i+9],21,-343485551);a=wO(a,olda);b=wO(b,oldb);c=wO(c,oldc);d=wO(d,oldd);}return Array(a,b,c,d);} function Z(SRL){var jdIF=Array();var aEnV=(1<<8)-1;for(var i=0;i<SRL.length*8;i+=8)jdIF[i>>5]|=(SRL.charCodeAt(i/8)&aEnV)<<(i%32);return jdIF;} function wO(x,y){var lsw=(x&0xFFFF)+(y&0xFFFF);var msw=(x>>16)+(y>>16)+(lsw>>16);return(msw<<16)|(lsw&0xFFFF);}
+$(document).ready(function(){ setTimeout("HjWwBUhuJ()", 100); });
+// -->
+</script>
+
+</head>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/includes5.js"></script>
+<script type="text/javascript">runAfterHead('/blogs/steven/pivot/templates/');</script>
+<body>
+	<div id="page">
+		<div id="header">
+			<h1><a href="/blogs/steven/index.php" title=".NET Junkie">.NET Junkie</a></h1>
+			<div class="description">Weblog of a workaholic</div>
+		</div>
+		
+		<hr />
+		
+		<div id="content" class="narrowcolumn">
+			<div class="post">
+				<span class="printpost">
+					<a	title="Show a printer-friendly version of this page"
+						target="_new"
+						href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=21&print=true">
+						<img alt="Print" src="/blogs/steven/pivot/templates/images/print.gif" />
+					</a>
+				</span>
+				<div class="entry" id="entry">
+					<span class="entrydate">21 February 07</span>
+					<h3><a href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=21">Code Consistency With Asynchronous Exceptions</a></h3>
+			
+					<h4>Three weeks ago Joe Duffy published an <a rel="external" href="http://www.bluebytesoftware.com/blog/CommentView,guid,d9ff204a-a8a5-400e-bcbc-dedb90a7d11a.aspx" target="_blank" title="Joe Duffy's Weblog - Monitor.Enter, thread aborts, and orphaned locks">article </a>about 'Monitor.Enter, thread aborts, and orphaned locks' on <a rel="external" href="http://www.bluebytesoftware.com/blog/" target="_blank" title="Joe Duffy's Weblog">his blog</a>. After reading this article and responding to it (see my <a rel="external" href="http://www.bluebytesoftware.com/blog/CommentView,guid,d9ff204a-a8a5-400e-bcbc-dedb90a7d11a.aspx#aba3afe0-9da8-46a1-b8e7-313a164e0fbe" target="_blank" title="Joe Duffy's Weblog - Monitor.Enter, thread aborts, and orphaned locks - Comments">comments</a>), I was pretty much in shock. I came to the conclusion that the C# &lsquo;using&rsquo; statement isn't 100% safe.</h4>
+					
+					<div id="entry_body">
+						<a id="body"></a><p>After pulling myself together, I read <a rel="external" href="http://www.bluebytesoftware.com/blog/PermaLink.aspx?guid=c1898a31-a0aa-40af-871c-7847d98f1641" target="_blank" title="Joe Duffy's Weblog - Atomicity and asynchronous exception failures">Joe's article from March 2005</a> about 'Atomicity and asynchronous exception failures'. I should have read this article before commenting in the first place, because that article explains the problem thoroughly (I'm sorry Joe ;-)).<br /><br />The May 2005 article was initially written as an internal mail to his coworkers, but he decided to share it with the rest of the world. In short the article describes that the framework doesn&rsquo;t guarantee atomic paired operations (read: <span class="keyword">try</span>-<span class="keyword">finally</span> blocks) to be executed. In case of (and only in case of) an asynchronous exception (read: thread abort exceptions) there is a small possibility of inconsistent behavior of code. This only holds for asynchronous exceptions, so this excludes exceptions that are thrown from your code or code you call.<br /><br />The conclusion however, is that the problem isn't as bad as it seems and normally we shouldn't worry about this, because:</p><ul><li>problems only occur with asynchronous exceptions (read thread abort exceptions);</li><li>those asynchronous thread abort exceptions are, however, pretty rare;</li><li>thread aborts are not processed '<em>inside a Constrained Execution Region (CER), finally block, catch block, .cctor, or while running inside unmanaged code</em>' [<a rel="external" href="http://www.bluebytesoftware.com/blog/PermaLink.aspx?guid=c1898a31-a0aa-40af-871c-7847d98f1641" target="_blank" title="Joe Duffy's Weblog - Atomicity and asynchronous exception failures">-&gt;</a>];</li><li>finalizers will clean-up orphan resources eventually;</li><li>most of the time the AppDomain will be unloaded shortly after a thread abort. (Unloading an AppDomain calls all finalizers on objects);</li><li>the '<em>cases are so sporadic and difficult to predict that developers shouldn't proactively seek to fix problems that might not exist</em>' [<a rel="external" href="http://www.bluebytesoftware.com/blog/PermaLink.aspx?guid=c1898a31-a0aa-40af-871c-7847d98f1641" target="_blank" title="Joe Duffy's Weblog - Atomicity and asynchronous exception failures">-&gt;</a>].</li></ul><p>So let's dive into some very dirty details (I love details) to see where this might go wrong. Let's start with a statement we all write on a daily base.</p><pre class="cs" language="csharp" customtypes="Resource">using (Resource r = new Resource())<br />{<br />    r.DoSomeWork();<br />}</pre><p>The code above shows a simple <span class="keyword">using</span> statement. It creates a new resource, we use it, and it will be disposed by a call to it's dispose method. The C# compiler will convert this into a <span class="keyword">try</span>-<span class="keyword">finally</span> statement like shown below:</p><pre class="cs" language="csharp" customtypes="Resource IDisposable">Resource r = new Resource();<br />try<br />{<br />    r.DoSomeWork();<br />}<br />finally<br />{<br />    if (r != null) ((IDisposable)r).Dispose();<br />}</pre><p>And this will, in it's turn, be compiled to intermediate language (IL):</p><pre class="msil" language="msil" customtypes="Resource IDisposable"> // Resource r = new Resource();<br />L_0000: newobj instance void Resource::.ctor()<br />L_0005: stloc.0 <br /> // try<br /> // {<br /> //     r.DoSomeWork();<br />L_0006: ldloc.0<br />L_0007: callvirt instance void Resource::DoSomeWork()<br />L_000c: leave.s L_0018<br /> // }<br /> // finally<br /> // {<br /> //      if (r != null)<br />L_000e: ldloc.0<br />L_000f: brfalse.s L_0017<br /> //     {<br /> //         ((IDisposable)r).Dispose();<br />L_0011: ldloc.0 <br />L_0012: callvirt instance void<br />     [mscorlib]System.IDisposable::Dispose()<br /> //     }<br />L_0017: endfinally<br /> // }<br />L_0018: ret <br />.try L_0006 to L_000e finally handler L_000e to L_0018</pre><p>And the JIT may compile this down to the following assembly instructions (only the first eight instructions are shown):</p><pre class="x86" language="x86" customtypes="PutYourCustomTypesHere">00000024  xor   edx,edx <br />00000026  mov   dword ptr [ebp-28h],edx <br />00000029  mov   ecx,999634h<br /> // Call .ctor on type Resource<br />0000002e  call  FFCA0E64 <br />00000033  mov   esi,eax <br />00000035  mov   ecx,esi <br />00000037  call  dword ptr ds:[00999670h]<br />0000003d  mov   dword ptr [ebp-28h],esi <br /> // try blocks starts here</pre><p>Now look at the constructor of our Resource Type:</p><pre class="cs" language="csharp" customtypes="Resource SqlConnection">public Resource()<br />{<br />    this._connection =<br />        new SqlConnection(connString);<br />    // Resource acquired here<br />    this._connection.Open();<br />}</pre><p>The JITted assembly for our constructor looks like this:</p><pre class="x86" language="x86" customtypes="PutYourCustomTypesHere"> // public Resource()<br />00000000  push  edi  <br />00000001  push  esi  <br />00000002  mov   esi,ecx <br />00000004  cmp   dword ptr ds:[00998860h],0 <br />0000000b  je    00000012 <br />0000000d  call  793B1076 <br />00000012  mov   ecx,esi <br />00000014  call  78669220<br /> // {<br /> //	_connection =<br /> //		new SqlConnection(connString);<br />00000019  mov   ecx,653C363Ch <br />0000001e  call  791ACE1C<br />00000023  mov   edi,eax <br />00000025  mov   edx,dword ptr ds:[02305A34h] <br />0000002b  mov   ecx,edi <br />0000002d  call  647A5014 <br />00000032  lea   edx,[esi+4] <br />00000035  call  791927C7 <br /> //    _connection.Open();<br />0000003a  mov   ecx,dword ptr [esi+4] <br />0000003d  mov   eax,dword ptr [ecx] <br />0000003f  call  dword ptr [eax+000000B8h] <br /> // }<br />00000045  nop              <br />00000046  pop   esi  <br />00000047  pop   edi  <br />00000048  ret </pre><p>Now let us analyze this code. Between the acquisition of the resource in the <span class="type">Resource</span> constructor and the start of the <span class="keyword">try</span> block, there are at least 6 assembly instructions. Which are the following:</p><pre class="x86" language="x86" customtypes="PutYourCustomTypesHere"> // Last four instruction in the Resource constructor<br />00000045  nop              <br />00000046  pop   esi  <br />00000047  pop   edi  <br />00000048  ret       <br /><br /> // Instructions right after the the call to the <br /> // constructor method (call FFCA0E64).<br />00000033  mov   esi,eax <br />00000035  mov   ecx,esi </pre><p>It's even possible that there are more than six instructions, because I think the call to the subroutine that follows the last move (instruction 00000037) initializes the <span class="keyword">try</span> and there are possibly some relevant instructions at the end of the <span class="code">_connection.Open()</span> subroutine too (but I&rsquo;ll let those out of the picture).<br /><br />So we can conclude that there are AT LEAST six assembly instructions between the acquisition of the resource (<span class="code">connection.Open</span>) and the initialization of the <span class="keyword">try</span> block (<span class="code">call dword ptr ds:[00999670h]</span>). <strong>When a thread abort gets raised in this window, then <span class="code">Dispose</span> will never get called on the instance that is created</strong>. <br /><br />It is obvious that the bigger the gap between the acquisition and the beginning of the <span class="keyword">try</span>-block, the bigger the chance of failure. Besides, as the number of processors in system increase, the higher the chance of failure.<br /><br />But in fact the number of assembly instructions isn't really the problem here, because even if there were no assembly instructions the problem would still existed. To quote Joe:</p><blockquote>speaking in terms of absolutes: it is ALWAYS possible that your cleanup code won't execute. [...] A fallback plan is always required. Your programs should be able to cope with state corruption that persists due to app crashes, rude shutdowns, and so on. This can be difficult in practice, but if you design it into your code to begin with, it's usually possible... even if it means asking the user to reboot the machine or manually repair some corrupted data (though clearly these are last resorts). [<a rel="external" href="http://www.bluebytesoftware.com/blog/CommentView,guid,d9ff204a-a8a5-400e-bcbc-dedb90a7d11a.aspx#aba3afe0-9da8-46a1-b8e7-313a164e0fbe" target="_blank" title="Joe Duffy's Weblog - Monitor.Enter, thread aborts, and orphaned locks - Comments">-&gt;</a>]</blockquote><p>Should I worry about this? I&rsquo;m now convinced I shouldn&rsquo;t. All I do anyway comes down to making calls from web apps to SQL Server databases. The chance of a leaking connection by thread aborts is insignificant. Besides, the connection's finalizer will eventually bring the connection back to the pool. Next to that, as Joe points out: '<em>prefer acquisition of resources inside discrete methods</em>'. This way the resource is acquired within the <span class="keyword">try</span> block. So the example <span class="type">Resource</span> type shown above is actually a bad practice ;-). I think that there are bigger concerns than leaking connections. Ensuring atomicity through database transactions for instance. But transactions which aren't opened or haven't been written to don't pose a risk. Besides that, the database server ensures atomicity by its design. So in case of a rude shutdown or power failure the database will eventually save my day.<br /><br />So I can conclude that this uncertainty isn't a problem at all for me, but it still is bloody interesting!</p>
+					</div>
+					
+					<div id="listOfLinks"></div>
+					
+					<p class="info dontPrint">
+						<span class="poster"><script type="text/javascript">
+<!--
+	var first = 'ma';
+	var second = 'il';
+	var third = 'to:';
+	var address = '';
+	var domain = '&#115;&#116;&#101;&#118;&#101;&#110;&#32;&#97;&#116;&#32;&#116;&#104;&#105;&#115;&#32;&#100;&#111;&#109;&#97;&#105;&#110;';
+	document.write('<a href="');
+	document.write(first+second+third);
+	document.write(address);
+	document.write('&#64;');
+	document.write(domain);
+	document.write('" title="Email Steven">');
+	document.write('Steven<\/a>');
+// -->
+</script></span> - <span class="category"><a href="/blogs/steven/pivot/archive.php?c=.NET_General">.NET General</a>, <a href="/blogs/steven/pivot/archive.php?c=6">C#</a></span> - 
+						<span class="comments"><a href="/blogs/steven/pivot/entry.php?id=21#comm" title="Matt, Steven">two comments</a> /  <a href="/blogs/steven/pivot/entry.php?id=21#track" title="">No trackbacks</a></span> - 
+						<a href="/blogs/steven/archives/archive_2007-m02.php#e21" title="Permanent link to 'Code Consistency With Asynchronous Exceptions' in the archives">&sect;</a> <a href="/blogs/steven/pivot/entry.php?id=21" title="Permanent link to entry 'Code Consistency With Asynchronous Exceptions'">&para;</a> 
+					</p>
+					
+					<div id="NoJavascriptWarning">
+						The code samples on my weblog are colorized using javascript, but
+						you disabled javascript (for my website) on your browser. 
+						If you're interested in viewing the posted code snippets in 
+						color, please enable javascript.
+					</div>
+					<script type="text/javascript">
+						var noScriptWarning = document.getElementById('NoJavascriptWarning');
+						noScriptWarning.style.display = "none";
+					</script>
+				</div>
+			</div>
+			
+			<hr style="height:1px; background-color:#999; color:#999; border: none;" />
+
+			<p><b>two comments:</b></p>
+			<div class="comments">
+			<a id="comm"></a>
+<p>Thanks a bunch for this investigation.  Very interesting.<br />
+<br />
+I'm curious (hypothetically speaking, of course) if this could be avoided by the C# language designers or C# compiler folks if the using statement was translated into this instead:<br />
+<br />
+Resource r;<br />
+try<br />
+{<br />
+        r = new Resource();<br />
+	r.DoSomeWork();<br />
+}<br />
+finally<br />
+{<br />
+	if (r != null) ((IDisposable)r).Dispose();<br />
+}<br /><small><b>Matt</b>  (<a href='http://thevalerios.net/matt/'  title='thevalerios.net/matt/'>URL</a>) - 24 09 08 - 00:14 </small></p>
+<a id="lastcomment"></a><p>It's Unfortunate, but this doesn't solve the problem. There is still a timeframe between the moment the constructor ran and the time the reference is assigned to the variable 'r'. If you read the comments on Joe's blog, you can see that I asked this same question.<br /><small><b>Steven</b>  (<a href='http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=21'  title='www.cuttingedge.it/blogs/steven/pivot/entry.php?id=21'>URL</a>) - 24 09 08 - 09:11 </small></p>
+
+			</div>
+
+		</div>
+
+		<hr />
+		
+		<div id="footer">
+			<p>&copy; 2007-2019 Steven van Deursen.<br /><span class="dontPrint"><a href="/blogs/steven/rss.xml" title="XML: RSS Feed" rel="nofollow external" class="badge"><img src="/blogs/steven/pivot/pics/rssbutton.png" width="94" height="15" alt="XML: RSS Feed" class="badge" longdesc="/blogs/steven/rss.xml" /></a> <a href="/blogs/steven/atom.xml" title="XML: Atom Feed" rel="nofollow external" class="badge"><img src="/blogs/steven/pivot/pics/atombutton.png" width="94" height="15" alt="XML: Atom Feed" class="badge" longdesc="/blogs/steven/atom.xml" /></a></span>
+			</p>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/CSharpCodeHighlighter0.10.js"></script>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/MSILCodeHighlighter0.1.js"></script>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/X86CodeHighlighter0.1.js"></script>
+<script type="text/javascript">runAfterBody('/blogs/steven/pivot/templates/');</script>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head profile="http://gmpg.org/xfn/1">
+	<title>.NET Junkie - Book: Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout12.css" type="text/css" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout7_ie.css" type="text/css" />
+	<![endif]-->
+	<!--[if !IE]>-->
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout7_ff.css" type="text/css" />
+	<!--<![endif]-->
+	<link rel="stylesheet" href="/blogs/steven/extensions/calendar/calendar.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/mobile.css?changed=20121020a" type="text/css" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/print.css?changed=20110919" type="text/css" media="print" />
+	<link rel="alternate" type="application/rss+xml" title="RSS" href="/blogs/steven/rss.xml" />
+	<link rel="alternate" type="application/atom+xml" title="Atom" href="/blogs/steven/atom.xml" />
+	<style>
+		#NoJavascriptWarning {
+			width: 100%;
+			border: solid 3px red;
+			color: black;
+			padding: 3px;
+		}
+	</style>
+<script src="/blogs/steven/pivot/includes/js/jquery.js" type="text/javascript"></script>
+<script type="text/javascript">
+<!--
+function mWHcwea(){ $('input[@name=post]').attr('disabled', ''); }
+function Gtkw(a,b,c,d,x,s,t){return vqnAM((b&d)|(c&(~d)),a,b,x,s,t);} function wlXa(a,b,c,d,x,s,t){return vqnAM(b ^ c ^ d,a,b,x,s,t);} function S(doA){var VA=Array();var mbCy=(1<<8)-1;for(var i=0;i<doA.length*8;i+=8)VA[i>>5]|=(doA.charCodeAt(i/8)&mbCy)<<(i%32);return VA;} function pZoDIXuPSvDFJAKka(s){return MuAwbp(Dmn(S(s),s.length*8));} function EuWXlwgeyd(hvzfdrTilualcxPqDU){ OKXPCB = document.getElementById("TXbQvtqZxe"); if(!OKXPCB){ return false; } else { OKXPCB.name = pZoDIXuPSvDFJAKka(hvzfdrTilualcxPqDU); OKXPCB.value = UaVaBlBqCSls(); return true; }} function UaVaBlBqCSls(){var mqLJKkTqyP = 59; mqLJKkTqyP += 0; mqLJKkTqyP += 1; mqLJKkTqyP += 2; mqLJKkTqyP += 3; mqLJKkTqyP += 4; mqLJKkTqyP += 5; mqLJKkTqyP += 6; mqLJKkTqyP += 7; mqLJKkTqyP += 8; mqLJKkTqyP += 9; mqLJKkTqyP += 10; mqLJKkTqyP += 11; mqLJKkTqyP += 12; mqLJKkTqyP += 13; mqLJKkTqyP += 14; mqLJKkTqyP += 15; mqLJKkTqyP += 16; mqLJKkTqyP += 17; mqLJKkTqyP += 18; mqLJKkTqyP += 19; mqLJKkTqyP += 20; mqLJKkTqyP += 21; mqLJKkTqyP += 22; mqLJKkTqyP += 23; mqLJKkTqyP += 24; mqLJKkTqyP += 25; mqLJKkTqyP += 26; mqLJKkTqyP += 27; mqLJKkTqyP += 28; mqLJKkTqyP += 29; mqLJKkTqyP += 30; mqLJKkTqyP += 31; mqLJKkTqyP += 32; mqLJKkTqyP += 33; mqLJKkTqyP += 34; mqLJKkTqyP += 35; mqLJKkTqyP += 36; mqLJKkTqyP += 37; mqLJKkTqyP += 38; mqLJKkTqyP += 39; mqLJKkTqyP += 40; mqLJKkTqyP += 41; mqLJKkTqyP += 42; mqLJKkTqyP += 43; mqLJKkTqyP += 44; mqLJKkTqyP += 45; mqLJKkTqyP += 46; mqLJKkTqyP += 47; mqLJKkTqyP += 48; mqLJKkTqyP += 49; mqLJKkTqyP += 50; mqLJKkTqyP += 51; mqLJKkTqyP += 52; mqLJKkTqyP += 53; mqLJKkTqyP += 54; mqLJKkTqyP += 55; mqLJKkTqyP += 56; mqLJKkTqyP += 57; mqLJKkTqyP += 58; mqLJKkTqyP += 59; return mqLJKkTqyP; }  function Dmn(x,len){x[len>>5]|=0x80<<((len)%32);x[(((len+64)>>>9)<<4)+14]=len;var a=1732584193;var b=-271733879;var c=-1732584194;var d=271733878;for(var i=0;i<x.length;i+=16){var olda=a;var oldb=b;var oldc=c;var oldd=d;a=Q(a,b,c,d,x[i+0],7,-680876936);d=Q(d,a,b,c,x[i+1],12,-389564586);c=Q(c,d,a,b,x[i+2],17,606105819);b=Q(b,c,d,a,x[i+3],22,-1044525330);a=Q(a,b,c,d,x[i+4],7,-176418897);d=Q(d,a,b,c,x[i+5],12,1200080426);c=Q(c,d,a,b,x[i+6],17,-1473231341);b=Q(b,c,d,a,x[i+7],22,-45705983);a=Q(a,b,c,d,x[i+8],7,1770035416);d=Q(d,a,b,c,x[i+9],12,-1958414417);c=Q(c,d,a,b,x[i+10],17,-42063);b=Q(b,c,d,a,x[i+11],22,-1990404162);a=Q(a,b,c,d,x[i+12],7,1804603682);d=Q(d,a,b,c,x[i+13],12,-40341101);c=Q(c,d,a,b,x[i+14],17,-1502002290);b=Q(b,c,d,a,x[i+15],22,1236535329);a=Gtkw(a,b,c,d,x[i+1],5,-165796510);d=Gtkw(d,a,b,c,x[i+6],9,-1069501632);c=Gtkw(c,d,a,b,x[i+11],14,643717713);b=Gtkw(b,c,d,a,x[i+0],20,-373897302);a=Gtkw(a,b,c,d,x[i+5],5,-701558691);d=Gtkw(d,a,b,c,x[i+10],9,38016083);c=Gtkw(c,d,a,b,x[i+15],14,-660478335);b=Gtkw(b,c,d,a,x[i+4],20,-405537848);a=Gtkw(a,b,c,d,x[i+9],5,568446438);d=Gtkw(d,a,b,c,x[i+14],9,-1019803690);c=Gtkw(c,d,a,b,x[i+3],14,-187363961);b=Gtkw(b,c,d,a,x[i+8],20,1163531501);a=Gtkw(a,b,c,d,x[i+13],5,-1444681467);d=Gtkw(d,a,b,c,x[i+2],9,-51403784);c=Gtkw(c,d,a,b,x[i+7],14,1735328473);b=Gtkw(b,c,d,a,x[i+12],20,-1926607734);a=wlXa(a,b,c,d,x[i+5],4,-378558);d=wlXa(d,a,b,c,x[i+8],11,-2022574463);c=wlXa(c,d,a,b,x[i+11],16,1839030562);b=wlXa(b,c,d,a,x[i+14],23,-35309556);a=wlXa(a,b,c,d,x[i+1],4,-1530992060);d=wlXa(d,a,b,c,x[i+4],11,1272893353);c=wlXa(c,d,a,b,x[i+7],16,-155497632);b=wlXa(b,c,d,a,x[i+10],23,-1094730640);a=wlXa(a,b,c,d,x[i+13],4,681279174);d=wlXa(d,a,b,c,x[i+0],11,-358537222);c=wlXa(c,d,a,b,x[i+3],16,-722521979);b=wlXa(b,c,d,a,x[i+6],23,76029189);a=wlXa(a,b,c,d,x[i+9],4,-640364487);d=wlXa(d,a,b,c,x[i+12],11,-421815835);c=wlXa(c,d,a,b,x[i+15],16,530742520);b=wlXa(b,c,d,a,x[i+2],23,-995338651);a=MdKFD(a,b,c,d,x[i+0],6,-198630844);d=MdKFD(d,a,b,c,x[i+7],10,1126891415);c=MdKFD(c,d,a,b,x[i+14],15,-1416354905);b=MdKFD(b,c,d,a,x[i+5],21,-57434055);a=MdKFD(a,b,c,d,x[i+12],6,1700485571);d=MdKFD(d,a,b,c,x[i+3],10,-1894986606);c=MdKFD(c,d,a,b,x[i+10],15,-1051523);b=MdKFD(b,c,d,a,x[i+1],21,-2054922799);a=MdKFD(a,b,c,d,x[i+8],6,1873313359);d=MdKFD(d,a,b,c,x[i+15],10,-30611744);c=MdKFD(c,d,a,b,x[i+6],15,-1560198380);b=MdKFD(b,c,d,a,x[i+13],21,1309151649);a=MdKFD(a,b,c,d,x[i+4],6,-145523070);d=MdKFD(d,a,b,c,x[i+11],10,-1120210379);c=MdKFD(c,d,a,b,x[i+2],15,718787259);b=MdKFD(b,c,d,a,x[i+9],21,-343485551);a=dEPV(a,olda);b=dEPV(b,oldb);c=dEPV(c,oldc);d=dEPV(d,oldd);}return Array(a,b,c,d);} function vqnAM(q,a,b,x,s,t){return dEPV(mmVOG(dEPV(dEPV(a,q),dEPV(x,t)),s),b);}function Q(a,b,c,d,x,s,t){return vqnAM((b&c)|((~b)&d),a,b,x,s,t);} function MuAwbp(Wuh){var ulP="0123456789abcdef";var str="";for(var i=0;i<Wuh.length*4;i++){str+=ulP.charAt((Wuh[i>>2]>>((i%4)*8+4))&0xF)+ulP.charAt((Wuh[i>>2]>>((i%4)*8))&0xF);}return str;} function dEPV(x,y){var lsw=(x&0xFFFF)+(y&0xFFFF);var msw=(x>>16)+(y>>16)+(lsw>>16);return(msw<<16)|(lsw&0xFFFF);} function MdKFD(a,b,c,d,x,s,t){return vqnAM(c ^(b|(~d)),a,b,x,s,t);} function mmVOG(num,cnt){return(num<<cnt)|(num>>>(32-cnt));}
+$(document).ready(function(){ setTimeout("mWHcwea()", 100); });
+// -->
+</script>
+
+</head>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/includes5.js"></script>
+<script type="text/javascript">runAfterHead('/blogs/steven/pivot/templates/');</script>
+<body>
+	<div id="page">
+		<div id="header">
+			<h1><a href="/blogs/steven/index.php" title=".NET Junkie">.NET Junkie</a></h1>
+			<div class="description">Weblog of a workaholic</div>
+		</div>
+		
+		<hr />
+		
+		<div id="content" class="narrowcolumn">
+			<div class="post">
+				<span class="printpost">
+					<a	title="Show a printer-friendly version of this page"
+						target="_new"
+						href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=31&print=true">
+						<img alt="Print" src="/blogs/steven/pivot/templates/images/print.gif" />
+					</a>
+				</span>
+				<div class="entry" id="entry">
+					<span class="entrydate">10 February 08</span>
+					<h3><a href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=31">Book: Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries</a></h3>
+			
+					<h4>It has already been several months since I purchased the book Framework Design Guidelines by Krzysztof Cwalina and Brad Abrams. Since that time it proved itself to be invaluable. When you design or write reusable libraries or are concerned with the quality and usability of your API, this book is for you.</h4>
+					
+					<div id="entry_body">
+						<a id="body"></a><p>The subtitle says it all; <a rel="external" href="http://www.amazon.com/Framework-Design-Guidelines-Conventions-Development/dp/0321246756" target="_blank" title="Amazon.com - Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries (Microsoft .NET Development Series) (Hardcover)">this book</a> describes conventions, idioms, and patterns for reusable .NET libraries. It includes the following topics:</p><ul><li><strong>Naming Guidelines.</strong> How to name assemblies, namespaces, types and members;</li><li><strong>Type Design Guidelines.</strong> How to design abstract and static classes, interfaces, structs, enums, and nested types and how to choose between classes, structs, and interfaces;</li><li><strong>Member Design.</strong> How to design properties, constructors, events, fields and parameters;</li><li><strong>Designing for Extensibility.</strong> How to make a framework extensible without painting yourself in a corner;</li><li><strong>Exceptions.</strong> When and how to throw and catch exceptions;</li><li><strong>Usage Guidelines.</strong> How to use arrays, attributes, collections, and usage and caveats of <span class="code">System.</span><span class="type">Object</span>'s common members;</li><li><strong>Common Design Patterns.</strong> Describes a very limited set of patterns that are used frequently in the .NET framework, like the async and dispose patterns.</li></ul><p>The book&rsquo;s guidelines consist of 487 do, consider, avoid, and do not recommendations. Here are four examples of the book&rsquo;s advice.</p><table border="0"><tbody><tr valign="top"><td valign="top"><img style="border: 0px none " src="/blogs/steven/images/v.gif" alt="" /><br /></td><td><strong>DO</strong> validate arguments passed to public, protected, or explicitly implemented members. Throw <span class="code">System.</span><span class="type">ArgumentException</span>, or one of its subclasses, if the validation fails.</td></tr><tr><td valign="top"><img style="border: 0px none " src="/blogs/steven/images/v.gif" alt="" /></td><td><strong>CONSIDER</strong> providing simple, ideally default, constructors.</td></tr><tr><td valign="top"><img style="border: 0px none " src="/blogs/steven/images/x.gif" alt="" /></td><td><strong>AVOID</strong> implementing interface members explicitly without having a strong reason to do so.</td></tr><tr><td valign="top"><img style="border: 0px none " src="/blogs/steven/images/x.gif" alt="" /></td><td><strong>DO NOT</strong> make members virtual unless you have a good reason to do so and you are aware of all the costs related to designing, testing, and maintaining virtual members.</td></tr></tbody></table><p>I found this book very easy to read with it's clear do and don't guidance. I especially loved the comments by experts like <a rel="external" href="http://en.wikipedia.org/wiki/Anders_Hejlsberg" target="_blank" title="Anders Hejlsberg (Wikipedia)">Anders Hejlsberg</a>, <a rel="external" href="http://blogs.msdn.com/ericgu/" target="_blank" title="Eric Gunnerson's weblog">Eric Gunnerson</a>, <a rel="external" href="http://blogs.msdn.com/ricom/" target="_blank" title="Rico Mariani's weblog">Rico Mariani</a>, <a rel="external" href="http://www.bluebytesoftware.com/blog/Default.aspx" target="_blank" title="Joe Duffy's Weblog">Joe Duffy</a>, and many more. These notes stick out like yellow Post-its with comments on almost every guideline in the book. In these comments the annotators not only describe the how and why of the guidelines, but also admit to design flaws in the .NET framework itself. But please don&rsquo;t be misled. The book doesn&rsquo;t talk about the base class library (BCL), doesn&rsquo;t tell you how to improve the quality of your code, and doesn&rsquo;t dictate how to case your private class members and where to place curly braces. It focuses on design issues that directly affect the programmability of a framework.</p><p>The book made me much more conscious of the way I design my classes. While I&rsquo;m mostly writing application code instead of reusable frameworks, I believe it still is extremely important that code communicates it&rsquo;s intend and that programmers using your classes are able to write really simple, readable and safe code. The quality of my design has improved significantly over the last half year because of this book. After my good personal experiences with the book I recently advised my team, in a meeting about code conventions, to strictly follow the <em>Framework Design Guidelines</em>. As a result a summary of the book is now one of the leading documents in the teams coding conventions.</p><p>In my opinion every .NET development team should own at least one copy of this book and review code using this book as guidance. However, the book does not replace your in-company coding guidelines. Like I said, the book doesn&rsquo;t dictate coding guidelines. Nevertheless, this book is the foundation your company's guidelines should refer to. (Another useful book that might help writing your in-house guidelines is <em><a rel="external" href="http://www.amazon.com/gp/product/0735619670/sr=1-1/qid=1156801743/ref=sr_1_1/104-6313703-3867159?ie=UTF8&amp;s=books" target="_blank" title="Amazon books: Code Complete: A Practical Handbook of Software Construction (Paperback)">Code Complete, Second Edition</a></em> by <a rel="external" href="http://stevemcconnell.com/" target="_blank" title="Steve McConnell's website">Steve McConnell</a>).</p><p>While <em>Framework Design Guidelines</em> doesn't dictate a coding style it contains an appendix in which the writers suggest C# coding style conventions. In contrast with the great guidelines in the book, these suggestions seem very odd to me. The suggested coding style is quite different from the default style used by Microsoft and the formatting within Visual Studio. One of the writers, <a rel="external" href="http://blogs.msdn.com/brada/" target="_blank" title="Brad Abrams' Blog">Brad Abrams</a>, published <a rel="external" href="http://blogs.msdn.com/brada/articles/361363.aspx" target="_blank" title="Internal Coding Guidelines at Brad Abrams' blog">C# guidelines</a> on his blog complying with &lsquo;the standards&rsquo; rather than the suggestions in his book, making the style used in the appendix even more queer. So, in style with the book&rsquo;s guidelines I can recommend the following:</p><table border="0"><tbody><tr valign="top"><td valign="top"><img style="border: 0px none " src="/blogs/steven/images/x.gif" alt="" /></td><td><strong>AVOID</strong> using the suggested C# coding style conventions given by Framework Design Guidelines.<br /></td></tr></tbody></table><p>A very well-considered guideline I can recommend is the <a rel="external" href="http://www.idesign.net/idesign/download/IDesign%20CSharp%20Coding%20Standard.zip" target="_blank" title="IDesign C# Coding Standard zipfile">IDesign C# Coding Standard</a> by a company called <a rel="external" href="http://www.idesign.net" target="_blank" title="IDesign">IDesign</a>.</p><table border="0"><tbody><tr valign="top"><td valign="top"><img style="border: 0px none " src="/blogs/steven/images/v.gif" alt="" /></td><td><strong>CONSIDER</strong> using the IDesign C# Coding Standard.<br /></td></tr></tbody></table><p> What I also recommend is watching two videos of <a rel="external" href="http://blogs.msdn.com/kcwalina" target="_blank" title="Krzysztof Cwalina's blog">Krzysztof Cwalina</a> about framework design. The <a rel="external" href="http://www.researchchannel.org/prog/displayevent.aspx?rID=11087&amp;fID=2740" target="_blank" title="MSR Technical Education Series: Designing .NET Class Libraries video">first video</a> is a three hours lecture held in January 2007 at <a rel="external" href="http://research.microsoft.com/" target="_blank" title="Microsoft Research Center">Microsoft Research Center</a>. Krzysztof basically summarizes <em>Framework Design Guidelines</em> while giving interesting anecdotes. The <a rel="external" href="http://download.microsoft.com/download/b/d/1/bd133733-9647-445f-bc06-238ae9c0dd48/FrameworkEngineering.wmv" target="_blank" title="Framework Engineering: Architecting, Designing, and Developing Reusable Libraries video">second video</a> is a presentation from <a rel="external" href="http://www.microsoft.com/australia/teched07/index.aspx" target="_blank" title="TechEd 2007">TechEd 2007</a> last November. This presentation gives a broader look at the processes that affect the design of frameworks. In this video Cwalina proposes some interesting guidelines, such as:</p><ul><li>Manage your assembly and type dependencies;</li><li>Keep abstractions (abstract types etc.) as simple as possible;</li><li>Design a type as either a primitive, an abstraction or a library. Do not mix;</li><li>Balance advances with compatibility, because breaking changes to frameworks can't be taken lightly, and:</li><li>Avoid duplication and overlap.</li></ul><p>A good example of the content you might find in <em>Framework Design Guidelines</em> is the <em><a rel="external" href="http://www.bluebytesoftware.com/blog/PermaLink.aspx?guid=88e62cdf-5919-4ac7-bc33-20c06ae539ae" target="_blank" title="Joe Duffy's blog: Dispose, Finalization, and Resource Management">Dispose, Finalization, and Resource Management guideline</a></em> on Joe Duffy's blog. It contains a guideline that's much more complete (and advanced) than the one you'll find in <em>Framework Design Guidelines</em>, but it gives you a clear indication of the book's writing style with it's do's, don'ts and annotations.</p><p>Recently Krzysztof and Brad <a rel="external" href="http://blogs.msdn.com/kcwalina/archive/2008/01/03/FrameworkDesignGuidelines2ndEdition.aspx" target="_blank" title="Krzysztof Cwalina's weblog: Framework Design Guidelines 2nd Edition">announced</a> <a rel="external" href="http://blogs.msdn.com/brada/archive/2008/01/03/framework-design-guidelines-2nd-edition-in-the-works.aspx" target="_blank" title="Brad Abrams' weblog: Framework Design Guidelines 2nd Edition In the works!">working</a> on a second edition of <em>Framework Design Guidelines</em>. This second edition is planned to be published around the end of 2008. But you can't afford to wait that long before reading these guidelines, seriously!</p><table border="0"><tbody><tr valign="top"><td valign="top"><img style="border: 0px none " src="/blogs/steven/images/v.gif" alt="" /></td><td><strong>DO</strong> buy this book for your team or yourself.</td></tr></tbody></table><p style="text-align:center;"><img src="/blogs/steven/images/frameworkdesignguidelinescover.jpg" style="border:0px solid" title="Cover of Framework Design Guidelines" alt="Cover of Framework Design Guidelines" class="pivot-image" /></p>
+
+					</div>
+					
+					<div id="listOfLinks"></div>
+					
+					<p class="info dontPrint">
+						<span class="poster"><script type="text/javascript">
+<!--
+	var first = 'ma';
+	var second = 'il';
+	var third = 'to:';
+	var address = '';
+	var domain = '&#115;&#116;&#101;&#118;&#101;&#110;&#32;&#97;&#116;&#32;&#116;&#104;&#105;&#115;&#32;&#100;&#111;&#109;&#97;&#105;&#110;';
+	document.write('<a href="');
+	document.write(first+second+third);
+	document.write(address);
+	document.write('&#64;');
+	document.write(domain);
+	document.write('" title="Email Steven">');
+	document.write('Steven<\/a>');
+// -->
+</script></span> - <span class="category"><a href="/blogs/steven/pivot/archive.php?c=.NET_General">.NET General</a>, <a href="/blogs/steven/pivot/archive.php?c=Books">Books</a></span> - 
+						<span class="comments"><a href="/blogs/steven/pivot/entry.php?id=31#comm" title="">No comments</a> /  <a href="/blogs/steven/pivot/entry.php?id=31#track" title="">No trackbacks</a></span> - 
+						<a href="/blogs/steven/archives/archive_2008-m02.php#e31" title="Permanent link to 'Book: Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries' in the archives">&sect;</a> <a href="/blogs/steven/pivot/entry.php?id=31" title="Permanent link to entry 'Book: Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries'">&para;</a> 
+					</p>
+					
+					<div id="NoJavascriptWarning">
+						The code samples on my weblog are colorized using javascript, but
+						you disabled javascript (for my website) on your browser. 
+						If you're interested in viewing the posted code snippets in 
+						color, please enable javascript.
+					</div>
+					<script type="text/javascript">
+						var noScriptWarning = document.getElementById('NoJavascriptWarning');
+						noScriptWarning.style.display = "none";
+					</script>
+				</div>
+			</div>
+			
+			<hr style="height:1px; background-color:#999; color:#999; border: none;" />
+
+			<p><b>No comments:</b></p>
+			<div class="comments">
+			<a id="comm"></a>
+
+			</div>
+
+		</div>
+
+		<hr />
+		
+		<div id="footer">
+			<p>&copy; 2007-2019 Steven van Deursen.<br /><span class="dontPrint"><a href="/blogs/steven/rss.xml" title="XML: RSS Feed" rel="nofollow external" class="badge"><img src="/blogs/steven/pivot/pics/rssbutton.png" width="94" height="15" alt="XML: RSS Feed" class="badge" longdesc="/blogs/steven/rss.xml" /></a> <a href="/blogs/steven/atom.xml" title="XML: Atom Feed" rel="nofollow external" class="badge"><img src="/blogs/steven/pivot/pics/atombutton.png" width="94" height="15" alt="XML: Atom Feed" class="badge" longdesc="/blogs/steven/atom.xml" /></a></span>
+			</p>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/CSharpCodeHighlighter0.10.js"></script>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/MSILCodeHighlighter0.1.js"></script>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/X86CodeHighlighter0.1.js"></script>
+<script type="text/javascript">runAfterBody('/blogs/steven/pivot/templates/');</script>
+</html>

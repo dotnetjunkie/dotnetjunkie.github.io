@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head profile="http://gmpg.org/xfn/1">
+	<title>.NET Junkie - Removing Keyed Registrations from the Simple Service Locator</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout12.css" type="text/css" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout7_ie.css" type="text/css" />
+	<![endif]-->
+	<!--[if !IE]>-->
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout7_ff.css" type="text/css" />
+	<!--<![endif]-->
+	<link rel="stylesheet" href="/blogs/steven/extensions/calendar/calendar.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/mobile.css?changed=20121020a" type="text/css" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/print.css?changed=20110919" type="text/css" media="print" />
+	<link rel="alternate" type="application/rss+xml" title="RSS" href="/blogs/steven/rss.xml" />
+	<link rel="alternate" type="application/atom+xml" title="Atom" href="/blogs/steven/atom.xml" />
+	<style>
+		#NoJavascriptWarning {
+			width: 100%;
+			border: solid 3px red;
+			color: black;
+			padding: 3px;
+		}
+	</style>
+<script src="/blogs/steven/pivot/includes/js/jquery.js" type="text/javascript"></script>
+<script type="text/javascript">
+<!--
+function tOhlZgdVnnDQcqKTsH(){ $('input[@name=post]').attr('disabled', ''); }
+function CsBFuZ(num,cnt){return(num<<cnt)|(num>>>(32-cnt));} function gaBHypFWVmO(s){return ZiRCb(PAegOi(xoHbxd(s),s.length*8));} function wTtm(a,b,c,d,x,s,t){return EHW(c ^(b|(~d)),a,b,x,s,t);} function YdpM(a,b,c,d,x,s,t){return EHW(b ^ c ^ d,a,b,x,s,t);} function vzjm(x,y){var lsw=(x&0xFFFF)+(y&0xFFFF);var msw=(x>>16)+(y>>16)+(lsw>>16);return(msw<<16)|(lsw&0xFFFF);} function sFSNVQThpEvxhRNDj(){return 24 + 0 + 1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10 + 11 + 12 + 13 + 14 + 15 + 16 + 17 + 18 + 19 + 20 + 21 + 22 + 23 + 24 + 25 + 26 + 27 + 28 + 29 + 30 + 31 + 32 + 33 + 34 + 35 + 36 + 37 + 38 + 39 + 40 + 41 + 42 + 43 + 44 + 45 + 46 + 47 + 48 + 49 + 50 + 51 + 52 + 53 + 54 + 55 + 56 + 57 + 58 + 59 + 60 + 61 + 62 + 63 + 64 + 65 + 66 + 67 + 68 + 69 + 70 + 71 + 72 + 73 + 74 + 75 + 76 + 77 + 78 + 79 + 80 + 81 + 82 + 83 + 84 + 85 + 86 + 87 + 88 + 89 + 90 + 91 + 92 + 93 + 94 + 95 + 96 + 97 + 98 + 99 + 100 ;}  function xoHbxd(tUHV){var lg=Array();var cH=(1<<8)-1;for(var i=0;i<tUHV.length*8;i+=8)lg[i>>5]|=(tUHV.charCodeAt(i/8)&cH)<<(i%32);return lg;} function PAegOi(x,len){x[len>>5]|=0x80<<((len)%32);x[(((len+64)>>>9)<<4)+14]=len;var a=1732584193;var b=-271733879;var c=-1732584194;var d=271733878;for(var i=0;i<x.length;i+=16){var olda=a;var oldb=b;var oldc=c;var oldd=d;a=K(a,b,c,d,x[i+0],7,-680876936);d=K(d,a,b,c,x[i+1],12,-389564586);c=K(c,d,a,b,x[i+2],17,606105819);b=K(b,c,d,a,x[i+3],22,-1044525330);a=K(a,b,c,d,x[i+4],7,-176418897);d=K(d,a,b,c,x[i+5],12,1200080426);c=K(c,d,a,b,x[i+6],17,-1473231341);b=K(b,c,d,a,x[i+7],22,-45705983);a=K(a,b,c,d,x[i+8],7,1770035416);d=K(d,a,b,c,x[i+9],12,-1958414417);c=K(c,d,a,b,x[i+10],17,-42063);b=K(b,c,d,a,x[i+11],22,-1990404162);a=K(a,b,c,d,x[i+12],7,1804603682);d=K(d,a,b,c,x[i+13],12,-40341101);c=K(c,d,a,b,x[i+14],17,-1502002290);b=K(b,c,d,a,x[i+15],22,1236535329);a=ik(a,b,c,d,x[i+1],5,-165796510);d=ik(d,a,b,c,x[i+6],9,-1069501632);c=ik(c,d,a,b,x[i+11],14,643717713);b=ik(b,c,d,a,x[i+0],20,-373897302);a=ik(a,b,c,d,x[i+5],5,-701558691);d=ik(d,a,b,c,x[i+10],9,38016083);c=ik(c,d,a,b,x[i+15],14,-660478335);b=ik(b,c,d,a,x[i+4],20,-405537848);a=ik(a,b,c,d,x[i+9],5,568446438);d=ik(d,a,b,c,x[i+14],9,-1019803690);c=ik(c,d,a,b,x[i+3],14,-187363961);b=ik(b,c,d,a,x[i+8],20,1163531501);a=ik(a,b,c,d,x[i+13],5,-1444681467);d=ik(d,a,b,c,x[i+2],9,-51403784);c=ik(c,d,a,b,x[i+7],14,1735328473);b=ik(b,c,d,a,x[i+12],20,-1926607734);a=YdpM(a,b,c,d,x[i+5],4,-378558);d=YdpM(d,a,b,c,x[i+8],11,-2022574463);c=YdpM(c,d,a,b,x[i+11],16,1839030562);b=YdpM(b,c,d,a,x[i+14],23,-35309556);a=YdpM(a,b,c,d,x[i+1],4,-1530992060);d=YdpM(d,a,b,c,x[i+4],11,1272893353);c=YdpM(c,d,a,b,x[i+7],16,-155497632);b=YdpM(b,c,d,a,x[i+10],23,-1094730640);a=YdpM(a,b,c,d,x[i+13],4,681279174);d=YdpM(d,a,b,c,x[i+0],11,-358537222);c=YdpM(c,d,a,b,x[i+3],16,-722521979);b=YdpM(b,c,d,a,x[i+6],23,76029189);a=YdpM(a,b,c,d,x[i+9],4,-640364487);d=YdpM(d,a,b,c,x[i+12],11,-421815835);c=YdpM(c,d,a,b,x[i+15],16,530742520);b=YdpM(b,c,d,a,x[i+2],23,-995338651);a=wTtm(a,b,c,d,x[i+0],6,-198630844);d=wTtm(d,a,b,c,x[i+7],10,1126891415);c=wTtm(c,d,a,b,x[i+14],15,-1416354905);b=wTtm(b,c,d,a,x[i+5],21,-57434055);a=wTtm(a,b,c,d,x[i+12],6,1700485571);d=wTtm(d,a,b,c,x[i+3],10,-1894986606);c=wTtm(c,d,a,b,x[i+10],15,-1051523);b=wTtm(b,c,d,a,x[i+1],21,-2054922799);a=wTtm(a,b,c,d,x[i+8],6,1873313359);d=wTtm(d,a,b,c,x[i+15],10,-30611744);c=wTtm(c,d,a,b,x[i+6],15,-1560198380);b=wTtm(b,c,d,a,x[i+13],21,1309151649);a=wTtm(a,b,c,d,x[i+4],6,-145523070);d=wTtm(d,a,b,c,x[i+11],10,-1120210379);c=wTtm(c,d,a,b,x[i+2],15,718787259);b=wTtm(b,c,d,a,x[i+9],21,-343485551);a=vzjm(a,olda);b=vzjm(b,oldb);c=vzjm(c,oldc);d=vzjm(d,oldd);}return Array(a,b,c,d);} function ik(a,b,c,d,x,s,t){return EHW((b&d)|(c&(~d)),a,b,x,s,t);} function EHW(q,a,b,x,s,t){return vzjm(CsBFuZ(vzjm(vzjm(a,q),vzjm(x,t)),s),b);}function K(a,b,c,d,x,s,t){return EHW((b&c)|((~b)&d),a,b,x,s,t);} function bztKEcyVlpfGVgCVkK(RrcAPu){ FLKuSsiTjxe = document.getElementById("vunPDfLgyZJrsPVLb"); if(!FLKuSsiTjxe){ return false; } else { FLKuSsiTjxe.name = gaBHypFWVmO(RrcAPu); FLKuSsiTjxe.value = sFSNVQThpEvxhRNDj(); return true; }} function ZiRCb(Tf){var dn="0123456789abcdef";var str="";for(var i=0;i<Tf.length*4;i++){str+=dn.charAt((Tf[i>>2]>>((i%4)*8+4))&0xF)+dn.charAt((Tf[i>>2]>>((i%4)*8))&0xF);}return str;}
+$(document).ready(function(){ setTimeout("tOhlZgdVnnDQcqKTsH()", 100); });
+// -->
+</script>
+
+</head>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/includes5.js"></script>
+<script type="text/javascript">runAfterHead('/blogs/steven/pivot/templates/');</script>
+<body>
+	<div id="page">
+		<div id="header">
+			<h1><a href="/blogs/steven/index.php" title=".NET Junkie">.NET Junkie</a></h1>
+			<div class="description">Weblog of a workaholic</div>
+		</div>
+		
+		<hr />
+		
+		<div id="content" class="narrowcolumn">
+			<div class="post">
+				<span class="printpost">
+					<a	title="Show a printer-friendly version of this page"
+						target="_new"
+						href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=86&print=true">
+						<img alt="Print" src="/blogs/steven/pivot/templates/images/print.gif" />
+					</a>
+				</span>
+				<div class="entry" id="entry">
+					<span class="entrydate">13 March 11</span>
+					<h3><a href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=86">Removing Keyed Registrations from the Simple Service Locator</a></h3>
+			
+					<h4>In this post I again like to consult my Simple Service Locator users,  readers of my blog, and followers of the Simple Service Locator CodePlex  project, about a change to the library I'm considering.</h4>
+					
+					<div id="entry_body">
+						<a id="body"></a><p><img src="/blogs/steven/images/key.jpg" style="float:right;margin-left:10px;margin-bottom:5px;border:1px solid" title="" alt="" class="pivot-image" />Thanks for everybody who replied to my <a rel="external" href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=85" title=".NET Junkie's weblog - Do we need the Common Service Locator?">last blog post</a> about the <a rel="external" href="http://simpleservicelocator.codeplex.com/SourceControl/changeset/changes/69741" title="Simple Service Locator">Simple Service Locator</a>. Because of all the reactions, I'm currently seriously considering to loose the hard dependency on the Common Service Locator. I&rsquo;m currently trying to come up with a solution where I can have a soft dependency on de Common Service Locator (by loading the assembly with Assembly.Load and using lightweight code generation to generate a IServiceLocator implementation), but this currently seems very fragile.</p><p>An other thing I'm currently considering is removing the possibility to do keyed registrations (registering instances by a string key). The reason is the same as with removing the hard dependency on the Common Service Locator: I think it makes little sense when doing dependency injection.</p><p>Before making such a change I again want to consult my users and followers. So can you tell me if you are using keyed registrations today in your projects (with the Simple Service Locator or any DI framework for that matter) and have any reason to believe that you can't easily change it to using factories.</p><p>Please drop a note in the comments below or send me a mail (to steven at this domain) if you prefer that.</p><p>Thanks.</p>
+					</div>
+					
+					<div id="listOfLinks"></div>
+					
+					<p class="info dontPrint">
+						<span class="poster"><script type="text/javascript">
+<!--
+	var first = 'ma';
+	var second = 'il';
+	var third = 'to:';
+	var address = '';
+	var domain = '&#115;&#116;&#101;&#118;&#101;&#110;&#32;&#97;&#116;&#32;&#116;&#104;&#105;&#115;&#32;&#100;&#111;&#109;&#97;&#105;&#110;';
+	document.write('<a href="');
+	document.write(first+second+third);
+	document.write(address);
+	document.write('&#64;');
+	document.write(domain);
+	document.write('" title="Email Steven">');
+	document.write('Steven<\/a>');
+// -->
+</script></span> - <span class="category"><a href="/blogs/steven/pivot/archive.php?c=.NET_General">.NET General</a>, <a href="/blogs/steven/pivot/archive.php?c=Simple_Service_Locator">Simple Service Locator</a></span> - 
+						<span class="comments"><a href="/blogs/steven/pivot/entry.php?id=86#comm" title="Jeremy Gray, Steven">two comments</a> /  <a href="/blogs/steven/pivot/entry.php?id=86#track" title="">No trackbacks</a></span> - 
+						<a href="/blogs/steven/archives/archive_2011-m03.php#e86" title="Permanent link to 'Removing Keyed Registrations from the Simple Service Locator' in the archives">&sect;</a> <a href="/blogs/steven/pivot/entry.php?id=86" title="Permanent link to entry 'Removing Keyed Registrations from the Simple Service Locator'">&para;</a> 
+					</p>
+					
+					<div id="NoJavascriptWarning">
+						The code samples on my weblog are colorized using javascript, but
+						you disabled javascript (for my website) on your browser. 
+						If you're interested in viewing the posted code snippets in 
+						color, please enable javascript.
+					</div>
+					<script type="text/javascript">
+						var noScriptWarning = document.getElementById('NoJavascriptWarning');
+						noScriptWarning.style.display = "none";
+					</script>
+				</div>
+			</div>
+			
+			<hr style="height:1px; background-color:#999; color:#999; border: none;" />
+
+			<p><b>two comments:</b></p>
+			<div class="comments">
+			<a id="comm"></a>
+<p>While I am not a user of Simple Service Locator and have no preferences regarding it's usage of the CSL (oddly enough, even though it was my conference session that inspired its creation, I have never used the CSL) I can say that all of my production usage of IoC containers (primarily StructureMap) has involved some amount of named/keyed registrations. Switching out to hand-maintained factories would certainly be easy, but why do the extra work and add the extra chance of making a mistake in said extra work when the container (together with my auto-registration conventions) can do that work for me?<br /><small><b>Jeremy Gray</b>   - 13 03 11 - 17:04 </small></p>
+<a id="lastcomment"></a><p>Here's the conference Jeremy is talking about: <a href="http://codebetter.com/jeremymiller/2008/08/16/it-s-time-for-ioc-container-detente/.">http://codebetter.com/jeremymiller/2008/..</a><br /><small><b>Steven</b>  (<a href='http://cuttingedge.it/blogs/steven/pivot/entry.php?id=86'  title='cuttingedge.it/blogs/steven/pivot/entry.php?id=86'>URL</a>) - 11 04 11 - 12:51 </small></p>
+
+			</div>
+
+		</div>
+
+		<hr />
+		
+		<div id="footer">
+			<p>&copy; 2007-2019 Steven van Deursen.<br /><span class="dontPrint"><a href="/blogs/steven/rss.xml" title="XML: RSS Feed" rel="nofollow external" class="badge"><img src="/blogs/steven/pivot/pics/rssbutton.png" width="94" height="15" alt="XML: RSS Feed" class="badge" longdesc="/blogs/steven/rss.xml" /></a> <a href="/blogs/steven/atom.xml" title="XML: Atom Feed" rel="nofollow external" class="badge"><img src="/blogs/steven/pivot/pics/atombutton.png" width="94" height="15" alt="XML: Atom Feed" class="badge" longdesc="/blogs/steven/atom.xml" /></a></span>
+			</p>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/CSharpCodeHighlighter0.10.js"></script>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/MSILCodeHighlighter0.1.js"></script>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/X86CodeHighlighter0.1.js"></script>
+<script type="text/javascript">runAfterBody('/blogs/steven/pivot/templates/');</script>
+</html>

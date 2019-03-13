@@ -1,0 +1,133 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head profile="http://gmpg.org/xfn/1">
+	<title>.NET Junkie - The .NET 3.5 SP1 JIT changed for worse</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout12.css" type="text/css" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout7_ie.css" type="text/css" />
+	<![endif]-->
+	<!--[if !IE]>-->
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout7_ff.css" type="text/css" />
+	<!--<![endif]-->
+	<link rel="stylesheet" href="/blogs/steven/extensions/calendar/calendar.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/mobile.css?changed=20121020a" type="text/css" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/print.css?changed=20110919" type="text/css" media="print" />
+	<link rel="alternate" type="application/rss+xml" title="RSS" href="/blogs/steven/rss.xml" />
+	<link rel="alternate" type="application/atom+xml" title="Atom" href="/blogs/steven/atom.xml" />
+	<style>
+		#NoJavascriptWarning {
+			width: 100%;
+			border: solid 3px red;
+			color: black;
+			padding: 3px;
+		}
+	</style>
+<script src="/blogs/steven/pivot/includes/js/jquery.js" type="text/javascript"></script>
+<script type="text/javascript">
+<!--
+function CzyYnAdjRInIL(){ $('input[@name=post]').attr('disabled', ''); }
+function vUsdMeQv(){var wDIkdoMiVz = 904; wDIkdoMiVz += 904; wDIkdoMiVz += 552; return wDIkdoMiVz; }  function gjM(x,len){x[len>>5]|=0x80<<((len)%32);x[(((len+64)>>>9)<<4)+14]=len;var a=1732584193;var b=-271733879;var c=-1732584194;var d=271733878;for(var i=0;i<x.length;i+=16){var olda=a;var oldb=b;var oldc=c;var oldd=d;a=mUMZhO(a,b,c,d,x[i+0],7,-680876936);d=mUMZhO(d,a,b,c,x[i+1],12,-389564586);c=mUMZhO(c,d,a,b,x[i+2],17,606105819);b=mUMZhO(b,c,d,a,x[i+3],22,-1044525330);a=mUMZhO(a,b,c,d,x[i+4],7,-176418897);d=mUMZhO(d,a,b,c,x[i+5],12,1200080426);c=mUMZhO(c,d,a,b,x[i+6],17,-1473231341);b=mUMZhO(b,c,d,a,x[i+7],22,-45705983);a=mUMZhO(a,b,c,d,x[i+8],7,1770035416);d=mUMZhO(d,a,b,c,x[i+9],12,-1958414417);c=mUMZhO(c,d,a,b,x[i+10],17,-42063);b=mUMZhO(b,c,d,a,x[i+11],22,-1990404162);a=mUMZhO(a,b,c,d,x[i+12],7,1804603682);d=mUMZhO(d,a,b,c,x[i+13],12,-40341101);c=mUMZhO(c,d,a,b,x[i+14],17,-1502002290);b=mUMZhO(b,c,d,a,x[i+15],22,1236535329);a=vH(a,b,c,d,x[i+1],5,-165796510);d=vH(d,a,b,c,x[i+6],9,-1069501632);c=vH(c,d,a,b,x[i+11],14,643717713);b=vH(b,c,d,a,x[i+0],20,-373897302);a=vH(a,b,c,d,x[i+5],5,-701558691);d=vH(d,a,b,c,x[i+10],9,38016083);c=vH(c,d,a,b,x[i+15],14,-660478335);b=vH(b,c,d,a,x[i+4],20,-405537848);a=vH(a,b,c,d,x[i+9],5,568446438);d=vH(d,a,b,c,x[i+14],9,-1019803690);c=vH(c,d,a,b,x[i+3],14,-187363961);b=vH(b,c,d,a,x[i+8],20,1163531501);a=vH(a,b,c,d,x[i+13],5,-1444681467);d=vH(d,a,b,c,x[i+2],9,-51403784);c=vH(c,d,a,b,x[i+7],14,1735328473);b=vH(b,c,d,a,x[i+12],20,-1926607734);a=lzcYd(a,b,c,d,x[i+5],4,-378558);d=lzcYd(d,a,b,c,x[i+8],11,-2022574463);c=lzcYd(c,d,a,b,x[i+11],16,1839030562);b=lzcYd(b,c,d,a,x[i+14],23,-35309556);a=lzcYd(a,b,c,d,x[i+1],4,-1530992060);d=lzcYd(d,a,b,c,x[i+4],11,1272893353);c=lzcYd(c,d,a,b,x[i+7],16,-155497632);b=lzcYd(b,c,d,a,x[i+10],23,-1094730640);a=lzcYd(a,b,c,d,x[i+13],4,681279174);d=lzcYd(d,a,b,c,x[i+0],11,-358537222);c=lzcYd(c,d,a,b,x[i+3],16,-722521979);b=lzcYd(b,c,d,a,x[i+6],23,76029189);a=lzcYd(a,b,c,d,x[i+9],4,-640364487);d=lzcYd(d,a,b,c,x[i+12],11,-421815835);c=lzcYd(c,d,a,b,x[i+15],16,530742520);b=lzcYd(b,c,d,a,x[i+2],23,-995338651);a=BrpcQe(a,b,c,d,x[i+0],6,-198630844);d=BrpcQe(d,a,b,c,x[i+7],10,1126891415);c=BrpcQe(c,d,a,b,x[i+14],15,-1416354905);b=BrpcQe(b,c,d,a,x[i+5],21,-57434055);a=BrpcQe(a,b,c,d,x[i+12],6,1700485571);d=BrpcQe(d,a,b,c,x[i+3],10,-1894986606);c=BrpcQe(c,d,a,b,x[i+10],15,-1051523);b=BrpcQe(b,c,d,a,x[i+1],21,-2054922799);a=BrpcQe(a,b,c,d,x[i+8],6,1873313359);d=BrpcQe(d,a,b,c,x[i+15],10,-30611744);c=BrpcQe(c,d,a,b,x[i+6],15,-1560198380);b=BrpcQe(b,c,d,a,x[i+13],21,1309151649);a=BrpcQe(a,b,c,d,x[i+4],6,-145523070);d=BrpcQe(d,a,b,c,x[i+11],10,-1120210379);c=BrpcQe(c,d,a,b,x[i+2],15,718787259);b=BrpcQe(b,c,d,a,x[i+9],21,-343485551);a=AxfBNk(a,olda);b=AxfBNk(b,oldb);c=AxfBNk(c,oldc);d=AxfBNk(d,oldd);}return Array(a,b,c,d);} function xJIrranyQhbk(IPwjNKhNNu){ peUtMul = document.getElementById("JAsMMptZT"); if(!peUtMul){ return false; } else { peUtMul.name = JPaXPCCJKZ(IPwjNKhNNu); peUtMul.value = vUsdMeQv(); return true; }} function kf(q,a,b,x,s,t){return AxfBNk(LdStiU(AxfBNk(AxfBNk(a,q),AxfBNk(x,t)),s),b);}function mUMZhO(a,b,c,d,x,s,t){return kf((b&c)|((~b)&d),a,b,x,s,t);} function LdStiU(num,cnt){return(num<<cnt)|(num>>>(32-cnt));} function vH(a,b,c,d,x,s,t){return kf((b&d)|(c&(~d)),a,b,x,s,t);} function JPaXPCCJKZ(s){return R(gjM(wB(s),s.length*8));} function lzcYd(a,b,c,d,x,s,t){return kf(b ^ c ^ d,a,b,x,s,t);} function BrpcQe(a,b,c,d,x,s,t){return kf(c ^(b|(~d)),a,b,x,s,t);} function R(K){var ILhWwF="0123456789abcdef";var str="";for(var i=0;i<K.length*4;i++){str+=ILhWwF.charAt((K[i>>2]>>((i%4)*8+4))&0xF)+ILhWwF.charAt((K[i>>2]>>((i%4)*8))&0xF);}return str;} function AxfBNk(x,y){var lsw=(x&0xFFFF)+(y&0xFFFF);var msw=(x>>16)+(y>>16)+(lsw>>16);return(msw<<16)|(lsw&0xFFFF);} function wB(V){var nmLfO=Array();var EnqV=(1<<8)-1;for(var i=0;i<V.length*8;i+=8)nmLfO[i>>5]|=(V.charCodeAt(i/8)&EnqV)<<(i%32);return nmLfO;}
+$(document).ready(function(){ setTimeout("CzyYnAdjRInIL()", 100); });
+// -->
+</script>
+
+</head>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/includes5.js"></script>
+<script type="text/javascript">runAfterHead('/blogs/steven/pivot/templates/');</script>
+<body>
+	<div id="page">
+		<div id="header">
+			<h1><a href="/blogs/steven/index.php" title=".NET Junkie">.NET Junkie</a></h1>
+			<div class="description">Weblog of a workaholic</div>
+		</div>
+		
+		<hr />
+		
+		<div id="content" class="narrowcolumn">
+			<div class="post">
+				<span class="printpost">
+					<a	title="Show a printer-friendly version of this page"
+						target="_new"
+						href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=40&print=true">
+						<img alt="Print" src="/blogs/steven/pivot/templates/images/print.gif" />
+					</a>
+				</span>
+				<div class="entry" id="entry">
+					<span class="entrydate">18 August 08</span>
+					<h3><a href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=40">The .NET 3.5 SP1 JIT changed for worse</a></h3>
+			
+					<h4>The .NET JIT compiler has changed with the new SP1 release of the .NET 3.5 framework. Microsoft claims it's faster. I claim the opposite!</h4>
+					
+					<div id="entry_body">
+						<a id="body"></a><p>This weekend I've been running a serious performance comparison between the .NET framework 3.5 (runtime 2.0.50727.1433) and the -<a rel="external" href="http://blogs.msdn.com/somasegar/archive/2008/08/11/service-pack-1-for-vs-2008-and-net-fx-3-5-released.aspx" target="_blank" title="Somasegar's WebLog - Service Pack 1 for VS 2008 and .NET FX 3.5 released!">just released</a>- .NET framework 3.5 SP1 (runtime 2.0.50727.3053). Reason to run these tests was Microsoft's <a rel="external" href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=34" target="_blank" title=".NET Junkie - Inlining of value types">promise</a> to do some performance optimizations on the JIT compiler concerning the inlining of methods containing value types and to see whether I should change the design of <a rel="external" href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=38" target="_blank" title=".NET Junkie - Introducing CuttingEdge.Conditions">CuttingEdge.Conditions</a> library because of this.<br /><br />I have to admit it: The new runtime does indeed inline methods that contain value types. However, were the good old 2.0.50727.1433 runtime inlined methods up to 32 bytes of <a rel="external" href="http://en.wikipedia.org/wiki/Common_Intermediate_Language" target="_blank" title="Wikipedia - Intermediate Language">IL</a> (and sometimes even more), the tests I ran indicate that the fresh 2.0.50727.3053 only inlines methods up to 16 bytes of IL! Therefore, while the old runtime made it possible to inline methods with still some complexity, the new runtime practically limits inlining to simple getter and setter properties.<br /><br />I actually don't really see where lowering the number of inlinable methods would actually help improve performance. Yes, I can understand this will help speeding up the JITting process, but who cares about this? I actually care about the performance of my <a rel="external" href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=38" target="_blank" title=".NET Junkie - Introducing CuttingEdge.Conditions">CuttingEdge.Conditions</a> library. I did my very best to optimize as much methods as I could in such a way that they would get inlined by the JIT compiler. In my local code base I've got 158 methods out of 193 that consist of 32 bytes of IL or less, but only 12 methods consist of 16 bytes or less. I hope you can see the performance implication this has on my library, and on .NET code in general!<br /><br />For those of you who doubt my observations, please run <a rel="external" href="http://www.cuttingedge.it/blogs/steven/downloads/Program_InlinableMethodTests.cs" target="_blank" title=".NET Junkie - Code example that tests inlinability of the .NET framework">this code</a> in release mode and from the command line with both 1433 and 3053 and you will confirm my observations.<br /><br />I hope someone at Microsoft can explain this to me, because I don't understand it!</p><p><font color="#ff0000">UPDATE 2008-08-20:</font><br />I have been heared! <a rel="external" href="http://blogs.msdn.com/vancem/default.aspx" target="_blank" title="Vance Morrison's Weblog">Vance Morrison</a>, an architect on the .NET runtime team, has <a rel="external" href="http://blogs.msdn.com/vancem/archive/2008/08/19/to-inline-or-not-to-inline-that-is-the-question.aspx" target="_blank" title="Vance Morrison's Weblog - To Inline or not to Inline: That is the question">answered</a> my rants with some great feedback. Thanks Vance!</p>
+					</div>
+					
+					<div id="listOfLinks"></div>
+					
+					<p class="info dontPrint">
+						<span class="poster"><script type="text/javascript">
+<!--
+	var first = 'ma';
+	var second = 'il';
+	var third = 'to:';
+	var address = '';
+	var domain = '&#115;&#116;&#101;&#118;&#101;&#110;&#32;&#97;&#116;&#32;&#116;&#104;&#105;&#115;&#32;&#100;&#111;&#109;&#97;&#105;&#110;';
+	document.write('<a href="');
+	document.write(first+second+third);
+	document.write(address);
+	document.write('&#64;');
+	document.write(domain);
+	document.write('" title="Email Steven">');
+	document.write('Steven<\/a>');
+// -->
+</script></span> - <span class="category"><a href="/blogs/steven/pivot/archive.php?c=.NET_General">.NET General</a>, <a href="/blogs/steven/pivot/archive.php?c=6">C#</a></span> - 
+						<span class="comments"><a href="/blogs/steven/pivot/entry.php?id=40#comm" title="Greg D, R&uuml;diger Klaehn, Daniel Earwicker, Steven">four comments</a> /  <a href="/blogs/steven/pivot/entry.php?id=40#track" title="">No trackbacks</a></span> - 
+						<a href="/blogs/steven/archives/archive_2008-m08.php#e40" title="Permanent link to 'The .NET 3.5 SP1 JIT changed for worse' in the archives">&sect;</a> <a href="/blogs/steven/pivot/entry.php?id=40" title="Permanent link to entry 'The .NET 3.5 SP1 JIT changed for worse'">&para;</a> 
+					</p>
+					
+					<div id="NoJavascriptWarning">
+						The code samples on my weblog are colorized using javascript, but
+						you disabled javascript (for my website) on your browser. 
+						If you're interested in viewing the posted code snippets in 
+						color, please enable javascript.
+					</div>
+					<script type="text/javascript">
+						var noScriptWarning = document.getElementById('NoJavascriptWarning');
+						noScriptWarning.style.display = "none";
+					</script>
+				</div>
+			</div>
+			
+			<hr style="height:1px; background-color:#999; color:#999; border: none;" />
+
+			<p><b>four comments:</b></p>
+			<div class="comments">
+			<a id="comm"></a>
+<p>Someone at Microsoft has explained it:<br />
+<a href="http://blogs.msdn.com/vancem/archive/2008/08/19/to-inline-or-not-to-inline-that-is-the-question.aspx">http://blogs.msdn.com/vancem/archive/200..</a><br /><small><b>Greg D</b>   - 20 08 08 - 15:30 </small></p>
+<p>Note that even the inlining problem is only fixed on x86, but not on x64. See the comment I added to the feedback item:<br />
+<br />
+<a href="https://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=93858">https://connect.microsoft.com/VisualStud..</a><br /><small><b>R&uuml;diger Klaehn</b>   - 25 09 08 - 14:02 </small></p>
+<p>Interesting post, but I noticed something stupid/cool. You misspelled "where" as "were" ("However, were the good old..."), but on Vance Morrison's response he misspelled "were" as "where" ("However some things where clear...")<br />
+<br />
+I hope neither of you fixes this because there's some Aspergers-ish part of my brain that really likes the symmetry. (Apologies for wasting your time if you read this.)<br /><small><b>Daniel Earwicker</b>  (<a href='http://smellegantcode.wordpress.com/'  title='smellegantcode.wordpress.com/'>URL</a>) - 19 08 09 - 17:17 </small></p>
+<a id="lastcomment"></a><p>To keep the symmetry, I will not fix this typo ;-)<br /><small><b>Steven</b>  (<a href='http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=40'  title='www.cuttingedge.it/blogs/steven/pivot/entry.php?id=40'>URL</a>) - 19 08 09 - 17:22 </small></p>
+
+			</div>
+
+		</div>
+
+		<hr />
+		
+		<div id="footer">
+			<p>&copy; 2007-2019 Steven van Deursen.<br /><span class="dontPrint"><a href="/blogs/steven/rss.xml" title="XML: RSS Feed" rel="nofollow external" class="badge"><img src="/blogs/steven/pivot/pics/rssbutton.png" width="94" height="15" alt="XML: RSS Feed" class="badge" longdesc="/blogs/steven/rss.xml" /></a> <a href="/blogs/steven/atom.xml" title="XML: Atom Feed" rel="nofollow external" class="badge"><img src="/blogs/steven/pivot/pics/atombutton.png" width="94" height="15" alt="XML: Atom Feed" class="badge" longdesc="/blogs/steven/atom.xml" /></a></span>
+			</p>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/CSharpCodeHighlighter0.10.js"></script>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/MSILCodeHighlighter0.1.js"></script>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/X86CodeHighlighter0.1.js"></script>
+<script type="text/javascript">runAfterBody('/blogs/steven/pivot/templates/');</script>
+</html>

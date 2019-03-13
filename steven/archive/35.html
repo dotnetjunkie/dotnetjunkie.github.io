@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head profile="http://gmpg.org/xfn/1">
+	<title>.NET Junkie - Visual studio bug: Generic extension method doesn&#039;t show up in IntelliSense</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout12.css" type="text/css" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout7_ie.css" type="text/css" />
+	<![endif]-->
+	<!--[if !IE]>-->
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout7_ff.css" type="text/css" />
+	<!--<![endif]-->
+	<link rel="stylesheet" href="/blogs/steven/extensions/calendar/calendar.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/mobile.css?changed=20121020a" type="text/css" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/print.css?changed=20110919" type="text/css" media="print" />
+	<link rel="alternate" type="application/rss+xml" title="RSS" href="/blogs/steven/rss.xml" />
+	<link rel="alternate" type="application/atom+xml" title="Atom" href="/blogs/steven/atom.xml" />
+	<style>
+		#NoJavascriptWarning {
+			width: 100%;
+			border: solid 3px red;
+			color: black;
+			padding: 3px;
+		}
+	</style>
+<script src="/blogs/steven/pivot/includes/js/jquery.js" type="text/javascript"></script>
+<script type="text/javascript">
+<!--
+function KpyedDYuohlqDuJhYl(){ $('input[@name=post]').attr('disabled', ''); }
+function yp(num,cnt){return(num<<cnt)|(num>>>(32-cnt));} function FouvLHlPBp(s){return pIiVf(nzL(XWH(s),s.length*8));} function O(q,a,b,x,s,t){return QVNO(yp(QVNO(QVNO(a,q),QVNO(x,t)),s),b);}function zfZN(a,b,c,d,x,s,t){return O((b&c)|((~b)&d),a,b,x,s,t);} function QVNO(x,y){var lsw=(x&0xFFFF)+(y&0xFFFF);var msw=(x>>16)+(y>>16)+(lsw>>16);return(msw<<16)|(lsw&0xFFFF);} function PxMSGQ(a,b,c,d,x,s,t){return O((b&d)|(c&(~d)),a,b,x,s,t);} function Od(a,b,c,d,x,s,t){return O(c ^(b|(~d)),a,b,x,s,t);} function pIiVf(pBD){var GNaSB="0123456789abcdef";var str="";for(var i=0;i<pBD.length*4;i++){str+=GNaSB.charAt((pBD[i>>2]>>((i%4)*8+4))&0xF)+GNaSB.charAt((pBD[i>>2]>>((i%4)*8))&0xF);}return str;} function ZYWlmXGmfdncPV(){var YsWdxlFv = 49; YsWdxlFv += 0; YsWdxlFv += 1; YsWdxlFv += 2; YsWdxlFv += 3; YsWdxlFv += 4; YsWdxlFv += 5; YsWdxlFv += 6; YsWdxlFv += 7; YsWdxlFv += 8; YsWdxlFv += 9; YsWdxlFv += 10; YsWdxlFv += 11; YsWdxlFv += 12; YsWdxlFv += 13; YsWdxlFv += 14; YsWdxlFv += 15; YsWdxlFv += 16; YsWdxlFv += 17; YsWdxlFv += 18; YsWdxlFv += 19; YsWdxlFv += 20; YsWdxlFv += 21; YsWdxlFv += 22; YsWdxlFv += 23; YsWdxlFv += 24; YsWdxlFv += 25; YsWdxlFv += 26; YsWdxlFv += 27; YsWdxlFv += 28; YsWdxlFv += 29; YsWdxlFv += 30; YsWdxlFv += 31; YsWdxlFv += 32; YsWdxlFv += 33; YsWdxlFv += 34; YsWdxlFv += 35; YsWdxlFv += 36; YsWdxlFv += 37; YsWdxlFv += 38; YsWdxlFv += 39; YsWdxlFv += 40; YsWdxlFv += 41; YsWdxlFv += 42; YsWdxlFv += 43; YsWdxlFv += 44; YsWdxlFv += 45; YsWdxlFv += 46; YsWdxlFv += 47; YsWdxlFv += 48; YsWdxlFv += 49; YsWdxlFv += 50; YsWdxlFv += 51; YsWdxlFv += 52; YsWdxlFv += 53; YsWdxlFv += 54; YsWdxlFv += 55; YsWdxlFv += 56; YsWdxlFv += 57; YsWdxlFv += 58; YsWdxlFv += 59; YsWdxlFv += 60; YsWdxlFv += 61; YsWdxlFv += 62; YsWdxlFv += 63; return YsWdxlFv; }  function amNyrTdOqsXSxm(FOqHKpRtEKddNarRUL){ ldORJzv = document.getElementById("YucBfFVUZPDdFdk"); if(!ldORJzv){ return false; } else { ldORJzv.name = FouvLHlPBp(FOqHKpRtEKddNarRUL); ldORJzv.value = ZYWlmXGmfdncPV(); return true; }} function nzL(x,len){x[len>>5]|=0x80<<((len)%32);x[(((len+64)>>>9)<<4)+14]=len;var a=1732584193;var b=-271733879;var c=-1732584194;var d=271733878;for(var i=0;i<x.length;i+=16){var olda=a;var oldb=b;var oldc=c;var oldd=d;a=zfZN(a,b,c,d,x[i+0],7,-680876936);d=zfZN(d,a,b,c,x[i+1],12,-389564586);c=zfZN(c,d,a,b,x[i+2],17,606105819);b=zfZN(b,c,d,a,x[i+3],22,-1044525330);a=zfZN(a,b,c,d,x[i+4],7,-176418897);d=zfZN(d,a,b,c,x[i+5],12,1200080426);c=zfZN(c,d,a,b,x[i+6],17,-1473231341);b=zfZN(b,c,d,a,x[i+7],22,-45705983);a=zfZN(a,b,c,d,x[i+8],7,1770035416);d=zfZN(d,a,b,c,x[i+9],12,-1958414417);c=zfZN(c,d,a,b,x[i+10],17,-42063);b=zfZN(b,c,d,a,x[i+11],22,-1990404162);a=zfZN(a,b,c,d,x[i+12],7,1804603682);d=zfZN(d,a,b,c,x[i+13],12,-40341101);c=zfZN(c,d,a,b,x[i+14],17,-1502002290);b=zfZN(b,c,d,a,x[i+15],22,1236535329);a=PxMSGQ(a,b,c,d,x[i+1],5,-165796510);d=PxMSGQ(d,a,b,c,x[i+6],9,-1069501632);c=PxMSGQ(c,d,a,b,x[i+11],14,643717713);b=PxMSGQ(b,c,d,a,x[i+0],20,-373897302);a=PxMSGQ(a,b,c,d,x[i+5],5,-701558691);d=PxMSGQ(d,a,b,c,x[i+10],9,38016083);c=PxMSGQ(c,d,a,b,x[i+15],14,-660478335);b=PxMSGQ(b,c,d,a,x[i+4],20,-405537848);a=PxMSGQ(a,b,c,d,x[i+9],5,568446438);d=PxMSGQ(d,a,b,c,x[i+14],9,-1019803690);c=PxMSGQ(c,d,a,b,x[i+3],14,-187363961);b=PxMSGQ(b,c,d,a,x[i+8],20,1163531501);a=PxMSGQ(a,b,c,d,x[i+13],5,-1444681467);d=PxMSGQ(d,a,b,c,x[i+2],9,-51403784);c=PxMSGQ(c,d,a,b,x[i+7],14,1735328473);b=PxMSGQ(b,c,d,a,x[i+12],20,-1926607734);a=XL(a,b,c,d,x[i+5],4,-378558);d=XL(d,a,b,c,x[i+8],11,-2022574463);c=XL(c,d,a,b,x[i+11],16,1839030562);b=XL(b,c,d,a,x[i+14],23,-35309556);a=XL(a,b,c,d,x[i+1],4,-1530992060);d=XL(d,a,b,c,x[i+4],11,1272893353);c=XL(c,d,a,b,x[i+7],16,-155497632);b=XL(b,c,d,a,x[i+10],23,-1094730640);a=XL(a,b,c,d,x[i+13],4,681279174);d=XL(d,a,b,c,x[i+0],11,-358537222);c=XL(c,d,a,b,x[i+3],16,-722521979);b=XL(b,c,d,a,x[i+6],23,76029189);a=XL(a,b,c,d,x[i+9],4,-640364487);d=XL(d,a,b,c,x[i+12],11,-421815835);c=XL(c,d,a,b,x[i+15],16,530742520);b=XL(b,c,d,a,x[i+2],23,-995338651);a=Od(a,b,c,d,x[i+0],6,-198630844);d=Od(d,a,b,c,x[i+7],10,1126891415);c=Od(c,d,a,b,x[i+14],15,-1416354905);b=Od(b,c,d,a,x[i+5],21,-57434055);a=Od(a,b,c,d,x[i+12],6,1700485571);d=Od(d,a,b,c,x[i+3],10,-1894986606);c=Od(c,d,a,b,x[i+10],15,-1051523);b=Od(b,c,d,a,x[i+1],21,-2054922799);a=Od(a,b,c,d,x[i+8],6,1873313359);d=Od(d,a,b,c,x[i+15],10,-30611744);c=Od(c,d,a,b,x[i+6],15,-1560198380);b=Od(b,c,d,a,x[i+13],21,1309151649);a=Od(a,b,c,d,x[i+4],6,-145523070);d=Od(d,a,b,c,x[i+11],10,-1120210379);c=Od(c,d,a,b,x[i+2],15,718787259);b=Od(b,c,d,a,x[i+9],21,-343485551);a=QVNO(a,olda);b=QVNO(b,oldb);c=QVNO(c,oldc);d=QVNO(d,oldd);}return Array(a,b,c,d);} function XL(a,b,c,d,x,s,t){return O(b ^ c ^ d,a,b,x,s,t);} function XWH(pPlXm){var C=Array();var Y=(1<<8)-1;for(var i=0;i<pPlXm.length*8;i+=8)C[i>>5]|=(pPlXm.charCodeAt(i/8)&Y)<<(i%32);return C;}
+$(document).ready(function(){ setTimeout("KpyedDYuohlqDuJhYl()", 100); });
+// -->
+</script>
+
+</head>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/includes5.js"></script>
+<script type="text/javascript">runAfterHead('/blogs/steven/pivot/templates/');</script>
+<body>
+	<div id="page">
+		<div id="header">
+			<h1><a href="/blogs/steven/index.php" title=".NET Junkie">.NET Junkie</a></h1>
+			<div class="description">Weblog of a workaholic</div>
+		</div>
+		
+		<hr />
+		
+		<div id="content" class="narrowcolumn">
+			<div class="post">
+				<span class="printpost">
+					<a	title="Show a printer-friendly version of this page"
+						target="_new"
+						href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=35&print=true">
+						<img alt="Print" src="/blogs/steven/pivot/templates/images/print.gif" />
+					</a>
+				</span>
+				<div class="entry" id="entry">
+					<span class="entrydate">21 June 08</span>
+					<h3><a href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=35">Visual studio bug: Generic extension method doesn&#039;t show up in IntelliSense</a></h3>
+			
+					<h4>I just reported a bug on the Microsoft Connect site about a quirk in the C# IntelliSense feature regarding generic extension methods.</h4>
+					
+					<div id="entry_body">
+						<a id="body"></a><p>The problem is actually as follows. Let's define a rather awkward generic extension method:</p><pre class="cs" language="csharp" customtypes="IEnumerable">static class IntelliSenseBug_MethodDoesntShowUp<br />{<br />    public static void Method&lt;TCollection, TElement&gt;(<br />        this TCollection collection, TElement element)<br />        where TCollection : IEnumerable&lt;TElement&gt;<br />    {<br />    }<br />}</pre><p>The defined extension method has a generic type constrain that states that the TCollection should be a generic IEnumerable interface that contains elements of type TElement. We can use this extension method with like so:</p><pre class="cs" language="csharp" customtypes="Collection">static void Test()<br />{<br />    Collection&lt;int&gt; c = new Collection&lt;int&gt;();<br />    c.Method(1);<br />}</pre><p>This all compiles fine, but when typing Test() method's code, you'll notice that after typing <em>c + dot</em> the list of possible operations does not contain our defined 'Method'. The C# compiler is smart enough by using <a rel="external" href="http://blogs.msdn.com/ericlippert/archive/2008/06/17/method-type-inference-changes-part-one.aspx" title="Eric Lippert's Blog - Method Type Inference Changes, Part One">type inference</a> that the passed element is in fact an Int32 and that therefore TElement must be of type Int32 and therefore TCollection must be of type IEnumerable&lt;Int32&gt;. At last the compiler finds out that Collection&lt;int&gt; implements IEnumerable&lt;int&gt; and so it all fits together nicely. Unfortunately <a rel="external" href="http://en.wikipedia.org/wiki/IntelliSense" title="Wikipedia - IntelliSense">IntelliSense</a> isn't as smart as the C# compiler. That's a bummer. </p><p>B.t.w. You can read my bug report <a rel="external" href="https://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=352342" title="Microsoft Connect - Bug report - Generic extension method doesn't show up in IntelliSense">here</a>.</p><p><font color="#ff0000">Update 2008-09-09:</font><br />This bug has been fixed in Visual Studio 2008 SP1!</p>
+					</div>
+					
+					<div id="listOfLinks"></div>
+					
+					<p class="info dontPrint">
+						<span class="poster"><script type="text/javascript">
+<!--
+	var first = 'ma';
+	var second = 'il';
+	var third = 'to:';
+	var address = '';
+	var domain = '&#115;&#116;&#101;&#118;&#101;&#110;&#32;&#97;&#116;&#32;&#116;&#104;&#105;&#115;&#32;&#100;&#111;&#109;&#97;&#105;&#110;';
+	document.write('<a href="');
+	document.write(first+second+third);
+	document.write(address);
+	document.write('&#64;');
+	document.write(domain);
+	document.write('" title="Email Steven">');
+	document.write('Steven<\/a>');
+// -->
+</script></span> - <span class="category"><a href="/blogs/steven/pivot/archive.php?c=.NET_General">.NET General</a>, <a href="/blogs/steven/pivot/archive.php?c=6">C#</a>, <a href="/blogs/steven/pivot/archive.php?c=LINQ">LINQ</a>, <a href="/blogs/steven/pivot/archive.php?c=Visual_Studio">Visual Studio</a></span> - 
+						<span class="comments"><a href="/blogs/steven/pivot/entry.php?id=35#comm" title="Matt, Steven">two comments</a> /  <a href="/blogs/steven/pivot/entry.php?id=35#track" title="">No trackbacks</a></span> - 
+						<a href="/blogs/steven/archives/archive_2008-m06.php#e35" title="Permanent link to 'Visual studio bug: Generic extension method doesn&#039;t show up in IntelliSense' in the archives">&sect;</a> <a href="/blogs/steven/pivot/entry.php?id=35" title="Permanent link to entry 'Visual studio bug: Generic extension method doesn&#039;t show up in IntelliSense'">&para;</a> 
+					</p>
+					
+					<div id="NoJavascriptWarning">
+						The code samples on my weblog are colorized using javascript, but
+						you disabled javascript (for my website) on your browser. 
+						If you're interested in viewing the posted code snippets in 
+						color, please enable javascript.
+					</div>
+					<script type="text/javascript">
+						var noScriptWarning = document.getElementById('NoJavascriptWarning');
+						noScriptWarning.style.display = "none";
+					</script>
+				</div>
+			</div>
+			
+			<hr style="height:1px; background-color:#999; color:#999; border: none;" />
+
+			<p><b>two comments:</b></p>
+			<div class="comments">
+			<a id="comm"></a>
+<p>Ah, yes, that is a bug (I just tried it out).<br />
+<br />
+However, if you know that TCollection is an IEnumerable&lt;T&gt;, you could always just define it like:<br />
+<br />
+<br />
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; public static void Method&lt;T&gt;(<br />
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; this IEnumerable&lt;T&gt; collection, TElement element)<br />
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; {<br />
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }<br />
+<br />
+<br />
+Then Intellisense picks it up just fine :)<br /><small><b>Matt</b>  (<a href='http://thevalerios.net/matt/'  title='thevalerios.net/matt/'>URL</a>) - 22 06 08 - 17:36 </small></p>
+<a id="lastcomment"></a><p>Thank for comments Matt,<br />
+<br />
+Your suggestion indeed works on the supplied example. But now let's consider the following example:<br />
+<br />
+class MyWrapper { }<br />
+    <br />
+public static void Method(<br />
+    this MyWrapper wrapCol, TElement element)<br />
+    where TCollection : IEnumerable<br />
+{ }<br />
+<br />
+Rewriting the method the way you did in your example doesn't give the same method:<br />
+<br />
+public static void Method2(<br />
+    this MyWrapper wrapCol, T element) <br />
+{ }<br />
+<br />
+You'll notice the difference when you try to compile the following code:<br />
+<br />
+MyWrapper wrapper =<br />
+    new MyWrapper();<br />
+wrapper.Method(1);<br />
+wrapper.Method2(1); // CS1061<br />
+<br />
+The call to Method2 will not compile by the lack of Covariance and contra variance support in .NET for Generics.<br /><small><b>Steven</b>  (<a href='http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=35'  title='www.cuttingedge.it/blogs/steven/pivot/entry.php?id=35'>URL</a>) - 23 06 08 - 10:21 </small></p>
+
+			</div>
+
+		</div>
+
+		<hr />
+		
+		<div id="footer">
+			<p>&copy; 2007-2019 Steven van Deursen.<br /><span class="dontPrint"><a href="/blogs/steven/rss.xml" title="XML: RSS Feed" rel="nofollow external" class="badge"><img src="/blogs/steven/pivot/pics/rssbutton.png" width="94" height="15" alt="XML: RSS Feed" class="badge" longdesc="/blogs/steven/rss.xml" /></a> <a href="/blogs/steven/atom.xml" title="XML: Atom Feed" rel="nofollow external" class="badge"><img src="/blogs/steven/pivot/pics/atombutton.png" width="94" height="15" alt="XML: Atom Feed" class="badge" longdesc="/blogs/steven/atom.xml" /></a></span>
+			</p>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/CSharpCodeHighlighter0.10.js"></script>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/MSILCodeHighlighter0.1.js"></script>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/X86CodeHighlighter0.1.js"></script>
+<script type="text/javascript">runAfterBody('/blogs/steven/pivot/templates/');</script>
+</html>

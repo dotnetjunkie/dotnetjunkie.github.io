@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+		<title>
+				Oop &middot; .NET Junkie - Weblog of a workaholic
+		</title>
+	
+		
+		<link rel="stylesheet" href="/steven/css/style.css">
+		<link rel="stylesheet" href="/steven/css/overrides.css">
+		<link rel="stylesheet" href="/steven/css/Libre_Baskerville_400_400i_700.css">
+		
+		<link rel="icon" type="image/png" sizes="32x32" href="/steven/images/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/steven/images/favicon-16x16.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="/steven/images/apple-touch-icon.png">
+	
+		
+		<link href="https://blogs.cuttingedge.it/steven/tags/oop/index.xml" rel="alternate" type="application/rss+xml" title=".NET Junkie - Weblog of a workaholic" />
+	</head>
+	
+    <body>
+        		<nav class="nav">
+			<div class="nav-container">
+				<a href="/steven/">
+					<h2 class="nav-title">.NET Junkie - Weblog of a workaholic</h2>
+				</a>
+				<ul>
+    <li><a href="/steven/about">About</a></li>
+    <li><a href="/steven/">Posts</a></li>
+</ul>
+			</div>
+		</nav>
+
+        
+
+<main>
+    <h1>Tag Oop</h1>
+	<div class="catalogue">
+		
+			<a href="https://blogs.cuttingedge.it/steven/posts/2016/abstract-factories-are-a-code-smell/" class="catalogue-item">
+    <div>
+        <time datetime="2016-08-10 00:00:00 &#43;0000 UTC" class="catalogue-time">August 10, 2016</time>
+        <h1 class="catalogue-title">Abstract Factories are a Code Smell</h1>
+        <div class="catalogue-line"></div>
+
+        <p>
+            When it comes to writing LOB applications, abstract factories are a code smell as they increase the complexity of the consumer instead of reducing it. This article describes why and offers alternatives. An Abstract Factory decouples the creation of a family of objects from usage. Compared to injecting a service into a constructor, a factory allow objects to be created lazily, instead of up front during object graph composition. Many applications make use of the Abstract Factory pattern extensively to create all sorts of objects.
+        </p>
+    </div>
+</a>
+
+		
+			<a href="https://blogs.cuttingedge.it/steven/posts/2015/code-smell-injecting-runtime-data-into-components/" class="catalogue-item">
+    <div>
+        <time datetime="2015-11-07 00:00:00 &#43;0000 UTC" class="catalogue-time">November 7, 2015</time>
+        <h1 class="catalogue-title">Dependency Injection Code Smell: Injecting runtime data into components</h1>
+        <div class="catalogue-line"></div>
+
+        <p>
+            Injecting runtime data into your application components is a code smell. Runtime data should flow through the method calls of already constructed object graphs. A recurring theme when it comes to questions about dependency injection is how to wire up and resolve components a.k.a. injectables (the classes that contain the application&rsquo;s behavior) that require runtime data during construction. My answer to this is always the same:
+ Don&rsquo;t inject runtime data into application components during construction—it causes ambiguity, complicates the composition root with an extra responsibility, and makes it extraordinarily hard to verify the correctness of your DI configuration.
+        </p>
+    </div>
+</a>
+
+		
+	</div>
+	
+	<div class="pagination">
+		
+		
+	
+		<span>1</span>
+	</div>
+</main>
+
+
+        		<footer>
+			<span>
+			&copy; <time datetime="2019-03-13 19:28:57.6292805 &#43;0100 CET m=&#43;0.260322101">2019</time> Steven van Deursen. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
+			</span>
+		</footer>
+
+    </body>
+</html>

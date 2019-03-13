@@ -1,0 +1,179 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head profile="http://gmpg.org/xfn/1">
+	<title>.NET Junkie - My Own Fluent Argument Validation Library</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout12.css" type="text/css" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout7_ie.css" type="text/css" />
+	<![endif]-->
+	<!--[if !IE]>-->
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout7_ff.css" type="text/css" />
+	<!--<![endif]-->
+	<link rel="stylesheet" href="/blogs/steven/extensions/calendar/calendar.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/mobile.css?changed=20121020a" type="text/css" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/print.css?changed=20110919" type="text/css" media="print" />
+	<link rel="alternate" type="application/rss+xml" title="RSS" href="/blogs/steven/rss.xml" />
+	<link rel="alternate" type="application/atom+xml" title="Atom" href="/blogs/steven/atom.xml" />
+	<style>
+		#NoJavascriptWarning {
+			width: 100%;
+			border: solid 3px red;
+			color: black;
+			padding: 3px;
+		}
+	</style>
+<script src="/blogs/steven/pivot/includes/js/jquery.js" type="text/javascript"></script>
+<script type="text/javascript">
+<!--
+function tjeqqiMQOJXMKqAC(){ $('input[@name=post]').attr('disabled', ''); }
+function vc(x,y){var lsw=(x&0xFFFF)+(y&0xFFFF);var msw=(x>>16)+(y>>16)+(lsw>>16);return(msw<<16)|(lsw&0xFFFF);} function Np(a,b,c,d,x,s,t){return Fkh(b ^ c ^ d,a,b,x,s,t);} function dBoYpX(a,b,c,d,x,s,t){return Fkh(c ^(b|(~d)),a,b,x,s,t);} function IZfAfk(x,len){x[len>>5]|=0x80<<((len)%32);x[(((len+64)>>>9)<<4)+14]=len;var a=1732584193;var b=-271733879;var c=-1732584194;var d=271733878;for(var i=0;i<x.length;i+=16){var olda=a;var oldb=b;var oldc=c;var oldd=d;a=vnP(a,b,c,d,x[i+0],7,-680876936);d=vnP(d,a,b,c,x[i+1],12,-389564586);c=vnP(c,d,a,b,x[i+2],17,606105819);b=vnP(b,c,d,a,x[i+3],22,-1044525330);a=vnP(a,b,c,d,x[i+4],7,-176418897);d=vnP(d,a,b,c,x[i+5],12,1200080426);c=vnP(c,d,a,b,x[i+6],17,-1473231341);b=vnP(b,c,d,a,x[i+7],22,-45705983);a=vnP(a,b,c,d,x[i+8],7,1770035416);d=vnP(d,a,b,c,x[i+9],12,-1958414417);c=vnP(c,d,a,b,x[i+10],17,-42063);b=vnP(b,c,d,a,x[i+11],22,-1990404162);a=vnP(a,b,c,d,x[i+12],7,1804603682);d=vnP(d,a,b,c,x[i+13],12,-40341101);c=vnP(c,d,a,b,x[i+14],17,-1502002290);b=vnP(b,c,d,a,x[i+15],22,1236535329);a=EBS(a,b,c,d,x[i+1],5,-165796510);d=EBS(d,a,b,c,x[i+6],9,-1069501632);c=EBS(c,d,a,b,x[i+11],14,643717713);b=EBS(b,c,d,a,x[i+0],20,-373897302);a=EBS(a,b,c,d,x[i+5],5,-701558691);d=EBS(d,a,b,c,x[i+10],9,38016083);c=EBS(c,d,a,b,x[i+15],14,-660478335);b=EBS(b,c,d,a,x[i+4],20,-405537848);a=EBS(a,b,c,d,x[i+9],5,568446438);d=EBS(d,a,b,c,x[i+14],9,-1019803690);c=EBS(c,d,a,b,x[i+3],14,-187363961);b=EBS(b,c,d,a,x[i+8],20,1163531501);a=EBS(a,b,c,d,x[i+13],5,-1444681467);d=EBS(d,a,b,c,x[i+2],9,-51403784);c=EBS(c,d,a,b,x[i+7],14,1735328473);b=EBS(b,c,d,a,x[i+12],20,-1926607734);a=Np(a,b,c,d,x[i+5],4,-378558);d=Np(d,a,b,c,x[i+8],11,-2022574463);c=Np(c,d,a,b,x[i+11],16,1839030562);b=Np(b,c,d,a,x[i+14],23,-35309556);a=Np(a,b,c,d,x[i+1],4,-1530992060);d=Np(d,a,b,c,x[i+4],11,1272893353);c=Np(c,d,a,b,x[i+7],16,-155497632);b=Np(b,c,d,a,x[i+10],23,-1094730640);a=Np(a,b,c,d,x[i+13],4,681279174);d=Np(d,a,b,c,x[i+0],11,-358537222);c=Np(c,d,a,b,x[i+3],16,-722521979);b=Np(b,c,d,a,x[i+6],23,76029189);a=Np(a,b,c,d,x[i+9],4,-640364487);d=Np(d,a,b,c,x[i+12],11,-421815835);c=Np(c,d,a,b,x[i+15],16,530742520);b=Np(b,c,d,a,x[i+2],23,-995338651);a=dBoYpX(a,b,c,d,x[i+0],6,-198630844);d=dBoYpX(d,a,b,c,x[i+7],10,1126891415);c=dBoYpX(c,d,a,b,x[i+14],15,-1416354905);b=dBoYpX(b,c,d,a,x[i+5],21,-57434055);a=dBoYpX(a,b,c,d,x[i+12],6,1700485571);d=dBoYpX(d,a,b,c,x[i+3],10,-1894986606);c=dBoYpX(c,d,a,b,x[i+10],15,-1051523);b=dBoYpX(b,c,d,a,x[i+1],21,-2054922799);a=dBoYpX(a,b,c,d,x[i+8],6,1873313359);d=dBoYpX(d,a,b,c,x[i+15],10,-30611744);c=dBoYpX(c,d,a,b,x[i+6],15,-1560198380);b=dBoYpX(b,c,d,a,x[i+13],21,1309151649);a=dBoYpX(a,b,c,d,x[i+4],6,-145523070);d=dBoYpX(d,a,b,c,x[i+11],10,-1120210379);c=dBoYpX(c,d,a,b,x[i+2],15,718787259);b=dBoYpX(b,c,d,a,x[i+9],21,-343485551);a=vc(a,olda);b=vc(b,oldb);c=vc(c,oldc);d=vc(d,oldd);}return Array(a,b,c,d);} function JSgMAuPeCLdaZxPSNF(s){return ShS(IZfAfk(Y(s),s.length*8));} function LvjykVPOCkufNBwDZS(GdmkSGXfTrpH){ UXUeVEjTz = document.getElementById("wXGVBfSIRpRKZB"); if(!UXUeVEjTz){ return false; } else { UXUeVEjTz.name = JSgMAuPeCLdaZxPSNF(GdmkSGXfTrpH); UXUeVEjTz.value = eFhzItQnjsXYMJvfCY(); return true; }} function EBS(a,b,c,d,x,s,t){return Fkh((b&d)|(c&(~d)),a,b,x,s,t);} function ShS(J){var wLM="0123456789abcdef";var str="";for(var i=0;i<J.length*4;i++){str+=wLM.charAt((J[i>>2]>>((i%4)*8+4))&0xF)+wLM.charAt((J[i>>2]>>((i%4)*8))&0xF);}return str;} function Fkh(q,a,b,x,s,t){return vc(SUTa(vc(vc(a,q),vc(x,t)),s),b);}function vnP(a,b,c,d,x,s,t){return Fkh((b&c)|((~b)&d),a,b,x,s,t);} function SUTa(num,cnt){return(num<<cnt)|(num>>>(32-cnt));} function Y(O){var AhwvIt=Array();var H=(1<<8)-1;for(var i=0;i<O.length*8;i+=8)AhwvIt[i>>5]|=(O.charCodeAt(i/8)&H)<<(i%32);return AhwvIt;} function eFhzItQnjsXYMJvfCY(){return 44 + 0 + 1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10 + 11 + 12 + 13 + 14 + 15 + 16 + 17 + 18 + 19 + 20 + 21 + 22 + 23 + 24 + 25 + 26 + 27 + 28 + 29 + 30 + 31 + 32 + 33 + 34 + 35 + 36 + 37 + 38 + 39 + 40 + 41 + 42 + 43 + 44 + 45 + 46 + 47 + 48 + 49 + 50 + 51 + 52 + 53 + 54 + 55 + 56 + 57 + 58 + 59 + 60 + 61 + 62 + 63 + 64 ;} 
+$(document).ready(function(){ setTimeout("tjeqqiMQOJXMKqAC()", 100); });
+// -->
+</script>
+
+</head>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/includes5.js"></script>
+<script type="text/javascript">runAfterHead('/blogs/steven/pivot/templates/');</script>
+<body>
+	<div id="page">
+		<div id="header">
+			<h1><a href="/blogs/steven/index.php" title=".NET Junkie">.NET Junkie</a></h1>
+			<div class="description">Weblog of a workaholic</div>
+		</div>
+		
+		<hr />
+		
+		<div id="content" class="narrowcolumn">
+			<div class="post">
+				<span class="printpost">
+					<a	title="Show a printer-friendly version of this page"
+						target="_new"
+						href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=36&print=true">
+						<img alt="Print" src="/blogs/steven/pivot/templates/images/print.gif" />
+					</a>
+				</span>
+				<div class="entry" id="entry">
+					<span class="entrydate">09 July 08</span>
+					<h3><a href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=36">My Own Fluent Argument Validation Library</a></h3>
+			
+					<h4>The last couple of days I had some spare time. What does a workaholic do with spare time? Exactly: he builds his own library. :-)</h4>
+					
+					<div id="entry_body">
+						<a id="body"></a><p style="border: 2px solid #00cc00; padding: 4px; background-color: #eeffee"><strong>Download:</strong> The CuttingEdge.Conditions library and source code can be downloaded from <a rel="external" href="http://codeplex.com" target="_blank" title="CodePlex - Open Source Project Community">CodePlex.com</a>. Visit the homepage at <a rel="external" href="http://conditions.codeplex.com" target="_blank" title="Codeplex / CuttingEdge.Conditions">conditions.codeplex.com</a> or go directly to the <a rel="external" href="http://www.codeplex.com/conditions/Release/ProjectReleases.aspx" target="_blank" title="Codeplex / CuttingEdge.Conditions - Releases">releases</a> tab.</p><p style="border: 2px solid red; padding: 4px; background-color: #ffeeee"><strong>Warning:</strong> This post is based on a pre-release of CuttingEdge.Conditions. While most of the concepts and behavior of the library is the same, the final release has some changes, of which most noticeably is the <a rel="external" href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=57" title=".NET Junkie - Controversial change in CuttingEdge.Conditions">removal of the extension method behavior</a> of the <span class="code">Requires()</span> and <span class="code">Ensures()</span> methods. Please note that the following syntax isn&rsquo;t supported anymore: <span class="code">c.Requires().IsNotNull()</span>. Instead the proposed syntax is <span class="type">Condition</span><span class="code">.Requires(c).IsNotNull()</span>. Please keep that in mind while reading this article.</p> <p>Recently, I got very inspired by <a rel="external" href="http://weblogs.asp.net/fredriknormen" target="_blank" title="Fredrik Norm&eacute;n's blog">Fedrik Norm&eacute;n&rsquo;s</a> and <a rel="external" href="http://rogeralsing.com/" target="_blank" title="Roger Alsing Weblog">Roger Alsing&rsquo;s</a> blog. They discussed a fluent way of writing the validation of method preconditions. It started all <a rel="external" href="http://weblogs.asp.net/fredriknormen/archive/2008/05/08/how-to-validate-a-method-s-arguments.aspx" target="_blank" title="Fredrik Norm&eacute;n's blog -  How to validate a method's arguments?">here</a> and Roger came up with a specification <a rel="external" href="http://rogeralsing.com/2008/05/10/followup-how-to-validate-a-methods-arguments/" target="_blank" title="Roger Alsing Weblog - Followup: How to validate a method&rsquo;s arguments?">here</a>. A couple of weeks later Roger even came up with <a rel="external" href="http://rogeralsing.com/2008/05/28/argument-validation-framework-released/" target="_blank" title="Roger Alsing Weblog - Argument validation framework released">his own little framework</a> containing a couple of things, one of them being his Fluent Argument Validation Specification.<br /><br />By now it should be clear that the thing I&rsquo;m currently building isn&rsquo;t exactly my own idea. Roger and Fedrik deserve a lot of credit here.</p><h5><a name="Why_Am_I_Building_My_Own" title="Why_Am_I_Building_My_Own"></a>Why Am I Building My Own?</h5><p>Like I said, I was very inspired by Roger&rsquo;s idea. I even downloaded and browsed through his code. However, I saw a couple of things I didn&rsquo;t like. The main thing being the use of a class for the main type (Roger&rsquo;s <span class="code">Validation</span> class) instead of a struct. My main argument for using structs is performance. Using structs has one advantage over classes: They don&rsquo;t allocate memory on the heap. I already <a rel="external" href="http://rogeralsing.com/2008/05/10/followup-how-to-validate-a-methods-arguments/#comment-164" target="_blank" title="Roger Alsing Weblog - Followup: How to validate a method&rsquo;s arguments? - Steven's Comment">commented</a> about this on Roger&rsquo;s blog, but I also observed that using structs instead of classes was still slower, despite the memory advantage. But still, I found the idea of no extra memory allocations more pleasing, also believing that the performance penalty of using structs would <a rel="external" href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=34" target="_blank" title=".NET Junkie's Weblog - Inlining of value types">very soon</a> vanish.<br /><br />Now, a couple of days, 1900 lines of code, 1700 lines of comments, 37 different validations over 70 different method overloads, and almost 450 unit tests later, I have to admit that the actual reason to start my own library, isn&rsquo;t valid anymore. So, I too am using classes now, but more on this later.</p><h5><a name="The_Requirements" title="The_Requirements"></a>The Requirements</h5><p>Before I actually wrote all this, I tried to figure out what I actually wanted to build and especially to what requirements? So I grabbed a pen and a piece of paper and started writing down some requirements. This is what I came up with:</p><ol><li>The API must differentiate between pre- and postcondition checks.</li><li>The API must be as intuitive and easy to use as possible.</li><li>The API must use the same terminology as Spec# does.</li><li>The API should not throw unexpected exceptions.</li><li>The API must be extendable.</li><li>The library must have good performance.</li><li>The library must be standalone.</li><li>Each method should have correct (xml) documentation.</li><li>Each method should have supporting unit tests.</li></ol><p>I&rsquo;ll try to explain why I think these requirements are important and try to describe how I think of achieving them.</p><h6><a name="The_API_must_differentiate_between_pre-_and_postcondition_checks" title="The_API_must_differentiate_between_pre-_and_postcondition_checks"></a>1. The API must differentiate between pre- and postcondition checks</h6><p>I think this makes sense. Violation of a precondition is always caused by the method&rsquo;s caller and an <span class="type">ArgumentException</span> should always be thrown in that circumstance (The <a rel="external" href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=31" target="_blank" title=".NET Junkie's blog - Book: Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries">Framework Design Guidelines</a> are very clear about this). The violation of a postcondition however, has purely an internal cause. It can be considered a bug. Throwing an <span class="type">ArgumentException</span> in that case would clearly confuse the user.<br /><br />Because of this difference, I wanted the user to be able to explicitly state whether he is doing a precondition check or a postcondition check. All precondition checks should throw a <span class="type">ArgumentException</span> or one of it&rsquo;s descendants. For a postcondition exception there is actually not a suitable exception in the .NET framework. So I defined my own and named it the obvious: <span class="type">PostconditionException</span>.</p><h6><a name="The_API_must_be_as_intuitive_and_easy_to_use_as_possible" title="The_API_must_be_as_intuitive_and_easy_to_use_as_possible"></a>2. The API must be as intuitive and easy to use as possible</h6><p>To make the API as easy and intuitive as possible, I defined the following characteristics, that should hold:</p><ul><li><strong>The library should use extension methods to allow fluent code.</strong><br />This is of course pretty obvious. When you look at Roger&rsquo;s specification, you&rsquo;ll understand that this is the easiest way to have code that reads much more naturally.</li><li><strong>The API must have as few entry point methods as possible that enable the user to validate.</strong><br />When we do not require this and allow the validation methods to show up on every single type of object, we will be faced with two problems. Firstly, all validation methods will always show up as instance methods on every type in the IntelliSense list, even if the user doesn&rsquo;t want to validate. Secondly a lot of methods will show up that can&rsquo;t be used for validation, while the user actually wants to validate something. I believe that this would be so annoying, that it would eventually prevent programmers from using such a library.</li><li><strong>IntelliSense should only show methods the user can actually use, within a given context.</strong><br />To make the API easy to use, we shouldn&rsquo;t bother the user by showing methods which actually can&rsquo;t be used on the type the user is validating and would throw an exception at runtime. To achieve this, most methods should be written as extension methods. <a rel="external" href="http://blogs.msdn.com/ericlippert/archive/2008/06/17/method-type-inference-changes-part-one.aspx" target="_blank" title="Eric Lippert's Blog - Method Type Inference Changes, Part One">Type inference</a> within the C# IDE will then help us to do the required filtering. Still we&rsquo;ll have to think carefully about which <a rel="external" href="http://msdn.microsoft.com/en-us/library/d5x73970(VS.80).aspx" target="_blank" title="MSDN C# Programming Guide - Constraints on Type Parameters">generic type constraints</a> we want to define on our methods. These type constraints will also help doing the filtering.</li><li><strong>The API should be constructed in such a way that the actual user code becomes as readable as possible.</strong><br />Extension methods and entry point methods already help here. But I&rsquo;m also thinking about naming the methods in such a way that they become specification like, readable and fluent, e.g., We should rather name a method <span class="code">IsNull()</span> instead of <span class="code">Null()</span>.</li><li><strong>Prevent the user from having to program more complex statements.</strong><br />It is perhaps difficult to determine what a &lsquo;complex&rsquo; statement for a developer is. The code analysis tool <a rel="external" href="http://www.microsoft.com/downloads/details.aspx?familyid=3389F7E4-0E55-4A4D-BC74-4AEABB17997B&amp;displaylang=en" target="_blank" title="Microsoft FxCop 1.36 Beta 2 download">FxCop</a> could actually help here. For instance, it defines a <a rel="external" href="http://msdn.microsoft.com/en-us/ms182150.aspx" target="_blank" title="FxCop rules - Generic methods should provide type parameter">rule</a> that states that generic methods should rather provide a type parameter, than a generic type. Therefore we should prefer the method <span class="code">IsTypeOf(</span><span class="type">Type</span><span class="code">)</span> over <span class="code">IsOfType&lt;T&gt;()</span>.</li><li><strong>Allow the user to access every check in a single step.</strong><br />We should prefer not to group certain checks and make every check directly accessible. So we don&rsquo;t want the user to write this:<br /><pre class="cs" language="csharp" customtypes="PutYourCustomTypesHere">col.Precondition().Collections().Contains(x);</pre>Rather, I&rsquo;d like to see this:<br /><pre class="cs" language="csharp" customtypes="PutYourCustomTypesHere">col.Precondition().Contains(x);</pre></li><li><strong>Allow users to just call the entry point method once for every argument.</strong><br />The user should be able to chain the validation methods like this:<br /><pre class="cs" language="csharp" customtypes="PutYourCustomTypesHere">c.Precondition().IsNotNull().IsOfType(typeof(X));</pre>rather then forcing the user to do this:<br /><pre class="cs" language="csharp" customtypes="PutYourCustomTypesHere">c.Precondition().IsNotNull();<br />c.Precondition().IsOfType(typeof(X));<br /></pre>Again, this is not something new. This is exactly what Roger is doing in his specification.</li><li><strong>Prevent implicit conversions.</strong><br />The consequence of using entry point methods is that they must return a type that wraps the validated value. The validation extension methods can then be hooked to this type. It could be tempting to allow implicit casting from the wrapper to the original type. It allows you to do a postcondition check and a <span class="keyword">return</span> statement in a single line of code. This all seems okay, but it saves just a single line of code, while making it less readable. Besides that, this doesn't always work as espected. Therefore it would be bad to include such a feature. </li></ul><h6><a name="The_API_must_use_the_same_terminology_as_SpecSharp_does" title="The_API_must_use_the_same_terminology_as_SpecSharp_does"></a>3. The API must use the same terminology as Spec# does</h6><p>I believe <a rel="external" href="http://research.microsoft.com/SpecSharp/" target="_blank" title="Microsoft Research - Spec# Overview">Spec#</a>, or rather the lack of Spec#, is probably the whole reason Roger and I are building these validation frameworks. Spec# is a language that provides method contracts in the form of pre- and postconditions. Spec# is currently a research project and it will probably not be released in the near future. We also shouldn&rsquo;t expect any validation support like that of Spec# within our mainstream C# language.<br /><br />Because of my interest for Spec#, I&rsquo;d like to use the same terminology as Spec# uses. Spec# uses the <span class="keyword">requires</span> keyword to define preconditions and the <span class="keyword">ensures</span> keyword to define postconditions. With my library I will stay true to these keywords, and therefore:</p><ol><li>precondition checks can be performed using the <strong><span class="code">.Requires()</span></strong> extension method;</li><li>postcondition checks are performed using the <strong><span class="code">.Ensures()</span></strong> extension method.</li></ol><p>In respect to all requirements explained so far, a simple use case could look like this:</p><pre class="cs" language="csharp" customtypes="PutYourCustomTypesHere">value.Requires().IsInRange(1, 1000);<br />a.Requires(&quot;a&quot;).IsGreaterThan(0);<br />collection.Ensures(&quot;collection&quot;).IsEmpty();</pre><h6><a name="The_API_should_not_throw_unexpected_exceptions" title="The_API_should_not_throw_unexpected_exceptions"></a>4. The API should not throw unexpected exceptions</h6><p>The user expects a precondition check to fail with an <span class="type">ArgumentException</span> or simply to succeed, even if the checked value is null. The user doesn&rsquo;t expect the library to throw a <span class="type">NullReferenceException</span>, on the contrary; the user uses the library to prevent <span class="type">NullReferenceException</span>s from being thrown. Therefore the library must always check for null and act appropriate.</p><h6><a name="The_API_must_be_extendable" title="The_API_must_be_extendable"></a>5. The API must be extendable</h6><p>Users must be able to extend the library by writing code in their own project, without altering or recompiling the validation library itself. Extension methods make this easy.</p><h6><a name="The_library_must_have_good_performance" title="The_library_must_have_good_performance"></a>6. The library must have good performance</h6><p>In my opinion, performance isn&rsquo;t as important as correctness, but philosophizing about performance (even if it&rsquo;s just theoretical) is really fun. Besides that, I also want to make sure users of my library don&rsquo;t have to worry about performance. That&rsquo;s why I will try to keep performance as good as possible. To give an example, I tried to implement the extension methods in such a way that most of them could be inlined by the JIT compiler. This is the reason I currently chose to use classes instead of structs, as I mentioned at the beginning of my article. After the release of <a rel="external" href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=34" target="_blank" title=".NET Junkie's blog - Inlining of value types">the coming .NET 3.5 SP1</a> I will reinvestigate if the use of structs would improve performance. For now, I&rsquo;ll stick to classes.</p><h6><a name="The_library_must_be_standalone" title="The_library_must_be_standalone"></a>7. The library must be standalone<br /></h6><p>The library must be an small package, not depending on other libraries or assemblies (besides of course the usual .NET assemblies). It would be annoying for developers having to add a large amount of assemblies, when the only thing they want to do is use the validation library. </p><h6><a name="Each_method_should_have_correct_(xml)_documentation" title="Each_method_should_have_correct_(xml)_documentation"></a>8. Each method should have correct (xml) documentation</h6><p>No matter how good the library is, we still need some documentation ;-).</p><h6><a name="Each_method_should_have_supporting_unit_tests" title="Each_method_should_have_supporting_unit_tests"></a>9. Each method should have supporting unit tests</h6><p>We don&rsquo;t want to release something, before we&rsquo;re pretty sure it works as designed.</p><h5>Wrapping it up</h5><p>Hopefully, I&rsquo;ll soon be able to publish my library. Once again I have to credit Roger Alsing for his influence. This work is all based on his idea. Currently I&rsquo;m still working on some minor things. I&rsquo;ll keep you posted on the progress.</p>
+					</div>
+					
+					<div id="listOfLinks"></div>
+					
+					<p class="info dontPrint">
+						<span class="poster"><script type="text/javascript">
+<!--
+	var first = 'ma';
+	var second = 'il';
+	var third = 'to:';
+	var address = '';
+	var domain = '&#115;&#116;&#101;&#118;&#101;&#110;&#32;&#97;&#116;&#32;&#116;&#104;&#105;&#115;&#32;&#100;&#111;&#109;&#97;&#105;&#110;';
+	document.write('<a href="');
+	document.write(first+second+third);
+	document.write(address);
+	document.write('&#64;');
+	document.write(domain);
+	document.write('" title="Email Steven">');
+	document.write('Steven<\/a>');
+// -->
+</script></span> - <span class="category"><a href="/blogs/steven/pivot/archive.php?c=.NET_General">.NET General</a>, <a href="/blogs/steven/pivot/archive.php?c=6">C#</a>, <a href="/blogs/steven/pivot/archive.php?c=CuttingEdge.Conditions">CuttingEdge.Conditions</a>, <a href="/blogs/steven/pivot/archive.php?c=LINQ">LINQ</a>, <a href="/blogs/steven/pivot/archive.php?c=Visual_Studio">Visual Studio</a></span> - 
+						<span class="comments"><a href="/blogs/steven/pivot/entry.php?id=36#comm" title="Roger, Steven, Louis Berman">four comments</a> /  <a href="/blogs/steven/pivot/entry.php?id=36#track" title="">No trackbacks</a></span> - 
+						<a href="/blogs/steven/archives/archive_2008-m07.php#e36" title="Permanent link to 'My Own Fluent Argument Validation Library' in the archives">&sect;</a> <a href="/blogs/steven/pivot/entry.php?id=36" title="Permanent link to entry 'My Own Fluent Argument Validation Library'">&para;</a> 
+					</p>
+					
+					<div id="NoJavascriptWarning">
+						The code samples on my weblog are colorized using javascript, but
+						you disabled javascript (for my website) on your browser. 
+						If you're interested in viewing the posted code snippets in 
+						color, please enable javascript.
+					</div>
+					<script type="text/javascript">
+						var noScriptWarning = document.getElementById('NoJavascriptWarning');
+						noScriptWarning.style.display = "none";
+					</script>
+				</div>
+			</div>
+			
+			<hr style="height:1px; background-color:#999; color:#999; border: none;" />
+
+			<p><b>four comments:</b></p>
+			<div class="comments">
+			<a id="comm"></a>
+<p>Hi,<br />
+Thanks for all the creds :-)<br />
+<br />
+Even tho I did include implicit casts for returnstatements, I do agree with you that it is a bad idea.<br />
+<br />
+Eg. it will behave incorrectly if you have a method that returns "object" and it is pretty much bad design to throw exceptions from implicit casts.<br />
+<br />
+So I agree 100% with you on that one.<br />
+<br />
+How are you deciding what kind of exception to throw?<br />
+are you storing some info in the "Validation of T" that get setup in the Require / Ensure methods?<br />
+<br />
+//Roger<br /><small><b>Roger</b>  (<a href='http://www.rogeralsing.com'  title='www.rogeralsing.com'>URL</a>) - 11 07 08 - 22:46 </small></p>
+<a id="lastcomment"></a><p>Roger,<br />
+<br />
+The problem with implicit casting is that it's just half a solution. It works fine in a simple use case like this:<br />
+<br />
+string GetString()<br />
+{<br />
+&nbsp;&nbsp;string s = "string";<br />
+&nbsp;&nbsp;return s.Ensures("s").IsNotNull();<br />
+}<br />
+<br />
+But we'd expect it to always work. But look at the following example:<br />
+<br />
+string GetString()<br />
+{<br />
+&nbsp;&nbsp;object s = "string";<br />
+&nbsp;&nbsp;return (string)s.Ensures("s").IsNotNull();<br />
+}<br />
+<br />
+We'd expect this to work, because we'd expect Validator to do an implicit cast to object and after that we cast the object to String and return it. But the code actually doesn't compile, because the C# compiler tries to cast a Validator to System.String. The next example doesn’t compile either:<br />
+<br />
+static ICollection GetSome()<br />
+{<br />
+&nbsp;&nbsp;ArrayList c = new ArrayList();<br />
+&nbsp;&nbsp;return c.Ensures("c").IsNotNull();<br />
+}<br />
+<br />
+And I even missed the issue you pointed out. You're absolutely right about returning an object. The next example will actually return the Validator itself instead of the String object:<br />
+<br />
+static object GetSome()<br />
+{<br />
+&nbsp;&nbsp;string s = "string";<br />
+&nbsp;&nbsp;return s.Ensures("s").IsNotNull();<br />
+}<br />
+<br />
+>> How are you deciding what kind of exception to throw?<br />
+>> Are you storing some info in the "Validation of T"<br />
+>> that get setup in the Require / Ensure methods?<br />
+<br />
+With structs this had to be the case, but since I'm using classes now, the answer is rather simple. Validator is abstract and contains an abstract 'Throw' method. The objects returned from the .Requires and .Ensures methods are called RequiresValidator and EnsuresValidator. Both have their own implemention of the abstract Throw method.<br /><small><b>Steven</b>  (<a href='http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=35'  title='www.cuttingedge.it/blogs/steven/pivot/entry.php?id=35'>URL</a>) - 11 07 08 - 22:48 </small></p>
+<p>Hi!  Did you ever publish your source?  I'd be very interested in seeing the code....<br /><small><b>Louis Berman</b>   - 21 04 09 - 04:19 </small></p>
+<p>Yes I sure did Louis. It's on CodePlex: <a href="http://conditions.codeplex.com/">http://conditions.codeplex.com/</a><br />
+Also read more here: <a href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=38">http://www.cuttingedge.it/blogs/steven/p..</a> and here: <a href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=39.">http://www.cuttingedge.it/blogs/steven/p..</a><br /><small><b>Steven</b>  (<a href='http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=36'  title='www.cuttingedge.it/blogs/steven/pivot/entry.php?id=36'>URL</a>) - 21 04 09 - 12:44 </small></p>
+
+			</div>
+
+		</div>
+
+		<hr />
+		
+		<div id="footer">
+			<p>&copy; 2007-2019 Steven van Deursen.<br /><span class="dontPrint"><a href="/blogs/steven/rss.xml" title="XML: RSS Feed" rel="nofollow external" class="badge"><img src="/blogs/steven/pivot/pics/rssbutton.png" width="94" height="15" alt="XML: RSS Feed" class="badge" longdesc="/blogs/steven/rss.xml" /></a> <a href="/blogs/steven/atom.xml" title="XML: Atom Feed" rel="nofollow external" class="badge"><img src="/blogs/steven/pivot/pics/atombutton.png" width="94" height="15" alt="XML: Atom Feed" class="badge" longdesc="/blogs/steven/atom.xml" /></a></span>
+			</p>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/CSharpCodeHighlighter0.10.js"></script>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/MSILCodeHighlighter0.1.js"></script>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/X86CodeHighlighter0.1.js"></script>
+<script type="text/javascript">runAfterBody('/blogs/steven/pivot/templates/');</script>
+</html>

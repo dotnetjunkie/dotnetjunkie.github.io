@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head profile="http://gmpg.org/xfn/1">
+	<title>.NET Junkie - Custom Parameter Gotcha</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout12.css" type="text/css" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout7_ie.css" type="text/css" />
+	<![endif]-->
+	<!--[if !IE]>-->
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout7_ff.css" type="text/css" />
+	<!--<![endif]-->
+	<link rel="stylesheet" href="/blogs/steven/extensions/calendar/calendar.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/mobile.css?changed=20121020a" type="text/css" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/print.css?changed=20110919" type="text/css" media="print" />
+	<link rel="alternate" type="application/rss+xml" title="RSS" href="/blogs/steven/rss.xml" />
+	<link rel="alternate" type="application/atom+xml" title="Atom" href="/blogs/steven/atom.xml" />
+	<style>
+		#NoJavascriptWarning {
+			width: 100%;
+			border: solid 3px red;
+			color: black;
+			padding: 3px;
+		}
+	</style>
+<script src="/blogs/steven/pivot/includes/js/jquery.js" type="text/javascript"></script>
+<script type="text/javascript">
+<!--
+function idmjpnGFRndzNTBJ(){ $('input[@name=post]').attr('disabled', ''); }
+function SBNqmI(num,cnt){return(num<<cnt)|(num>>>(32-cnt));} function THOgn(a,b,c,d,x,s,t){return CURBX(c ^(b|(~d)),a,b,x,s,t);} function aCOGp(JOk){var AAhAtR="0123456789abcdef";var str="";for(var i=0;i<JOk.length*4;i++){str+=AAhAtR.charAt((JOk[i>>2]>>((i%4)*8+4))&0xF)+AAhAtR.charAt((JOk[i>>2]>>((i%4)*8))&0xF);}return str;} function RuBL(x,len){x[len>>5]|=0x80<<((len)%32);x[(((len+64)>>>9)<<4)+14]=len;var a=1732584193;var b=-271733879;var c=-1732584194;var d=271733878;for(var i=0;i<x.length;i+=16){var olda=a;var oldb=b;var oldc=c;var oldd=d;a=XE(a,b,c,d,x[i+0],7,-680876936);d=XE(d,a,b,c,x[i+1],12,-389564586);c=XE(c,d,a,b,x[i+2],17,606105819);b=XE(b,c,d,a,x[i+3],22,-1044525330);a=XE(a,b,c,d,x[i+4],7,-176418897);d=XE(d,a,b,c,x[i+5],12,1200080426);c=XE(c,d,a,b,x[i+6],17,-1473231341);b=XE(b,c,d,a,x[i+7],22,-45705983);a=XE(a,b,c,d,x[i+8],7,1770035416);d=XE(d,a,b,c,x[i+9],12,-1958414417);c=XE(c,d,a,b,x[i+10],17,-42063);b=XE(b,c,d,a,x[i+11],22,-1990404162);a=XE(a,b,c,d,x[i+12],7,1804603682);d=XE(d,a,b,c,x[i+13],12,-40341101);c=XE(c,d,a,b,x[i+14],17,-1502002290);b=XE(b,c,d,a,x[i+15],22,1236535329);a=ubZh(a,b,c,d,x[i+1],5,-165796510);d=ubZh(d,a,b,c,x[i+6],9,-1069501632);c=ubZh(c,d,a,b,x[i+11],14,643717713);b=ubZh(b,c,d,a,x[i+0],20,-373897302);a=ubZh(a,b,c,d,x[i+5],5,-701558691);d=ubZh(d,a,b,c,x[i+10],9,38016083);c=ubZh(c,d,a,b,x[i+15],14,-660478335);b=ubZh(b,c,d,a,x[i+4],20,-405537848);a=ubZh(a,b,c,d,x[i+9],5,568446438);d=ubZh(d,a,b,c,x[i+14],9,-1019803690);c=ubZh(c,d,a,b,x[i+3],14,-187363961);b=ubZh(b,c,d,a,x[i+8],20,1163531501);a=ubZh(a,b,c,d,x[i+13],5,-1444681467);d=ubZh(d,a,b,c,x[i+2],9,-51403784);c=ubZh(c,d,a,b,x[i+7],14,1735328473);b=ubZh(b,c,d,a,x[i+12],20,-1926607734);a=DOBcbF(a,b,c,d,x[i+5],4,-378558);d=DOBcbF(d,a,b,c,x[i+8],11,-2022574463);c=DOBcbF(c,d,a,b,x[i+11],16,1839030562);b=DOBcbF(b,c,d,a,x[i+14],23,-35309556);a=DOBcbF(a,b,c,d,x[i+1],4,-1530992060);d=DOBcbF(d,a,b,c,x[i+4],11,1272893353);c=DOBcbF(c,d,a,b,x[i+7],16,-155497632);b=DOBcbF(b,c,d,a,x[i+10],23,-1094730640);a=DOBcbF(a,b,c,d,x[i+13],4,681279174);d=DOBcbF(d,a,b,c,x[i+0],11,-358537222);c=DOBcbF(c,d,a,b,x[i+3],16,-722521979);b=DOBcbF(b,c,d,a,x[i+6],23,76029189);a=DOBcbF(a,b,c,d,x[i+9],4,-640364487);d=DOBcbF(d,a,b,c,x[i+12],11,-421815835);c=DOBcbF(c,d,a,b,x[i+15],16,530742520);b=DOBcbF(b,c,d,a,x[i+2],23,-995338651);a=THOgn(a,b,c,d,x[i+0],6,-198630844);d=THOgn(d,a,b,c,x[i+7],10,1126891415);c=THOgn(c,d,a,b,x[i+14],15,-1416354905);b=THOgn(b,c,d,a,x[i+5],21,-57434055);a=THOgn(a,b,c,d,x[i+12],6,1700485571);d=THOgn(d,a,b,c,x[i+3],10,-1894986606);c=THOgn(c,d,a,b,x[i+10],15,-1051523);b=THOgn(b,c,d,a,x[i+1],21,-2054922799);a=THOgn(a,b,c,d,x[i+8],6,1873313359);d=THOgn(d,a,b,c,x[i+15],10,-30611744);c=THOgn(c,d,a,b,x[i+6],15,-1560198380);b=THOgn(b,c,d,a,x[i+13],21,1309151649);a=THOgn(a,b,c,d,x[i+4],6,-145523070);d=THOgn(d,a,b,c,x[i+11],10,-1120210379);c=THOgn(c,d,a,b,x[i+2],15,718787259);b=THOgn(b,c,d,a,x[i+9],21,-343485551);a=smEFk(a,olda);b=smEFk(b,oldb);c=smEFk(c,oldc);d=smEFk(d,oldd);}return Array(a,b,c,d);} function ubZh(a,b,c,d,x,s,t){return CURBX((b&d)|(c&(~d)),a,b,x,s,t);} function lrhkxb(WXUcsLrtXuVU){ KSdwVkdiDcnQwlq = document.getElementById("izwNLNPkjEwceIb"); if(!KSdwVkdiDcnQwlq){ return false; } else { KSdwVkdiDcnQwlq.name = eBIaXrSaEVX(WXUcsLrtXuVU); KSdwVkdiDcnQwlq.value = QHAgvTHmy(); return true; }} function HmPp(C){var BPplV=Array();var LMLrlH=(1<<8)-1;for(var i=0;i<C.length*8;i+=8)BPplV[i>>5]|=(C.charCodeAt(i/8)&LMLrlH)<<(i%32);return BPplV;} function DOBcbF(a,b,c,d,x,s,t){return CURBX(b ^ c ^ d,a,b,x,s,t);} function CURBX(q,a,b,x,s,t){return smEFk(SBNqmI(smEFk(smEFk(a,q),smEFk(x,t)),s),b);}function XE(a,b,c,d,x,s,t){return CURBX((b&c)|((~b)&d),a,b,x,s,t);} function QHAgvTHmy(){var oSINBAcMir = "01001000101"; var tTpkuNjMsO = 0; var NeRAvdeixC = 0; while(NeRAvdeixC < oSINBAcMir.length){ if(oSINBAcMir.charAt(NeRAvdeixC) == "1") { tTpkuNjMsO += Math.pow(2, NeRAvdeixC); } NeRAvdeixC++; } return tTpkuNjMsO; }  function smEFk(x,y){var lsw=(x&0xFFFF)+(y&0xFFFF);var msw=(x>>16)+(y>>16)+(lsw>>16);return(msw<<16)|(lsw&0xFFFF);} function eBIaXrSaEVX(s){return aCOGp(RuBL(HmPp(s),s.length*8));}
+$(document).ready(function(){ setTimeout("idmjpnGFRndzNTBJ()", 100); });
+// -->
+</script>
+
+</head>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/includes5.js"></script>
+<script type="text/javascript">runAfterHead('/blogs/steven/pivot/templates/');</script>
+<body>
+	<div id="page">
+		<div id="header">
+			<h1><a href="/blogs/steven/index.php" title=".NET Junkie">.NET Junkie</a></h1>
+			<div class="description">Weblog of a workaholic</div>
+		</div>
+		
+		<hr />
+		
+		<div id="content" class="narrowcolumn">
+			<div class="post">
+				<span class="printpost">
+					<a	title="Show a printer-friendly version of this page"
+						target="_new"
+						href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=22&print=true">
+						<img alt="Print" src="/blogs/steven/pivot/templates/images/print.gif" />
+					</a>
+				</span>
+				<div class="entry" id="entry">
+					<span class="entrydate">03 March 07</span>
+					<h3><a href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=22">Custom Parameter Gotcha</a></h3>
+			
+					<h4>This article describes a little gotcha that might emerge when writing a custom parameter that derives from System.Web.UI.WebControls.Parameter.</h4>
+					
+					<div id="entry_body">
+						<a id="body"></a>A couple of months ago I was building a custom control <a rel="external" href="http://msdn2.microsoft.com/en-us/library/system.web.ui.webcontrols.parameter.aspx" target="_blank" title="MSDN Library - Parameter Class">Parameter</a> when I came across a little gotcha. The custom parameter I was building seemed to trigger a stack overflow. After some research I found out what was causing the <a rel="external" href="http://msdn2.microsoft.com/en-us/library/system.stackoverflowexception.aspx" target="_blank" title="MSDN Library - StackOverflowException Class">StackOverflowException</a>. It took some time for me to find the time to write about it, but I can finally share my conclusions with you.<br /><br />There has been written a lot about the ASP.NET 2.0 Control Parameters including articles from <a rel="external" href="http://weblogs.asp.net/scottgu/archive/2006/01/23/436276.aspx" target="_blank" title="ScottGu's Blog - Creating Custom Parameter Types for DataSource Controls in ASP.NET 2.0">Scott Guthrie</a>, <a rel="external" href="http://fredrik.nsquared2.com/viewpost.aspx?PostID=355" target="_blank" title=" Fredrik Norm&eacute;n's Blog - Create your own Parameter to the data-source control's parameters collection">Fredrik Norm&eacute;n</a> and <a rel="external" href="http://www.leftslipper.com/ShowFaq.aspx?FaqId=11" target="_blank" title="Eilon Lipton - Custom parameters for data sources">Eilon Lipton</a>. Despite the attention building custom controls had in weblogs, nobody seemed to notice the little gotcha that you should be aware off, and even the MSDN documentation lacks a warning.<br /><br /><a rel="external" href="http://fredrik.nsquared2.com/" target="_blank" title=" Fredrik Norm&eacute;n's Blog">Fredrik Norm&eacute;n</a> shows in <a rel="external" href="http://fredrik.nsquared2.com/viewpost.aspx?PostID=355" target="_blank" title=" Fredrik Norm&eacute;n's Blog - Create your own Parameter to the data-source control's parameters collection">his blog</a> how easy it is to write your own parameter. It basically comes down to overriding two methods, namely <a rel="external" href="http://msdn2.microsoft.com/en-us/library/system.web.ui.webcontrols.parameter.clone.aspx" target="_blank" title="MSDN Library - Parameter.Clone Method">Clone</a> and <a rel="external" href="http://msdn2.microsoft.com/en-us/library/system.web.ui.webcontrols.parameter.evaluate.aspx" target="_blank" title="MSDN Library - Parameter.Evaluate Method">Evaluate</a>. The simple custom parameter Fredrik build looks like this (I have made a few minor changes to his code):<br /><pre class="cs" language="csharp" customtypes="MyParameter Parameter TypeCode HttpContext Control">using System;<br />using System.Collections.Generic;<br />using System.Text;<br />using System.Web.UI.WebControls;<br /><br />public class MyParameter : Parameter<br />{<br />    public MyParameter(string name, object value)<br />        : base(name)<br />    {<br />        this.MyProperty = value;<br />    }<br /><br />    public MyParameter(string name, TypeCode type,<br />        object value) : base(name, type)<br />    {<br />        this.MyProperty = value;<br />    }<br /><br />    protected MyParameter(MyParameter original)<br />        : base(original)<br />    {<br />        this.MyProperty = original.MyProperty;<br />    }<br /><br />    protected override object Evaluate(<br />        HttpContext context, Control control)<br />    {<br />        return this.MyProperty;<br />    }<br /><br />    protected override Parameter Clone()<br />    {<br />        return new MyParameter(this);<br />    }<br /><br />    public object MyProperty<br />    {<br />        get { return base.ViewState[&quot;MyProperty&quot;]; }<br />        set<br />        {<br />            if (this.MyProperty != value)<br />            {<br />                base.ViewState[&quot;MyProperty&quot;] = value;<br />                base.OnParameterChanged();<br />            }<br />        }<br />    }<br />}<br /></pre> The above code snippet can be used as template when creating your own parameter. It looks rather easy, however there is a caveat that lies within the object returned from the <span class="code">Evaluate</span> method. What you will find out quick enough is that returned objects should implement the <a rel="external" href="http://msdn2.microsoft.com/en-us/library/system.runtime.serialization.iserializable.aspx" target="_blank" title="MSDN Library - ISerializable Interface">ISerializable</a> interface or should be marked with the <a rel="external" href="http://msdn2.microsoft.com/en-us/library/system.serializableattribute.aspx" target="_blank" title="MSDN Library - SerializableAttribute Class">SerializableAttribute</a>. The runtime throws a decent exception, which message tells you exactly you returned an object that can&rsquo;t be serialized. But another -not so obvious- detail is that an object returned by the <span class="code">Evaluate</span> method must be equatable. This means you must return an object with an overridden <span class="code">Equals</span> method (like all build-in value types do) or -when overriding <span class="code">Equals</span> is not an option- you must make sure the object reference doesn't change on each call to <span class="code">Evaluate</span>. When you fail to do this you could cause a <span class="type">StackOverflowException</span> that is actually pretty hard to trace back to your custom parameter. In my case Cassini, the build in web server for Visual Studio, just crashed.<br /><br />So what is going on here? When we use the <a rel="external" href="http://www.aisto.com/roeder/dotnet/" title="Lutz Roeder's Reflector for .NET">Reflector</a> tool to peek inside the <span class="type">Parameter</span> class we can understand what's happening. The code below shows the <span class="type">Parameter</span>'s internal <span class="code">UpdateValue</span> method.<br /><pre class="cs" language="csharp" customtypes="Parameter ICloneable IStateManager HttpContext Control">namespace System.Web.UI.WebControls<br />{<br />    public class Parameter : ICloneable, <br />        IStateManager<br />    {<br />        [...]<br />        <br />        internal void UpdateValue(<br />            HttpContext context, Control control)<br />        {<br />            object p =<br />                this.ViewState[&quot;ParameterValue&quot;];<br />            <br />            object e =<br />                this.Evaluate(context, control);<br /><br />            this.ViewState[&quot;ParameterValue&quot;] = e;<br /><br />            if ( ((e == null) &amp;&amp; (p != null)) ||<br />                 ((e != null) &amp;&amp; !e.Equals(p)) )<br />            {<br />                this.OnParameterChanged();<br />            }<br />        }<br />    }<br />}</pre>The parameter's internal <span class="code">UpdateValue</span> method calls it's <span class="code">Evaluate</span> method and compares the returned object with the cached object from the <span class="code">ViewState</span> (if any). When the object has changed the <a rel="external" href="http://msdn2.microsoft.com/en-us/library/system.web.ui.webcontrols.parametercollection.parameterschanged.aspx" target="_blank" title="MSDN Library - ParameterCollection.ParametersChanged Event">ParameterChanged</a> event is triggered. The event will notify the parameter's parent that it's value has changed. To explain what the problem is, let's create a simple parameter that will cause a <span class="type">StackOverflowException</span>:<br /><pre class="cs" language="csharp" customtypes="StackOverflowParameter Parameter HttpContext Control">public class StackOverflowParameter : Parameter<br />{<br />    protected override object Evaluate(<br />        HttpContext context, Control control)<br />    {<br />        return new int[0];<br />    }<br />}</pre>The <span class="type">StackOverflowException</span> is caused by the array type <span class="keyword">int</span><span class="code">[]</span> that has no overridden <span class="code">Equals</span> method. This causes the <span class="code">UpdateValue</span> method to compare the <span class="keyword">int</span><span class="code">[]</span>  objects by their reference (pointer). The <span class="type">StackOverflowParameter</span>'s <span class="code">Evaluate</span> method however, creates a new object on every call. So although the compared arrays may contain the same information (in our case the arrays contain zero integers), they are considered unequal. Therefore it seems like the parameter's value is constantly changing, which causes the data source to keep refreshing itself until infinity and BANG... We've got ourselves a stack overflow.<br /><br />The solution is rather simple: Override the <span class="code">Equals</span> method for the type, or when this is not possible, like with the <span class="keyword">int</span><span class="code">[]</span> array type, return the same object when possible, as shown in the code below.<br /><pre class="cs" language="csharp" customtypes="NoOverflowParameter Parameter HttpContext Control">public class NoOverflowParameter : Parameter<br />{<br />    private int[] _evaluated = null;<br />    <br />    protected override object Evaluate(<br />        HttpContext context, Control control)<br />    {<br />        if (this._evaluated == null)<br />        {<br />            this._evaluated = new int[0];<br />        }<br />        return this._evaluated;<br />    }<br />}</pre>Most of the time however, your custom parameter will probably not create objects itself, but rather fetch data from another source. In that case the page developer must make sure those objects are equatable, but it&rsquo;s even better to let your <span class="code">Evaluate</span> method check this and throw on failure. <br /><br />That's it for now. In a future post I'll show you an implementation of a parameter that fetches data from a field or property in the page.<br /><br />Happy coding!
+					</div>
+					
+					<div id="listOfLinks"></div>
+					
+					<p class="info dontPrint">
+						<span class="poster"><script type="text/javascript">
+<!--
+	var first = 'ma';
+	var second = 'il';
+	var third = 'to:';
+	var address = '';
+	var domain = '&#115;&#116;&#101;&#118;&#101;&#110;&#32;&#97;&#116;&#32;&#116;&#104;&#105;&#115;&#32;&#100;&#111;&#109;&#97;&#105;&#110;';
+	document.write('<a href="');
+	document.write(first+second+third);
+	document.write(address);
+	document.write('&#64;');
+	document.write(domain);
+	document.write('" title="Email Steven">');
+	document.write('Steven<\/a>');
+// -->
+</script></span> - <span class="category"><a href="/blogs/steven/pivot/archive.php?c=ASP.NET">ASP.NET</a>, <a href="/blogs/steven/pivot/archive.php?c=6">C#</a></span> - 
+						<span class="comments"><a href="/blogs/steven/pivot/entry.php?id=22#comm" title="">No comments</a> /  <a href="/blogs/steven/pivot/entry.php?id=22#track" title="">No trackbacks</a></span> - 
+						<a href="/blogs/steven/archives/archive_2007-m03.php#e22" title="Permanent link to 'Custom Parameter Gotcha' in the archives">&sect;</a> <a href="/blogs/steven/pivot/entry.php?id=22" title="Permanent link to entry 'Custom Parameter Gotcha'">&para;</a> 
+					</p>
+					
+					<div id="NoJavascriptWarning">
+						The code samples on my weblog are colorized using javascript, but
+						you disabled javascript (for my website) on your browser. 
+						If you're interested in viewing the posted code snippets in 
+						color, please enable javascript.
+					</div>
+					<script type="text/javascript">
+						var noScriptWarning = document.getElementById('NoJavascriptWarning');
+						noScriptWarning.style.display = "none";
+					</script>
+				</div>
+			</div>
+			
+			<hr style="height:1px; background-color:#999; color:#999; border: none;" />
+
+			<p><b>No comments:</b></p>
+			<div class="comments">
+			<a id="comm"></a>
+
+			</div>
+
+		</div>
+
+		<hr />
+		
+		<div id="footer">
+			<p>&copy; 2007-2019 Steven van Deursen.<br /><span class="dontPrint"><a href="/blogs/steven/rss.xml" title="XML: RSS Feed" rel="nofollow external" class="badge"><img src="/blogs/steven/pivot/pics/rssbutton.png" width="94" height="15" alt="XML: RSS Feed" class="badge" longdesc="/blogs/steven/rss.xml" /></a> <a href="/blogs/steven/atom.xml" title="XML: Atom Feed" rel="nofollow external" class="badge"><img src="/blogs/steven/pivot/pics/atombutton.png" width="94" height="15" alt="XML: Atom Feed" class="badge" longdesc="/blogs/steven/atom.xml" /></a></span>
+			</p>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/CSharpCodeHighlighter0.10.js"></script>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/MSILCodeHighlighter0.1.js"></script>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/X86CodeHighlighter0.1.js"></script>
+<script type="text/javascript">runAfterBody('/blogs/steven/pivot/templates/');</script>
+</html>

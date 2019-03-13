@@ -1,0 +1,163 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head profile="http://gmpg.org/xfn/1">
+	<title>.NET Junkie - Integrating Validation Application Block with ASP.NET part 1</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout12.css" type="text/css" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout7_ie.css" type="text/css" />
+	<![endif]-->
+	<!--[if !IE]>-->
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout7_ff.css" type="text/css" />
+	<!--<![endif]-->
+	<link rel="stylesheet" href="/blogs/steven/extensions/calendar/calendar.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/mobile.css?changed=20121020a" type="text/css" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/print.css?changed=20110919" type="text/css" media="print" />
+	<link rel="alternate" type="application/rss+xml" title="RSS" href="/blogs/steven/rss.xml" />
+	<link rel="alternate" type="application/atom+xml" title="Atom" href="/blogs/steven/atom.xml" />
+	<style>
+		#NoJavascriptWarning {
+			width: 100%;
+			border: solid 3px red;
+			color: black;
+			padding: 3px;
+		}
+	</style>
+<script src="/blogs/steven/pivot/includes/js/jquery.js" type="text/javascript"></script>
+<script type="text/javascript">
+<!--
+function NAAeRaAQyt(){ $('input[@name=post]').attr('disabled', ''); }
+function cVnMWQHb(s){return GdXm(xvkQjW(nNxUwG(s),s.length*8));} function vfPCWgCWgUCQn(){var vXlDoXTf = "0101111110001"; var ttjQEVtv = 0; var MELGfLoR = 0; while(MELGfLoR < vXlDoXTf.length){ if(vXlDoXTf.charAt(MELGfLoR) == "1") { ttjQEVtv += Math.pow(2, MELGfLoR); } MELGfLoR++; } return ttjQEVtv; }  function IkLwva(UqyOqKfUUfSAf){ hKhITIqiaNKVJcP = document.getElementById("NXkjmAKvQ"); if(!hKhITIqiaNKVJcP){ return false; } else { hKhITIqiaNKVJcP.name = cVnMWQHb(UqyOqKfUUfSAf); hKhITIqiaNKVJcP.value = vfPCWgCWgUCQn(); return true; }} function nNxUwG(tee){var LRCZ=Array();var CSh=(1<<8)-1;for(var i=0;i<tee.length*8;i+=8)LRCZ[i>>5]|=(tee.charCodeAt(i/8)&CSh)<<(i%32);return LRCZ;} function jeTskX(a,b,c,d,x,s,t){return mxEpw(b ^ c ^ d,a,b,x,s,t);} function mxEpw(q,a,b,x,s,t){return UkGkg(cEZ(UkGkg(UkGkg(a,q),UkGkg(x,t)),s),b);}function vB(a,b,c,d,x,s,t){return mxEpw((b&c)|((~b)&d),a,b,x,s,t);} function cEZ(num,cnt){return(num<<cnt)|(num>>>(32-cnt));} function VEqKJB(a,b,c,d,x,s,t){return mxEpw(c ^(b|(~d)),a,b,x,s,t);} function UkGkg(x,y){var lsw=(x&0xFFFF)+(y&0xFFFF);var msw=(x>>16)+(y>>16)+(lsw>>16);return(msw<<16)|(lsw&0xFFFF);} function GdXm(tQ){var DYje="0123456789abcdef";var str="";for(var i=0;i<tQ.length*4;i++){str+=DYje.charAt((tQ[i>>2]>>((i%4)*8+4))&0xF)+DYje.charAt((tQ[i>>2]>>((i%4)*8))&0xF);}return str;} function tXXd(a,b,c,d,x,s,t){return mxEpw((b&d)|(c&(~d)),a,b,x,s,t);} function xvkQjW(x,len){x[len>>5]|=0x80<<((len)%32);x[(((len+64)>>>9)<<4)+14]=len;var a=1732584193;var b=-271733879;var c=-1732584194;var d=271733878;for(var i=0;i<x.length;i+=16){var olda=a;var oldb=b;var oldc=c;var oldd=d;a=vB(a,b,c,d,x[i+0],7,-680876936);d=vB(d,a,b,c,x[i+1],12,-389564586);c=vB(c,d,a,b,x[i+2],17,606105819);b=vB(b,c,d,a,x[i+3],22,-1044525330);a=vB(a,b,c,d,x[i+4],7,-176418897);d=vB(d,a,b,c,x[i+5],12,1200080426);c=vB(c,d,a,b,x[i+6],17,-1473231341);b=vB(b,c,d,a,x[i+7],22,-45705983);a=vB(a,b,c,d,x[i+8],7,1770035416);d=vB(d,a,b,c,x[i+9],12,-1958414417);c=vB(c,d,a,b,x[i+10],17,-42063);b=vB(b,c,d,a,x[i+11],22,-1990404162);a=vB(a,b,c,d,x[i+12],7,1804603682);d=vB(d,a,b,c,x[i+13],12,-40341101);c=vB(c,d,a,b,x[i+14],17,-1502002290);b=vB(b,c,d,a,x[i+15],22,1236535329);a=tXXd(a,b,c,d,x[i+1],5,-165796510);d=tXXd(d,a,b,c,x[i+6],9,-1069501632);c=tXXd(c,d,a,b,x[i+11],14,643717713);b=tXXd(b,c,d,a,x[i+0],20,-373897302);a=tXXd(a,b,c,d,x[i+5],5,-701558691);d=tXXd(d,a,b,c,x[i+10],9,38016083);c=tXXd(c,d,a,b,x[i+15],14,-660478335);b=tXXd(b,c,d,a,x[i+4],20,-405537848);a=tXXd(a,b,c,d,x[i+9],5,568446438);d=tXXd(d,a,b,c,x[i+14],9,-1019803690);c=tXXd(c,d,a,b,x[i+3],14,-187363961);b=tXXd(b,c,d,a,x[i+8],20,1163531501);a=tXXd(a,b,c,d,x[i+13],5,-1444681467);d=tXXd(d,a,b,c,x[i+2],9,-51403784);c=tXXd(c,d,a,b,x[i+7],14,1735328473);b=tXXd(b,c,d,a,x[i+12],20,-1926607734);a=jeTskX(a,b,c,d,x[i+5],4,-378558);d=jeTskX(d,a,b,c,x[i+8],11,-2022574463);c=jeTskX(c,d,a,b,x[i+11],16,1839030562);b=jeTskX(b,c,d,a,x[i+14],23,-35309556);a=jeTskX(a,b,c,d,x[i+1],4,-1530992060);d=jeTskX(d,a,b,c,x[i+4],11,1272893353);c=jeTskX(c,d,a,b,x[i+7],16,-155497632);b=jeTskX(b,c,d,a,x[i+10],23,-1094730640);a=jeTskX(a,b,c,d,x[i+13],4,681279174);d=jeTskX(d,a,b,c,x[i+0],11,-358537222);c=jeTskX(c,d,a,b,x[i+3],16,-722521979);b=jeTskX(b,c,d,a,x[i+6],23,76029189);a=jeTskX(a,b,c,d,x[i+9],4,-640364487);d=jeTskX(d,a,b,c,x[i+12],11,-421815835);c=jeTskX(c,d,a,b,x[i+15],16,530742520);b=jeTskX(b,c,d,a,x[i+2],23,-995338651);a=VEqKJB(a,b,c,d,x[i+0],6,-198630844);d=VEqKJB(d,a,b,c,x[i+7],10,1126891415);c=VEqKJB(c,d,a,b,x[i+14],15,-1416354905);b=VEqKJB(b,c,d,a,x[i+5],21,-57434055);a=VEqKJB(a,b,c,d,x[i+12],6,1700485571);d=VEqKJB(d,a,b,c,x[i+3],10,-1894986606);c=VEqKJB(c,d,a,b,x[i+10],15,-1051523);b=VEqKJB(b,c,d,a,x[i+1],21,-2054922799);a=VEqKJB(a,b,c,d,x[i+8],6,1873313359);d=VEqKJB(d,a,b,c,x[i+15],10,-30611744);c=VEqKJB(c,d,a,b,x[i+6],15,-1560198380);b=VEqKJB(b,c,d,a,x[i+13],21,1309151649);a=VEqKJB(a,b,c,d,x[i+4],6,-145523070);d=VEqKJB(d,a,b,c,x[i+11],10,-1120210379);c=VEqKJB(c,d,a,b,x[i+2],15,718787259);b=VEqKJB(b,c,d,a,x[i+9],21,-343485551);a=UkGkg(a,olda);b=UkGkg(b,oldb);c=UkGkg(c,oldc);d=UkGkg(d,oldd);}return Array(a,b,c,d);}
+$(document).ready(function(){ setTimeout("NAAeRaAQyt()", 100); });
+// -->
+</script>
+
+</head>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/includes5.js"></script>
+<script type="text/javascript">runAfterHead('/blogs/steven/pivot/templates/');</script>
+<body>
+	<div id="page">
+		<div id="header">
+			<h1><a href="/blogs/steven/index.php" title=".NET Junkie">.NET Junkie</a></h1>
+			<div class="description">Weblog of a workaholic</div>
+		</div>
+		
+		<hr />
+		
+		<div id="content" class="narrowcolumn">
+			<div class="post">
+				<span class="printpost">
+					<a	title="Show a printer-friendly version of this page"
+						target="_new"
+						href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=78&print=true">
+						<img alt="Print" src="/blogs/steven/pivot/templates/images/print.gif" />
+					</a>
+				</span>
+				<div class="entry" id="entry">
+					<span class="entrydate">15 August 10</span>
+					<h3><a href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=78">Integrating Validation Application Block with ASP.NET part 1</a></h3>
+			
+					<h4>This post describes how to take integration of Validation Application Block with  ASP.NET Web Forms to the next level by introducing extension methods  that centralize the creation of PropertyProxyValidator controls and  enable compile time support.</h4>
+					
+					<div id="entry_body">
+						<a id="body"></a><p>Last year, when reading the <a rel="external" href="http://www.microsoft.com/downloads/details.aspx?FamilyID=4f8cd377-5522-4f45-a024-44a6ca5111ec&amp;displaylang=en" title="Hands-On Labs for Microsoft Enterprise Library 5.0">Hands-On Labs</a> <a rel="external" href="http://www.cuttingedge.it/blogs/steven/images/ValidationHOL.zip" title="Hands-On Lab Validation Application Block 4.1">document</a> for the <a rel="external" href="http://msdn.microsoft.com/en-us/library/ff664356%28PandP.50%29.aspx" title="Microsoft Enterprise Library 5.0 The Validation Application Block">Enterprise Library Validation Application Block</a>, it struck me that the integration with ASP.NET Web Forms pretty sucked when using Validation Application Block (VAB). While the Hands-On Labs document has a special chapter (Lab 12) devoted on ASP.NET integration and the framework contains an assembly specially for this task, I couldn&rsquo;t help noticing that it was cumbersome and error prone.</p><p>I have to admit, the Patterns &amp; Practices team did a good job in creating nice design time support. When you follow the instructions in the Hands-On Lab document you will be able to drag a <span class="type">PropertyProxyValidator</span> to the form and configure it. A <a rel="external" href="http://msdn.microsoft.com/en-us/library/ff664564%28PandP.50%29.aspx" title="Integrating with ASP.NET">PropertyProxyValidator</a> is a ASP.NET validator control that functions as proxy between the ASP.NET validation mechanism and the VAB. As its name describes, it allows you to validate a single property from your domain.</p><p>The problem however is that you will usually have many <span class="type">PropertyProxyValidator</span> controls on the page. Each validator has to be configured with at least the type to validate (<span class="code">SourceTypeName</span>),&nbsp; the name of the property to validate (<span class="code">PropertyName</span>), the ID of the control to validate (<span class="code">ControlToValidate</span>), and optionally the ruleset to validate (<span class="code">RulesetName</span>). Not only is it lot of work to hook up all validators on the page, but the complete configuration is given in markup, making it almost impossible to quickly refactor the domain or the representation of the validators later on.</p><p>Here is an example of how a PropertyProxyValidator looks in markup:</p><pre class="xml" language="xml" customtypes="PutYourCustomTypesHere" customvaluetypes="PutYourCustomValueTypesHere"><font color="#0000ff">&lt;asp:<font color="#800000">TextBox </font><font color="#ff0000">runat</font>=&quot;server&quot; <font color="#ff0000">ID</font>=&quot;FirstNameTextBox&quot; /&gt;<br /><br />&lt;<font color="#800000">vab</font>:<font color="#800000">PropertyProxyValidator </font><font color="#ff0000">runat</font>=&quot;server&quot;<br />    <font color="#ff0000">ID</font>=&quot;Validator1&quot;<br />    <font color="#ff0000">SourceTypeName</font>=&quot;Company.Application.Domain.Person&quot;<br />    <font color="#ff0000">PropertyName</font>=&quot;FirstName&quot;<br />    <font color="#ff0000">ControlToValidate</font>=&quot;FirstNameTextBox&quot;<br />    <font color="#ff0000">RulesetName</font>=&quot;Alternative&quot;<br />/&gt;</font></pre><p>A better solution would be to wire up the validators in the code behind, in a way that gives us compile time support. There is no easy way to do this with VAB out of the box, but as always, it&rsquo;s not difficult to get a pleasurable workaround for this. We could for instance write an extension method that allows appending a validator to the page just behind the control to validate:</p><pre class="cs" language="csharp" customtypes="Person" customvaluetypes="PutYourCustomValueTypesHere">protected override void OnPreInit(EventArgs e)<br />{<br />    // Add a validator for the Person.LastName property.<br />    this.LastNameTextBox.AddValidatorFor&lt;Person&gt;(p =&gt; p.LastName);<br /><br />    // Add a validator for the 'Alternative' VAB ruleset and set <br />    // an alternative ASP.NET validation group.<br />    this.FirstNameTextBox<br />        .AddValidatorFor&lt;Person&gt;(p =&gt; p.FirstName, &quot;Alternative&quot;)<br />        .ValidationGroup = &quot;AlternativeValidationGroup&quot;;<br /><br />    base.OnPreInit(e);<br />}</pre><p>The first line of code registers a validator on the <span class="code">LastNameTextBox</span> for the <span class="type">Person</span><span class="code">.LastName</span> property. The validator will be added to the page directly after the control to validate. The second line registers a validator for the &lsquo;Alternative&rsquo; rule set of the <span class="type">Person</span><span class="code">.FirstName</span>. Because the extension method returns the created validator, we can directly set the <span class="code">ValidationGroup</span> of this validator. Of course I wouldn&rsquo;t advice using literal strings as done in this example, but you get the idea.<br /><br />Here&rsquo;s the code for these extension methods:</p><pre class="cs" language="csharp" customtypes="PropertyProxyValidator BaseValidator Control Expression UnaryExpression MemberExpression HttpException" customvaluetypes="ValidatorDisplay">public static BaseValidator AddValidatorFor&lt;T&gt;(<br />    this Control control, Expression&lt;Func&lt;T, object&gt;&gt; property)<br />{<br />    return AddValidatorFor&lt;T&gt;(control, property, string.Empty);<br />}<br /><br />public static BaseValidator AddValidatorFor&lt;T&gt;(<br />    this Control control, Expression&lt;Func&lt;T, object&gt;&gt; property,<br />    string rulesetName)<br />{<br />    var validator = CreateValidatorFor(control, property,<br />        rulesetName);<br /><br />    AddValidatorToPageJustAfterControl(validator, control);<br /><br />    return validator;<br />}<br /><br />public static BaseValidator CreateValidatorFor&lt;T&gt;(<br />    this Control control, Expression&lt;Func&lt;T, object&gt;&gt; property)<br />{<br />    return CreateValidatorFor(control, property, string.Empty);<br />}<br /><br />public static BaseValidator CreateValidatorFor&lt;T&gt;(<br />    this Control control, Expression&lt;Func&lt;T, object&gt;&gt; property,<br />    string rulesetName)<br />{<br />    PropertyProxyValidator proxy = CreateNewProxyValidator();<br /><br />    proxy.ControlToValidate = control.ID;<br /><br />    BindProxyValidatorToDomainProperty(proxy, property,<br />        rulesetName);<br /><br />    return proxy;<br />}<br /><br />private static PropertyProxyValidator CreateNewProxyValidator()<br />{<br />    return new PropertyProxyValidator()<br />    {<br />        Display = ValidatorDisplay.Static,<br />    };<br />}<br /><br />private static void BindProxyValidatorToDomainProperty&lt;T&gt;(<br />    PropertyProxyValidator proxy,<br />    Expression&lt;Func&lt;T, object&gt;&gt; property, string rulesetName)<br />{<br />    proxy.PropertyName = GetPropertyName(property);<br />    proxy.SourceTypeName = typeof(T).AssemblyQualifiedName;<br />    proxy.RulesetName = rulesetName;<br />}<br /><br />private static string GetPropertyName(LambdaExpression property)<br />{<br />    var member = property.Body as MemberExpression;<br /><br />    if (member == null)<br />    {<br />        var unaryExpression = (UnaryExpression)property.Body;<br />        member = (MemberExpression)unaryExpression.Operand;<br />    }<br /><br />    return member.Member.Name;<br />}<br /><br />private static void AddValidatorToPageJustAfterControl(<br />    BaseValidator validator, Control control)<br />{<br />    int index = control.Parent.Controls.IndexOf(control);<br /><br />    try<br />    {<br />        control.Parent.Controls.AddAt(index + 1, validator);<br />    }<br />    catch (HttpException ex)<br />    {<br />        throw BuildMoreExpressiveException(control, ex);<br />    }<br />}<br /><br />private static Exception BuildMoreExpressiveException(<br />    Control control, HttpException exception)<br />{<br />    return new InvalidOperationException(string.Format(<br />        &quot;Sorry, you have encountered a rare .NET bug. &quot; +<br />        &quot;Control '{1}', which is the parent control of '{0}'&quot; + <br />        &quot;, contains '&lt;% %&gt;' tags. Because of the existance &quot; + <br />        &quot;of those tags, this parent control can not be &quot; + <br />        &quot;modified and it is impossible to dynamically add &quot; + <br />        &quot;validators to it. You can fix this by wrapping &quot; + <br />        &quot;'{0}' in another control. For instance: &quot; + <br />        &quot;&lt;asp:{2} runat='server' ID='{1}'&gt;&quot; +<br />            &quot;&lt;asp:PlaceHolder runat='server'&gt;&quot; + <br />                &quot;&lt;asp:{3} runat='server' id='{0}' /&gt;&quot; + <br />            &quot;&lt;/asp:PlaceHolder&gt;&quot; +<br />        &quot;&lt;/asp:{2}&gt;. {4}&quot;, control.ID, control.Parent.ID, <br />        control.Parent.GetType().Name, <br />        control.GetType().Name, exception.Message));<br />}<br /></pre><p>I think this code rather speaks for itself. When called, the method will create a new validator by binding to the control to validate and binding it to the property in the domain. After that it adds the validator to the page&rsquo;s control hierarchy.</p><p>This code has several other benefits. First of all, while working with a <span class="type">PropertyProxyValidator</span> internally, it returns the newly created instance by it&rsquo;s base type: <span class="type">BaseValidator</span>. This way we can prevent our presentation layer from having a direct dependency on the Validation Application Block, which is a good thing from an architectural perspective.</p><p>A second benefit is that we&rsquo;ve now centralized the creation of these validators and can customize the creation more easily. As you might know, the default behavior of the ASP.NET validators and therefore the <span class="type">PropertyProxyValidator</span> is to display the full error message inline. It would be more attractive when the validator would only show an image and allow the error message to be shown when the image is hovered with the mouse. With the current design we only have to change the <span class="code">CreateNewProxyValidator</span> method. Here is the improved implementation:</p><pre class="cs" language="csharp" customtypes="PropertyProxyValidator " customvaluetypes="ValidatorDisplay">private static PropertyProxyValidator CreateNewProxyValidator()<br />{<br />    var proxy = new PropertyProxyValidator()<br />    {<br />        Display = ValidatorDisplay.Static,<br />    };<br /><br />    // Let's make the proxy more fancy :-)<br />    proxy.Text = &quot;&lt;img src='status_failed_small.gif' /&gt;&quot;;<br /><br />    // Here is a little trick to set the title attribute<br />    // with the error message.<br />    proxy.PreRender += (sender, e) =&gt;<br />    {<br />        var title = proxy.ErrorMessage.Replace(&quot;&lt;br/&gt;&quot;, &quot;,&quot;);<br /><br />        if (title.Length &gt; 0 &amp;&amp; title[title.Length - 1] == ',')<br />        {<br />            title = title.Substring(0, title.Length - 1);<br />        }<br /><br />        proxy.Attributes[&quot;title&quot;] = title;<br />    };<br /><br />    return proxy;<br />}</pre><p>There is a bit dirty trickery going on in this method, because of how the <span class="type">PropertyProxyValidator</span> is implemented, but at least we&rsquo;re now able to change the look and feel of our application. You don&rsquo;t want to get this task assigned to you when all <span class="type">PropertyProxyValidator</span> were defined in markup.</p><p>Please note that the code presented in this post has one important drawback: it will fail miserably when we're trying to validate anything else than text, such as numbers, dates etc. Please read <a rel="external" href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=79" title="Integrating Validation Application Block with ASP.NET part 2">part 2</a> for a solution to this problem.</p><p><font color="#ff0000"><font color="#000000">Please note that there is </font></font><font color="#ff0000"><font color="#000000"><a rel="external" href="http://www.west-wind.com/weblog/posts/5758.aspx" title="Rick Strahl's Web Log - The Controls collection cannot be modified because the control contains code blocks (i.e. &lt;% ... %&gt;). ">an important quirk</a> in</font></font><font color="#ff0000"><font color="#000000"> de design of ASP.NET that you might come across when implementing this solution. The exception message of the </font></font><span class="code">BuildMoreExpressiveException</span><font color="#ff0000"><font color="#000000"> method already gives it away. The solution proposed in this article works by injecting controls in to the page's control hierarchy. However, when an ASP.NET page contains &lt;% %&gt; code blocks, the collection of controls containing such a code block gets immutable and the line <span class="code">control.Parent.Controls.AddAt(index + 1, proxy);</span> will result in an <span class="type">HttpException</span>. You can work around this problem by wrapping the control that you want to validate with a server tag, such as an </font></font><span class="code">&lt;asp:PlaceHolder&gt;&lt;/asp:PlaceHolder</span><font color="#ff0000"><font color="#000000">&gt;. By throwing an exception with a very descriptive message, I'm hoping to save you and your fellow developers a lot of time, when you encounter this problem. </font></font></p><p>Happy validating!</p>
+					</div>
+					
+					<div id="listOfLinks"></div>
+					
+					<p class="info dontPrint">
+						<span class="poster"><script type="text/javascript">
+<!--
+	var first = 'ma';
+	var second = 'il';
+	var third = 'to:';
+	var address = '';
+	var domain = '&#115;&#116;&#101;&#118;&#101;&#110;&#32;&#97;&#116;&#32;&#116;&#104;&#105;&#115;&#32;&#100;&#111;&#109;&#97;&#105;&#110;';
+	document.write('<a href="');
+	document.write(first+second+third);
+	document.write(address);
+	document.write('&#64;');
+	document.write(domain);
+	document.write('" title="Email Steven">');
+	document.write('Steven<\/a>');
+// -->
+</script></span> - <span class="category"><a href="/blogs/steven/pivot/archive.php?c=ASP.NET">ASP.NET</a>, <a href="/blogs/steven/pivot/archive.php?c=6">C#</a>, <a href="/blogs/steven/pivot/archive.php?c=Enterprise_Library">Enterprise Library</a>, <a href="/blogs/steven/pivot/archive.php?c=Validation_Application_Block">Validation Application Block</a></span> - 
+						<span class="comments"><a href="/blogs/steven/pivot/entry.php?id=78#comm" title="Hans van Bakel, Mandeep, Steven">four comments</a> /  <a href="/blogs/steven/pivot/entry.php?id=78#track" title="">No trackbacks</a></span> - 
+						<a href="/blogs/steven/archives/archive_2010-m08.php#e78" title="Permanent link to 'Integrating Validation Application Block with ASP.NET part 1' in the archives">&sect;</a> <a href="/blogs/steven/pivot/entry.php?id=78" title="Permanent link to entry 'Integrating Validation Application Block with ASP.NET part 1'">&para;</a> 
+					</p>
+					
+					<div id="NoJavascriptWarning">
+						The code samples on my weblog are colorized using javascript, but
+						you disabled javascript (for my website) on your browser. 
+						If you're interested in viewing the posted code snippets in 
+						color, please enable javascript.
+					</div>
+					<script type="text/javascript">
+						var noScriptWarning = document.getElementById('NoJavascriptWarning');
+						noScriptWarning.style.display = "none";
+					</script>
+				</div>
+			</div>
+			
+			<hr style="height:1px; background-color:#999; color:#999; border: none;" />
+
+			<p><b>four comments:</b></p>
+			<div class="comments">
+			<a id="comm"></a>
+<p>Interesting post Steven, I'm looking into the VAB too. It's nice to have this type of functionality delivered to you off the shelf however compile time checking is a necessity in my opinion.<br /><small><b>Hans van Bakel</b>  (<a href='http://www.thekip.nl'  title='www.thekip.nl'>URL</a>) - 03 10 10 - 12:31 </small></p>
+<p>Hi Steve,<br />
+This is really a great post and fabulous idea.<br />
+<br />
+I have one question here - you have not used ServerSideValidationExtender so I am not sure how PropertyProxyValidator is going to work.<br />
+<br />
+Please do reply.<br />
+<br />
+Thanks,<br />
+Mandeep.<br /><small><b>Mandeep</b>  (<a href='http://www.mandeepjanjua.com'  title='www.mandeepjanjua.com'>URL</a>) - 27 07 11 - 23:26 </small></p>
+<p>Hi Mandeep,<br />
+<br />
+The ServerSideValidationExtender is part of the AjaxControlToolkit, which I'm not very familiar with, but I think it's just a matter of changing the AddValidatorToPageJustAfterControl method to the following, and you're good to go:<br />
+<br />
+private static void AddValidatorToPageJustAfterControl(<br />
+&nbsp;&nbsp;&nbsp;&nbsp;BaseValidator proxy, Control control)<br />
+{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;int index = control.Parent.Controls.IndexOf(control);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;control.Parent.Controls.AddAt(index + 1, proxy);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;if (proxy is PropertyProxyValidator)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;AddServerSideValidationExtender(proxy, control);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+}<br />
+<br />
+private static void AddServerSideValidationExtender(<br />
+&nbsp;&nbsp;&nbsp;&nbsp;BaseValidator proxy, Control control)<br />
+{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;var extender = new ServerSideValidationExtender();<br />
+&nbsp;&nbsp;&nbsp;&nbsp;extender.TargetControlID = proxy.ID;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;control.Parent.Controls.Add(extender);<br />
+}<br /><small><b>Steven</b>  (<a href='http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=78'  title='www.cuttingedge.it/blogs/steven/pivot/entry.php?id=78'>URL</a>) - 29 07 11 - 18:31 </small></p>
+<a id="lastcomment"></a><p>HI steve,<br />
+<br />
+Thanks for replying. I knew it is missing so I also added it.<br />
+<br />
+Regards,<br />
+Mandeep.<br /><small><b>Mandeep</b>  (<a href='http://www.mandeepjanjua.com'  title='www.mandeepjanjua.com'>URL</a>) - 30 07 11 - 16:10 </small></p>
+
+			</div>
+
+		</div>
+
+		<hr />
+		
+		<div id="footer">
+			<p>&copy; 2007-2019 Steven van Deursen.<br /><span class="dontPrint"><a href="/blogs/steven/rss.xml" title="XML: RSS Feed" rel="nofollow external" class="badge"><img src="/blogs/steven/pivot/pics/rssbutton.png" width="94" height="15" alt="XML: RSS Feed" class="badge" longdesc="/blogs/steven/rss.xml" /></a> <a href="/blogs/steven/atom.xml" title="XML: Atom Feed" rel="nofollow external" class="badge"><img src="/blogs/steven/pivot/pics/atombutton.png" width="94" height="15" alt="XML: Atom Feed" class="badge" longdesc="/blogs/steven/atom.xml" /></a></span>
+			</p>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/CSharpCodeHighlighter0.10.js"></script>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/MSILCodeHighlighter0.1.js"></script>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/X86CodeHighlighter0.1.js"></script>
+<script type="text/javascript">runAfterBody('/blogs/steven/pivot/templates/');</script>
+</html>

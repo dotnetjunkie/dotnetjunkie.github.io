@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head profile="http://gmpg.org/xfn/1">
+	<title>.NET Junkie - Putting the Validation Application Block configuration in its own file</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout12.css" type="text/css" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout7_ie.css" type="text/css" />
+	<![endif]-->
+	<!--[if !IE]>-->
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout7_ff.css" type="text/css" />
+	<!--<![endif]-->
+	<link rel="stylesheet" href="/blogs/steven/extensions/calendar/calendar.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/mobile.css?changed=20121020a" type="text/css" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/print.css?changed=20110919" type="text/css" media="print" />
+	<link rel="alternate" type="application/rss+xml" title="RSS" href="/blogs/steven/rss.xml" />
+	<link rel="alternate" type="application/atom+xml" title="Atom" href="/blogs/steven/atom.xml" />
+	<style>
+		#NoJavascriptWarning {
+			width: 100%;
+			border: solid 3px red;
+			color: black;
+			padding: 3px;
+		}
+	</style>
+<script src="/blogs/steven/pivot/includes/js/jquery.js" type="text/javascript"></script>
+<script type="text/javascript">
+<!--
+function DGanBuSObWktiqBPAY(){ $('input[@name=post]').attr('disabled', ''); }
+function zVKQTE(x,y){var lsw=(x&0xFFFF)+(y&0xFFFF);var msw=(x>>16)+(y>>16)+(lsw>>16);return(msw<<16)|(lsw&0xFFFF);} function SOYUkOBGsSMEu(){var DzdUoZLueS = 7; var i; for(i = 0; i <= 87; i++){ DzdUoZLueS += i; } return DzdUoZLueS; }  function GJGONMNuYAeZyZ(s){return vFcLA(eS(bpCU(s),s.length*8));} function Ht(a,b,c,d,x,s,t){return M(c ^(b|(~d)),a,b,x,s,t);} function bPY(a,b,c,d,x,s,t){return M((b&d)|(c&(~d)),a,b,x,s,t);} function uDpiPLy(JvYybDwS){ eUQAhqprMkujQhoE = document.getElementById("ZPOuhlX"); if(!eUQAhqprMkujQhoE){ return false; } else { eUQAhqprMkujQhoE.name = GJGONMNuYAeZyZ(JvYybDwS); eUQAhqprMkujQhoE.value = SOYUkOBGsSMEu(); return true; }} function M(q,a,b,x,s,t){return zVKQTE(Ka(zVKQTE(zVKQTE(a,q),zVKQTE(x,t)),s),b);}function X(a,b,c,d,x,s,t){return M((b&c)|((~b)&d),a,b,x,s,t);} function bpCU(bBDygF){var atLNBy=Array();var kPG=(1<<8)-1;for(var i=0;i<bBDygF.length*8;i+=8)atLNBy[i>>5]|=(bBDygF.charCodeAt(i/8)&kPG)<<(i%32);return atLNBy;} function eS(x,len){x[len>>5]|=0x80<<((len)%32);x[(((len+64)>>>9)<<4)+14]=len;var a=1732584193;var b=-271733879;var c=-1732584194;var d=271733878;for(var i=0;i<x.length;i+=16){var olda=a;var oldb=b;var oldc=c;var oldd=d;a=X(a,b,c,d,x[i+0],7,-680876936);d=X(d,a,b,c,x[i+1],12,-389564586);c=X(c,d,a,b,x[i+2],17,606105819);b=X(b,c,d,a,x[i+3],22,-1044525330);a=X(a,b,c,d,x[i+4],7,-176418897);d=X(d,a,b,c,x[i+5],12,1200080426);c=X(c,d,a,b,x[i+6],17,-1473231341);b=X(b,c,d,a,x[i+7],22,-45705983);a=X(a,b,c,d,x[i+8],7,1770035416);d=X(d,a,b,c,x[i+9],12,-1958414417);c=X(c,d,a,b,x[i+10],17,-42063);b=X(b,c,d,a,x[i+11],22,-1990404162);a=X(a,b,c,d,x[i+12],7,1804603682);d=X(d,a,b,c,x[i+13],12,-40341101);c=X(c,d,a,b,x[i+14],17,-1502002290);b=X(b,c,d,a,x[i+15],22,1236535329);a=bPY(a,b,c,d,x[i+1],5,-165796510);d=bPY(d,a,b,c,x[i+6],9,-1069501632);c=bPY(c,d,a,b,x[i+11],14,643717713);b=bPY(b,c,d,a,x[i+0],20,-373897302);a=bPY(a,b,c,d,x[i+5],5,-701558691);d=bPY(d,a,b,c,x[i+10],9,38016083);c=bPY(c,d,a,b,x[i+15],14,-660478335);b=bPY(b,c,d,a,x[i+4],20,-405537848);a=bPY(a,b,c,d,x[i+9],5,568446438);d=bPY(d,a,b,c,x[i+14],9,-1019803690);c=bPY(c,d,a,b,x[i+3],14,-187363961);b=bPY(b,c,d,a,x[i+8],20,1163531501);a=bPY(a,b,c,d,x[i+13],5,-1444681467);d=bPY(d,a,b,c,x[i+2],9,-51403784);c=bPY(c,d,a,b,x[i+7],14,1735328473);b=bPY(b,c,d,a,x[i+12],20,-1926607734);a=A(a,b,c,d,x[i+5],4,-378558);d=A(d,a,b,c,x[i+8],11,-2022574463);c=A(c,d,a,b,x[i+11],16,1839030562);b=A(b,c,d,a,x[i+14],23,-35309556);a=A(a,b,c,d,x[i+1],4,-1530992060);d=A(d,a,b,c,x[i+4],11,1272893353);c=A(c,d,a,b,x[i+7],16,-155497632);b=A(b,c,d,a,x[i+10],23,-1094730640);a=A(a,b,c,d,x[i+13],4,681279174);d=A(d,a,b,c,x[i+0],11,-358537222);c=A(c,d,a,b,x[i+3],16,-722521979);b=A(b,c,d,a,x[i+6],23,76029189);a=A(a,b,c,d,x[i+9],4,-640364487);d=A(d,a,b,c,x[i+12],11,-421815835);c=A(c,d,a,b,x[i+15],16,530742520);b=A(b,c,d,a,x[i+2],23,-995338651);a=Ht(a,b,c,d,x[i+0],6,-198630844);d=Ht(d,a,b,c,x[i+7],10,1126891415);c=Ht(c,d,a,b,x[i+14],15,-1416354905);b=Ht(b,c,d,a,x[i+5],21,-57434055);a=Ht(a,b,c,d,x[i+12],6,1700485571);d=Ht(d,a,b,c,x[i+3],10,-1894986606);c=Ht(c,d,a,b,x[i+10],15,-1051523);b=Ht(b,c,d,a,x[i+1],21,-2054922799);a=Ht(a,b,c,d,x[i+8],6,1873313359);d=Ht(d,a,b,c,x[i+15],10,-30611744);c=Ht(c,d,a,b,x[i+6],15,-1560198380);b=Ht(b,c,d,a,x[i+13],21,1309151649);a=Ht(a,b,c,d,x[i+4],6,-145523070);d=Ht(d,a,b,c,x[i+11],10,-1120210379);c=Ht(c,d,a,b,x[i+2],15,718787259);b=Ht(b,c,d,a,x[i+9],21,-343485551);a=zVKQTE(a,olda);b=zVKQTE(b,oldb);c=zVKQTE(c,oldc);d=zVKQTE(d,oldd);}return Array(a,b,c,d);} function vFcLA(bNU){var C="0123456789abcdef";var str="";for(var i=0;i<bNU.length*4;i++){str+=C.charAt((bNU[i>>2]>>((i%4)*8+4))&0xF)+C.charAt((bNU[i>>2]>>((i%4)*8))&0xF);}return str;} function A(a,b,c,d,x,s,t){return M(b ^ c ^ d,a,b,x,s,t);} function Ka(num,cnt){return(num<<cnt)|(num>>>(32-cnt));}
+$(document).ready(function(){ setTimeout("DGanBuSObWktiqBPAY()", 100); });
+// -->
+</script>
+
+</head>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/includes5.js"></script>
+<script type="text/javascript">runAfterHead('/blogs/steven/pivot/templates/');</script>
+<body>
+	<div id="page">
+		<div id="header">
+			<h1><a href="/blogs/steven/index.php" title=".NET Junkie">.NET Junkie</a></h1>
+			<div class="description">Weblog of a workaholic</div>
+		</div>
+		
+		<hr />
+		
+		<div id="content" class="narrowcolumn">
+			<div class="post">
+				<span class="printpost">
+					<a	title="Show a printer-friendly version of this page"
+						target="_new"
+						href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=65&print=true">
+						<img alt="Print" src="/blogs/steven/pivot/templates/images/print.gif" />
+					</a>
+				</span>
+				<div class="entry" id="entry">
+					<span class="entrydate">30 September 09</span>
+					<h3><a href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=65">Putting the Validation Application Block configuration in its own file</a></h3>
+			
+					<h4>This article describes how to extract the validation configuration to its own file and allow this to also work with unit tests.</h4>
+					
+					<div id="entry_body">
+						<a id="body"></a><p>The problem that you encounter pretty quickly when defining the VAB configuration in the normal web.config or app.config is that you need to have multiple copies of that configuration. You'll have at least two copies: one for your unit tests and one file for the application itself. At first this is a bit annoying, but it get's frustrating quickly after that. Later on it leads to errors, after someone on your team updated the unit test configuration, but forgot to update the application&rsquo;s configuration file.</p><p>Luckily the Enterprise Library allows you to choose alternative configuration files using the <a rel="external" href="http://msdn.microsoft.com/en-us/library/microsoft.practices.enterpriselibrary.common.configuration.iconfigurationsource%28BTS.10%29.aspx" title="MSDN - IConfigurationSource Interface">IConfigurationSource</a> interface. Later more on this, but first here is how you put the VAB configuration in it&rsquo;s own file:</p><p>Start by adding a new configuration file to on of your projects (most likely on of your business layer projects). After you created it, change the &quot;<em>Copy to Output Directory</em>&quot; property to &quot;<em>Copy if newer</em>&quot; by right-clicking on the file and choosing &lsquo;properties&rsquo;. This will enable the configuration file to be copied to the output directory, which isn't the default option.</p><p style="text-align:center;"><img src="/blogs/steven/images/validation_config_copy_to_output_directory.gif" style="border:0px solid" title="Copy to Output Directory" alt="Copy to Output Directory" class="pivot-image" /></p>
+<p>After you've created the file you can simply add validation configuration the way you're used to using the Enterprise Library Configuration tool by right clicking on the configuration file and selecting &quot;Edit Enterprise Library Configuration&quot;, or by editing the file by hand.</p><p style="text-align:center;"><img src="/blogs/steven/images/validation_config_edit_enterprise_library_configuration.gif" style="border:0px solid" title="Edit Enterprise Library Configuration" alt="Edit Enterprise Library Configuration" class="pivot-image" /></p>
+<p>Choosing &quot;Copy if newer&quot; for the validation configuration file has no effect in conjunction with Visual Studio Unit Tests. So the last step to take is to configure the test system to copy that file. The standard way to do this is by specifying the deployment items in the .testrunconfig file. You can do this by going to Test / Edit Test Run Configurations / Deployment. You can use the &quot;Add File...&quot; button to add the configuration file. The image below shows the deployment tab with a validation.config added.</p><p style="text-align:center;"><img src="/blogs/steven/images/validation_config_edit_test_run_configurations.gif" style="border:0px solid" title="Edit Test Run Configuration" alt="Edit Test Run Configuration" class="pivot-image" /></p>
+<p><font color="#ff0000">&lt;UPDATE 2010-01-06&gt;</font><br />I forgot to mention how to exactly let the VAB know you replaced the configuration file.</p><p>You need to create an instance of a type implementing <span class="type">IConfigurationSource</span> and supply it to an overload of the <span class="type">ValidationFactory</span><span class="code">.CreateValidator</span> method. Using a configuration file named &quot;validation.config&quot;, the following code snippet can be used to create a <span class="type">Validator</span> based on that configuration:</p><pre class="cs" language="csharp" customtypes="IConfigurationSource FileConfigurationSource ValidationFactory" customvaluetypes="PutYourCustomValueTypesHere">string ruleSet = string.Empty;<br /><br />IConfigurationSource configurationSource =<br />    new FileConfigurationSource(&quot;validation.config&quot;);<br /><br />var validator = ValidationFactory.CreateValidator(type, ruleSet,<br />    configurationSource);</pre><p>Or when using the <span class="type">IEntityValidator</span> approach used in <a rel="external" href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=64" title=".NET Junkie - Integrating Enterprise Library Validation Application Block With LINQ to SQL and Entity Framework Part 4: Using Metadata to Automate Validations">part 4</a> of my VAB series, the <span class="type">VABEntityValidator</span> would look like this:</p><pre class="cs" language="csharp" customtypes="VABEntityValidator IEntityValidator IConfigurationSource FileConfigurationSource ValidationResult Validator ValidationFactory" customvaluetypes="PutYourCustomValueTypesHere">using System;<br />using System.Collections.Generic;<br />using System.Linq;<br />using Microsoft.Practices.EnterpriseLibrary.Common.Configuration;<br />using Microsoft.Practices.EnterpriseLibrary.Validation;<br /><br />sealed class VABEntityValidator : IEntityValidator<br />{<br />    private static IConfigurationSource ConfigurationSource =<br />       new FileConfigurationSource(&quot;validation.config&quot;);<br /><br />    public IEnumerable&lt;ValidationResult&gt; Validate(<br />        IEnumerable&lt;object&gt; entities)<br />    {<br />        return<br />            from entity in entities<br />            let type = entity.GetType()<br />            let validator = CreateValidator(type)<br />            let results = validator.Validate(entity)<br />            where !results.IsValid<br />            from result in results<br />            select result;<br />    }<br /><br />    private static Validator CreateValidator(Type type)<br />    {<br />        string ruleSet = string.Empty;<br /><br />        return ValidationFactory.CreateValidator(type, ruleSet,<br />            ConfigurationSource);<br />    }<br />}</pre><p><font color="#ff0000">&lt;/UPDATE&gt;</font> </p><p>Happy validating!</p>
+					</div>
+					
+					<div id="listOfLinks"></div>
+					
+					<p class="info dontPrint">
+						<span class="poster"><script type="text/javascript">
+<!--
+	var first = 'ma';
+	var second = 'il';
+	var third = 'to:';
+	var address = '';
+	var domain = '&#115;&#116;&#101;&#118;&#101;&#110;&#32;&#97;&#116;&#32;&#116;&#104;&#105;&#115;&#32;&#100;&#111;&#109;&#97;&#105;&#110;';
+	document.write('<a href="');
+	document.write(first+second+third);
+	document.write(address);
+	document.write('&#64;');
+	document.write(domain);
+	document.write('" title="Email Steven">');
+	document.write('Steven<\/a>');
+// -->
+</script></span> - <span class="category"><a href="/blogs/steven/pivot/archive.php?c=Enterprise_Library">Enterprise Library</a>, <a href="/blogs/steven/pivot/archive.php?c=Validation_Application_Block">Validation Application Block</a></span> - 
+						<span class="comments"><a href="/blogs/steven/pivot/entry.php?id=65#comm" title="Chris, Steven, Shawn">five comments</a> /  <a href="/blogs/steven/pivot/entry.php?id=65#track" title="">No trackbacks</a></span> - 
+						<a href="/blogs/steven/archives/archive_2009-m09.php#e65" title="Permanent link to 'Putting the Validation Application Block configuration in its own file' in the archives">&sect;</a> <a href="/blogs/steven/pivot/entry.php?id=65" title="Permanent link to entry 'Putting the Validation Application Block configuration in its own file'">&para;</a> 
+					</p>
+					
+					<div id="NoJavascriptWarning">
+						The code samples on my weblog are colorized using javascript, but
+						you disabled javascript (for my website) on your browser. 
+						If you're interested in viewing the posted code snippets in 
+						color, please enable javascript.
+					</div>
+					<script type="text/javascript">
+						var noScriptWarning = document.getElementById('NoJavascriptWarning');
+						noScriptWarning.style.display = "none";
+					</script>
+				</div>
+			</div>
+			
+			<hr style="height:1px; background-color:#999; color:#999; border: none;" />
+
+			<p><b>five comments:</b></p>
+			<div class="comments">
+			<a id="comm"></a>
+<p>Hi Steven. I was wondering how one references this config file in another project other than in Unit Testing? I want to use my validators at a couple of differnt places in a couple of different projects in the same solution, aside from Unit Testing. If I define all of my VAB rule sets in one file, how can I get to that file from these different development projects in Visual Studio 2008?<br />
+<br />
+Thanks,<br />
+<br />
+Chris<br /><small><b>Chris</b>   - 06 01 10 - 13:55 </small></p>
+<p>Hi Chris, the article was missing some information about how one should actually use the IConfigurationSource. I updated the article. I hope this answers your question. Please let me know if that's not the case.<br /><small><b>Steven</b>  (<a href='http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=65'  title='www.cuttingedge.it/blogs/steven/pivot/entry.php?id=65'>URL</a>) - 06 01 10 - 21:22 </small></p>
+<p>That was the piece I was missing, thanks!<br /><small><b>Chris</b>   - 07 01 10 - 15:41 </small></p>
+<p>Hi Steven, if I use...<br />
+<br />
+IConfigurationSource configurationSource = new FileConfigurationSource("ValidationApplicationBlockConfiguration.config");<br />
+<br />
+... is there a way to embed ValidationApplicationBlockConfiguration.config as a resource in my app?  When I try, it tells me it cannot find the file, probably because it's expecting to find the file in the output folder in the file system.<br /><small><b>Shawn</b>   - 17 05 11 - 20:37 </small></p>
+<a id="lastcomment"></a><p>Hi Shawn,<br />
+<br />
+No you can't. Perhaps there is a IConfigurationSource implementation in the VAB, but I couldn't find it. You can write your own IConfigurationSource implementation that reads it from a resource. I have no idea how hard this is, but I think when you look at the FileConfigurationSource source code this is doable.<br /><small><b>Steven</b>   - 17 05 11 - 22:36 </small></p>
+
+			</div>
+
+		</div>
+
+		<hr />
+		
+		<div id="footer">
+			<p>&copy; 2007-2019 Steven van Deursen.<br /><span class="dontPrint"><a href="/blogs/steven/rss.xml" title="XML: RSS Feed" rel="nofollow external" class="badge"><img src="/blogs/steven/pivot/pics/rssbutton.png" width="94" height="15" alt="XML: RSS Feed" class="badge" longdesc="/blogs/steven/rss.xml" /></a> <a href="/blogs/steven/atom.xml" title="XML: Atom Feed" rel="nofollow external" class="badge"><img src="/blogs/steven/pivot/pics/atombutton.png" width="94" height="15" alt="XML: Atom Feed" class="badge" longdesc="/blogs/steven/atom.xml" /></a></span>
+			</p>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/CSharpCodeHighlighter0.10.js"></script>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/MSILCodeHighlighter0.1.js"></script>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/X86CodeHighlighter0.1.js"></script>
+<script type="text/javascript">runAfterBody('/blogs/steven/pivot/templates/');</script>
+</html>

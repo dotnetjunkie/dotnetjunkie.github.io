@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+	<meta name="generator" content="Hugo 0.53" />
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+		<title>
+				.NET Junkie - Weblog of a workaholic &middot; .NET Junkie - Weblog of a workaholic
+		</title>
+	
+		
+		<link rel="stylesheet" href="/steven/css/style.css">
+		<link rel="stylesheet" href="/steven/css/overrides.css">
+		<link rel="stylesheet" href="/steven/css/Libre_Baskerville_400_400i_700.css">
+		
+		<link rel="icon" type="image/png" sizes="32x32" href="/steven/images/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/steven/images/favicon-16x16.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="/steven/images/apple-touch-icon.png">
+	
+		
+		<link href="https://blogs.cuttingedge.it/steven/index.xml" rel="alternate" type="application/rss+xml" title=".NET Junkie - Weblog of a workaholic" />
+	</head>
+	
+    <body>
+        		<nav class="nav">
+			<div class="nav-container">
+				<a href="/steven/">
+					<h2 class="nav-title">.NET Junkie - Weblog of a workaholic</h2>
+				</a>
+				<ul>
+    <li><a href="/steven/about">About</a></li>
+    <li><a href="/steven/">Posts</a></li>
+</ul>
+			</div>
+		</nav>
+
+        
+
+<main>
+	
+
+
+	<div class="catalogue">
+		
+			<a href="https://blogs.cuttingedge.it/steven/posts/2010/breaking-changes-in-smtpclient-in-net40/" class="catalogue-item">
+    <div>
+        <time datetime="2010-05-06 00:00:00 &#43;0000 UTC" class="catalogue-time">May 6, 2010</time>
+        <h1 class="catalogue-title">Breaking changes in SmtpClient in .NET 4.0</h1>
+        <div class="catalogue-line"></div>
+
+        <p>
+            In .NET 4.0 the SmtpClient class now implements IDisposable. This is a breaking change what you should watch out for. For .NET 4.0 the BCL team decided to pool SMTP connections, just as .NET already did with database connections. This of course means that the SmtpClient class should implement IDisposable, just as the SqlConnection does. When STMP connections are pooled, the overhead over establishing a new connection is lowered, which is a good thing.
+        </p>
+    </div>
+</a>
+
+		
+			<a href="https://blogs.cuttingedge.it/steven/posts/2010/protecting-against-regex-dos-attacks/" class="catalogue-item">
+    <div>
+        <time datetime="2010-05-05 00:00:00 &#43;0000 UTC" class="catalogue-time">May 5, 2010</time>
+        <h1 class="catalogue-title">Protecting against Regex DOS attacks</h1>
+        <div class="catalogue-line"></div>
+
+        <p>
+            Bryan Sullivan describes in the May issue of his MSDN article a denial of service attack that abuses regular expressions. As Bryan explains, a poorly written regex can bring your server to its knees. Bryan demonstrates that even the simplest regular expressions can bring your server to its knees. Here are some examples of regular expressions that can easily cause this to happen:
+^(\d+)+$ ^(\d+)*$ ^(\d*)*$ ^(\d+|\s+)*$ ^(\d|\d\d)+$ ^(\d|\d?)+$ Read more about the causes and the cures here.
+        </p>
+    </div>
+</a>
+
+		
+			<a href="https://blogs.cuttingedge.it/steven/posts/2009/protecting-against-xml-expansion-attacks/" class="catalogue-item">
+    <div>
+        <time datetime="2009-05-23 00:00:00 &#43;0000 UTC" class="catalogue-time">May 23, 2009</time>
+        <h1 class="catalogue-title">Protecting against XML Entity Expansion attacks</h1>
+        <div class="catalogue-line"></div>
+
+        <p>
+            Tom Hollander describes on his blog a denial of service attack I never knew the existence of, called XML Entity Expansion attack. Tom explains how to bring a server to its knees when allowing any type of xml document as input and passing it directly to an XmlDocument for parsing. Tom uses the following XML document of less than 1 KB to demonstrate the attack:
+&lt;!DOCTYPE foo [ &lt;!ENTITY a &#34;1234567890&#34; &gt; &lt;!
+        </p>
+    </div>
+</a>
+
+		
+			<a href="https://blogs.cuttingedge.it/steven/posts/2008/the-death-of-linq-to-sql/" class="catalogue-item">
+    <div>
+        <time datetime="2008-11-01 00:00:00 &#43;0000 UTC" class="catalogue-time">November 1, 2008</time>
+        <h1 class="catalogue-title">The death of LINQ to SQL</h1>
+        <div class="catalogue-line"></div>
+
+        <p>
+            The Microsoft ADO.NET team blog made an important announcement yesterday about the future of LINQ to SQL. The ADO.NET team announced that Microsoft will continue to make some investments in LINQ to SQL, but they also made it pretty clear that LINQ to Entities is the recommended data access solution in the future frameworks. Microsoft will invest heavily in the Entity Framework.
+I always wondered why Microsoft focused on two different O/RM technologies for the .
+        </p>
+    </div>
+</a>
+
+		
+			<a href="https://blogs.cuttingedge.it/steven/posts/2007/readonlydictionary/" class="catalogue-item">
+    <div>
+        <time datetime="2007-11-22 00:00:00 &#43;0000 UTC" class="catalogue-time">November 22, 2007</time>
+        <h1 class="catalogue-title">ReadOnlyDictionary</h1>
+        <div class="catalogue-line"></div>
+
+        <p>
+            This article describes an implementation of a ReadOnlyDictionary&lt;TKey, TValue&gt; that&rsquo;s missing from the .NET framework. UPDATE 2012-06-05: .NET 4.5 will (finally finally!!) contain a ReadOnlyDictionary&lt;TKey, TValue&gt;, which will make this post (that has long be my top most googled article) finally redundant. If you&rsquo;re still developing under .NET 4.0 or below, please read on. UPDATE 2013-04-11: Software license notice: I previously released this under the MIT license, but decided to change this.
+        </p>
+    </div>
+</a>
+
+		
+			<a href="https://blogs.cuttingedge.it/steven/posts/2006/net-backwards-compatibility/" class="catalogue-item">
+    <div>
+        <time datetime="2006-05-23 00:00:00 &#43;0000 UTC" class="catalogue-time">May 23, 2006</time>
+        <h1 class="catalogue-title">.NET Backwards compatibility, why should we?</h1>
+        <div class="catalogue-line"></div>
+
+        <p>
+            Microsofts corporate vice present of the Developer Division, Somasegar, wrote on his weblog about the backwards compatibility of the .NET framework version 2.0. But his readers doubt the usefulness of this compatibility, as do I. UPDATE 2010: This post was written in 2006. During the last couple of years I worked for many clients and found that the backwards compatibility of .NET was very important for many of my clients, because it allowed them to migrate slowly from one version to the next without making very big investments.
+        </p>
+    </div>
+</a>
+
+		
+			<a href="https://blogs.cuttingedge.it/steven/posts/2006/welcome-to-my-blog/" class="catalogue-item">
+    <div>
+        <time datetime="2006-05-10 00:00:00 &#43;0000 UTC" class="catalogue-time">May 10, 2006</time>
+        <h1 class="catalogue-title">Welcome to my blog</h1>
+        <div class="catalogue-line"></div>
+
+        <p>
+             Hi everybody, welcome to my blog! This blog will be a place where I share my random thoughts about ASP.NET, C# and everything related to it. I will post code snippets and links to interesting other blogs.
+Comments 
+        </p>
+    </div>
+</a>
+
+		
+	</div>
+	
+	<div class="pagination">
+		
+			<a href="/steven/" class="left arrow">&#8592;</a>
+		
+		
+	
+		<span>2</span>
+	</div>
+</main>
+
+
+        		<footer>
+			<span>
+			&copy; <time datetime="2019-03-13 19:28:57.61128 &#43;0100 CET m=&#43;0.242321601">2019</time> Steven van Deursen. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
+			</span>
+		</footer>
+
+    </body>
+</html>

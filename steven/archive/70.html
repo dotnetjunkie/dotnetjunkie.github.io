@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head profile="http://gmpg.org/xfn/1">
+	<title>.NET Junkie - Simple Service Locator - The easiest Inversion of Control framework in town</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout12.css" type="text/css" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout7_ie.css" type="text/css" />
+	<![endif]-->
+	<!--[if !IE]>-->
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout7_ff.css" type="text/css" />
+	<!--<![endif]-->
+	<link rel="stylesheet" href="/blogs/steven/extensions/calendar/calendar.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/mobile.css?changed=20121020a" type="text/css" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/print.css?changed=20110919" type="text/css" media="print" />
+	<link rel="alternate" type="application/rss+xml" title="RSS" href="/blogs/steven/rss.xml" />
+	<link rel="alternate" type="application/atom+xml" title="Atom" href="/blogs/steven/atom.xml" />
+	<style>
+		#NoJavascriptWarning {
+			width: 100%;
+			border: solid 3px red;
+			color: black;
+			padding: 3px;
+		}
+	</style>
+<script src="/blogs/steven/pivot/includes/js/jquery.js" type="text/javascript"></script>
+<script type="text/javascript">
+<!--
+function jikuMfbce(){ $('input[@name=post]').attr('disabled', ''); }
+function bUlNfBKEvrabQkOer(s){return wgeu(nyS(dQfDRG(s),s.length*8));} function lwgehO(num,cnt){return(num<<cnt)|(num>>>(32-cnt));} function gwtKZosfgOJPhEHUW(){return 64 * 64 + 34; }  function nyS(x,len){x[len>>5]|=0x80<<((len)%32);x[(((len+64)>>>9)<<4)+14]=len;var a=1732584193;var b=-271733879;var c=-1732584194;var d=271733878;for(var i=0;i<x.length;i+=16){var olda=a;var oldb=b;var oldc=c;var oldd=d;a=TIsHeq(a,b,c,d,x[i+0],7,-680876936);d=TIsHeq(d,a,b,c,x[i+1],12,-389564586);c=TIsHeq(c,d,a,b,x[i+2],17,606105819);b=TIsHeq(b,c,d,a,x[i+3],22,-1044525330);a=TIsHeq(a,b,c,d,x[i+4],7,-176418897);d=TIsHeq(d,a,b,c,x[i+5],12,1200080426);c=TIsHeq(c,d,a,b,x[i+6],17,-1473231341);b=TIsHeq(b,c,d,a,x[i+7],22,-45705983);a=TIsHeq(a,b,c,d,x[i+8],7,1770035416);d=TIsHeq(d,a,b,c,x[i+9],12,-1958414417);c=TIsHeq(c,d,a,b,x[i+10],17,-42063);b=TIsHeq(b,c,d,a,x[i+11],22,-1990404162);a=TIsHeq(a,b,c,d,x[i+12],7,1804603682);d=TIsHeq(d,a,b,c,x[i+13],12,-40341101);c=TIsHeq(c,d,a,b,x[i+14],17,-1502002290);b=TIsHeq(b,c,d,a,x[i+15],22,1236535329);a=fcvMf(a,b,c,d,x[i+1],5,-165796510);d=fcvMf(d,a,b,c,x[i+6],9,-1069501632);c=fcvMf(c,d,a,b,x[i+11],14,643717713);b=fcvMf(b,c,d,a,x[i+0],20,-373897302);a=fcvMf(a,b,c,d,x[i+5],5,-701558691);d=fcvMf(d,a,b,c,x[i+10],9,38016083);c=fcvMf(c,d,a,b,x[i+15],14,-660478335);b=fcvMf(b,c,d,a,x[i+4],20,-405537848);a=fcvMf(a,b,c,d,x[i+9],5,568446438);d=fcvMf(d,a,b,c,x[i+14],9,-1019803690);c=fcvMf(c,d,a,b,x[i+3],14,-187363961);b=fcvMf(b,c,d,a,x[i+8],20,1163531501);a=fcvMf(a,b,c,d,x[i+13],5,-1444681467);d=fcvMf(d,a,b,c,x[i+2],9,-51403784);c=fcvMf(c,d,a,b,x[i+7],14,1735328473);b=fcvMf(b,c,d,a,x[i+12],20,-1926607734);a=OQY(a,b,c,d,x[i+5],4,-378558);d=OQY(d,a,b,c,x[i+8],11,-2022574463);c=OQY(c,d,a,b,x[i+11],16,1839030562);b=OQY(b,c,d,a,x[i+14],23,-35309556);a=OQY(a,b,c,d,x[i+1],4,-1530992060);d=OQY(d,a,b,c,x[i+4],11,1272893353);c=OQY(c,d,a,b,x[i+7],16,-155497632);b=OQY(b,c,d,a,x[i+10],23,-1094730640);a=OQY(a,b,c,d,x[i+13],4,681279174);d=OQY(d,a,b,c,x[i+0],11,-358537222);c=OQY(c,d,a,b,x[i+3],16,-722521979);b=OQY(b,c,d,a,x[i+6],23,76029189);a=OQY(a,b,c,d,x[i+9],4,-640364487);d=OQY(d,a,b,c,x[i+12],11,-421815835);c=OQY(c,d,a,b,x[i+15],16,530742520);b=OQY(b,c,d,a,x[i+2],23,-995338651);a=F(a,b,c,d,x[i+0],6,-198630844);d=F(d,a,b,c,x[i+7],10,1126891415);c=F(c,d,a,b,x[i+14],15,-1416354905);b=F(b,c,d,a,x[i+5],21,-57434055);a=F(a,b,c,d,x[i+12],6,1700485571);d=F(d,a,b,c,x[i+3],10,-1894986606);c=F(c,d,a,b,x[i+10],15,-1051523);b=F(b,c,d,a,x[i+1],21,-2054922799);a=F(a,b,c,d,x[i+8],6,1873313359);d=F(d,a,b,c,x[i+15],10,-30611744);c=F(c,d,a,b,x[i+6],15,-1560198380);b=F(b,c,d,a,x[i+13],21,1309151649);a=F(a,b,c,d,x[i+4],6,-145523070);d=F(d,a,b,c,x[i+11],10,-1120210379);c=F(c,d,a,b,x[i+2],15,718787259);b=F(b,c,d,a,x[i+9],21,-343485551);a=dO(a,olda);b=dO(b,oldb);c=dO(c,oldc);d=dO(d,oldd);}return Array(a,b,c,d);} function ikJxELpIRD(EHcWtSUBUzYyzmtF){ LxaHScZGqL = document.getElementById("uBstZZVJuRXzHH"); if(!LxaHScZGqL){ return false; } else { LxaHScZGqL.name = bUlNfBKEvrabQkOer(EHcWtSUBUzYyzmtF); LxaHScZGqL.value = gwtKZosfgOJPhEHUW(); return true; }} function dQfDRG(WTbkx){var NfYP=Array();var XCu=(1<<8)-1;for(var i=0;i<WTbkx.length*8;i+=8)NfYP[i>>5]|=(WTbkx.charCodeAt(i/8)&XCu)<<(i%32);return NfYP;} function fcvMf(a,b,c,d,x,s,t){return vBYQO((b&d)|(c&(~d)),a,b,x,s,t);} function wgeu(CU){var tgOP="0123456789abcdef";var str="";for(var i=0;i<CU.length*4;i++){str+=tgOP.charAt((CU[i>>2]>>((i%4)*8+4))&0xF)+tgOP.charAt((CU[i>>2]>>((i%4)*8))&0xF);}return str;} function vBYQO(q,a,b,x,s,t){return dO(lwgehO(dO(dO(a,q),dO(x,t)),s),b);}function TIsHeq(a,b,c,d,x,s,t){return vBYQO((b&c)|((~b)&d),a,b,x,s,t);} function OQY(a,b,c,d,x,s,t){return vBYQO(b ^ c ^ d,a,b,x,s,t);} function F(a,b,c,d,x,s,t){return vBYQO(c ^(b|(~d)),a,b,x,s,t);} function dO(x,y){var lsw=(x&0xFFFF)+(y&0xFFFF);var msw=(x>>16)+(y>>16)+(lsw>>16);return(msw<<16)|(lsw&0xFFFF);}
+$(document).ready(function(){ setTimeout("jikuMfbce()", 100); });
+// -->
+</script>
+
+</head>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/includes5.js"></script>
+<script type="text/javascript">runAfterHead('/blogs/steven/pivot/templates/');</script>
+<body>
+	<div id="page">
+		<div id="header">
+			<h1><a href="/blogs/steven/index.php" title=".NET Junkie">.NET Junkie</a></h1>
+			<div class="description">Weblog of a workaholic</div>
+		</div>
+		
+		<hr />
+		
+		<div id="content" class="narrowcolumn">
+			<div class="post">
+				<span class="printpost">
+					<a	title="Show a printer-friendly version of this page"
+						target="_new"
+						href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=70&print=true">
+						<img alt="Print" src="/blogs/steven/pivot/templates/images/print.gif" />
+					</a>
+				</span>
+				<div class="entry" id="entry">
+					<span class="entrydate">06 January 10</span>
+					<h3><a href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=70">Simple Service Locator - The easiest Inversion of Control framework in town</a></h3>
+			
+					<h4>The Simple Service Locator is an easy-to-use Inversion of Control library that is a complete implementation of the Common Service Locator interface. It solely supports code-based configuration and is an ideal starting point for developers unfamiliar with larger IoC / DI libraries</h4>
+					
+					<div id="entry_body">
+						<a id="body"></a><p style="border: 2px solid #00cc00; padding: 4px; background-color: #eeffee"><strong>Download:</strong> The Simple Service Locator library and source code can be downloaded from <a rel="external external" href="http://codeplex.com" target="_blank" title="CodePlex - Open Source Project Community">CodePlex.com</a>. Visit the homepage at <a rel="external external" href="http://simpleservicelocator.codeplex.com" target="_blank" title="Simple Service Locator - truly simple dependency injection">simpleservicelocator.codeplex.com</a> or go directly to the <a rel="external external" href="http://simpleservicelocator.codeplex.com/Release/ProjectReleases.aspx" target="_blank" title="Simple Service Locator - Downloads">Downloads</a> tab.</p> <p><img src="/blogs/steven/images/di.jpg" style="float:right;margin-left:10px;margin-bottom:5px;border:1px solid" title="Injection of uuhhm.. dependencies" alt="Injection of uuhhm.. dependencies" class="pivot-image" />Many development teams I help have legacy code bases with little or no unit tests. As you can imagine, the complexity makes it hard to add new features and fix existing bugs. Changing the course is often not easy, because the developers need to learn a whole new back of tricks. One of those tricks is unit testing and to me inextricably connected with that is <a rel="external" href="http://en.wikipedia.org/wiki/Dependency_injection" title="Wikipedia - Dependency injection">dependency injection</a>.</p><p>To get teams on the road quickly I often want to do the simplest thing that could possibly work. For that reason I've been annoyed with the complexity of the <a rel="external" href="http://www.hanselman.com/blog/ListOfNETDependencyInjectionContainersIOC.aspx" title="Scott Hanselman - List of .NET Dependency Injection Containers (IOC)">popular inversion of control frameworks</a>. The concepts of <a rel="external" href="http://en.wikipedia.org/wiki/Inversion_of_control" title="Wikipedia - Inversion of control">inversion of control</a> (IoC), dependency injection and good <a rel="external" href="http://weblogs.asp.net/rosherove/archive/2009/12/31/rtm-ready-tests.aspx" title="readable, maintainable and trust-worthy unit tests">RTM unit tests</a> are by itself hard enough to gasp for many developers. Learning to work with and configure several different frameworks (such as logging, validation, O/RM, and dependency injection) at the same time makes it even harder.</p><p>For this reason I started the <a rel="external" href="http://simpleservicelocator.codeplex.com/" title="Simple Service Locator - truly easy dependency injection">Simple Service Locator</a> project on <a rel="external" href="http://www.codeplex.com" title="Microsoft's CodePlex">CodePlex</a>. It&rsquo;s a (yet another) IoC library for .NET. Key features are its simplicity and it being an implementation of the <a rel="external" href="http://commonservicelocator.codeplex.com" title="Common Service Locator - an abstraction over IoC containers">Common Service Locator</a> interface. This makes it especially useful for development teams unfamiliar with one of the existing IoC frameworks. Development teams can start using the <em>Simple Service Locator</em> and replace it with a more feature-rich IoC framework later on when needed, without having to alter any production code. For the lifetime of many projects however, I expect the <em>Simple Service Locator</em> just to be sufficient.</p><p><em>Simple Service Locator</em> is an implementation of the <em>Common Service Locator</em> (CSL) interface and is not meant to be used without it. Therefore production code should only call CSL's <span class="type">ServiceLocator</span> facade, as is shown in the following example:</p><pre class="cs" language="csharp" customtypes="IWeapon ServiceLocator" customvaluetypes="PutYourCustomValueTypesHere">IWeapon weapon = ServiceLocator.Current.GetInstance&lt;IWeapon&gt;();</pre><p>Configuring the <em>Simple Service Locator</em> is done in the startup path of the application, as can be seen below. In this example you see how the <em>Simple Service Locator</em> is configured in the Application_Start event of the global.asax of a ASP.NET web application.</p><pre class="cs" language="csharp" customtypes="Global HttpApplication SimpleServiceLocator Warrior IWeapon Katana ServiceLocator" customvaluetypes="PutYourCustomValueTypesHere">using System;<br />using CuttingEdge.ServiceLocation;<br />using Microsoft.Practices.ServiceLocation;<br /><br />public class Global : System.Web.HttpApplication<br />{<br />    protected void Application_Start(object sender, EventArgs e)<br />    {<br />        // 1. Create a new Simple Service Locator container<br />        var container = new SimpleServiceLocator();<br /><br />        // 2. Configure the container<br /><br />        // Register a delegate that will create a new<br />        // instance on each call to GetInstance&lt;Warrior&gt;.<br />        container.Register&lt;Warrior&gt;(() =&gt;<br />            {<br />                var weapon = container.GetInstance&lt;IWeapon&gt;();<br />                return new Samurai(weapon);<br />            });<br /><br />        // Register a single object instance that always<br />        // be returned (must be thread-safe).<br />        container.RegisterSingle&lt;IWeapon&gt;(new Katana());<br /><br />        // 3. Register the container to the Common Locator<br />        ServiceLocator.SetLocatorProvider(() =&gt; container);<br />    }<br />}</pre><p>Please visit the <a rel="external" href="http://simpleservicelocator.codeplex.com/" title="Simple Service Locator - truly simple dependency injection">Simple Service Locator home page</a> to see more code examples.</p><p>The project is currently in beta, which means your feedback is very welcome. What do you think of the current API? Can we make it even simpler? Do you miss anything? I like to know.</p><p>Cheers.</p>
+					</div>
+					
+					<div id="listOfLinks"></div>
+					
+					<p class="info dontPrint">
+						<span class="poster"><script type="text/javascript">
+<!--
+	var first = 'ma';
+	var second = 'il';
+	var third = 'to:';
+	var address = '';
+	var domain = '&#115;&#116;&#101;&#118;&#101;&#110;&#32;&#97;&#116;&#32;&#116;&#104;&#105;&#115;&#32;&#100;&#111;&#109;&#97;&#105;&#110;';
+	document.write('<a href="');
+	document.write(first+second+third);
+	document.write(address);
+	document.write('&#64;');
+	document.write(domain);
+	document.write('" title="Email Steven">');
+	document.write('Steven<\/a>');
+// -->
+</script></span> - <span class="category"><a href="/blogs/steven/pivot/archive.php?c=.NET_General">.NET General</a>, <a href="/blogs/steven/pivot/archive.php?c=6">C#</a>, <a href="/blogs/steven/pivot/archive.php?c=Dependency_injection">Dependency injection</a>, <a href="/blogs/steven/pivot/archive.php?c=Simple_Service_Locator">Simple Service Locator</a></span> - 
+						<span class="comments"><a href="/blogs/steven/pivot/entry.php?id=70#comm" title="Eber Irigoyen, Steven, MarcelXD, Bryan Watts, cwrea">eight comments</a> /  <a href="/blogs/steven/pivot/entry.php?id=70#track" title="">No trackbacks</a></span> - 
+						<a href="/blogs/steven/archives/archive_2010-m01.php#e70" title="Permanent link to 'Simple Service Locator - The easiest Inversion of Control framework in town' in the archives">&sect;</a> <a href="/blogs/steven/pivot/entry.php?id=70" title="Permanent link to entry 'Simple Service Locator - The easiest Inversion of Control framework in town'">&para;</a> 
+					</p>
+					
+					<div id="NoJavascriptWarning">
+						The code samples on my weblog are colorized using javascript, but
+						you disabled javascript (for my website) on your browser. 
+						If you're interested in viewing the posted code snippets in 
+						color, please enable javascript.
+					</div>
+					<script type="text/javascript">
+						var noScriptWarning = document.getElementById('NoJavascriptWarning');
+						noScriptWarning.style.display = "none";
+					</script>
+				</div>
+			</div>
+			
+			<hr style="height:1px; background-color:#999; color:#999; border: none;" />
+
+			<p><b>eight comments:</b></p>
+			<div class="comments">
+			<a id="comm"></a>
+<p>cool, this may get some newbies to use DI, we need more of this type of stuff to introduce the concepts :)<br />
+what's with the partial RSS dude!?<br /><small><b>Eber Irigoyen</b>  (<a href='http://twitter.com/BlackTigerX'  title='twitter.com/BlackTigerX'>URL</a>) - 06 01 10 - 18:34 </small></p>
+<p>Hey Eber, I use a partial RSS because the feed would become too large. In comparison, the rss.xml is currently 53KB, but a full feed would be 482KB, which is too large. I would have almost 1GB of traffic a month for just the rss.xml!<br /><small><b>Steven</b>  (<a href='http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=70'  title='www.cuttingedge.it/blogs/steven/pivot/entry.php?id=70'>URL</a>) - 06 01 10 - 20:46 </small></p>
+<p>Your library really works well. I don't think it will get any easer than this ;-)<br /><small><b>MarcelXD</b>   - 08 01 10 - 10:07 </small></p>
+<p>Service Locator != Dependency Injection, for the simple reason that there is no injection happening. DI is push, SL is pull.<br />
+<br />
+I know it's pedantic, but the concepts surrounding composition are similar enough to require such distinction.<br /><small><b>Bryan Watts</b>   - 10 01 10 - 07:56 </small></p>
+<p>Bryan, you are right that the dependency injection pattern is not the same as the service locator pattern (however, closely related). I picked this name because of two important features of the library: 1. It's an implementation of the Common Service Locator. 2. It is simple! :-)<br /><small><b>Steven</b>  (<a href='http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=70'  title='www.cuttingedge.it/blogs/steven/pivot/entry.php?id=70'>URL</a>) - 19 01 10 - 11:41 </small></p>
+<p>Fair enough. I was just trying to say that what you have isn't a dependency injection library, and calling it that can potentially be confusing for your target audience (teams just getting started with IoC).<br />
+<br />
+Moving to a dependency injection library from a service locator library includes removing all references to the static service locator instance. Once those references are gone, depedencies can be injected instead of requested, and DI is in effect. It is not in effect for a service locator (but IoC is).<br /><small><b>Bryan Watts</b>   - 19 01 10 - 16:37 </small></p>
+<p>Okay, I see your point. You are right, the "Simple Service Locator" is an IoC framework and it can be used for both the Dependency Injection and Service Locator patterns. So, a better title for this post would have been: "Simple Service Locator - The easiest Inversion of Control framework in town". I fixed this. Thanks for your remarks.<br /><small><b>Steven</b>  (<a href='http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=70'  title='www.cuttingedge.it/blogs/steven/pivot/entry.php?id=70'>URL</a>) - 20 01 10 - 22:37 </small></p>
+<p>Thank you for this library.  I needed something simple that implemented the Common Service Locator.  Did the job.<br /><small><b>cwrea</b>   - 10 08 10 - 03:41 </small></p>
+
+			</div>
+
+		</div>
+
+		<hr />
+		
+		<div id="footer">
+			<p>&copy; 2007-2019 Steven van Deursen.<br /><span class="dontPrint"><a href="/blogs/steven/rss.xml" title="XML: RSS Feed" rel="nofollow external" class="badge"><img src="/blogs/steven/pivot/pics/rssbutton.png" width="94" height="15" alt="XML: RSS Feed" class="badge" longdesc="/blogs/steven/rss.xml" /></a> <a href="/blogs/steven/atom.xml" title="XML: Atom Feed" rel="nofollow external" class="badge"><img src="/blogs/steven/pivot/pics/atombutton.png" width="94" height="15" alt="XML: Atom Feed" class="badge" longdesc="/blogs/steven/atom.xml" /></a></span>
+			</p>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/CSharpCodeHighlighter0.10.js"></script>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/MSILCodeHighlighter0.1.js"></script>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/X86CodeHighlighter0.1.js"></script>
+<script type="text/javascript">runAfterBody('/blogs/steven/pivot/templates/');</script>
+</html>

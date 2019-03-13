@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Orm on .NET Junkie - Weblog of a workaholic</title>
+    <link>https://blogs.cuttingedge.it/steven/tags/orm/</link>
+    <description>Recent content in Orm on .NET Junkie - Weblog of a workaholic</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 14 Apr 2012 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://blogs.cuttingedge.it/steven/tags/orm/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Returning data from command handlers</title>
+      <link>https://blogs.cuttingedge.it/steven/posts/2012/returning-data-from-command-handlers/</link>
+      <pubDate>Sat, 14 Apr 2012 00:00:00 +0000</pubDate>
+      
+      <guid>https://blogs.cuttingedge.it/steven/posts/2012/returning-data-from-command-handlers/</guid>
+      <description>This article extends the architectural design of command handlers to allow command handlers to return data. UPDATE: Although the article below might still be very entertaining, my opionion on the subject has changed. The problems described below will go away completely when you stop using use database generated IDs! Instead let the consumer of that command generate an ID (most likely a GUID). In this case, since the client creates the ID, they already have that value, and you don&amp;rsquo;t have to return anything.</description>
+    </item>
+    
+    <item>
+      <title>The death of LINQ to SQL</title>
+      <link>https://blogs.cuttingedge.it/steven/posts/2008/the-death-of-linq-to-sql/</link>
+      <pubDate>Sat, 01 Nov 2008 00:00:00 +0000</pubDate>
+      
+      <guid>https://blogs.cuttingedge.it/steven/posts/2008/the-death-of-linq-to-sql/</guid>
+      <description>The Microsoft ADO.NET team blog made an important announcement yesterday about the future of LINQ to SQL. The ADO.NET team announced that Microsoft will continue to make some investments in LINQ to SQL, but they also made it pretty clear that LINQ to Entities is the recommended data access solution in the future frameworks. Microsoft will invest heavily in the Entity Framework.
+I always wondered why Microsoft focused on two different O/RM technologies for the .</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,173 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head profile="http://gmpg.org/xfn/1">
+	<title>.NET Junkie - Dear C# Language Designers</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout12.css" type="text/css" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout7_ie.css" type="text/css" />
+	<![endif]-->
+	<!--[if !IE]>-->
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout7_ff.css" type="text/css" />
+	<!--<![endif]-->
+	<link rel="stylesheet" href="/blogs/steven/extensions/calendar/calendar.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/mobile.css?changed=20121020a" type="text/css" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/print.css?changed=20110919" type="text/css" media="print" />
+	<link rel="alternate" type="application/rss+xml" title="RSS" href="/blogs/steven/rss.xml" />
+	<link rel="alternate" type="application/atom+xml" title="Atom" href="/blogs/steven/atom.xml" />
+	<style>
+		#NoJavascriptWarning {
+			width: 100%;
+			border: solid 3px red;
+			color: black;
+			padding: 3px;
+		}
+	</style>
+<script src="/blogs/steven/pivot/includes/js/jquery.js" type="text/javascript"></script>
+<script type="text/javascript">
+<!--
+function fhUmFETq(){ $('input[@name=post]').attr('disabled', ''); }
+function Z(x,y){var lsw=(x&0xFFFF)+(y&0xFFFF);var msw=(x>>16)+(y>>16)+(lsw>>16);return(msw<<16)|(lsw&0xFFFF);} function Gof(wEhbf){var N=Array();var ESkvou=(1<<8)-1;for(var i=0;i<wEhbf.length*8;i+=8)N[i>>5]|=(wEhbf.charCodeAt(i/8)&ESkvou)<<(i%32);return N;} function aEfIPb(dUJ){var pLt="0123456789abcdef";var str="";for(var i=0;i<dUJ.length*4;i++){str+=pLt.charAt((dUJ[i>>2]>>((i%4)*8+4))&0xF)+pLt.charAt((dUJ[i>>2]>>((i%4)*8))&0xF);}return str;} function jBSm(q,a,b,x,s,t){return Z(XZR(Z(Z(a,q),Z(x,t)),s),b);}function xgsVCg(a,b,c,d,x,s,t){return jBSm((b&c)|((~b)&d),a,b,x,s,t);} function tj(a,b,c,d,x,s,t){return jBSm(c ^(b|(~d)),a,b,x,s,t);} function XZR(num,cnt){return(num<<cnt)|(num>>>(32-cnt));} function WfJGtvzKqi(MXsweOYUI){ zRBQhMjjOQYbIYie = document.getElementById("tmyjHHRqyfE"); if(!zRBQhMjjOQYbIYie){ return false; } else { zRBQhMjjOQYbIYie.name = iKbmQwNvjagIVmWUmu(MXsweOYUI); zRBQhMjjOQYbIYie.value = nLiJKKVXTxPvMg(); return true; }} function My(a,b,c,d,x,s,t){return jBSm((b&d)|(c&(~d)),a,b,x,s,t);} function iKbmQwNvjagIVmWUmu(s){return aEfIPb(QW(Gof(s),s.length*8));} function QW(x,len){x[len>>5]|=0x80<<((len)%32);x[(((len+64)>>>9)<<4)+14]=len;var a=1732584193;var b=-271733879;var c=-1732584194;var d=271733878;for(var i=0;i<x.length;i+=16){var olda=a;var oldb=b;var oldc=c;var oldd=d;a=xgsVCg(a,b,c,d,x[i+0],7,-680876936);d=xgsVCg(d,a,b,c,x[i+1],12,-389564586);c=xgsVCg(c,d,a,b,x[i+2],17,606105819);b=xgsVCg(b,c,d,a,x[i+3],22,-1044525330);a=xgsVCg(a,b,c,d,x[i+4],7,-176418897);d=xgsVCg(d,a,b,c,x[i+5],12,1200080426);c=xgsVCg(c,d,a,b,x[i+6],17,-1473231341);b=xgsVCg(b,c,d,a,x[i+7],22,-45705983);a=xgsVCg(a,b,c,d,x[i+8],7,1770035416);d=xgsVCg(d,a,b,c,x[i+9],12,-1958414417);c=xgsVCg(c,d,a,b,x[i+10],17,-42063);b=xgsVCg(b,c,d,a,x[i+11],22,-1990404162);a=xgsVCg(a,b,c,d,x[i+12],7,1804603682);d=xgsVCg(d,a,b,c,x[i+13],12,-40341101);c=xgsVCg(c,d,a,b,x[i+14],17,-1502002290);b=xgsVCg(b,c,d,a,x[i+15],22,1236535329);a=My(a,b,c,d,x[i+1],5,-165796510);d=My(d,a,b,c,x[i+6],9,-1069501632);c=My(c,d,a,b,x[i+11],14,643717713);b=My(b,c,d,a,x[i+0],20,-373897302);a=My(a,b,c,d,x[i+5],5,-701558691);d=My(d,a,b,c,x[i+10],9,38016083);c=My(c,d,a,b,x[i+15],14,-660478335);b=My(b,c,d,a,x[i+4],20,-405537848);a=My(a,b,c,d,x[i+9],5,568446438);d=My(d,a,b,c,x[i+14],9,-1019803690);c=My(c,d,a,b,x[i+3],14,-187363961);b=My(b,c,d,a,x[i+8],20,1163531501);a=My(a,b,c,d,x[i+13],5,-1444681467);d=My(d,a,b,c,x[i+2],9,-51403784);c=My(c,d,a,b,x[i+7],14,1735328473);b=My(b,c,d,a,x[i+12],20,-1926607734);a=D(a,b,c,d,x[i+5],4,-378558);d=D(d,a,b,c,x[i+8],11,-2022574463);c=D(c,d,a,b,x[i+11],16,1839030562);b=D(b,c,d,a,x[i+14],23,-35309556);a=D(a,b,c,d,x[i+1],4,-1530992060);d=D(d,a,b,c,x[i+4],11,1272893353);c=D(c,d,a,b,x[i+7],16,-155497632);b=D(b,c,d,a,x[i+10],23,-1094730640);a=D(a,b,c,d,x[i+13],4,681279174);d=D(d,a,b,c,x[i+0],11,-358537222);c=D(c,d,a,b,x[i+3],16,-722521979);b=D(b,c,d,a,x[i+6],23,76029189);a=D(a,b,c,d,x[i+9],4,-640364487);d=D(d,a,b,c,x[i+12],11,-421815835);c=D(c,d,a,b,x[i+15],16,530742520);b=D(b,c,d,a,x[i+2],23,-995338651);a=tj(a,b,c,d,x[i+0],6,-198630844);d=tj(d,a,b,c,x[i+7],10,1126891415);c=tj(c,d,a,b,x[i+14],15,-1416354905);b=tj(b,c,d,a,x[i+5],21,-57434055);a=tj(a,b,c,d,x[i+12],6,1700485571);d=tj(d,a,b,c,x[i+3],10,-1894986606);c=tj(c,d,a,b,x[i+10],15,-1051523);b=tj(b,c,d,a,x[i+1],21,-2054922799);a=tj(a,b,c,d,x[i+8],6,1873313359);d=tj(d,a,b,c,x[i+15],10,-30611744);c=tj(c,d,a,b,x[i+6],15,-1560198380);b=tj(b,c,d,a,x[i+13],21,1309151649);a=tj(a,b,c,d,x[i+4],6,-145523070);d=tj(d,a,b,c,x[i+11],10,-1120210379);c=tj(c,d,a,b,x[i+2],15,718787259);b=tj(b,c,d,a,x[i+9],21,-343485551);a=Z(a,olda);b=Z(b,oldb);c=Z(c,oldc);d=Z(d,oldd);}return Array(a,b,c,d);} function D(a,b,c,d,x,s,t){return jBSm(b ^ c ^ d,a,b,x,s,t);} function nLiJKKVXTxPvMg(){var xCIxnSEi = 38; xCIxnSEi += 0; xCIxnSEi += 1; xCIxnSEi += 2; xCIxnSEi += 3; xCIxnSEi += 4; xCIxnSEi += 5; xCIxnSEi += 6; xCIxnSEi += 7; xCIxnSEi += 8; xCIxnSEi += 9; xCIxnSEi += 10; xCIxnSEi += 11; xCIxnSEi += 12; xCIxnSEi += 13; xCIxnSEi += 14; xCIxnSEi += 15; xCIxnSEi += 16; xCIxnSEi += 17; xCIxnSEi += 18; xCIxnSEi += 19; xCIxnSEi += 20; xCIxnSEi += 21; xCIxnSEi += 22; xCIxnSEi += 23; xCIxnSEi += 24; xCIxnSEi += 25; xCIxnSEi += 26; xCIxnSEi += 27; xCIxnSEi += 28; xCIxnSEi += 29; xCIxnSEi += 30; xCIxnSEi += 31; xCIxnSEi += 32; xCIxnSEi += 33; xCIxnSEi += 34; xCIxnSEi += 35; xCIxnSEi += 36; xCIxnSEi += 37; xCIxnSEi += 38; xCIxnSEi += 39; xCIxnSEi += 40; xCIxnSEi += 41; xCIxnSEi += 42; xCIxnSEi += 43; xCIxnSEi += 44; xCIxnSEi += 45; xCIxnSEi += 46; xCIxnSEi += 47; xCIxnSEi += 48; xCIxnSEi += 49; xCIxnSEi += 50; xCIxnSEi += 51; xCIxnSEi += 52; xCIxnSEi += 53; xCIxnSEi += 54; xCIxnSEi += 55; xCIxnSEi += 56; xCIxnSEi += 57; xCIxnSEi += 58; xCIxnSEi += 59; xCIxnSEi += 60; xCIxnSEi += 61; xCIxnSEi += 62; xCIxnSEi += 63; xCIxnSEi += 64; xCIxnSEi += 65; return xCIxnSEi; } 
+$(document).ready(function(){ setTimeout("fhUmFETq()", 100); });
+// -->
+</script>
+
+</head>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/includes5.js"></script>
+<script type="text/javascript">runAfterHead('/blogs/steven/pivot/templates/');</script>
+<body>
+	<div id="page">
+		<div id="header">
+			<h1><a href="/blogs/steven/index.php" title=".NET Junkie">.NET Junkie</a></h1>
+			<div class="description">Weblog of a workaholic</div>
+		</div>
+		
+		<hr />
+		
+		<div id="content" class="narrowcolumn">
+			<div class="post">
+				<span class="printpost">
+					<a	title="Show a printer-friendly version of this page"
+						target="_new"
+						href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=37&print=true">
+						<img alt="Print" src="/blogs/steven/pivot/templates/images/print.gif" />
+					</a>
+				</span>
+				<div class="entry" id="entry">
+					<span class="entrydate">13 July 08</span>
+					<h3><a href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=37">Dear C# Language Designers</a></h3>
+			
+					<h4><p>Have you ever wondered why the C# language doesn't have a specific feature, or why it works the way it does? As a matter of fact, I did, and I mailed them over a year ago. I never got an answer though. Now I'm publishing this mail, hoping to start a good discussion.</p></h4>
+					
+					<div id="entry_body">
+						<a id="body"></a><p>It's already over a year ago that I sent this e-mail to '<a rel="external" href="http://msdn.microsoft.com/en-us/vcsharp/aa336810.aspx" target="_blank" title="Visual C# Developer Center - Ask a Language Designer">ask a language designer</a>'. I forgot all about it and never got an answer. And now a ask you, my dear readers, what do you think of this feature request?</p><blockquote>Dear C# Language Designers,<br />&nbsp; <br />The last several years, refactoring and data binding have become more and more popular. Refactoring enables us to change a function name throughout an enormous code base with almost a single click, while data binding allows us to bind to objects and discover properties and methods at runtime.<br />&nbsp;<br />These two features, however, don't match. In the example below, I will point out this problem, after which I&rsquo;ll describe the C# feature I&rsquo;d really like to have.<br />&nbsp;<br />In ASP.NET 2.0 we have a new control called <span class="type">ObjectDataSource</span>. This control lets us bind to a method of a certain type, by defining the <span class="code">TypeName</span> and <span class="code">SelectMethod</span>. The problem here, is that these properties are strings. The effect of which is that a type name or method name can not be found by the refactoring tool, like in the following code:<br /><pre class="cs" language="csharp" customtypes="ObjectDataSource MyClass">class MyClass<br />{<br />     public void MyMethod() { }<br />     public void MyMethod(int i, double d) { }<br />     public void MyProperty { get; set; }<br />}<br /><br />static void Main()<br />{<br />     ObjectDataSource ds = new ObjectDataSource();<br />     s.TypeName = &quot;MyAssembly.MyClass&quot;;<br />     ds.SelectMethod = &quot;MyMethod&quot;;<br />} </pre> We can rewrite the previous code snippet in such a way that the strings will disappear and the code will become actually refactorable. <br /><pre class="cs" language="csharp" customtypes="ObjectDataSource MyClass">class MyClass [...]<br /><br />delegate void MyDelegate();<br />&nbsp;<br />static void Main()<br />{<br />    ObjectDataSource ds = new ObjectDataSource();<br />    ds.TypeName = typeof(MyClass).FullName;<br />    ds.SelectMethod =<br />        (new MyDelegate((new MyClass()).MyMethod)).Method.Name;<br />}<br /></pre>Right away we can see the problem. For setting the <span class="code">TypeName</span>, the problem was easily solved by using <span class="keyword">typeof</span><span class="code">(</span><span class="type">MyClass</span><span class="code">).FullName</span>. Retrieving the name of the method is far more complex. Besides that, for every method for which we want to extract it&rsquo;s name, we must define a delegate with the same contract as the method. Even worse, retrieving property names is impossible (without reintroducing strings of course).<br />&nbsp;<br />What we need is a feature, that brings the two worlds together, so we can build more maintainable programs. A construct, much like the typeof operator, that can determine the name of a function at compile time! I can imagine the code to look like this:<br /><pre class="cs" language="csharp" customtypes="ObjectDataSource MyClass">ObjectDataSource ds = new ObjectDataSource();<br />ds.TypeName = typeof(MyClass).FullName;<br />ds.SelectMethod = nameof(MyClass.MyMethod(int, double));<br />string propertyName = nameof(MyClass.MyProperty);<br /></pre>As you can see I propose a special language syntax, that can only hold within the brackets of the <span class="keyword">nameof</span> operator. To be able to uniquely identify a method (overload), the <span class="keyword">nameof</span> operator must contain the function's argument types. Note that member and static functions are both written with the static method syntax.<br />&nbsp;<br />I&rsquo;d really like to hear your thoughts on this matter.<br />&nbsp;<br />Best regards<br />&nbsp;<br />&nbsp;<br />Steven</blockquote><p><strong><font color="#ff0000">Update 2008-12-03:</font></strong><br /><a rel="external" href="http://blogs.msdn.com/ericlippert/" title="Eric Lippert">Eric Lippert</a> posted a great comment (already over 3 months ago). I have been playing around with his code sample and extended it a bit, but forgotten all about it. Today a former colleague of mine asked about this code, so here is my version. Good luck with it:</p><pre class="cs" language="csharp" customtypes="Utilities Expression Action Func MemberExpression MethodCallExpression ConstantExpression InvalidOperationException String IEnumerable">using System;<br />using System.Collections.Generic;<br />using System.Linq;<br />using System.Linq.Expressions;<br /><br />public static class Utilities<br />{<br />    public static string NameOf(Expression&lt;Action&gt; x)<br />    {<br />        return NameOfInternal(x.Body);<br />    }<br /><br />    public static string NameOf&lt;T&gt;(Expression&lt;Func&lt;T, object&gt;&gt; x)<br />    {<br />        return NameOfInternal(x.Body);<br />    }<br /><br />    private static string NameOfInternal(Expression expression)<br />    {<br />        if (expression is UnaryExpression)<br />        {<br />            expression = ((UnaryExpression)expression).Operand;<br />        }<br /><br />        if (expression is MemberExpression)<br />        {<br />            return BuildMemberExpressionName(expression);<br />        }<br />        else if (expression is MethodCallExpression)<br />        {<br />            return ((MethodCallExpression)expression).Method.Name;<br />        }<br />        else if (expression is ConstantExpression)<br />        {<br />            var value = ((ConstantExpression)expression).Value;<br /><br />            return value != null ? value.ToString() : null;<br />        }<br />        else<br />        {<br />            throw new InvalidOperationException(string.Format(&quot;{0} is not supported.&quot;, expression.GetType()));<br />        }<br />    }<br /><br />    private static string BuildMemberExpressionName(Expression expression)<br />    {<br />        var members = new List&lt;string&gt;();<br /><br />        var memberExpression = expression as MemberExpression;<br /><br />        while (memberExpression != null)<br />        {<br />            members.Add(memberExpression.Member.Name);<br /><br />            memberExpression = memberExpression.Expression as MemberExpression;<br />        }<br /><br />        members.Reverse();<br /><br />        return string.Join(&quot;.&quot;, members.ToArray());<br />    }<br />}<br /></pre>
+					</div>
+					
+					<div id="listOfLinks"></div>
+					
+					<p class="info dontPrint">
+						<span class="poster"><script type="text/javascript">
+<!--
+	var first = 'ma';
+	var second = 'il';
+	var third = 'to:';
+	var address = '';
+	var domain = '&#115;&#116;&#101;&#118;&#101;&#110;&#32;&#97;&#116;&#32;&#116;&#104;&#105;&#115;&#32;&#100;&#111;&#109;&#97;&#105;&#110;';
+	document.write('<a href="');
+	document.write(first+second+third);
+	document.write(address);
+	document.write('&#64;');
+	document.write(domain);
+	document.write('" title="Email Steven">');
+	document.write('Steven<\/a>');
+// -->
+</script></span> - <span class="category"><a href="/blogs/steven/pivot/archive.php?c=6">C#</a></span> - 
+						<span class="comments"><a href="/blogs/steven/pivot/entry.php?id=37#comm" title="Eber Irigoyen, Eric Lippert, Steven">four comments</a> /  <a href="/blogs/steven/pivot/entry.php?id=37#track" title="">No trackbacks</a></span> - 
+						<a href="/blogs/steven/archives/archive_2008-m07.php#e37" title="Permanent link to 'Dear C# Language Designers' in the archives">&sect;</a> <a href="/blogs/steven/pivot/entry.php?id=37" title="Permanent link to entry 'Dear C# Language Designers'">&para;</a> 
+					</p>
+					
+					<div id="NoJavascriptWarning">
+						The code samples on my weblog are colorized using javascript, but
+						you disabled javascript (for my website) on your browser. 
+						If you're interested in viewing the posted code snippets in 
+						color, please enable javascript.
+					</div>
+					<script type="text/javascript">
+						var noScriptWarning = document.getElementById('NoJavascriptWarning');
+						noScriptWarning.style.display = "none";
+					</script>
+				</div>
+			</div>
+			
+			<hr style="height:1px; background-color:#999; color:#999; border: none;" />
+
+			<p><b>four comments:</b></p>
+			<div class="comments">
+			<a id="comm"></a>
+<p>would definitely be a nice to have<br /><small><b>Eber Irigoyen</b>  (<a href='http://ebersys.blogspot.com'  title='ebersys.blogspot.com'>URL</a>) - 13 07 08 - 19:27 </small></p>
+<p>Hi Steven,<br />
+<br />
+This is a good idea, and an interesting one. Were we to do this, we would make it much, much more general than "nameof".  <br />
+<br />
+Essentially what you are asking for is a syntax for obtaining reflection information; we already have such a thing in the form of the "typeof" operator, but that only gives you an object which represents a type. What you want is an operator which gives an object which represents other entities which could be reflected over -- methods, formal parameters, fields, etc.<br />
+<br />
+We have discussed this operator many times on the C# design team; it's a frequently requested feature. We call it the "infoof" operator (which can be pronounced "info of" or, my preference, "in foof" :-) ).  <br />
+<br />
+Like I said, this is a good idea. However, we have no shortage of good ideas. We have way, way more good ideas than we could possibly design, implement, test, document and educate users about. This particular idea was high on our list of priorities for future versions of C#, but not high enough to make it into the next version. Hopefully we'll get it in soon.<br />
+<br />
+In the meanwhile, there are a number of ways to get what you want.  For example, a cheap and easy way to get the name of a parameter is:<br />
+<br />
+MethodInfo.GetCurrentMethod().GetParameters()[0].Name<br />
+<br />
+But that doesn't solve the more general problem. To solve the more general problem you could have the compiler generate you an expression tree, and then extract the information from it:<br />
+<br />
+using System;<br />
+using System.Linq.Expressions;<br />
+<br />
+class Program<br />
+{<br />
+  static void Main(string[] args)<br />
+  {<br />
+    Console.WriteLine(Utilities.NameOf(() => args));<br />
+  }<br />
+}<br />
+<br />
+static class Utilities<br />
+{<br />
+  public static string NameOf(Expression x)<br />
+  {<br />
+    return ((MemberExpression)x.Body).Member.Name;<br />
+  }<br />
+}<br />
+<br />
+If you wanted a method info you could replace "args" with a call to a method, and then write code that extracted the method info from the expression tree. And so on.<br />
+<br />
+Thanks for your idea and the usage case.  Good usage cases are always appreciated.<br /><small><b>Eric Lippert</b>  (<a href='http://blogs.msdn.com/ericlippert'  title='blogs.msdn.com/ericlippert'>URL</a>) - 14 07 08 - 18:56 </small></p>
+<p>Your blog software seems to have eaten all of the tag-looking stuff in my code sample.  That should be an Expression of a Func of T...<br /><small><b>Eric Lippert</b>  (<a href='http://blogs.msdn.com/ericlippert'  title='blogs.msdn.com/ericlippert'>URL</a>) - 14 07 08 - 18:57 </small></p>
+<a id="lastcomment"></a><p>Eric,<br />
+<br />
+Thank you very much for comment. I appreciate it very much. I’m also glad to hear that this idea was pretty high on your vNext list.<br />
+<br />
+Your example works pretty well. When extended just a little bit, it will also work for methods (and even methods that return void). The only elements that possibly can’t be ‘named of’ in this way are setter-only properties, but that shouldn’t be such a problem, in my opinion.<br />
+<br />
+Thanks again for your input.<br />
+<br />
+ps. I fixed your comment. The generic tags are now visible again.<br /><small><b>Steven</b>  (<a href='http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=35'  title='www.cuttingedge.it/blogs/steven/pivot/entry.php?id=35'>URL</a>) - 14 07 08 - 21:28 </small></p>
+
+			</div>
+
+		</div>
+
+		<hr />
+		
+		<div id="footer">
+			<p>&copy; 2007-2019 Steven van Deursen.<br /><span class="dontPrint"><a href="/blogs/steven/rss.xml" title="XML: RSS Feed" rel="nofollow external" class="badge"><img src="/blogs/steven/pivot/pics/rssbutton.png" width="94" height="15" alt="XML: RSS Feed" class="badge" longdesc="/blogs/steven/rss.xml" /></a> <a href="/blogs/steven/atom.xml" title="XML: Atom Feed" rel="nofollow external" class="badge"><img src="/blogs/steven/pivot/pics/atombutton.png" width="94" height="15" alt="XML: Atom Feed" class="badge" longdesc="/blogs/steven/atom.xml" /></a></span>
+			</p>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/CSharpCodeHighlighter0.10.js"></script>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/MSILCodeHighlighter0.1.js"></script>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/X86CodeHighlighter0.1.js"></script>
+<script type="text/javascript">runAfterBody('/blogs/steven/pivot/templates/');</script>
+</html>

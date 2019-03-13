@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+		<title>
+				Dependency Injection in Attributes: don’t do it! &middot; .NET Junkie - Weblog of a workaholic
+		</title>
+	
+		
+		<link rel="stylesheet" href="/steven/css/style.css">
+		<link rel="stylesheet" href="/steven/css/overrides.css">
+		<link rel="stylesheet" href="/steven/css/Libre_Baskerville_400_400i_700.css">
+		
+		<link rel="icon" type="image/png" sizes="32x32" href="/steven/images/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/steven/images/favicon-16x16.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="/steven/images/apple-touch-icon.png">
+	
+		
+		<link href="" rel="alternate" type="application/rss+xml" title=".NET Junkie - Weblog of a workaholic" />
+	</head>
+	
+    <body>
+        		<nav class="nav">
+			<div class="nav-container">
+				<a href="/steven/">
+					<h2 class="nav-title">.NET Junkie - Weblog of a workaholic</h2>
+				</a>
+				<ul>
+    <li><a href="/steven/about">About</a></li>
+    <li><a href="/steven/">Posts</a></li>
+</ul>
+			</div>
+		</nav>
+
+        
+
+<main>
+	<div class="post">
+		<div class="post-info">
+    <span>Written by</span>
+        Steven van Deursen
+        <br>
+        <span>on&nbsp;</span><time datetime="2014-05-14 00:00:00 &#43;0000 UTC">May 14, 2014</time>
+</div>
+		<h1 class="post-title">Dependency Injection in Attributes: don’t do it!</h1>
+<div class="post-line"></div>
+
+		
+
+		
+
+<h3 id="a-number-of-common-frameworks-have-promoted-the-concept-of-using-attributes-as-a-way-of-implementing-aop-on-the-surface-this-seems-perfectly-acceptable-but-in-reality-the-maintainability-of-these-options-degrades-as-you-add-behaviors-by-injecting-dependencies-into-attributes-the-point-of-this-article-is-don-t-do-it-there-are-better-ways-and-this-article-will-describe-one-such-alternative">A number of common frameworks have promoted the concept of using attributes as a way of implementing AOP. On the surface this seems perfectly acceptable but in reality the maintainability of these options degrades as you add behaviors by injecting dependencies into attributes. The point of this article is “don’t do it!” There are better ways and this article will describe one such alternative.</h3>
+
+<p>A long time has passed since the early formative stages of the .NET Framework and ideals such as the <a href="https://en.wikipedia.org/wiki/Design_Patterns">original design patterns from the gang of four</a> have since achieved mainstream status. Approaches to development that include features such as dependency injection (DI) and <a href="https://en.wikipedia.org/wiki/Aspect-oriented_programming">aspect-oriented programming</a> (AOP) are now the norm. It is fair to say that the original structure of the .NET framework was not conducive to applying AOP but some bright spark has struck upon the idea of blending attributes and services as a simple technique for adding AOP to our tool box.</p>
+
+<p>Many frameworks, such as the ASP.NET frameworks for MVC and Web API now offer the option of applying AOP with attributes. For example, both frameworks contain an <code>ActionFilterAttribute</code> to be derived from for adding specific features such as routing and authentication to Controllers and/or Controller Actions. The ASP.NET stack leads us to the idea of mixing data and behavior by extending the <code>Attribute</code> class with the <code>OnActionExecuting</code> and <code>OnActionExecuted</code> methods.</p>
+
+<p>This design has a limitation in that the responsibility for creating each <code>Attribute</code> instance is owned by the CLR and the creation of an attribute instance cannot be intercepted. It is the CLR that creates each attribute instance and as such we cannot rely on our DI container of choice to “automagically do its stuff” and give us the instance with all of its required dependencies injected through <a href="https://martinfowler.com/articles/injection.html#FormsOfDependencyInjection">constructor injection</a>. Instead we are forced to hook into the framework at runtime, sometime after the instance has been created and then attempt to add on the required services.</p>
+
+<p>To introduce this post construction/pre activation hook, the ASP.NET frameworks provide an abstraction known as the <a href="https://msdn.microsoft.com/en-us/library/system.web.mvc.ifilterprovider(v=vs.118).aspx">IFilterProvider</a>. The <code>IFilterProvider</code> allows us to alter each attribute instance after it has been created by the runtime and before it is used by the rest of the ASP.NET framework.</p>
+
+<p>By registering a custom <code>IFilterProvider</code> and relying on property injection for the dependencies, we are able to inject dependencies into attributes, but this process is fragile and presents us with a problem. A DI container composes service components, but attributes are data packages and there can be many variations of the same attribute (attributes will invariably have multiple optional constructor dependencies). In addition to this fact the container will simply not know how to create attributes because it is not a task it is permitted to do. It is this limitation that prevents us from <a href="https://simpleinjector.org/howto#verify-configuration">verifying the correctness</a> of the entire container’s configuration. Verifying the correctness of the configuration is important as we do not wish to click through the entire application (i.e. regression test) each and every time the DI configuration changed (which will be constantly for a medium to large code base). We desire the ability to verify the correctness of the configuration during application startup and/or within an integration test or two.</p>
+
+<p>Another problem with property injection when working with MVC or Web API is that these frameworks <a href="https://stackoverflow.com/questions/27646196/asp-net-web-api-caches-action-filter-attributes-across-requests">cache attributes</a>, making them singletons. This makes it very easy to accidentally create <a href="https://blog.ploeh.dk/2014/06/02/captive-dependency/">captive dependencies</a> which can lead to all sorts of concurrency issues.</p>
+
+<p>But, more importantly than anything mentioned up to this point - mixing attribute metadata with service behavior means it is impossible to apply cross-cutting concerns to the behavior. The concept of applying AOP to AOP may sound extreme but it is only a matter of time before you reach the point of having enough logic before and/or after the execution of an action that you want to apply some new cross-cutting concern to that logic. Consider, for example, the simple requirement of profiling the time it takes to execute a piece of logic. You can hack that extra feature into your filter attribute but it is ugly and it violates both <a href="https://en.wikipedia.org/wiki/Don't_repeat_yourself">DRY</a> and the <a href="https://en.wikipedia.org/wiki/Single_responsibility_principle">Single Responsibility Principle</a>.</p>
+
+<p>Fundamentally there is nothing wrong with the concept of applying AOP using attributes but if take a step back and consider the original idea of the humble attribute as “declarative tags […] to specify additional information […] that can be retrieved at run time through reflection” (<a href="https://msdn.microsoft.com/en-us/library/aa288059(v=vs.71).aspx">see</a>). Attributes hold fixed, and specific, metadata relevant to their location within code. An attribute can realistically be seen as a sort of static <a href="https://refactoring.com/catalog/introduceParameterObject.html">Parameter Object</a>.</p>
+
+<p>It&rsquo;s only as you consider the details of what it means to mix attributes with behavior in the conventional way, i.e. by injecting the behavior into the attribute, that you start to see how this goes against the principle of keeping the necessary boundaries between these two object types (data/behavior). The blending of data and behavior is a bad thing and the solution to this that follows is to explicitly separate the data from the behavior. You may have seen this done before <a href="/steven/p/commands">here</a> and <a href="/steven/p/queries">here</a> and the examples that follow, despite being specific to the ASP.NET Web API, should clearly demonstrate an attribute without behavior and its accompanying service:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> IActionFilter&lt;TAttribute&gt; <span style="color:#66d9ef">where</span> TAttribute : Attribute
+{
+     <span style="color:#66d9ef">void</span> OnActionExecuting(TAttribute attribute, HttpActionContext context);
+}
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MinimumAgeAttribute</span> : Attribute
+{
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">readonly</span> <span style="color:#66d9ef">int</span> MinimumAge;
+
+    <span style="color:#66d9ef">public</span> MinimumAgeAttribute(<span style="color:#66d9ef">int</span> minimumAge)
+    {
+        <span style="color:#66d9ef">this</span>.MinimumAge = minimumAge;
+    }
+}
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MinimumAgeActionFilter</span>
+    : IActionFilter&lt;MinimumAgeAttribute&gt;
+{
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IRepository repository;
+
+    <span style="color:#66d9ef">public</span> MinimumAgeActionFilter(IRepository repository)
+    {
+        <span style="color:#66d9ef">this</span>.repository = repository;
+    }
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> OnActionExecuting(
+        MinimumAgeAttribute attribute, 
+        HttpActionContext context)
+    {
+        Debug.WriteLine(
+            <span style="color:#e6db74">&#34;OnActionExecuting &#34;</span> + attribute.MinimumAge);
+    }
+}</code></pre></div>
+
+<p>The example shows an attribute that allows restricting access to parts of the API for users of a particular age. Do note that this class does not inherit from any Web API specific attribute, in other words, the attribute is truly a humble behaviorless data container. All the related logic has been removed from the attribute and can now be found in the accompanying <code>MinimumAgeActionFilter</code> service (that implements our customly defined <code>IActionFilter&lt;TAttribute&gt;</code> interface). The attribute is now a <em>Parameter Object</em>.</p>
+
+<p>Assuming that you have read any of my earlier blog posts you should now be noticing the common theme and that is that we have a message (<code>MinimumAgeAttribute</code>) a.k.a the attribute, which is a mere data container, and we have a handler (<code>MinimumAgeActionFilter</code>) which can process the message. In addition the handler is an implementation of the generic <code>IActionFilter&lt;TAttribute&gt;</code> interface.</p>
+
+<p>As always, this design gives us a lot. The <code>MinimumAgeActionFilter</code> is a normal service and as such it can benefit from plain old constructor injected dependencies and can be registered with our DI container. The service has dependencies and the container will automatically resolve them for us and should throw an exception if any of the dependencies cannot be wired. As the container should be aware of all services it should also be able to verify whether all registrations can be successfully resolved, either during application start-up or with an integration test. This upfront knowledge of all dependencies enables the DI container to diagnose the configuration (as <a href="https://simpleinjector.org/diagnostics">you can do</a> with <a href="https://simpleinjector.org">Simple Injector</a>).</p>
+
+<p><img src="/steven/images/diagnosticsdebuggerwatch.gif" alt="Example of the Simple Injector Diagnostics Debugger Watch" /></p>
+
+<p>The first advantage of this design is that we can decorate all action filter services with one or more decorators, such as this one:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ProfilingActionFilterDecorator</span>&lt;TAttribute&gt;
+    : IActionFilter&lt;TAttribute&gt;
+    <span style="color:#66d9ef">where</span> TAttribute : Attribute
+{
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IActionFilter&lt;TAttribute&gt; decoratee;
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> ILogger logger;
+
+    <span style="color:#66d9ef">public</span> ProfilingActionFilterDecorator(
+        IActionFilter&lt;TAttribute&gt; decoratee, ILogger logger)
+    {
+        <span style="color:#66d9ef">this</span>.decoratee = decoratee;
+        <span style="color:#66d9ef">this</span>.logger = logger;
+    }
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> OnActionExecuting(
+        TAttribute attribute, HttpActionContext context)
+    {
+        <span style="color:#66d9ef">this</span>.logger.Info(<span style="color:#e6db74">&#34;Decorated OnActionExecuting.&#34;</span>);
+        <span style="color:#66d9ef">this</span>.decoratee.OnActionExecuting(attribute, context);
+    }
+}</code></pre></div>
+
+<p>There are a lot of differences between the popular DI containers in their support for decorators. So your mileage might vary, but with Simple Injector all the IActionFilter<TAttribute> implementations can be registered in a single call:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">container.Collection.Register(
+    <span style="color:#66d9ef">typeof</span>(IActionFilter&lt;&gt;), 
+    <span style="color:#66d9ef">typeof</span>(IActionFilter&lt;&gt;).Assembly);</code></pre></div>
+
+<p>And the decorator can simply be applied as follows:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">container.RegisterDecorator(
+    <span style="color:#66d9ef">typeof</span>(IActionFilter&lt;&gt;), 
+    <span style="color:#66d9ef">typeof</span>(ProfilingActionFilterDecorator&lt;&gt;));</code></pre></div>
+
+<p>To get this working though, we inevitably need some infrastructure. In the case of Web API we need to create our own global filter that will dispatch the decorated attributes to our <code>IActionFilter&lt;TAttribute&gt;</code> implementations.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">sealed</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ActionFilterDispatcher</span> : IActionFilter
+{
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> Func&lt;Type, IEnumerable&gt; container;
+
+    <span style="color:#66d9ef">public</span> ActionFilterDispatcher(Func&lt;Type, IEnumerable&gt; container)
+    {
+        <span style="color:#66d9ef">this</span>.container = container;
+    }
+
+    <span style="color:#66d9ef">public</span> Task&lt;HttpResponseMessage&gt; ExecuteActionFilterAsync(
+        HttpActionContext context,
+        CancellationToken cancellationToken,
+        Func&lt;Task&lt;HttpResponseMessage&gt;&gt; continuation)
+    {
+        <span style="color:#66d9ef">var</span> descriptor = context.ActionDescriptor;
+        <span style="color:#66d9ef">var</span> attributes = descriptor.ControllerDescriptor
+            .GetCustomAttributes&lt;Attribute&gt;(<span style="color:#66d9ef">true</span>)
+            .Concat(descriptor.GetCustomAttributes&lt;Attribute&gt;(<span style="color:#66d9ef">true</span>));
+
+        <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> attribute <span style="color:#66d9ef">in</span> attributes)
+        {
+            Type filterType = <span style="color:#66d9ef">typeof</span>(IActionFilter&lt;&gt;)
+                .MakeGenericType(attribute.GetType());
+            
+            <span style="color:#66d9ef">var</span> filters = <span style="color:#66d9ef">this</span>.container.Invoke(filterType);
+
+            <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">dynamic</span> actionFilter <span style="color:#66d9ef">in</span> filters)
+            {
+                actionFilter.OnActionExecuting((<span style="color:#66d9ef">dynamic</span>)attribute, context);
+            }
+        }
+
+        <span style="color:#66d9ef">return</span> continuation();
+    }
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">bool</span> AllowMultiple =&gt; <span style="color:#66d9ef">true</span>;
+}</code></pre></div>
+
+<p>The <code>ActionFilterDispatcher</code> takes a Func delegate that allows resolving collections of types. During the call to <code>ExecuteActionFilterAsync</code>, the method will request all applicable attributes and will request the container for all <code>IActionFilter&lt;TAttribute&gt;</code> implemenations per attribute.</p>
+
+<p>The following code will register our action filter components and the new action filter dispatcher in Web API:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">GlobalConfiguration.Configuration.Filters.Add(
+    <span style="color:#66d9ef">new</span> ActionFilterDispatcher(container.GetAllInstances));
+
+container.Collection.Register(
+    <span style="color:#66d9ef">typeof</span>(IActionFilter&lt;&gt;), 
+    <span style="color:#66d9ef">typeof</span>(IActionFilter&lt;&gt;).Assembly);</code></pre></div>
+
+<h2 id="wiring-asp-net-mvc">Wiring ASP.NET MVC</h2>
+
+<p>The code for MVC will be very similar. The interface will look as follows:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> IActionFilter&lt;TAttribute&gt; <span style="color:#66d9ef">where</span> TAttribute : Attribute
+{
+    <span style="color:#66d9ef">void</span> OnActionExecuting(
+        TAttribute attribute, ActionExecutingContext context);
+}</code></pre></div>
+
+<p>Here is MVC&rsquo;s <code>ActionFilterDispatcher</code>:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">using</span> System;
+<span style="color:#66d9ef">using</span> System.Collections;
+<span style="color:#66d9ef">using</span> System.Linq;
+<span style="color:#66d9ef">using</span> System.Web.Mvc;
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ActionFilterDispatcher</span> : IActionFilter
+{
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> Func&lt;Type, IEnumerable&gt; container;
+
+    <span style="color:#66d9ef">public</span> ActionFilterDispatcher(Func&lt;Type, IEnumerable&gt; container)
+    {
+        <span style="color:#66d9ef">this</span>.container = container;
+    }
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> OnActionExecuting(ActionExecutingContext context)
+    {
+        <span style="color:#66d9ef">var</span> descriptor = context.ActionDescriptor;
+        <span style="color:#66d9ef">var</span> attributes = descriptor.ControllerDescriptor
+            .GetCustomAttributes(<span style="color:#66d9ef">true</span>)
+            .Concat(descriptor.GetCustomAttributes(<span style="color:#66d9ef">true</span>))
+            .Cast&lt;Attribute&gt;();
+
+        <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> attribute <span style="color:#66d9ef">in</span> attributes)
+        {
+            Type filterType = <span style="color:#66d9ef">typeof</span>(IActionFilter&lt;&gt;)
+                .MakeGenericType(attribute.GetType());
+                
+            <span style="color:#66d9ef">var</span> filters = <span style="color:#66d9ef">this</span>.container.Invoke(filterType);
+
+            <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">dynamic</span> actionFilter <span style="color:#66d9ef">in</span> filters)
+            {
+                actionFilter.OnActionExecuting((<span style="color:#66d9ef">dynamic</span>)attribute, context);
+            }
+        }
+    }
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> OnActionExecuted(
+        ActionExecutedContext filterContext) { }
+}</code></pre></div>
+
+<p>The following code allows our <code>ActionFilterDispatcher</code> for MVC to be added to MVC&rsquo;s pipeline:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">GlobalFilters.Filters.Add(
+    <span style="color:#66d9ef">new</span> ActionFilterDispatcher(container.GetAllInstances));</code></pre></div>
+
+<h2 id="asp-net-core-mvc">ASP.NET Core MVC</h2>
+
+<p>The code for ASP.NET Core will be very similar, but since ASP.NET Core is a completely new framework, things look (again) a bit different. The interface will look as follows:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> IActionFilter&lt;TAttribute&gt; <span style="color:#66d9ef">where</span> TAttribute : Attribute
+{
+    <span style="color:#66d9ef">void</span> OnActionExecuting(
+        TAttribute attribute, ActionExecutingContext context);
+}</code></pre></div>
+
+<p>Here is ASP.NET Core&rsquo;s <code>ActionFilterDispatcher</code>:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">using</span> System;
+<span style="color:#66d9ef">using</span> System.Collections.Generic;
+<span style="color:#66d9ef">using</span> System.Linq;
+<span style="color:#66d9ef">using</span> System.Collections;
+<span style="color:#66d9ef">using</span> System.Reflection;
+<span style="color:#66d9ef">using</span> Microsoft.AspNet.Mvc.Filters;
+<span style="color:#66d9ef">using</span> Microsoft.AspNet.Mvc.Controllers;
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">sealed</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ActionFilterDispatcher</span> : IActionFilter
+{
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> Func&lt;Type, IEnumerable&gt; container;
+
+    <span style="color:#66d9ef">public</span> ActionFilterDispatcher(Func&lt;Type, IEnumerable&gt; container)
+    {
+        <span style="color:#66d9ef">this</span>.container = container;
+    }
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> OnActionExecuting(ActionExecutingContext context)
+    {
+        IEnumerable&lt;<span style="color:#66d9ef">object</span>&gt; attributes =
+            context.Controller.GetType().GetTypeInfo()
+                .GetCustomAttributes(<span style="color:#66d9ef">true</span>);
+
+        <span style="color:#66d9ef">var</span> descriptor = context.ActionDescriptor
+            <span style="color:#66d9ef">as</span> ControllerActionDescriptor;
+
+        <span style="color:#66d9ef">if</span> (descriptor != <span style="color:#66d9ef">null</span>)
+        {
+            attributes = attributes.Concat(
+                descriptor.MethodInfo.GetCustomAttributes(<span style="color:#66d9ef">true</span>));
+        }
+
+        <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> attribute <span style="color:#66d9ef">in</span> attributes)
+        {
+            Type filterType = <span style="color:#66d9ef">typeof</span>(IActionFilter&lt;&gt;)
+                .MakeGenericType(attribute.GetType());
+            <span style="color:#66d9ef">var</span> filters = <span style="color:#66d9ef">this</span>.container.Invoke(filterType);
+
+            <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">dynamic</span> actionFilter <span style="color:#66d9ef">in</span> filters)
+            {
+                actionFilter.OnActionExecuting((<span style="color:#66d9ef">dynamic</span>)attribute, context);
+            }
+        }
+    }
+    
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> OnActionExecuted(ActionExecutedContext context) { }
+}</code></pre></div>
+
+<p>The following code allows our <code>ActionFilterDispatcher</code> for ASP.NET Core to be added to ASP.NET&rsquo;s pipeline:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> ConfigureServices(IServiceCollection services)
+{
+    <span style="color:#75715e">// Add MVC services to the services container.
+</span><span style="color:#75715e"></span>    services.AddMvc().Configure&lt;MvcOptions&gt;(options =&gt;
+    {
+        options.Filters.Add(<span style="color:#66d9ef">new</span> ActionFilterDispatcher(
+			container.GetAllInstances));
+    });
+
+    ...
+}</code></pre></div>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>It is unfortunate that the ASP.NET frameworks lead us to mix data and behavior through the decision to promote applying AOP techniques with attributes. We can still, however, get our design where we want it to be using abstractions such as those described in this post: a design where data and behavior are separated; attributes are just plain old messages; behaviors can easily be registered and decorated; and, most importantly of all, we have a DI Container configuration that can be completely diagnosed and verified before we deploy to production.</p>
+
+<p>As always, happy injecting!</p>
+
+<h2 id="comments">Comments</h2>
+
+<hr />
+
+<h4 id="adriano-27-november-15">Adriano - 27 November 15</h4>
+
+<p>Hi,</p>
+
+<p>Great post, thanks for that :) I would like to try do this at WCF and I have problem with Dispatcher. I don&rsquo;t know how to call BeforeCall from IParameterInspector with declaration container. Did you consider this problem with injection attributes at WCF? Thanks for help :)</p>
+
+<hr />
+
+<h4 id="steven-27-november-15">Steven - 27 November 15</h4>
+
+<p>Hi Adriano,</p>
+
+<p>With WCF the problem becomes much simpler IMO, because what I usually do is let my WCF service be this tiny little maintenance free wrapper around my business layer (see <a href="/steven/p/maintainable-wcf">this</a>). This means that attributes are defined on the message or handler level, and not as part of WCF service classes. This completely removes the problem.</p>
+
+<hr />
+
+<h4 id="daniel-04-december-15">Daniel - 04 December 15</h4>
+
+<blockquote>
+<p>with Simple Injector all the <code>IActionFilter&lt;T&gt;</code> implementations can be registered in a single call:</p>
+
+<pre><code class="language-c#">container.Register(typeof(IActionFilter&lt;&gt;), typeof(IActionFilter&lt;&gt;).Assembly);
+</code></pre>
+</blockquote>
+
+<p>However, later the action filter is registered using <code>container.RegisterCollection</code>. Why?</p>
+
+<p>I was having issues with MVC using the first option, when I changed it to use <code>RegisterCollection</code> it worked :)</p>
+
+<p>Since this attribute is just a basic DTO, is it still possible to somehow use it as a global filter?</p>
+
+<hr />
+
+<h4 id="dave-17-january-16">Dave - 17 January 16</h4>
+
+<p>Is there a way to wire this up without a 3rd party injection framework in MVC 6 RC1: I can&rsquo;t figure out how to get this to work: new ActionFilterDispatcher(container.GetAllInstances) is container a part of another dependency framework and not something I can use by default in mvc 6? Thanks!</p>
+
+<hr />
+
+<h4 id="steven-15-april-16">Steven - 15 April 16</h4>
+
+<p>Daniel,</p>
+
+<p>Thank you for your comment. The use of <code>container.Register</code> is a bit confusing, because the use of <code>container.RegisterCollection</code> is required, because filters are resolved using <code>GetAllInstances</code>. Simple Injector makes an explicit difference between one-to-one mappings and registration of collections. I updated the article accordingly.</p>
+
+<blockquote>
+<p>Since this attribute is just a basic DTO, is it still possible to somehow use it as a global filter?</p>
+</blockquote>
+
+<p>You can absolutely register a filter as global filter. As a matter of fact, the <code>ActionFilterDispatcher</code> is registered as global filter. You can also create your individual filters as MVC specific implementations that check whether a certain attribute is applied and handle the request accordingly. This does however couple the action filter implementations with MVC and requires you to let every filter have implement the check on attributes itself.</p>
+
+<hr />
+
+<h4 id="steven-15-april-16-1">Steven - 15 April 16</h4>
+
+<p>Dave,</p>
+
+<p>You can configure this by storing the <code>IServiceProvider</code> in a private field inside the <code>Configure</code> method and use this instance and register the <code>ActionFilterDispatcher</code> in the <code>ConfigureServices</code> that resolves from the stored <code>IServiceProvider</code>. Here&rsquo;s an example:</p>
+
+<pre><code class="language-c#">private IServiceProvider serviceProvider;
+
+private IEnumerable GetActionFilters(Type type) =&gt; this.serviceProvider.GetServices(type);
+
+public void ConfigureServices(IServiceCollection services) {
+    services.AddMvc().AddMvcOptions(options =&gt;
+    {
+        options.Filters.Add(new ActionFilterDispatcher(this.GetActionFilters));
+    });
+    // more here
+}
+
+public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory) {
+    this.serviceProvider = app.ApplicationServices;
+    // more here
+}
+</code></pre>
+
+<hr />
+
+<h4 id="joseph-vaughan-16-june-16">Joseph Vaughan - 16 June 16</h4>
+
+<p>Hi Steven</p>
+
+<p>Great article again, thank you. I feel like this is too restrictive to the <code>IActionFilter</code> interface however. What should I do if I wish to implement attributes for Authorization, Authentication, etc. in order to keep the execution order correct?</p>
+
+<p>The solution I see currently is to define additional interfaces for <code>IAuthorizationFilter</code>, <code>IAuthenticationFilter</code>, etc. And then additionally implement <code>AuthorizationFilterDispatcher</code>, <code>AuthenticationFilterDispatcher</code>, and so on. Am I missing something that would make this simpler?</p>
+
+<p>Thanks.</p>
+
+<hr />
+
+<h4 id="steven-26-june-16">Steven - 26 June 16</h4>
+
+<p>Hi Joseph,</p>
+
+<p>With this model, you don&rsquo;t inherit your attributes from MVC&rsquo;s <code>IAuthorizationFilter</code> or <code>IAuthenticationFilter</code>. You have framework-agnostic attributes and have one or multiple <code>IActionFilter&lt;T&gt;</code> implementations for each attribute.</p>
+
+<p>When it comes to authorization however, I prefer to mark my <a href="/steven/p/commands/">command messages</a> and <a href="/steven/p/queries/">query message</a> with an attribute that either sets a permission or role. On top of that you can apply a decorator that checks authorization of the user (see for instance <a href="https://github.com/dotnetjunkie/solidservices/issues/4">this discussion</a>). This keeps the authorization rules as close to the definition of your use cases as you possibly can from experience I can say that such model will prevent many security bugs in your application.</p>
+
+<hr />
+
+<h4 id="daniel-20-january-17">Daniel - 20 January 17</h4>
+
+<p>Hi Steven, let me clarify my previous question, I know the actual filter dispatcher is registered as a global filter, however, let&rsquo;s say that you want to attach the Minimum age attribute to all methods for all controllers, would it be possible to do this without having a base controller?</p>
+
+<hr />
+
+<h4 id="steven-25-february-17">Steven - 25 February 17</h4>
+
+<p>Attaching behavior to <em>all</em> methods of all controllers basically means you want to have a &lsquo;global&rsquo; filter. This is where you actually use the framework&rsquo;s <code>GlobalFilters</code> feature.</p>
+
+
+		<hr />
+
+<h2 id="wish-to-comment">Wish to comment?</h2>
+
+<p>Comments are currently turned off as I switched to a static site generator. I will enable commenting again in the future, most likely using pull requests. Stay tuned...</p>
+
+
+
+<hr />
+
+<h2 id="buy-my-book">Buy my book</h2>
+
+<p style="margin-right:7%">
+<a href="https://manning.com/seemann2"><img src="/steven/images/book%20cover%20smaller.png" style="float:left;margin-right:10px;margin-bottom:5px;border:0px solid" title="Dependency Injection Principles, Practices, and Patterns" alt="Dependency Injection Principles, Practices, and Patterns Cover Small" /></a>
+I coauthored the book <a href="https://manning.com/seemann2">Dependency Injection Principles, Practices, and Patterns</a>. If you're interested to learn more about DI and software design in general, consider reading my book.
+</p>
+	</div>
+
+	<div class="pagination">
+		<a href="/steven/posts/2013/di-anti-pattern-multiple-constructors/" class="left arrow">&#8592;</a>
+		<a href="/steven/posts/2015/code-smell-injecting-runtime-data-into-components/" class="right arrow">&#8594;</a>
+
+		<a href="#" class="top">Top</a>
+	</div>
+</main>
+
+
+        		<footer>
+			<span>
+			&copy; <time datetime="2019-03-13 19:28:57.5292834 &#43;0100 CET m=&#43;0.160325001">2019</time> Steven van Deursen. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
+			</span>
+		</footer>
+
+    </body>
+</html>

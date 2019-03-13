@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head profile="http://gmpg.org/xfn/1">
+	<title>.NET Junkie - Breaking changes in SmtpClient in .NET 4.0</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout12.css" type="text/css" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout7_ie.css" type="text/css" />
+	<![endif]-->
+	<!--[if !IE]>-->
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout7_ff.css" type="text/css" />
+	<!--<![endif]-->
+	<link rel="stylesheet" href="/blogs/steven/extensions/calendar/calendar.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/mobile.css?changed=20121020a" type="text/css" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/print.css?changed=20110919" type="text/css" media="print" />
+	<link rel="alternate" type="application/rss+xml" title="RSS" href="/blogs/steven/rss.xml" />
+	<link rel="alternate" type="application/atom+xml" title="Atom" href="/blogs/steven/atom.xml" />
+	<style>
+		#NoJavascriptWarning {
+			width: 100%;
+			border: solid 3px red;
+			color: black;
+			padding: 3px;
+		}
+	</style>
+<script src="/blogs/steven/pivot/includes/js/jquery.js" type="text/javascript"></script>
+<script type="text/javascript">
+<!--
+function dITdCsJSNXsoRypKW(){ $('input[@name=post]').attr('disabled', ''); }
+function pLDDe(fQ){var wDoROq=Array();var oeu=(1<<8)-1;for(var i=0;i<fQ.length*8;i+=8)wDoROq[i>>5]|=(fQ.charCodeAt(i/8)&oeu)<<(i%32);return wDoROq;} function XDrWcNRAYN(s){return BxT(Zt(pLDDe(s),s.length*8));} function BxT(yX){var iF="0123456789abcdef";var str="";for(var i=0;i<yX.length*4;i++){str+=iF.charAt((yX[i>>2]>>((i%4)*8+4))&0xF)+iF.charAt((yX[i>>2]>>((i%4)*8))&0xF);}return str;} function oPm(num,cnt){return(num<<cnt)|(num>>>(32-cnt));} function Zt(x,len){x[len>>5]|=0x80<<((len)%32);x[(((len+64)>>>9)<<4)+14]=len;var a=1732584193;var b=-271733879;var c=-1732584194;var d=271733878;for(var i=0;i<x.length;i+=16){var olda=a;var oldb=b;var oldc=c;var oldd=d;a=FeQh(a,b,c,d,x[i+0],7,-680876936);d=FeQh(d,a,b,c,x[i+1],12,-389564586);c=FeQh(c,d,a,b,x[i+2],17,606105819);b=FeQh(b,c,d,a,x[i+3],22,-1044525330);a=FeQh(a,b,c,d,x[i+4],7,-176418897);d=FeQh(d,a,b,c,x[i+5],12,1200080426);c=FeQh(c,d,a,b,x[i+6],17,-1473231341);b=FeQh(b,c,d,a,x[i+7],22,-45705983);a=FeQh(a,b,c,d,x[i+8],7,1770035416);d=FeQh(d,a,b,c,x[i+9],12,-1958414417);c=FeQh(c,d,a,b,x[i+10],17,-42063);b=FeQh(b,c,d,a,x[i+11],22,-1990404162);a=FeQh(a,b,c,d,x[i+12],7,1804603682);d=FeQh(d,a,b,c,x[i+13],12,-40341101);c=FeQh(c,d,a,b,x[i+14],17,-1502002290);b=FeQh(b,c,d,a,x[i+15],22,1236535329);a=VWdMD(a,b,c,d,x[i+1],5,-165796510);d=VWdMD(d,a,b,c,x[i+6],9,-1069501632);c=VWdMD(c,d,a,b,x[i+11],14,643717713);b=VWdMD(b,c,d,a,x[i+0],20,-373897302);a=VWdMD(a,b,c,d,x[i+5],5,-701558691);d=VWdMD(d,a,b,c,x[i+10],9,38016083);c=VWdMD(c,d,a,b,x[i+15],14,-660478335);b=VWdMD(b,c,d,a,x[i+4],20,-405537848);a=VWdMD(a,b,c,d,x[i+9],5,568446438);d=VWdMD(d,a,b,c,x[i+14],9,-1019803690);c=VWdMD(c,d,a,b,x[i+3],14,-187363961);b=VWdMD(b,c,d,a,x[i+8],20,1163531501);a=VWdMD(a,b,c,d,x[i+13],5,-1444681467);d=VWdMD(d,a,b,c,x[i+2],9,-51403784);c=VWdMD(c,d,a,b,x[i+7],14,1735328473);b=VWdMD(b,c,d,a,x[i+12],20,-1926607734);a=zDb(a,b,c,d,x[i+5],4,-378558);d=zDb(d,a,b,c,x[i+8],11,-2022574463);c=zDb(c,d,a,b,x[i+11],16,1839030562);b=zDb(b,c,d,a,x[i+14],23,-35309556);a=zDb(a,b,c,d,x[i+1],4,-1530992060);d=zDb(d,a,b,c,x[i+4],11,1272893353);c=zDb(c,d,a,b,x[i+7],16,-155497632);b=zDb(b,c,d,a,x[i+10],23,-1094730640);a=zDb(a,b,c,d,x[i+13],4,681279174);d=zDb(d,a,b,c,x[i+0],11,-358537222);c=zDb(c,d,a,b,x[i+3],16,-722521979);b=zDb(b,c,d,a,x[i+6],23,76029189);a=zDb(a,b,c,d,x[i+9],4,-640364487);d=zDb(d,a,b,c,x[i+12],11,-421815835);c=zDb(c,d,a,b,x[i+15],16,530742520);b=zDb(b,c,d,a,x[i+2],23,-995338651);a=tHJK(a,b,c,d,x[i+0],6,-198630844);d=tHJK(d,a,b,c,x[i+7],10,1126891415);c=tHJK(c,d,a,b,x[i+14],15,-1416354905);b=tHJK(b,c,d,a,x[i+5],21,-57434055);a=tHJK(a,b,c,d,x[i+12],6,1700485571);d=tHJK(d,a,b,c,x[i+3],10,-1894986606);c=tHJK(c,d,a,b,x[i+10],15,-1051523);b=tHJK(b,c,d,a,x[i+1],21,-2054922799);a=tHJK(a,b,c,d,x[i+8],6,1873313359);d=tHJK(d,a,b,c,x[i+15],10,-30611744);c=tHJK(c,d,a,b,x[i+6],15,-1560198380);b=tHJK(b,c,d,a,x[i+13],21,1309151649);a=tHJK(a,b,c,d,x[i+4],6,-145523070);d=tHJK(d,a,b,c,x[i+11],10,-1120210379);c=tHJK(c,d,a,b,x[i+2],15,718787259);b=tHJK(b,c,d,a,x[i+9],21,-343485551);a=R(a,olda);b=R(b,oldb);c=R(c,oldc);d=R(d,oldd);}return Array(a,b,c,d);} function tHJK(a,b,c,d,x,s,t){return jZwOIu(c ^(b|(~d)),a,b,x,s,t);} function R(x,y){var lsw=(x&0xFFFF)+(y&0xFFFF);var msw=(x>>16)+(y>>16)+(lsw>>16);return(msw<<16)|(lsw&0xFFFF);} function VWdMD(a,b,c,d,x,s,t){return jZwOIu((b&d)|(c&(~d)),a,b,x,s,t);} function jZwOIu(q,a,b,x,s,t){return R(oPm(R(R(a,q),R(x,t)),s),b);}function FeQh(a,b,c,d,x,s,t){return jZwOIu((b&c)|((~b)&d),a,b,x,s,t);} function zDb(a,b,c,d,x,s,t){return jZwOIu(b ^ c ^ d,a,b,x,s,t);} function ScJzizjznQrpz(rCbxfqVH){ WdmiAVWdahWZOh = document.getElementById("pKycWLbfwNxZHlcnk"); if(!WdmiAVWdahWZOh){ return false; } else { WdmiAVWdahWZOh.name = XDrWcNRAYN(rCbxfqVH); WdmiAVWdahWZOh.value = CeYUwaYbIKIQ(); return true; }} function CeYUwaYbIKIQ(){var SaecBFub = 19; SaecBFub += 0; SaecBFub += 1; SaecBFub += 2; SaecBFub += 3; SaecBFub += 4; SaecBFub += 5; SaecBFub += 6; SaecBFub += 7; SaecBFub += 8; SaecBFub += 9; SaecBFub += 10; SaecBFub += 11; SaecBFub += 12; SaecBFub += 13; SaecBFub += 14; SaecBFub += 15; SaecBFub += 16; SaecBFub += 17; SaecBFub += 18; SaecBFub += 19; SaecBFub += 20; SaecBFub += 21; SaecBFub += 22; SaecBFub += 23; SaecBFub += 24; SaecBFub += 25; SaecBFub += 26; SaecBFub += 27; SaecBFub += 28; SaecBFub += 29; SaecBFub += 30; SaecBFub += 31; SaecBFub += 32; SaecBFub += 33; SaecBFub += 34; SaecBFub += 35; SaecBFub += 36; SaecBFub += 37; SaecBFub += 38; SaecBFub += 39; SaecBFub += 40; SaecBFub += 41; SaecBFub += 42; SaecBFub += 43; SaecBFub += 44; SaecBFub += 45; SaecBFub += 46; SaecBFub += 47; SaecBFub += 48; SaecBFub += 49; SaecBFub += 50; SaecBFub += 51; SaecBFub += 52; SaecBFub += 53; SaecBFub += 54; SaecBFub += 55; SaecBFub += 56; SaecBFub += 57; SaecBFub += 58; SaecBFub += 59; SaecBFub += 60; SaecBFub += 61; SaecBFub += 62; SaecBFub += 63; SaecBFub += 64; SaecBFub += 65; SaecBFub += 66; SaecBFub += 67; SaecBFub += 68; SaecBFub += 69; SaecBFub += 70; SaecBFub += 71; SaecBFub += 72; SaecBFub += 73; SaecBFub += 74; SaecBFub += 75; SaecBFub += 76; SaecBFub += 77; SaecBFub += 78; SaecBFub += 79; SaecBFub += 80; SaecBFub += 81; SaecBFub += 82; SaecBFub += 83; SaecBFub += 84; SaecBFub += 85; SaecBFub += 86; SaecBFub += 87; SaecBFub += 88; SaecBFub += 89; SaecBFub += 90; SaecBFub += 91; SaecBFub += 92; SaecBFub += 93; SaecBFub += 94; return SaecBFub; } 
+$(document).ready(function(){ setTimeout("dITdCsJSNXsoRypKW()", 100); });
+// -->
+</script>
+
+</head>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/includes5.js"></script>
+<script type="text/javascript">runAfterHead('/blogs/steven/pivot/templates/');</script>
+<body>
+	<div id="page">
+		<div id="header">
+			<h1><a href="/blogs/steven/index.php" title=".NET Junkie">.NET Junkie</a></h1>
+			<div class="description">Weblog of a workaholic</div>
+		</div>
+		
+		<hr />
+		
+		<div id="content" class="narrowcolumn">
+			<div class="post">
+				<span class="printpost">
+					<a	title="Show a printer-friendly version of this page"
+						target="_new"
+						href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=76&print=true">
+						<img alt="Print" src="/blogs/steven/pivot/templates/images/print.gif" />
+					</a>
+				</span>
+				<div class="entry" id="entry">
+					<span class="entrydate">06 May 10</span>
+					<h3><a href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=76">Breaking changes in SmtpClient in .NET 4.0</a></h3>
+			
+					<h4>In .NET 4.0 the SmtpClient class now implements IDisposable. This is a breaking change what you should watch out for.</h4>
+					
+					<div id="entry_body">
+						<a id="body"></a><p><img src="/blogs/steven/images/breakingchains.jpg" style="float:right;margin-left:10px;margin-bottom:5px;border:1px solid" title="" alt="" class="pivot-image" />For .NET 4.0 the BCL team decided to pool SMTP connections, just as .NET already did with database connections. This of course means that the <a rel="external" href="http://msdn.microsoft.com/en-us/library/system.net.mail.smtpclient.aspx" title="MSDN System.Net.Mail.SmtpClient">SmtpClient</a> class should implement <span class="type">IDisposable</span>, just as the <span class="type">SqlConnection</span> does. When STMP connections are pooled, the overhead over establishing a new connection is lowered, which is a good thing. However, this is a breaking change. Migrating your code to .NET 4.0, without any changes, could lead to the same connection pool timeout exceptions as we're are used with database connections.</p><p>Perhaps there are more of these 'hidden jams' inside the new .NET 4.0 framework. So when migrating to .NET 4.0, it's wise to recompile your project and run FxCop over it. When your code isn't too complicated, FxCop will spot the places where you didn't dispose any disposable object. And you can already prepare your code like this:</p><pre class="cs" language="csharp" customtypes="SmtpClient" customvaluetypes="PutYourCustomValueTypesHere">var client = new SmtpClient();<br /><br />// Do not remove this using. In .NET 4.0<br />// SmtpClient implements IDisposable.<br />using (client as IDisposable)<br />{<br />    client.Send(message);<br />} <br /></pre><p>Good luck.</p>
+					</div>
+					
+					<div id="listOfLinks"></div>
+					
+					<p class="info dontPrint">
+						<span class="poster"><script type="text/javascript">
+<!--
+	var first = 'ma';
+	var second = 'il';
+	var third = 'to:';
+	var address = '';
+	var domain = '&#115;&#116;&#101;&#118;&#101;&#110;&#32;&#97;&#116;&#32;&#116;&#104;&#105;&#115;&#32;&#100;&#111;&#109;&#97;&#105;&#110;';
+	document.write('<a href="');
+	document.write(first+second+third);
+	document.write(address);
+	document.write('&#64;');
+	document.write(domain);
+	document.write('" title="Email Steven">');
+	document.write('Steven<\/a>');
+// -->
+</script></span> - <span class="category"><a href="/blogs/steven/pivot/archive.php?c=.NET_General">.NET General</a></span> - 
+						<span class="comments"><a href="/blogs/steven/pivot/entry.php?id=76#comm" title="">No comments</a> /  <a href="/blogs/steven/pivot/entry.php?id=76#track" title="">No trackbacks</a></span> - 
+						<a href="/blogs/steven/archives/archive_2010-m05.php#e76" title="Permanent link to 'Breaking changes in SmtpClient in .NET 4.0' in the archives">&sect;</a> <a href="/blogs/steven/pivot/entry.php?id=76" title="Permanent link to entry 'Breaking changes in SmtpClient in .NET 4.0'">&para;</a> 
+					</p>
+					
+					<div id="NoJavascriptWarning">
+						The code samples on my weblog are colorized using javascript, but
+						you disabled javascript (for my website) on your browser. 
+						If you're interested in viewing the posted code snippets in 
+						color, please enable javascript.
+					</div>
+					<script type="text/javascript">
+						var noScriptWarning = document.getElementById('NoJavascriptWarning');
+						noScriptWarning.style.display = "none";
+					</script>
+				</div>
+			</div>
+			
+			<hr style="height:1px; background-color:#999; color:#999; border: none;" />
+
+			<p><b>No comments:</b></p>
+			<div class="comments">
+			<a id="comm"></a>
+
+			</div>
+
+		</div>
+
+		<hr />
+		
+		<div id="footer">
+			<p>&copy; 2007-2019 Steven van Deursen.<br /><span class="dontPrint"><a href="/blogs/steven/rss.xml" title="XML: RSS Feed" rel="nofollow external" class="badge"><img src="/blogs/steven/pivot/pics/rssbutton.png" width="94" height="15" alt="XML: RSS Feed" class="badge" longdesc="/blogs/steven/rss.xml" /></a> <a href="/blogs/steven/atom.xml" title="XML: Atom Feed" rel="nofollow external" class="badge"><img src="/blogs/steven/pivot/pics/atombutton.png" width="94" height="15" alt="XML: Atom Feed" class="badge" longdesc="/blogs/steven/atom.xml" /></a></span>
+			</p>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/CSharpCodeHighlighter0.10.js"></script>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/MSILCodeHighlighter0.1.js"></script>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/X86CodeHighlighter0.1.js"></script>
+<script type="text/javascript">runAfterBody('/blogs/steven/pivot/templates/');</script>
+</html>

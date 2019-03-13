@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Oop on .NET Junkie - Weblog of a workaholic</title>
+    <link>https://blogs.cuttingedge.it/steven/tags/oop/</link>
+    <description>Recent content in Oop on .NET Junkie - Weblog of a workaholic</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 10 Aug 2016 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://blogs.cuttingedge.it/steven/tags/oop/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Abstract Factories are a Code Smell</title>
+      <link>https://blogs.cuttingedge.it/steven/posts/2016/abstract-factories-are-a-code-smell/</link>
+      <pubDate>Wed, 10 Aug 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://blogs.cuttingedge.it/steven/posts/2016/abstract-factories-are-a-code-smell/</guid>
+      <description>When it comes to writing LOB applications, abstract factories are a code smell as they increase the complexity of the consumer instead of reducing it. This article describes why and offers alternatives. An Abstract Factory decouples the creation of a family of objects from usage. Compared to injecting a service into a constructor, a factory allow objects to be created lazily, instead of up front during object graph composition. Many applications make use of the Abstract Factory pattern extensively to create all sorts of objects.</description>
+    </item>
+    
+    <item>
+      <title>Dependency Injection Code Smell: Injecting runtime data into components</title>
+      <link>https://blogs.cuttingedge.it/steven/posts/2015/code-smell-injecting-runtime-data-into-components/</link>
+      <pubDate>Sat, 07 Nov 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://blogs.cuttingedge.it/steven/posts/2015/code-smell-injecting-runtime-data-into-components/</guid>
+      <description>Injecting runtime data into your application components is a code smell. Runtime data should flow through the method calls of already constructed object graphs. A recurring theme when it comes to questions about dependency injection is how to wire up and resolve components a.k.a. injectables (the classes that contain the application&amp;rsquo;s behavior) that require runtime data during construction. My answer to this is always the same:
+ Don&amp;rsquo;t inject runtime data into application components during construction—it causes ambiguity, complicates the composition root with an extra responsibility, and makes it extraordinarily hard to verify the correctness of your DI configuration.</description>
+    </item>
+    
+  </channel>
+</rss>

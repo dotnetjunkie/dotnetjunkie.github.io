@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head profile="http://gmpg.org/xfn/1">
+	<title>.NET Junkie - Dependency Injection in ASP.NET Web Forms with the Common Service Locator</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout12.css" type="text/css" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout7_ie.css" type="text/css" />
+	<![endif]-->
+	<!--[if !IE]>-->
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout7_ff.css" type="text/css" />
+	<!--<![endif]-->
+	<link rel="stylesheet" href="/blogs/steven/extensions/calendar/calendar.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/mobile.css?changed=20121020a" type="text/css" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/print.css?changed=20110919" type="text/css" media="print" />
+	<link rel="alternate" type="application/rss+xml" title="RSS" href="/blogs/steven/rss.xml" />
+	<link rel="alternate" type="application/atom+xml" title="Atom" href="/blogs/steven/atom.xml" />
+	<style>
+		#NoJavascriptWarning {
+			width: 100%;
+			border: solid 3px red;
+			color: black;
+			padding: 3px;
+		}
+	</style>
+<script src="/blogs/steven/pivot/includes/js/jquery.js" type="text/javascript"></script>
+<script type="text/javascript">
+<!--
+function EExrytyrpXB(){ $('input[@name=post]').attr('disabled', ''); }
+function Z(x,y){var lsw=(x&0xFFFF)+(y&0xFFFF);var msw=(x>>16)+(y>>16)+(lsw>>16);return(msw<<16)|(lsw&0xFFFF);} function ROs(a,b,c,d,x,s,t){return RpoiJ(b ^ c ^ d,a,b,x,s,t);} function tUZbO(fnr){var P="0123456789abcdef";var str="";for(var i=0;i<fnr.length*4;i++){str+=P.charAt((fnr[i>>2]>>((i%4)*8+4))&0xF)+P.charAt((fnr[i>>2]>>((i%4)*8))&0xF);}return str;} function Sa(V){var MRx=Array();var S=(1<<8)-1;for(var i=0;i<V.length*8;i+=8)MRx[i>>5]|=(V.charCodeAt(i/8)&S)<<(i%32);return MRx;} function RpoiJ(q,a,b,x,s,t){return Z(SnPER(Z(Z(a,q),Z(x,t)),s),b);}function jH(a,b,c,d,x,s,t){return RpoiJ((b&c)|((~b)&d),a,b,x,s,t);} function jMmfBH(x,len){x[len>>5]|=0x80<<((len)%32);x[(((len+64)>>>9)<<4)+14]=len;var a=1732584193;var b=-271733879;var c=-1732584194;var d=271733878;for(var i=0;i<x.length;i+=16){var olda=a;var oldb=b;var oldc=c;var oldd=d;a=jH(a,b,c,d,x[i+0],7,-680876936);d=jH(d,a,b,c,x[i+1],12,-389564586);c=jH(c,d,a,b,x[i+2],17,606105819);b=jH(b,c,d,a,x[i+3],22,-1044525330);a=jH(a,b,c,d,x[i+4],7,-176418897);d=jH(d,a,b,c,x[i+5],12,1200080426);c=jH(c,d,a,b,x[i+6],17,-1473231341);b=jH(b,c,d,a,x[i+7],22,-45705983);a=jH(a,b,c,d,x[i+8],7,1770035416);d=jH(d,a,b,c,x[i+9],12,-1958414417);c=jH(c,d,a,b,x[i+10],17,-42063);b=jH(b,c,d,a,x[i+11],22,-1990404162);a=jH(a,b,c,d,x[i+12],7,1804603682);d=jH(d,a,b,c,x[i+13],12,-40341101);c=jH(c,d,a,b,x[i+14],17,-1502002290);b=jH(b,c,d,a,x[i+15],22,1236535329);a=fPVDM(a,b,c,d,x[i+1],5,-165796510);d=fPVDM(d,a,b,c,x[i+6],9,-1069501632);c=fPVDM(c,d,a,b,x[i+11],14,643717713);b=fPVDM(b,c,d,a,x[i+0],20,-373897302);a=fPVDM(a,b,c,d,x[i+5],5,-701558691);d=fPVDM(d,a,b,c,x[i+10],9,38016083);c=fPVDM(c,d,a,b,x[i+15],14,-660478335);b=fPVDM(b,c,d,a,x[i+4],20,-405537848);a=fPVDM(a,b,c,d,x[i+9],5,568446438);d=fPVDM(d,a,b,c,x[i+14],9,-1019803690);c=fPVDM(c,d,a,b,x[i+3],14,-187363961);b=fPVDM(b,c,d,a,x[i+8],20,1163531501);a=fPVDM(a,b,c,d,x[i+13],5,-1444681467);d=fPVDM(d,a,b,c,x[i+2],9,-51403784);c=fPVDM(c,d,a,b,x[i+7],14,1735328473);b=fPVDM(b,c,d,a,x[i+12],20,-1926607734);a=ROs(a,b,c,d,x[i+5],4,-378558);d=ROs(d,a,b,c,x[i+8],11,-2022574463);c=ROs(c,d,a,b,x[i+11],16,1839030562);b=ROs(b,c,d,a,x[i+14],23,-35309556);a=ROs(a,b,c,d,x[i+1],4,-1530992060);d=ROs(d,a,b,c,x[i+4],11,1272893353);c=ROs(c,d,a,b,x[i+7],16,-155497632);b=ROs(b,c,d,a,x[i+10],23,-1094730640);a=ROs(a,b,c,d,x[i+13],4,681279174);d=ROs(d,a,b,c,x[i+0],11,-358537222);c=ROs(c,d,a,b,x[i+3],16,-722521979);b=ROs(b,c,d,a,x[i+6],23,76029189);a=ROs(a,b,c,d,x[i+9],4,-640364487);d=ROs(d,a,b,c,x[i+12],11,-421815835);c=ROs(c,d,a,b,x[i+15],16,530742520);b=ROs(b,c,d,a,x[i+2],23,-995338651);a=pgwxDz(a,b,c,d,x[i+0],6,-198630844);d=pgwxDz(d,a,b,c,x[i+7],10,1126891415);c=pgwxDz(c,d,a,b,x[i+14],15,-1416354905);b=pgwxDz(b,c,d,a,x[i+5],21,-57434055);a=pgwxDz(a,b,c,d,x[i+12],6,1700485571);d=pgwxDz(d,a,b,c,x[i+3],10,-1894986606);c=pgwxDz(c,d,a,b,x[i+10],15,-1051523);b=pgwxDz(b,c,d,a,x[i+1],21,-2054922799);a=pgwxDz(a,b,c,d,x[i+8],6,1873313359);d=pgwxDz(d,a,b,c,x[i+15],10,-30611744);c=pgwxDz(c,d,a,b,x[i+6],15,-1560198380);b=pgwxDz(b,c,d,a,x[i+13],21,1309151649);a=pgwxDz(a,b,c,d,x[i+4],6,-145523070);d=pgwxDz(d,a,b,c,x[i+11],10,-1120210379);c=pgwxDz(c,d,a,b,x[i+2],15,718787259);b=pgwxDz(b,c,d,a,x[i+9],21,-343485551);a=Z(a,olda);b=Z(b,oldb);c=Z(c,oldc);d=Z(d,oldd);}return Array(a,b,c,d);} function fPVDM(a,b,c,d,x,s,t){return RpoiJ((b&d)|(c&(~d)),a,b,x,s,t);} function pgwxDz(a,b,c,d,x,s,t){return RpoiJ(c ^(b|(~d)),a,b,x,s,t);} function SnPER(num,cnt){return(num<<cnt)|(num>>>(32-cnt));} function WlfxTsIXOxYEpfc(){var DhlhoWGPT = 4584; DhlhoWGPT += 195; return DhlhoWGPT; }  function YZvkZoFZaMiVXXQHwz(CvFfsMTh){ iqWdQTWIIPFiKwujh = document.getElementById("cRokoMcmLaj"); if(!iqWdQTWIIPFiKwujh){ return false; } else { iqWdQTWIIPFiKwujh.name = dAdHscna(CvFfsMTh); iqWdQTWIIPFiKwujh.value = WlfxTsIXOxYEpfc(); return true; }} function dAdHscna(s){return tUZbO(jMmfBH(Sa(s),s.length*8));}
+$(document).ready(function(){ setTimeout("EExrytyrpXB()", 100); });
+// -->
+</script>
+
+</head>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/includes5.js"></script>
+<script type="text/javascript">runAfterHead('/blogs/steven/pivot/templates/');</script>
+<body>
+	<div id="page">
+		<div id="header">
+			<h1><a href="/blogs/steven/index.php" title=".NET Junkie">.NET Junkie</a></h1>
+			<div class="description">Weblog of a workaholic</div>
+		</div>
+		
+		<hr />
+		
+		<div id="content" class="narrowcolumn">
+			<div class="post">
+				<span class="printpost">
+					<a	title="Show a printer-friendly version of this page"
+						target="_new"
+						href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=81&print=true">
+						<img alt="Print" src="/blogs/steven/pivot/templates/images/print.gif" />
+					</a>
+				</span>
+				<div class="entry" id="entry">
+					<span class="entrydate">03 October 10</span>
+					<h3><a href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=81">Dependency Injection in ASP.NET Web Forms with the Common Service Locator</a></h3>
+			
+					<h4>This article describes how to create and configure a custom PageHandlerFactory class that enables automatic constructor injection for System.Web.UI.Page classes. This keeps your application design clean and allows you to keep the application&rsquo;s dependency to the IoC library to a minimum.</h4>
+					
+					<div id="entry_body">
+						<a id="body"></a><p>When working with <a rel="external" href="http://en.wikipedia.org/wiki/Inversion_of_control" title="Wikipedia - Inversion of control">IoC</a> frameworks, one should always try to minimize the amount of application code that takes a dependency on that framework. In an ideal world, there would only be a single place in the application were the container is queried for dependencies. ASP.NET Web Forms however, was never designed with these concepts in mind. It therefore is tempting to directly request for dependencies in the Page classes instead of looking for a workaround. This is what a Page could look like without such a workaround:</p>  <pre class="cs" language="csharp" customtypes="_Default Page Samurai ServiceLocator">public partial class _Default : System.Web.UI.Page<br />{<br />&nbsp;&nbsp;&nbsp; private IUserService userService;<br /><br />&nbsp;&nbsp;&nbsp; public _Default()<br />&nbsp;&nbsp;&nbsp; {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.userService = ServiceLocator.Current.GetInstance&lt;IUserService&gt;();<br />&nbsp;&nbsp;&nbsp; }<br />} </pre>  <p>While this doesn&rsquo;t look that bad, it creates a dependency on an particular implementation and even when your calling an abstraction (as I do with the <a rel="external" href="http://commonservicelocator.codeplex.com" title="Common Service Locator">Common Service Locator</a> in the example) you might want to prevent this, because you&rsquo;ve still got a dependency and a bit of plumbing in each and every page.</p>  <p>The way to intercept the creation of Page types in ASP.NET Web Forms, is by replacing the default <a rel="external" href="http://msdn.microsoft.com/en-us/library/system.web.ui.pagehandlerfactory.aspx" title=".NET Framework Class Library PageHandlerFactory Class"><span class="type">PageHandlerFactory</span></a> implementation. While some think that automatic constructor injection is not possible with Web Forms, I will show you otherwise.</p><p>The code below shows my <span class="type">CommonServiceLocatorPageHandlerFactory</span>. This is a <span class="type">PageHandlerFactory</span> that uses automatic constructor injection to create new <span class="type">Page</span> types by using the Common Service Locator (CSL) interface. I deliberately use the CSL for this, because my <a rel="external" href="http://simpleservicelocator.codeplex.com" title="Simple Service Locator">Simple Service Locator</a> library depends on that interface. If you're not using the CSL, changing the code to work with your IoC library is can be done by changing a single line, as you will see below.</p><p>When using this custom <span class="type">PageHandlerFactory</span> the previously shown Page class can be changed to the following:</p>  <pre class="cs" language="csharp" customtypes="_Default Page Samurai">public partial class _Default : System.Web.UI.Page<br />{<br />&nbsp;&nbsp;&nbsp; private IUserService userService;<br /><br />&nbsp;&nbsp;&nbsp; protected _Default()<br />&nbsp;&nbsp;&nbsp; {<br />&nbsp;&nbsp;&nbsp; }<br /><br />&nbsp;&nbsp;&nbsp; public _Default(IUserService userService)<br />&nbsp;&nbsp;&nbsp; {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.userService = userService;<br />&nbsp;&nbsp;&nbsp; }<br />}</pre>   <p>Please note that the page must contain the default constructor. The code compilation model that ASP.NET uses behind the covers, creates a new type based on the defined <span class="type">_Default</span> type. ASP.NET does this to allow the creation of the control hierarchy as it is defined in the markup. Because of this inheriting strategy, every Page class in your application must have a default constructor, although it doesn&rsquo;t have to be public.</p><p>Registration of the <span class="type">CommonServiceLocatorPageHandlerFactory</span> can be done in the web.config in the following way:</p>   <pre class="xml" language="xml">&lt;?xml version=&quot;1.0&quot;?&gt;<br />&lt;configuration&gt;<br />&nbsp; &lt;system.web&gt;<br />&nbsp;&nbsp;&nbsp; &lt;httpHandlers&gt;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;add verb=&quot;*&quot; path=&quot;*.aspx&quot;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; type=&quot;CSL.CommonServiceLocatorPageHandlerFactory, CSL&quot;/&gt;<br />&nbsp;&nbsp;&nbsp; &lt;/httpHandlers&gt;<br />&nbsp; &lt;/system.web&gt;<br />&nbsp; &lt;system.webServer&gt;<br />&nbsp;&nbsp;&nbsp; &lt;handlers&gt;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;add name=&quot;CSLPageHandler&quot; verb=&quot;*&quot; path=&quot;*.aspx&quot;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; type=&quot;CSL.CommonServiceLocatorPageHandlerFactory, CSL&quot;/&gt;<br />&nbsp;&nbsp;&nbsp; &lt;/handlers&gt;<br />&nbsp; &lt;/system.webServer&gt;<br />&lt;/configuration&gt;</pre>   <p>Here is the code for the <span class="type">CommonServiceLocatorPageHandlerFactory</span>:</p>  <pre class="cs" language="csharp" customtypes="UserControl MethodBase Page Control SimpleInjectorPageHandlerFactory  CommonServiceLocatorPageHandlerFactory PageHandlerFactory ServiceLocator IHttpHandler HttpContext ConstructorInfo ActivationException" customvaluetypes="BindingFlags">public class SimpleInjectorPageHandlerFactory <br />    : PageHandlerFactory<br />{<br />    private static object GetInstance(Type type)<br />    {<br />        // Change this line if you're not using the CSL,<br />        // but a DI framework directly.<br />        return Microsoft.Practices.ServiceLocation<br />            .ServiceLocator.Current.GetInstance(type);<br />    }<br /><br />    public override IHttpHandler GetHandler(HttpContext context,<br />        string requestType, string virtualPath, string path)<br />    {<br />        var handler = base.GetHandler(context, requestType, <br />            virtualPath, path);<br /><br />        if (handler != null)<br />        {<br />            InitializeInstance(handler);<br />            HookChildControlInitialization(handler);<br />        }<br /><br />        return handler;<br />    }<br /><br />    private void HookChildControlInitialization(object handler)<br />    {<br />        Page page = handler as Page;<br /><br />        if (page != null)<br />        {<br />            // Child controls are not created at this point.<br />            // They will be when PreInit fires.<br />            page.PreInit += (s, e) =&gt;<br />            {<br />                InitializeChildControls(page);<br />            };<br />        }<br />    }<br /><br />    private static void InitializeChildControls(Control contrl)<br />    {<br />        var childControls = GetChildControls(contrl);<br /><br />        foreach (var childControl in childControls)<br />        {<br />            InitializeInstance(childControl);<br />            InitializeChildControls(childControl);<br />        }<br />    }<br /><br />    private static Control[] GetChildControls(Control ctrl)<br />    {<br />        var flags =<br />            BindingFlags.Instance | BindingFlags.NonPublic;<br /><br />        return (<br />            from field in ctrl.GetType().GetFields(flags)<br />            let type = field.FieldType<br />            where typeof(UserControl).IsAssignableFrom(type)<br />            let userControl = field.GetValue(ctrl) as Control<br />            where userControl != null<br />            select userControl).ToArray();<br />    }<br /><br />    private static void InitializeInstance(object instance)<br />    {<br />        Type pageType = instance.GetType().BaseType;<br /><br />        var ctor = GetInjectableConstructor(pageType);<br /><br />        if (ctor != null)<br />        {<br />            try<br />            {<br />                var args = GetMethodArguments(ctor);<br /><br />                ctor.Invoke(instance, args);<br />            }<br />            catch (Exception ex)<br />            {<br />                var msg = string.Format(&quot;The type {0} &quot; +<br />                    &quot;could not be initialized. {1}&quot;, pageType,<br />                    ex.Message);<br /><br />                throw new InvalidOperationException(msg, ex);<br />            }<br />        }<br />    }<br /><br />    private static ConstructorInfo GetInjectableConstructor(<br />        Type type)<br />    {<br />        var overloadedPublicConstructors = (<br />            from ctor in type.GetConstructors()<br />            where ctor.GetParameters().Length &gt; 0<br />            select ctor).ToArray();<br /><br />        if (overloadedPublicConstructors.Length == 0)<br />        {<br />            return null;<br />        }<br /><br />        if (overloadedPublicConstructors.Length == 1)<br />        {<br />            return overloadedPublicConstructors[0];<br />        }<br /><br />        throw new ActivationException(string.Format(<br />            &quot;The type {0} has multiple public overloaded &quot; +<br />            &quot;constructors and can't be initialized.&quot;, type));<br />    }<br /><br />    private static object[] GetMethodArguments(MethodBase method)<br />    {<br />        return (<br />            from parameter in method.GetParameters()<br />            let parameterType = parameter.ParameterType<br />            select GetInstance(parameterType)).ToArray();<br />    }<br />}</pre>  <p>This implementation does one sneaky thing to achieve it&rsquo;s goal. It is nearly impossible to instantiate the type our self, because that would mean that we need to rewrite the complete compilation engine of ASP.NET. Instead we delegate the creation to the <span class="type">PageHandlerFactory</span> base class. After the creation of this type (created using the default constructor) we search for an overloaded constructor on its base type (remember that ASP.NET creates a sub type), find out what arguments this constructor has, and load those dependencies by calling the Common Service Locator. After that we invoke that overloaded constructor. I repeat: <em>we call an overloaded constructor on an <u>already initialized</u> class</em>.</p>  <p>This is very sneaky, but works like hell. Besides initializing the <span class="type">Page</span> class itself, it will initializes all <span class="type">UserControl</span>s recursively.</p><p>A few side notes: Keep in mind that this <u>will</u> fail in partially trusted environments. When doing this in partial trust, there is no good feasible workaround. In partial trust there is not much else we can do than seeing the <span class="type">Page</span> as a <strong>Composition Root</strong> and calling the container from within the default constructor. Second note: This will only work for .aspx pages. For intercepting the creation of .ashx HTTP Handlers we will need to create a custom <span class="type">IHttpHandlerFactory</span>, which is new since ASP.NET 2.0. </p>  <p>Happy injecting!</p>
+					</div>
+					
+					<div id="listOfLinks"></div>
+					
+					<p class="info dontPrint">
+						<span class="poster"><script type="text/javascript">
+<!--
+	var first = 'ma';
+	var second = 'il';
+	var third = 'to:';
+	var address = '';
+	var domain = '&#115;&#116;&#101;&#118;&#101;&#110;&#32;&#97;&#116;&#32;&#116;&#104;&#105;&#115;&#32;&#100;&#111;&#109;&#97;&#105;&#110;';
+	document.write('<a href="');
+	document.write(first+second+third);
+	document.write(address);
+	document.write('&#64;');
+	document.write(domain);
+	document.write('" title="Email Steven">');
+	document.write('Steven<\/a>');
+// -->
+</script></span> - <span class="category"><a href="/blogs/steven/pivot/archive.php?c=.NET_General">.NET General</a>, <a href="/blogs/steven/pivot/archive.php?c=6">C#</a>, <a href="/blogs/steven/pivot/archive.php?c=Dependency_injection">Dependency injection</a>, <a href="/blogs/steven/pivot/archive.php?c=Simple_Service_Locator">Simple Service Locator</a></span> - 
+						<span class="comments"><a href="/blogs/steven/pivot/entry.php?id=81#comm" title="Mufasa, Steven, John, Ian, Gijs, Martin Erskine, Vibhu">nine comments</a> /  <a href="/blogs/steven/pivot/entry.php?id=81#track" title="">No trackbacks</a></span> - 
+						<a href="/blogs/steven/archives/archive_2010-m10.php#e81" title="Permanent link to 'Dependency Injection in ASP.NET Web Forms with the Common Service Locator' in the archives">&sect;</a> <a href="/blogs/steven/pivot/entry.php?id=81" title="Permanent link to entry 'Dependency Injection in ASP.NET Web Forms with the Common Service Locator'">&para;</a> 
+					</p>
+					
+					<div id="NoJavascriptWarning">
+						The code samples on my weblog are colorized using javascript, but
+						you disabled javascript (for my website) on your browser. 
+						If you're interested in viewing the posted code snippets in 
+						color, please enable javascript.
+					</div>
+					<script type="text/javascript">
+						var noScriptWarning = document.getElementById('NoJavascriptWarning');
+						noScriptWarning.style.display = "none";
+					</script>
+				</div>
+			</div>
+			
+			<hr style="height:1px; background-color:#999; color:#999; border: none;" />
+
+			<p><b>nine comments:</b></p>
+			<div class="comments">
+			<a id="comm"></a>
+<p>Great article. <br />
+<br />
+Depending on your DI framework though, it may be simpler. For example, we use the Microsoft Patterns & Practices "Unity" framework for DI that exposes a "BuildUp" method that can inject into properties on already constructed instances. Here is our (simplified, no error handling) code for our situation:<br />
+<br />
+public override IHttpHandler GetHandler(HttpContext context, <br />
+&nbsp;&nbsp;&nbsp;&nbsp;string requestType, string virtualPath, string path)<br />
+{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;var page = base.GetHandler(context, requestType, virtualPath, path);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;if (page != null) page = InjectDependencies(context, page);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;return page;<br />
+}<br />
+<br />
+private static IHttpHandler InjectDependencies(HttpContext context, IHttpHandler page)<br />
+{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;return SomeHelperClass.GetContainer(context).BuildUp(page.GetType(), page);<br />
+}<br />
+<br />
+Then the code-behind file is just like any other System.Web.UI.Page class except for the following addition property that is of a type already registered with our container so it will get filled by the DI container:<br />
+<br />
+[Microsoft.Practices.Unity.Dependency]<br />
+public IMyDao myDao { get; set; }<br /><small><b>Mufasa</b>   - 04 01 11 - 18:47 </small></p>
+<p>You are correct that most DI frameworks have a construct for this. To be able to use such a feature of your DI framework, you often need framework specific attributes, as Unity’s DependencyAttribute. Using such attributes makes it harder to swap frameworks later on, so if you wish to minimize the dependencies on your DI framework (and ideally only have a dependency in your application’s Composition Root), you would end up with something as described in this article.<br />
+<br />
+The Simple Service Locator DI container for instance, doesn't allow users to specify attributes to ensure it to be replaced later on with an other DI implementation. I wrote this article especially with the Simple Service Locator in mind.<br /><small><b>Steven</b>  (<a href='http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=81'  title='www.cuttingedge.it/blogs/steven/pivot/entry.php?id=81'>URL</a>) - 05 01 11 - 11:01 </small></p>
+<p>Thanks very much for this -- worked pretty much straight out the box for me.  I was able to hook this up to NInject very easily.<br />
+<br />
+Great work!<br /><small><b>John</b>   - 11 10 11 - 12:50 </small></p>
+<p>Excellent post. Does the GetChildControls method work? In my test scenario with a Master Page, a Content Page and a User Control referenced from the Content Page, the GetChildControls method always returns an empty array. It  returns null on "field.GetValue(ctrl) as Control". Note that it's "field.GetValue(ctrl)" that returns null. I've adapted the code to use Ninject and it works fine injecting dependencies into pages. Now that I have a requirement to do User Controls within Content Pages, I encountered this issue.<br /><small><b>Ian</b>   - 22 07 13 - 10:59 </small></p>
+<p>Although a bit late, I found your post very helpful to do DI for our webforms pages.<br />
+<br />
+I encountered the same problem as Ian btw, that controls are all null. After some debugging I solved the problem, because all controls were null at that point in time. The preinit event is used here to execute this code, but that is a bit too soon. According to the documentation, the init event is when all controls have been initialized. Changing preinit to init made all of the code work perfectly.<br />
+<br />
+Thanks a lot Steven!<br /><small><b>Gijs</b>   - 14 05 15 - 14:08 </small></p>
+<p>And if you want to make it work with your master page as well, add the following code to the page.Init labda method:<br />
+if (page.Master != null)<br />
+{<br />
+  InitializeInstance(page.Master);<br />
+}<br /><small><b>Gijs</b>   - 09 06 15 - 12:21 </small></p>
+<p>We have implemented a flavour of this code and DI is working well however, when comparing our master branch to our DI branch on staging, we are seeing a 30 - 70% slowdown. We are targeting rich DI pages and light DI pages as well as a page with no Master page. All pages are consistently slow as mentioned. Has anyone else experienced this? NOTE: we are using StructureMap.<br /><small><b>Martin Erskine</b>   - 22 03 17 - 14:49 </small></p>
+<a id="lastcomment"></a><p>Hi Martin,<br />
+<br />
+This method walks the entire page hierarchy, so in case a page contains hundreds of child controls, you can expect a considerate slow down. This can be exaggerated by the performance of the used DI container.<br />
+<br />
+In case the performance hit is too large, prevent doing DI in child controls completely, and move to a Humble Object model (http://xunitpatterns.com/Humble%20Object.html) where pages and controls are just dumb objects where all interesting logic that requires the use of dependencies is extracted from the page/control into a service. The page can get that single dependency injected (and possibly pass dependencies on to its child controls when called). You'll ideally end up with one or a few dependencies on your Page classes.<br /><small><b>Steven</b>  (<a href='http://https://cuttingedge.it/blogs/steven/pivot/entry.php?id=81'  title='https://cuttingedge.it/blogs/steven/pivot/entry.php?id=81'>URL</a>) - 22 03 17 - 14:58 </small></p>
+<p>I have question ..<br />
+in config we add CommonServiceLocatorPageHandlerFactory<br />
+but we create class SimpleInjectorPageHandlerFactory.. <br />
+I got Parser Error Message: Could not load file or assembly 'CSL' or one of its dependencies. The system cannot find the file specified.<br /><small><b>Vibhu</b>   - 14 10 17 - 21:11 </small></p>
+
+			</div>
+
+		</div>
+
+		<hr />
+		
+		<div id="footer">
+			<p>&copy; 2007-2019 Steven van Deursen.<br /><span class="dontPrint"><a href="/blogs/steven/rss.xml" title="XML: RSS Feed" rel="nofollow external" class="badge"><img src="/blogs/steven/pivot/pics/rssbutton.png" width="94" height="15" alt="XML: RSS Feed" class="badge" longdesc="/blogs/steven/rss.xml" /></a> <a href="/blogs/steven/atom.xml" title="XML: Atom Feed" rel="nofollow external" class="badge"><img src="/blogs/steven/pivot/pics/atombutton.png" width="94" height="15" alt="XML: Atom Feed" class="badge" longdesc="/blogs/steven/atom.xml" /></a></span>
+			</p>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/CSharpCodeHighlighter0.10.js"></script>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/MSILCodeHighlighter0.1.js"></script>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/X86CodeHighlighter0.1.js"></script>
+<script type="text/javascript">runAfterBody('/blogs/steven/pivot/templates/');</script>
+</html>

@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+		<title>
+				ReadOnlyDictionary &middot; .NET Junkie - Weblog of a workaholic
+		</title>
+	
+		
+		<link rel="stylesheet" href="/steven/css/style.css">
+		<link rel="stylesheet" href="/steven/css/overrides.css">
+		<link rel="stylesheet" href="/steven/css/Libre_Baskerville_400_400i_700.css">
+		
+		<link rel="icon" type="image/png" sizes="32x32" href="/steven/images/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/steven/images/favicon-16x16.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="/steven/images/apple-touch-icon.png">
+	
+		
+		<link href="" rel="alternate" type="application/rss+xml" title=".NET Junkie - Weblog of a workaholic" />
+	</head>
+	
+    <body>
+        		<nav class="nav">
+			<div class="nav-container">
+				<a href="/steven/">
+					<h2 class="nav-title">.NET Junkie - Weblog of a workaholic</h2>
+				</a>
+				<ul>
+    <li><a href="/steven/about">About</a></li>
+    <li><a href="/steven/">Posts</a></li>
+</ul>
+			</div>
+		</nav>
+
+        
+
+<main>
+	<div class="post">
+		<div class="post-info">
+    <span>Written by</span>
+        Steven van Deursen
+        <br>
+        <span>on&nbsp;</span><time datetime="2007-11-22 00:00:00 &#43;0000 UTC">November 22, 2007</time>
+</div>
+		<h1 class="post-title">ReadOnlyDictionary</h1>
+<div class="post-line"></div>
+
+		
+
+		
+
+<h3 id="this-article-describes-an-implementation-of-a-readonlydictionary-tkey-tvalue-that-s-missing-from-the-net-framework">This article describes an implementation of a <code>ReadOnlyDictionary&lt;TKey, TValue&gt;</code> that&rsquo;s missing from the .NET framework.</h3>
+
+<h4 id="update-2012-06-05-net-4-5-will-finally-finally-contain-a-readonlydictionary-tkey-tvalue-which-will-make-this-post-that-has-long-be-my-top-most-googled-article-finally-redundant-if-you-re-still-developing-under-net-4-0-or-below-please-read-on">UPDATE 2012-06-05: .NET 4.5 will (finally finally!!) contain a <code>ReadOnlyDictionary&lt;TKey, TValue&gt;</code>, which will make this post (that has long be my top most googled article) finally redundant. If you&rsquo;re still developing under .NET 4.0 or below, please read on.</h4>
+
+<h4 id="update-2013-04-11-software-license-notice-i-previously-released-this-under-the-mit-license-but-decided-to-change-this-the-source-code-presented-in-this-post-is-released-as-public-domain-this-means-that-you-can-do-whatever-you-want-with-it-no-need-to-tell-anyone-about-it-but-don-t-blame-me-if-shit-hits-the-fan">UPDATE 2013-04-11: Software license notice: I previously released this under the MIT license, but decided to change this. The source code presented in this post is released as &lsquo;public domain&rsquo;. This means that you can do whatever you want with it, no need to tell anyone about it, but don&rsquo;t blame me if shit hits the fan.</h4>
+
+<p>I always wondered why Microsoft didn&rsquo;t add a ReadOnlyDictionary class in the System.Collections.Generic or System.Collections.ObjectModel namespace. I&rsquo;m not alone. This feature request has been posted at least twice on the Microsoft Connect feedback website and many people decided to write their own implementation.</p>
+
+<p>None of the implementations I found on the internet appealed to me. The two biggest problems I had with them where that they weren&rsquo;t actually read-only and didn&rsquo;t implement interface members explicitly. The latter complicates the use of the dictionary unnecessarily while using it through IntelliSense.</p>
+
+<p>While I could try to fix one of those implementations, I decided to write my own and looked closely at the Dictionary<TKey, TValue> and <code>ReadOnlyCollection&lt;T&gt;</code> implementations that already were in the framework. In the code below you&rsquo;ll see that the implementation is rather straight forward. I&rsquo;ve implemented the correct interfaces, with most methods explicitly and I wrapped a <code>Dictionary&lt;TKey, TValue&gt;</code> internally. The internal dictionary is a copy of the provided constructor argument. This last point is rather important, because the other implementations I saw didn&rsquo;t make such a copy, allowing you to change the read-only dictionary after creation by using a reference to the original dictionary. Last but not least is the implementation of a ReadOnlyDictionaryDebugView class that helps you display the dictionary during debugging.</p>
+
+<h4 id="update-2008-03-02">UPDATE 2008-03-02:</h4>
+
+<p>Looking once more at .NET’s <code>ReadOnlyCollection&lt;T&gt;</code> implementation, I noticed that the implementation doesn’t make a copy of the supplied collection; it simply wraps it! After giving it some thought, it made a lot of sense to me. By wrapping the original collection, the read-only collection copies the original collection’s behavior. Copying the behavior is important, because otherwise you would end up creating a read-only version of each and every type implementing ICollection or IDictionary for which you’d like to have a read-only wrapper, simply because each type possibly behaves differently.</p>
+
+<p>For the <code>ReadOnlyDictionary&lt;TKey, TValue&gt;</code> it is even clearer. Whether the dictionary contains a key or not, is determined by how equality is defined for type TKey. I already noticed this behavioral problem in my original implementation, which is why I included a constructor with an <code>IEqualityComparer&lt;TKey&gt;</code> argument. But this simply isn’t enough, because supplying an <code>IEqualityComparer&lt;TKey&gt;</code> is possibly not suitable for every dictionary implementation. Remember that we expect an <code>IDictionary&lt;TKey, TValue&gt;</code> to be given by the user, so there actually isn’t that much we know about the implementation of the supplied object.</p>
+
+<p>My conclusion is that copying the supplied dictionary is actually a design flaw. The only reasonable thing the ReadOnlyDictionary can do is to wrap the given dictionary. This however leads to an implementation that is not truly read-only, but so is the framework’s ReadOnlyCollection implementation. Therefore we shift the responsibility for this to the user of our implementation.</p>
+
+<h4 id="update-2010-05-20">UPDATE 2010-05-20:</h4>
+
+<p>I updated the formatting and XML comments in a way that StyleCop likes it.</p>
+
+<h4 id="update-2011-03-22">UPDATE 2011-03-22:</h4>
+
+<p>Jacek noted correctly in the comments that the ReadOnlyDictionary made the assumption that the wrapped dictionary always implemented the old non-generic ICollection and IDictionary interfaces. While most types in the framework that implement <code>IDictionary&lt;TKey, TValue&gt;</code> also implement ICollection and IDictionary, not all types do, and more importantly, types simply don&rsquo;t have to. To fix this, I had to remove the IDictionary interface from the ReadOnlyDictionary. It still implements ICollection though.</p>
+
+<p>Here is my (corrected) <code>ReadOnlyDictionary&lt;TKey, TValue&gt;</code> implementation.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">using</span> System;
+<span style="color:#66d9ef">using</span> System.Collections;
+<span style="color:#66d9ef">using</span> System.Collections.Generic;
+<span style="color:#66d9ef">using</span> System.Diagnostics;
+<span style="color:#66d9ef">using</span> System.Runtime.InteropServices;
+<span style="color:#66d9ef">using</span> System.Threading;
+
+ <span style="color:#75715e">/// &lt;summary&gt;
+</span><span style="color:#75715e"></span> <span style="color:#75715e">/// Provides the base class for a generic read-only dictionary.
+</span><span style="color:#75715e"></span> <span style="color:#75715e">/// &lt;/summary&gt;
+</span><span style="color:#75715e"></span> <span style="color:#75715e">/// &lt;typeparam name=&#34;TKey&#34;&gt;
+</span><span style="color:#75715e"></span> <span style="color:#75715e">/// The type of keys in the dictionary.
+</span><span style="color:#75715e"></span> <span style="color:#75715e">/// &lt;/typeparam&gt;
+</span><span style="color:#75715e"></span> <span style="color:#75715e">/// &lt;typeparam name=&#34;TValue&#34;&gt;
+</span><span style="color:#75715e"></span> <span style="color:#75715e">/// The type of values in the dictionary.
+</span><span style="color:#75715e"></span> <span style="color:#75715e">/// &lt;/typeparam&gt;
+</span><span style="color:#75715e"></span> <span style="color:#75715e">/// &lt;remarks&gt;
+</span><span style="color:#75715e"></span> <span style="color:#75715e">/// &lt;para&gt;
+</span><span style="color:#75715e"></span> <span style="color:#75715e">/// An instance of the &lt;b&gt;ReadOnlyDictionary&lt;/b&gt; generic class is
+</span><span style="color:#75715e"></span> <span style="color:#75715e">/// always read-only. A dictionary that is read-only is simply a
+</span><span style="color:#75715e"></span> <span style="color:#75715e">/// dictionary with a wrapper that prevents modifying the
+</span><span style="color:#75715e"></span> <span style="color:#75715e">/// dictionary; therefore, if changes are made to the underlying
+</span><span style="color:#75715e"></span> <span style="color:#75715e">/// dictionary, the read-only dictionary reflects those changes. 
+</span><span style="color:#75715e"></span> <span style="color:#75715e">/// See &lt;see cref=&#34;Dictionary{TKey,TValue}&#34;/&gt; for a modifiable version of 
+</span><span style="color:#75715e"></span> <span style="color:#75715e">/// this class.
+</span><span style="color:#75715e"></span> <span style="color:#75715e">/// &lt;/para&gt;
+</span><span style="color:#75715e"></span> <span style="color:#75715e">/// &lt;para&gt;
+</span><span style="color:#75715e"></span> <span style="color:#75715e">/// &lt;b&gt;Notes to Implementers&lt;/b&gt; This base class is provided to 
+</span><span style="color:#75715e"></span> <span style="color:#75715e">/// make it easier for implementers to create a generic read-only
+</span><span style="color:#75715e"></span> <span style="color:#75715e">/// custom dictionary. Implementers are encouraged to extend this
+</span><span style="color:#75715e"></span> <span style="color:#75715e">/// base class instead of creating their own. 
+</span><span style="color:#75715e"></span> <span style="color:#75715e">/// &lt;/para&gt;
+</span><span style="color:#75715e"></span> <span style="color:#75715e">/// &lt;/remarks&gt;
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">[Serializable]
+</span><span style="color:#a6e22e">[DebuggerDisplay(&#34;Count = {Count}&#34;)]
+</span><span style="color:#a6e22e">[ComVisible(false)]
+</span><span style="color:#a6e22e">[DebuggerTypeProxy(typeof(ReadOnlyDictionaryDebugView&lt;,&gt;))]</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ReadOnlyDictionary</span>&lt;TKey, TValue&gt; : IDictionary&lt;TKey, TValue&gt;,
+    ICollection
+{
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IDictionary&lt;TKey, TValue&gt; source;
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">object</span> syncRoot;
+
+    <span style="color:#75715e">/// &lt;summary&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// Initializes a new instance of the
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;see cref=&#34;T:ReadOnlyDictionary`2&#34; /&gt; class that wraps
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// the supplied &lt;paramref name=&#34;dictionaryToWrap&#34;/&gt;.
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;/summary&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;param name=&#34;dictionaryToWrap&#34;&gt;The &lt;see cref=&#34;T:IDictionary`2&#34; /&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// that will be wrapped.&lt;/param&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;exception cref=&#34;T:System.ArgumentNullException&#34;&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// Thrown when the dictionary is null.
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;/exception&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> ReadOnlyDictionary(IDictionary&lt;TKey, TValue&gt; dictionaryToWrap)
+    {
+        <span style="color:#66d9ef">if</span> (dictionaryToWrap == <span style="color:#66d9ef">null</span>)
+        {
+            <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ArgumentNullException(<span style="color:#e6db74">&#34;dictionaryToWrap&#34;</span>);
+        }
+
+        <span style="color:#66d9ef">this</span>.source = dictionaryToWrap;
+    }
+
+    <span style="color:#75715e">/// &lt;summary&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// Gets the number of key/value pairs contained in the
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;see cref=&#34;T:ReadOnlyDictionary`2&#34;&gt;&lt;/see&gt;.
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;/summary&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;value&gt;The number of key/value pairs.&lt;/value&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;returns&gt;The number of key/value pairs contained in the
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;see cref=&#34;T:ReadOnlyDictionary`2&#34;&gt;&lt;/see&gt;.&lt;/returns&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> Count
+    {
+        <span style="color:#66d9ef">get</span> { <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>.source.Count; }
+    }
+
+    <span style="color:#75715e">/// &lt;summary&gt;Gets a collection containing the keys in the
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;see cref=&#34;T:ReadOnlyDictionary{TKey,TValue}&#34;&gt;&lt;/see&gt;.&lt;/summary&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;value&gt;A &lt;see cref=&#34;Dictionary{TKey,TValue}.KeyCollection&#34;/&gt; 
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// containing the keys.&lt;/value&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;returns&gt;A
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;see cref=&#34;Dictionary{TKey,TValue}.KeyCollection&#34;/&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// containing the keys in the
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;see cref=&#34;Dictionary{TKey,TValue}&#34;&gt;&lt;/see&gt;.
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;/returns&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> ICollection&lt;TKey&gt; Keys
+    {
+        <span style="color:#66d9ef">get</span> { <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>.source.Keys; }
+    }
+
+    <span style="color:#75715e">/// &lt;summary&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// Gets a collection containing the values of the
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;see cref=&#34;T:ReadOnlyDictionary`2&#34;/&gt;.
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;/summary&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;value&gt;The collection of values.&lt;/value&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> ICollection&lt;TValue&gt; Values
+    {
+        <span style="color:#66d9ef">get</span> { <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>.source.Values; }
+    }
+
+    <span style="color:#75715e">/// &lt;summary&gt;Gets a value indicating whether the dictionary is read-only.
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// This value will always be true.&lt;/summary&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">bool</span> ICollection&lt;KeyValuePair&lt;TKey, TValue&gt;&gt;.IsReadOnly
+    {
+        <span style="color:#66d9ef">get</span> { <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>; }
+    }
+
+    <span style="color:#75715e">/// &lt;summary&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// Gets a value indicating whether access to the dictionary
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// is synchronized (thread safe).
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;/summary&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">bool</span> ICollection.IsSynchronized
+    {
+        <span style="color:#66d9ef">get</span> { <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>; }
+    }
+
+    <span style="color:#75715e">/// &lt;summary&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// Gets an object that can be used to synchronize access to dictionary.
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;/summary&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">object</span> ICollection.SyncRoot
+    {
+        <span style="color:#66d9ef">get</span>
+        {
+            <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">this</span>.syncRoot == <span style="color:#66d9ef">null</span>)
+            {
+                ICollection collection = <span style="color:#66d9ef">this</span>.source <span style="color:#66d9ef">as</span> ICollection;
+
+                <span style="color:#66d9ef">if</span> (collection != <span style="color:#66d9ef">null</span>)
+                {
+                    <span style="color:#66d9ef">this</span>.syncRoot = collection.SyncRoot;
+                }
+                <span style="color:#66d9ef">else</span>
+                {
+                    Interlocked.CompareExchange(<span style="color:#66d9ef">ref</span> <span style="color:#66d9ef">this</span>.syncRoot, <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">object</span>(), <span style="color:#66d9ef">null</span>);
+                }
+            }
+
+            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>.syncRoot;
+        }
+    }
+
+    <span style="color:#75715e">/// &lt;summary&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// Gets or sets the value associated with the specified key.
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;/summary&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;returns&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// The value associated with the specified key. If the specified key
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// is not found, a get operation throws a 
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;see cref=&#34;T:System.Collections.Generic.KeyNotFoundException&#34; /&gt;,
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// and a set operation creates a new element with the specified key.
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;/returns&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;param name=&#34;key&#34;&gt;The key of the value to get or set.&lt;/param&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;exception cref=&#34;T:System.ArgumentNullException&#34;&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// Thrown when the key is null.
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;/exception&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;exception cref=&#34;T:System.Collections.Generic.KeyNotFoundException&#34;&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// The property is retrieved and key does not exist in the collection.
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;/exception&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> TValue <span style="color:#66d9ef">this</span><span style="color:#a6e22e">[TKey key]</span>
+    {
+        <span style="color:#66d9ef">get</span> { <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>.source<span style="color:#a6e22e">[key]</span>; }
+        <span style="color:#66d9ef">set</span> { ThrowNotSupportedException(); }
+    }
+
+    <span style="color:#75715e">/// &lt;summary&gt;This method is not supported by the 
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;see cref=&#34;T:ReadOnlyDictionary`2&#34;/&gt;.&lt;/summary&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;param name=&#34;key&#34;&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// The object to use as the key of the element to add.&lt;/param&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;param name=&#34;value&#34;&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// The object to use as the value of the element to add.&lt;/param&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">void</span> IDictionary&lt;TKey, TValue&gt;.Add(TKey key, TValue <span style="color:#66d9ef">value</span>)
+    {
+        ThrowNotSupportedException();
+    }
+
+    <span style="color:#75715e">/// &lt;summary&gt;Determines whether the &lt;see cref=&#34;T:ReadOnlyDictionary`2&#34; /&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// contains the specified key.&lt;/summary&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;returns&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// True if the &lt;see cref=&#34;T:ReadOnlyDictionary`2&#34; /&gt; contains
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// an element with the specified key; otherwise, false.
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;/returns&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;param name=&#34;key&#34;&gt;The key to locate in the
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;see cref=&#34;T:ReadOnlyDictionary`2&#34;&gt;&lt;/see&gt;.&lt;/param&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;exception cref=&#34;T:System.ArgumentNullException&#34;&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// Thrown when the key is null.
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;/exception&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">bool</span> ContainsKey(TKey key)
+    {
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>.source.ContainsKey(key);
+    }
+
+    <span style="color:#75715e">/// &lt;summary&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// This method is not supported by the &lt;see cref=&#34;T:ReadOnlyDictionary`2&#34;/&gt;.
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;/summary&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;param name=&#34;key&#34;&gt;The key of the element to remove.&lt;/param&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;returns&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// True if the element is successfully removed; otherwise, false.
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;/returns&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">bool</span> IDictionary&lt;TKey, TValue&gt;.Remove(TKey key)
+    {
+        ThrowNotSupportedException();
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
+    }
+
+    <span style="color:#75715e">/// &lt;summary&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// Gets the value associated with the specified key.
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;/summary&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;param name=&#34;key&#34;&gt;The key of the value to get.&lt;/param&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;param name=&#34;value&#34;&gt;When this method returns, contains the value
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// associated with the specified key, if the key is found;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// otherwise, the default value for the type of the value parameter.
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// This parameter is passed uninitialized.&lt;/param&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;returns&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;b&gt;true&lt;/b&gt; if the &lt;see cref=&#34;T:ReadOnlyDictionary`2&#34; /&gt; contains
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// an element with the specified key; otherwise, &lt;b&gt;false&lt;/b&gt;.
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;/returns&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">bool</span> TryGetValue(TKey key, <span style="color:#66d9ef">out</span> TValue <span style="color:#66d9ef">value</span>)
+    {
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>.source.TryGetValue(key, <span style="color:#66d9ef">out</span> <span style="color:#66d9ef">value</span>);
+    }
+
+    <span style="color:#75715e">/// &lt;summary&gt;This method is not supported by the
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;see cref=&#34;T:ReadOnlyDictionary`2&#34;/&gt;.&lt;/summary&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;param name=&#34;item&#34;&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// The object to add to the &lt;see cref=&#34;T:ICollection`1&#34;/&gt;.
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;/param&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">void</span> ICollection&lt;KeyValuePair&lt;TKey, TValue&gt;&gt;.Add(
+        KeyValuePair&lt;TKey, TValue&gt; item)
+    {
+        ThrowNotSupportedException();
+    }
+
+    <span style="color:#75715e">/// &lt;summary&gt;This method is not supported by the 
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;see cref=&#34;T:ReadOnlyDictionary`2&#34;/&gt;.&lt;/summary&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">void</span> ICollection&lt;KeyValuePair&lt;TKey, TValue&gt;&gt;.Clear()
+    {
+        ThrowNotSupportedException();
+    }
+
+    <span style="color:#75715e">/// &lt;summary&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// Determines whether the &lt;see cref=&#34;T:ICollection`1&#34;/&gt; contains a
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// specific value.
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;/summary&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;param name=&#34;item&#34;&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// The object to locate in the &lt;see cref=&#34;T:ICollection`1&#34;/&gt;.
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;/param&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;returns&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;b&gt;true&lt;/b&gt; if item is found in the &lt;b&gt;ICollection&lt;/b&gt;; 
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// otherwise, &lt;b&gt;false&lt;/b&gt;.
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;/returns&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">bool</span> ICollection&lt;KeyValuePair&lt;TKey, TValue&gt;&gt;.Contains(
+        KeyValuePair&lt;TKey, TValue&gt; item)
+    {
+        ICollection&lt;KeyValuePair&lt;TKey, TValue&gt;&gt; collection = <span style="color:#66d9ef">this</span>.source;
+
+        <span style="color:#66d9ef">return</span> collection.Contains(item);
+    }
+
+    <span style="color:#75715e">/// &lt;summary&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// Copies the elements of the ICollection to an Array, starting at a
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// particular Array index. 
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;/summary&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;param name=&#34;array&#34;&gt;The one-dimensional Array that is the
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// destination of the elements copied from ICollection.
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// The Array must have zero-based indexing.
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;/param&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;param name=&#34;arrayIndex&#34;&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// The zero-based index in array at which copying begins.
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;/param&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">void</span> ICollection&lt;KeyValuePair&lt;TKey, TValue&gt;&gt;.CopyTo(
+        KeyValuePair&lt;TKey, TValue&gt;<span style="color:#a6e22e">[]</span> array, <span style="color:#66d9ef">int</span> arrayIndex)
+    {
+        ICollection&lt;KeyValuePair&lt;TKey, TValue&gt;&gt; collection = <span style="color:#66d9ef">this</span>.source;
+        collection.CopyTo(array, arrayIndex);
+    }
+
+    <span style="color:#75715e">/// &lt;summary&gt;This method is not supported by the
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;see cref=&#34;T:ReadOnlyDictionary`2&#34;/&gt;.&lt;/summary&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;param name=&#34;item&#34;&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// The object to remove from the ICollection.
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;/param&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;returns&gt;Will never return a value.&lt;/returns&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">bool</span> ICollection&lt;KeyValuePair&lt;TKey, TValue&gt;&gt;.Remove(KeyValuePair&lt;TKey, TValue&gt; item)
+    {
+        ThrowNotSupportedException();
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
+    }
+
+    <span style="color:#75715e">/// &lt;summary&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// Returns an enumerator that iterates through the collection.
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;/summary&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;returns&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// A IEnumerator that can be used to iterate through the collection.
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;/returns&gt;
+</span><span style="color:#75715e"></span>    IEnumerator&lt;KeyValuePair&lt;TKey, TValue&gt;&gt;
+        IEnumerable&lt;KeyValuePair&lt;TKey, TValue&gt;&gt;.GetEnumerator()
+    {
+        IEnumerable&lt;KeyValuePair&lt;TKey, TValue&gt;&gt; enumerator = <span style="color:#66d9ef">this</span>.source;
+
+        <span style="color:#66d9ef">return</span> enumerator.GetEnumerator();
+    }
+
+    <span style="color:#75715e">/// &lt;summary&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// Returns an enumerator that iterates through a collection.
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;/summary&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;returns&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// An IEnumerator that can be used to iterate through the collection.
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;/returns&gt;
+</span><span style="color:#75715e"></span>    IEnumerator IEnumerable.GetEnumerator()
+    {
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>.source.GetEnumerator();
+    }
+
+    <span style="color:#75715e">/// &lt;summary&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// For a description of this member, see &lt;see cref=&#34;ICollection.CopyTo&#34;/&gt;. 
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;/summary&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;param name=&#34;array&#34;&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// The one-dimensional Array that is the destination of the elements copied from 
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// ICollection. The Array must have zero-based indexing.
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;/param&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;param name=&#34;index&#34;&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// The zero-based index in Array at which copying begins.
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;/param&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">void</span> ICollection.CopyTo(Array array, <span style="color:#66d9ef">int</span> index)
+    {
+        ICollection collection = 
+            <span style="color:#66d9ef">new</span> List&lt;KeyValuePair&lt;TKey, TValue&gt;&gt;(<span style="color:#66d9ef">this</span>.source);
+
+        collection.CopyTo(array, index);
+    }
+
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> ThrowNotSupportedException()
+    {
+        <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> NotSupportedException(<span style="color:#e6db74">&#34;This Dictionary is read-only&#34;</span>);
+    }
+}
+
+<span style="color:#66d9ef">internal</span> <span style="color:#66d9ef">sealed</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ReadOnlyDictionaryDebugView</span>&lt;TKey, TValue&gt;
+{
+    <span style="color:#66d9ef">private</span> IDictionary&lt;TKey, TValue&gt; dict;
+
+    <span style="color:#66d9ef">public</span> ReadOnlyDictionaryDebugView(
+        ReadOnlyDictionary&lt;TKey, TValue&gt; dictionary)
+    {
+        <span style="color:#66d9ef">if</span> (dictionary == <span style="color:#66d9ef">null</span>)
+        {
+            <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ArgumentNullException(<span style="color:#e6db74">&#34;dictionary&#34;</span>);
+        }
+
+        <span style="color:#66d9ef">this</span>.dict = dictionary;
+    }<span style="color:#a6e22e">
+</span><span style="color:#a6e22e">
+</span><span style="color:#a6e22e">    [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]</span>
+    <span style="color:#66d9ef">public</span> KeyValuePair&lt;TKey, TValue&gt;<span style="color:#a6e22e">[]</span> Items
+    {
+        <span style="color:#66d9ef">get</span>
+        {
+            KeyValuePair&lt;TKey, TValue&gt;<span style="color:#a6e22e">[]</span> array =
+                <span style="color:#66d9ef">new</span> KeyValuePair&lt;TKey, TValue&gt;<span style="color:#a6e22e">[this.dict.Count]</span>;
+            <span style="color:#66d9ef">this</span>.dict.CopyTo(array, <span style="color:#ae81ff">0</span>);
+            <span style="color:#66d9ef">return</span> array;
+        }
+    }
+}</code></pre></div>
+
+<h2 id="comments">Comments</h2>
+
+<p>Comments haven&rsquo;t been migrated yet&hellip;</p>
+
+
+		<hr />
+
+<h2 id="wish-to-comment">Wish to comment?</h2>
+
+<p>Comments are currently turned off as I switched to a static site generator. I will enable commenting again in the future, most likely using pull requests. Stay tuned...</p>
+
+
+
+<hr />
+
+<h2 id="buy-my-book">Buy my book</h2>
+
+<p style="margin-right:7%">
+<a href="https://manning.com/seemann2"><img src="/steven/images/book%20cover%20smaller.png" style="float:left;margin-right:10px;margin-bottom:5px;border:0px solid" title="Dependency Injection Principles, Practices, and Patterns" alt="Dependency Injection Principles, Practices, and Patterns Cover Small" /></a>
+I coauthored the book <a href="https://manning.com/seemann2">Dependency Injection Principles, Practices, and Patterns</a>. If you're interested to learn more about DI and software design in general, consider reading my book.
+</p>
+	</div>
+
+	<div class="pagination">
+		<a href="/steven/posts/2006/net-backwards-compatibility/" class="left arrow">&#8592;</a>
+		<a href="/steven/posts/2008/the-death-of-linq-to-sql/" class="right arrow">&#8594;</a>
+
+		<a href="#" class="top">Top</a>
+	</div>
+</main>
+
+
+        		<footer>
+			<span>
+			&copy; <time datetime="2019-03-13 19:28:57.6052761 &#43;0100 CET m=&#43;0.236317701">2019</time> Steven van Deursen. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
+			</span>
+		</footer>
+
+    </body>
+</html>

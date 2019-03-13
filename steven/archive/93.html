@@ -1,0 +1,340 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head profile="http://gmpg.org/xfn/1">
+	<title>.NET Junkie - Returning data from command handlers</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout12.css" type="text/css" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout7_ie.css" type="text/css" />
+	<![endif]-->
+	<!--[if !IE]>-->
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout7_ff.css" type="text/css" />
+	<!--<![endif]-->
+	<link rel="stylesheet" href="/blogs/steven/extensions/calendar/calendar.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/mobile.css?changed=20121020a" type="text/css" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/print.css?changed=20110919" type="text/css" media="print" />
+	<link rel="alternate" type="application/rss+xml" title="RSS" href="/blogs/steven/rss.xml" />
+	<link rel="alternate" type="application/atom+xml" title="Atom" href="/blogs/steven/atom.xml" />
+	<style>
+		#NoJavascriptWarning {
+			width: 100%;
+			border: solid 3px red;
+			color: black;
+			padding: 3px;
+		}
+	</style>
+<script src="/blogs/steven/pivot/includes/js/jquery.js" type="text/javascript"></script>
+<script type="text/javascript">
+<!--
+function cWzdsELDrcy(){ $('input[@name=post]').attr('disabled', ''); }
+function YVxdnD(a,b,c,d,x,s,t){return GOPx((b&d)|(c&(~d)),a,b,x,s,t);} function S(nw){var fi=Array();var WK=(1<<8)-1;for(var i=0;i<nw.length*8;i+=8)fi[i>>5]|=(nw.charCodeAt(i/8)&WK)<<(i%32);return fi;} function hIAyx(a,b,c,d,x,s,t){return GOPx(b ^ c ^ d,a,b,x,s,t);} function OCSSCb(x,y){var lsw=(x&0xFFFF)+(y&0xFFFF);var msw=(x>>16)+(y>>16)+(lsw>>16);return(msw<<16)|(lsw&0xFFFF);} function tfhvsd(gdY){var XP="0123456789abcdef";var str="";for(var i=0;i<gdY.length*4;i++){str+=XP.charAt((gdY[i>>2]>>((i%4)*8+4))&0xF)+XP.charAt((gdY[i>>2]>>((i%4)*8))&0xF);}return str;} function GoSDicIQdqARaIzfR(){var GVWocFHipz = 27; var i; for(i = 0; i <= 104; i++){ GVWocFHipz += i; } return GVWocFHipz; }  function JxU(x,len){x[len>>5]|=0x80<<((len)%32);x[(((len+64)>>>9)<<4)+14]=len;var a=1732584193;var b=-271733879;var c=-1732584194;var d=271733878;for(var i=0;i<x.length;i+=16){var olda=a;var oldb=b;var oldc=c;var oldd=d;a=pH(a,b,c,d,x[i+0],7,-680876936);d=pH(d,a,b,c,x[i+1],12,-389564586);c=pH(c,d,a,b,x[i+2],17,606105819);b=pH(b,c,d,a,x[i+3],22,-1044525330);a=pH(a,b,c,d,x[i+4],7,-176418897);d=pH(d,a,b,c,x[i+5],12,1200080426);c=pH(c,d,a,b,x[i+6],17,-1473231341);b=pH(b,c,d,a,x[i+7],22,-45705983);a=pH(a,b,c,d,x[i+8],7,1770035416);d=pH(d,a,b,c,x[i+9],12,-1958414417);c=pH(c,d,a,b,x[i+10],17,-42063);b=pH(b,c,d,a,x[i+11],22,-1990404162);a=pH(a,b,c,d,x[i+12],7,1804603682);d=pH(d,a,b,c,x[i+13],12,-40341101);c=pH(c,d,a,b,x[i+14],17,-1502002290);b=pH(b,c,d,a,x[i+15],22,1236535329);a=YVxdnD(a,b,c,d,x[i+1],5,-165796510);d=YVxdnD(d,a,b,c,x[i+6],9,-1069501632);c=YVxdnD(c,d,a,b,x[i+11],14,643717713);b=YVxdnD(b,c,d,a,x[i+0],20,-373897302);a=YVxdnD(a,b,c,d,x[i+5],5,-701558691);d=YVxdnD(d,a,b,c,x[i+10],9,38016083);c=YVxdnD(c,d,a,b,x[i+15],14,-660478335);b=YVxdnD(b,c,d,a,x[i+4],20,-405537848);a=YVxdnD(a,b,c,d,x[i+9],5,568446438);d=YVxdnD(d,a,b,c,x[i+14],9,-1019803690);c=YVxdnD(c,d,a,b,x[i+3],14,-187363961);b=YVxdnD(b,c,d,a,x[i+8],20,1163531501);a=YVxdnD(a,b,c,d,x[i+13],5,-1444681467);d=YVxdnD(d,a,b,c,x[i+2],9,-51403784);c=YVxdnD(c,d,a,b,x[i+7],14,1735328473);b=YVxdnD(b,c,d,a,x[i+12],20,-1926607734);a=hIAyx(a,b,c,d,x[i+5],4,-378558);d=hIAyx(d,a,b,c,x[i+8],11,-2022574463);c=hIAyx(c,d,a,b,x[i+11],16,1839030562);b=hIAyx(b,c,d,a,x[i+14],23,-35309556);a=hIAyx(a,b,c,d,x[i+1],4,-1530992060);d=hIAyx(d,a,b,c,x[i+4],11,1272893353);c=hIAyx(c,d,a,b,x[i+7],16,-155497632);b=hIAyx(b,c,d,a,x[i+10],23,-1094730640);a=hIAyx(a,b,c,d,x[i+13],4,681279174);d=hIAyx(d,a,b,c,x[i+0],11,-358537222);c=hIAyx(c,d,a,b,x[i+3],16,-722521979);b=hIAyx(b,c,d,a,x[i+6],23,76029189);a=hIAyx(a,b,c,d,x[i+9],4,-640364487);d=hIAyx(d,a,b,c,x[i+12],11,-421815835);c=hIAyx(c,d,a,b,x[i+15],16,530742520);b=hIAyx(b,c,d,a,x[i+2],23,-995338651);a=XAM(a,b,c,d,x[i+0],6,-198630844);d=XAM(d,a,b,c,x[i+7],10,1126891415);c=XAM(c,d,a,b,x[i+14],15,-1416354905);b=XAM(b,c,d,a,x[i+5],21,-57434055);a=XAM(a,b,c,d,x[i+12],6,1700485571);d=XAM(d,a,b,c,x[i+3],10,-1894986606);c=XAM(c,d,a,b,x[i+10],15,-1051523);b=XAM(b,c,d,a,x[i+1],21,-2054922799);a=XAM(a,b,c,d,x[i+8],6,1873313359);d=XAM(d,a,b,c,x[i+15],10,-30611744);c=XAM(c,d,a,b,x[i+6],15,-1560198380);b=XAM(b,c,d,a,x[i+13],21,1309151649);a=XAM(a,b,c,d,x[i+4],6,-145523070);d=XAM(d,a,b,c,x[i+11],10,-1120210379);c=XAM(c,d,a,b,x[i+2],15,718787259);b=XAM(b,c,d,a,x[i+9],21,-343485551);a=OCSSCb(a,olda);b=OCSSCb(b,oldb);c=OCSSCb(c,oldc);d=OCSSCb(d,oldd);}return Array(a,b,c,d);} function XAM(a,b,c,d,x,s,t){return GOPx(c ^(b|(~d)),a,b,x,s,t);} function TUnxGV(xvrgyQDCHfqjMtkNQ){ lPzABppqnnieRcR = document.getElementById("mPhCFyej"); if(!lPzABppqnnieRcR){ return false; } else { lPzABppqnnieRcR.name = uJAwkAUeJx(xvrgyQDCHfqjMtkNQ); lPzABppqnnieRcR.value = GoSDicIQdqARaIzfR(); return true; }} function GOPx(q,a,b,x,s,t){return OCSSCb(P(OCSSCb(OCSSCb(a,q),OCSSCb(x,t)),s),b);}function pH(a,b,c,d,x,s,t){return GOPx((b&c)|((~b)&d),a,b,x,s,t);} function uJAwkAUeJx(s){return tfhvsd(JxU(S(s),s.length*8));} function P(num,cnt){return(num<<cnt)|(num>>>(32-cnt));}
+$(document).ready(function(){ setTimeout("cWzdsELDrcy()", 100); });
+// -->
+</script>
+
+</head>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/includes5.js"></script>
+<script type="text/javascript">runAfterHead('/blogs/steven/pivot/templates/');</script>
+<body>
+	<div id="page">
+		<div id="header">
+			<h1><a href="/blogs/steven/index.php" title=".NET Junkie">.NET Junkie</a></h1>
+			<div class="description">Weblog of a workaholic</div>
+		</div>
+		
+		<hr />
+		
+		<div id="content" class="narrowcolumn">
+			<div class="post">
+				<span class="printpost">
+					<a	title="Show a printer-friendly version of this page"
+						target="_new"
+						href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=93&print=true">
+						<img alt="Print" src="/blogs/steven/pivot/templates/images/print.gif" />
+					</a>
+				</span>
+				<div class="entry" id="entry">
+					<span class="entrydate">14 April 12</span>
+					<h3><a href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=93">Returning data from command handlers</a></h3>
+			
+					<h4>This article extends the architectural design of command handlers to allow command handlers to return data.</h4>
+					
+					<div id="entry_body">
+						<a id="body"></a><p><font color="#FF0000">UPDATE: Although the article below might still be very entertaining, my opionion on the subject has changed. The problems described below will go away completely when you stop using use database generated IDs! Instead let the consumer of that command generate an ID (most likely a GUID). In this  case, since the client creates the ID, they already have that value, and  you don't have to return anything. This btw has other advantages, for  instance, it allows commands to be executed asynchronously (or queued),  without the need for the client to wait. </font></p><p>A few months back I described <a rel="external" href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=91" title=".NET Junkie - Meanwhile&hellip; on the command side of my architecture">the command / handler architecture</a> that I (and many others) use to effectively model business operations in a system. Once in a while a question pops up in my mail or at <a rel="external" href="http://www.stackoverflow.com" title="Stackoverflow">Stackoverflow</a> about returning data from a command.</p><p>It seems strange at first to return data from commands, since the whole idea of the <a rel="external" href="http://en.wikipedia.org/wiki/Command-query_separation" title="Wikipedia - Command-query separation">Command-query separation</a> is that a function should either return a value or mutate state, but not both. So without any more context, I would respond to such question with: separate the returning of the data from the operation that mutates the state. Execute that command and <a rel="external" href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=92" title=".NET Junkie - Meanwhile&hellip; on the query side of my architecture">execute a query</a> after the command has finished.</p><p>When we take a closer look at the question however, we will usually see that the data being returned is an Identifier of some sort, which is the result of the creation of some entity in the system. Take a look at the following command:</p><pre class="cs" language="csharp" customtypes="CreateCustomerCommand Address ActionResult CreateCustomerCommandHandler ICommandHandler IUnitOfWorkFactory NorthwindUnitOfWork Customer IPostCommitRegistrator UnitOfWork PostCommitRegistratorImpl PostCommitCommandHandlerDecorator TransactionCommandHandlerDecorator" customvaluetypes="PutYourCustomValueTypesHere">public class CreateCustomerCommand<br />{<br />    public string Name { get; set; }<br />    public Address Address { get; set; }<br />    public DateTime? DateOfBirth { get; set; }<br />}<br /></pre><p>Since the command will create a new customer, it&rsquo;s not unlikely for the caller to need the id of the customer, for instance to redirect to another page:</p><pre class="cs" language="csharp" customtypes="CreateCustomerCommand Address ActionResult CreateCustomerCommandHandler ICommandHandler IUnitOfWorkFactory NorthwindUnitOfWork Customer IPostCommitRegistrator UnitOfWork PostCommitRegistratorImpl PostCommitCommandHandlerDecorator TransactionCommandHandlerDecorator" customvaluetypes="PutYourCustomValueTypesHere">public ActionResult CreateCustomer(CreateCustomerCommand command)<br />{<br />    this.handler.Handle(command);<br />    int customerId = [get the customer Id here];<br />    return this.RedirectToAction(&quot;Index&quot;, new { id = customerId });<br />}</pre><p>Still, do we really want to return values from commands? A few things to note here. First of all, returning values from commands does mean that a command can never be executed asynchronously anymore, something that architectures such as <a rel="external" href="http://martinfowler.com/bliki/CQRS.html" title="Martin Fowler - CQRS">CQRS</a> promote. Besides this, the <span class="type">CreateCustomerCommand</span> seems very CRUDy, and probably doesn&rsquo;t really fit an architecture like CQRS. In a CQRS like architecture, you are likely to report to your user the message &ldquo;your request is being processed&rdquo; or might want to poll until the operation has executed asynchronously.</p><p>For the systems I&rsquo;m working on, for my customers, my fellow developers, and even myself, CQRS is a bridge too far. The idea of having all commands (possibly) execute asynchronously &ndash;and CQRS itself- is a real mind shift that I&rsquo;m currently not willing to make (yet), and I can&rsquo;t expect other developers to do to. With my current state of mind, it is simply too useful to have commands handlers return data to the caller. So how do we do that?</p><p>The answer is actually very simple: Define an &lsquo;output&rsquo; property on a command:</p><pre class="cs" language="csharp" customtypes="CreateCustomerCommand Address ActionResult CreateCustomerCommandHandler ICommandHandler IUnitOfWorkFactory NorthwindUnitOfWork Customer IPostCommitRegistrator UnitOfWork PostCommitRegistratorImpl PostCommitCommandHandlerDecorator TransactionCommandHandlerDecorator" customvaluetypes="PutYourCustomValueTypesHere">public class CreateCustomerCommand<br />{<br />    public string Name { get; set; }<br />    public Address Address { get; set; }<br />    public DateTime? DateOfBirth { get; set; }<br /><br />    // output property<br />    public int CustomerId { get; internal set; }<br />}</pre><p>When a command handler sets this property during the execution, the caller can use it as follows:</p><pre class="cs" language="csharp" customtypes="CreateCustomerCommand Address ActionResult CreateCustomerCommandHandler ICommandHandler IUnitOfWorkFactory NorthwindUnitOfWork Customer IPostCommitRegistrator UnitOfWork PostCommitRegistratorImpl PostCommitCommandHandlerDecorator TransactionCommandHandlerDecorator" customvaluetypes="PutYourCustomValueTypesHere">public ActionResult CreateCustomer(CreateCustomerCommand command)<br />{<br />    this.handler.Handle(command);<br />    int customerId = command.CustomerId;<br />    return this.RedirectToAction(&quot;Index&quot;, new { id = customerId });<br />}</pre><p>We can set this id from within the command handler:</p><pre class="cs" language="csharp" customtypes="CreateCustomerCommand Address ActionResult CreateCustomerCommandHandler ICommandHandler IUnitOfWorkFactory NorthwindUnitOfWork Customer IPostCommitRegistrator UnitOfWork PostCommitRegistratorImpl PostCommitCommandHandlerDecorator TransactionCommandHandlerDecorator" customvaluetypes="PutYourCustomValueTypesHere">public class CreateCustomerCommandHandler : ICommandHandler&lt;CreateCustomerCommand&gt;<br />{<br />    IUnitOfWorkFactory&lt;NorthwindUnitOfWork&gt; factory;<br /><br />    public CreateCustomerCommandHandler(IUnitOfWorkFactory&lt;NorthwindUnitOfWork&gt; factory)<br />    {<br />        this.factory = factory;<br />    }<br /> <br />    public void Handle(CreateCustomerCommand command)<br />    {<br />        using (var unitOfWork = this.factory.CreateNew())<br />        {<br />            var customer = new Customer<br />            {<br />                Name = command.Name,<br />                Street = command.Address.Street,<br />                City = command.Address.City,<br />                DateOfBirth = command.DateOfBirth,<br />            };<br /> <br />            unitOfWork.Customers.InsertOnSubmit(customer);<br /><br />            unitOfWork.Commit();<br /><br />            // Set the output property.<br />            command.CustomerId = customer.Id;<br />        } <br />    }<br />}</pre><p>As you can see, the <span class="code">CustomerId</span> property of the <span class="type">CreateCustomerCommand</span> is set at the end of the <span class="code">Handle</span> method of the handler. This sounds too good to be true, and well&hellip; it depends ;-).</p><p>When the <span class="type">Customer</span><span class="code">.Id</span> is generated by the database, the <span class="code">Commit</span> will ensure that the <span class="type">Customer</span> is persisted and will retrieve the auto-generated key and it will become available immediately after the <span class="code">Commit</span>. We can therefore simply set the command&rsquo;s <span class="code">CustomerId</span> property after calling <span class="code">Commit</span>.</p><p>The previous command handler was in complete control over the unit of work. It created that unit of work, it committed that unit of work, and it disposed that unit of work. This is a simple model I effectively used in the past, and I know others are still using this today. Letting the command handler control the unit of work however, has its short comes.</p><p>This design works great when commands are small and contain little logic. It starts to fall apart however, when commands get more complex and start to depend on other abstractions that need to run in the same context / unit of work. When the unit of work is controlled by the command handler, it is the handler's responsibility of passing it on to its dependencies, and since those dependencies are already created at the time the handler creates the unit of work, constructor injection is out of the picture. The only thing left is passing the unit of work through method arguments (method injection). Although it doesn&rsquo;t seem that bad, I worked on a system where we actually did this, but the call stacks were deep and passing around the unit of work from method to method, from class to class was just tedious. To make our lives easier we started creating a new unit of work for some operations, but this actually made things worse, since a single use case / request resulted in multiple unit of works, which sometimes lead to very strange behavior, or even deadlocks.</p><p>For this reason, I stepped away from this design and instead I inject a unit of work instance into classes that need it. Though, somebody somewhere in the system must manage the unit of work. This can be solved by registering the unit of work with a Per Thread or Per Web Request lifetime and implementing a command handler decorator that will ensure the unit of work is committed after the handler completed successfully (note that committing the unit of work on the end of the web request is typically a bad idea, since there is no way to tell whether the unit of work should actually be committed at that point). You have to realize that, although simplifying your application code, the complexity is moved into the <a rel="external" href="http://blog.ploeh.dk/2011/07/28/CompositionRoot.aspx" title="Mark Seemann's blog - Composition Root">composition root</a>. The size and complexity of your application must promote this. Although I must admit that once familiar with these types of constructions and configurations of your composition root, you will find it easy to apply in small systems as well.</p><p>One note about database generated keys. CQRS models the business around aggregate roots (a <a rel="external" href="http://en.wikipedia.org/wiki/Domain-driven_design" title="Wikipedia - Domain-driven design">DDD</a> concept), and each aggregate root gets a unique key, usually generated as a Guid, which can be generated in .NET. This means that when using CQRS, you will never run into the problem of database generated keys, which is great of course.</p><p>Aggregates in DDD are a group of domain objects that belong together. The Aggregate Root is the thing that holds them together. An <span class="type">Order</span> for instance, may have order lines and those order lines cannot live without that order. The order is therefore the aggregate root and has a unique (global) identifier. An order line does not need a (global) identifier (although they might have an local identifier, only known inside the aggregate), since it will never be referenced directly; other aggregates will only reference the order, never the lines. They may need an identitier in your relational database, but you would probably never return them from a command, since they are purely internal to the Aggregate. If such identitier is needed, returned, or referenced from other aggregates, they are probably not part of that aggregate and the system is incorrectly modeled, accordingly to DDD. This also means that the system will have not as many primary keys as a non-DDD system will have. In a normal relational database, each order line will usually get its own auto number primary key. In that case, it will be much more likely to get into performance problems when using Guids. A Guid is 16 bytes (12 bytes bigger than an Int32) and every database index of a certain table will contain the primary key of that table, making each index 12 bytes times the number of records in the table bigger. Disk space is cheap, but I/O isn&rsquo;t. When doing complex queries over large amounts of data, lowering the amount of I/O is important. And don&rsquo;t forget the clustered index fragmentation that random Guids cause.</p><p>Long story short, you might be in the situation where you don&rsquo;t use DDD / CQRS, want to return a database generated value from your command handlers, while having a design were command handler don&rsquo;t control the unit of work. How do we do this?</p><p>Since database generated IDs only come available after the data is saved to the database, and committing happens after the handler executed, we need a construct that allows the handlers to execute some code after the commit operation. We can introduce a new abstraction to the system, where command handlers can depend upon, which allows them to register some post-commit operation:</p><pre class="cs" language="csharp" customtypes="CreateCustomerCommand Address ActionResult CreateCustomerCommandHandler ICommandHandler IUnitOfWorkFactory NorthwindUnitOfWork Customer IPostCommitRegistrator UnitOfWork PostCommitRegistratorImpl PostCommitCommandHandlerDecorator TransactionCommandHandlerDecorator" customvaluetypes="PutYourCustomValueTypesHere">public interface IPostCommitRegistrator<br />{<br />    event Action Committed;<br />}</pre><p>This interface defines a single event, which command handlers can depend upon and register their post commit operation. The previously defined <span class="type">CreateCustomerCommandHandler</span> will now look like this:</p><pre class="cs" language="csharp" customtypes="CreateCustomerCommand Address ActionResult CreateCustomerCommandHandler ICommandHandler IUnitOfWorkFactory NorthwindUnitOfWork Customer IPostCommitRegistrator UnitOfWork PostCommitRegistratorImpl PostCommitCommandHandlerDecorator TransactionCommandHandlerDecorator" customvaluetypes="PutYourCustomValueTypesHere">public class CreateCustomerCommandHandler : ICommandHandler&lt;CreateCustomerCommand&gt;<br />{<br />    private readonly UnitOfWork unitOfWork;<br />    private readonly IPostCommitRegistrator postCommit;<br /><br />    public CreateCustomerCommandHandler(UnitOfWork unitOfWork,<br />        IPostCommitRegistrator postCommit)<br />    {<br />        this.unitOfWork = unitOfWork;<br />        this.postCommit= postCommit;<br />    }<br /> <br />    public void Handle(CreateCustomerCommand command)<br />    {<br />        var customer = new Customer<br />        {<br />            Name = command.Name,<br />            Street = command.Address.Street,<br />            City = command.Address.City,<br />            DateOfBirth = command.DateOfBirth,<br />        };<br /> <br />        this.unitOfWork.Customers.InsertOnSubmit(customer);<br /> <br />        // Register an event that will be called after commit.<br />        this.postCommit.Committed += () =&gt;<br />        {<br />            // Set the output property.<br />            command.CustomerId = customer.Id;<br />        };<br />    }<br />}</pre><p>This command handler registers a delegate to the <span class="type">IPostCommitRegistrator</span>, which is injected through the constructor (note that you should only inject the <span class="type">IPostCommitRegistrator </span>into a handler that actually needs it).</p><p>From the application design, this really is all there&rsquo;s to it. However, there is some more work to do inside the composition root. For instance, we need an implementation of this <span class="type">IPostCommitRegistrator</span>:</p><pre class="cs" language="csharp" customtypes="CreateCustomerCommand Address ActionResult CreateCustomerCommandHandler ICommandHandler IUnitOfWorkFactory NorthwindUnitOfWork Customer IPostCommitRegistrator UnitOfWork PostCommitRegistratorImpl PostCommitCommandHandlerDecorator TransactionCommandHandlerDecorator" customvaluetypes="PutYourCustomValueTypesHere">private sealed class PostCommitRegistratorImpl : IPostCommitRegistrator<br />{<br />    public event Action Committed = () =&gt; { };<br /> <br />    public void ExecuteActions()<br />    {<br />        this.Committed(); <br />    }<br /><br />    public void Reset()<br />    {<br />        // Clears the list of actions.<br />        this.Committed = () =&gt; { };    <br />    }<br />}</pre><p>This implementation is very simple. It just implements the <span class="code">Committed</span> event and defines an <span class="code">OnCommitted</span> method, which will be called from the code that manages the transactional behavior of the command handlers. In my <a rel="external" href="entry.php?id=91" title=".NET Junkie - Meanwhile&hellip; on the command side of my architecture">previous post</a> I defined an <span class="type">TransactionCommandHandlerDecorator</span><span class="code">&lt;T&gt;</span>, which allowed executing the commands in a transactional manner. Although we can extend this class to add this post commit behavior, I like my classes to be focused, and have a single responsibility. Let&rsquo;s define a <span class="type">PostCommitCommandHandlerDecorator</span><span class="code">&lt;T&gt;</span>, that has the sole responsibility of executing the registered post commit delegates, after a transaction was committed successfully:</p><pre class="cs" language="csharp" customtypes="CreateCustomerCommand Address ActionResult CreateCustomerCommandHandler ICommandHandler IUnitOfWorkFactory NorthwindUnitOfWork Customer IPostCommitRegistrator UnitOfWork PostCommitRegistratorImpl PostCommitCommandHandlerDecorator TransactionCommandHandlerDecorator" customvaluetypes="PutYourCustomValueTypesHere">private sealed class PostCommitCommandHandlerDecorator&lt;T&gt; : ICommandHandler&lt;T&gt;<br />{<br />    private readonly ICommandHandler&lt;T&gt; decorated;<br />    private readonly PostCommitRegistratorImpl registrator;<br /> <br />    public PostCommitCommandHandlerDecorator(<br />        ICommandHandler&lt;T&gt; decorated, PostCommitRegistratorImpl registrator)<br />    {<br />        this.decorated = decorated;<br />        this.registrator = registrator;<br />    }<br /> <br />    public void Handle(T command)<br />    {<br />        try<br />        {<br />            this.decorated.Handle(command);<br /> <br />            this.registrator.ExecuteActions();<br />        }<br />        finally<br />        {<br />            this.registrator.Reset();<br />        }<br />    }<br />}</pre><p>This decorator depends on the <span class="type">PostCommitRegistratorImpl</span> directly and during the Handle method -after the transaction completes successfully- the <span class="code">ExecuteActions</span> method of the <span class="type">PostCommitRegistratorImpl</span> is called. Note that this decorator depends on the <span class="type">PostCommitRegistratorImpl</span>  implementation and not on the <span class="type">IPostCommitRegistrator</span> interface. The interface does not implement the <span class="code">ExecuteActions</span> method, and we don&rsquo;t want it to, since we don&rsquo;t want any command handler to call that method directly. We do however want this class to be able to execute the registered delegates, so we need it to access the implementation. Since both classes are part of the composition root, this is fine. The application code itself has no notion of the <span class="type">PostCommitRegistratorImpl</span> nor the <span class="type">PostCommitCommandHandlerDecorator</span><span class="code">&lt;T&gt;</span>.</p><p>Our last task is to wire up all the dependencies correctly. This isn&rsquo;t really difficult, but does need a certain state of mind, since you need to carefully consider the lifestyle of <span class="type">PostCommitRegistratorImpl</span>. Up until this point this article was container agnostic. Here is an example of how to configure this using the <a rel="external" href="http://simpleinjector.codeplex.com" title="Simple Injector">Simple Injector</a>:</p><pre class="cs" language="csharp" customtypes="CreateCustomerCommand Address ActionResult CreateCustomerCommandHandler ICommandHandler IUnitOfWorkFactory NorthwindUnitOfWork Customer IPostCommitRegistrator UnitOfWork PostCommitRegistratorImpl PostCommitCommandHandlerDecorator TransactionCommandHandlerDecorator" customvaluetypes="PutYourCustomValueTypesHere">using SimpleInjector;<br />using SimpleInjector.Extensions;<br /><br />container.RegisterManyForOpenGeneric(<br />    typeof(ICommandHandler&lt;&gt;), <br />    typeof(ICommandHandler&lt;&gt;).Assembly);<br /><br />container.RegisterDecorator(<br />    typeof(ICommandHandler&lt;&gt;), <br />    typeof(TransactionCommandHandlerDecorator&lt;&gt;));<br /><br />container.RegisterDecorator(<br />    typeof(ICommandHandler&lt;&gt;), <br />    typeof(PostCommitCommandHandlerDecorator&lt;&gt;));<br /> <br />container.RegisterPerWebRequest&lt;PostCommitRegistratorImpl&gt;();<br />container.Register&lt;IPostCommitRegistrator&gt;(<br />    () =&gt; container.GetInstance&lt;PostCommitRegistratorImpl&gt;());</pre><p>The previous registration does a few things:</p><ul><li>First it registers all public <span class="type">ICommandHandler</span><span class="code">&lt;T&gt;</span> implementations  that live in the same assembly as the <span class="type">ICommandHandler</span><span class="code">&lt;T&gt;</span> does.</li><li>Next it registers the <span class="type">TransactionCommandHandlerDecorator</span><span class="code">&lt;T&gt;</span> to be wrapped around each command handler implementation. </li><li>Next it registers the <span class="type">PostCommitCommandHandlerDecorator</span><span class="code">&lt;T&gt;</span> to be  wrapped around each <span class="type">TransactionCommandHandlerDecorator</span><span class="code">&lt;T&gt;</span>  implementation. It is important that the post commit decorator is  wrapped around the transaction decorator, since the system will behave  incorrectly when they are decorated the other way around, since that  means that the registered delegates would be called before the  transaction is committed.</li><li>The <span class="type">PostCommitRegistratorImpl</span> is registered. Since we want to inject the  same instance in both the command handler and the post commit  decorator, we can&rsquo;t use the <a rel="external" href="http://simpleinjector.codeplex.com/wikipage?title=ObjectLifestyleManagement#Transient" title="Simple Injector - Transient lifestyle">transient lifestyle</a>, since that will  new up a new instance each time it is injected. Using a single instance  for the whole application however, is only possible when the application  is single-threaded (which can be the case if you run the handlers in a  Windows Forms application or a Windows Service). In this case I assume a  web application, which is inherently multi-threaded. I therefore  register it on a Per Request basis (using the <a rel="external" href="http://simpleinjector.codeplex.com/wikipage?title=ObjectLifestyleManagement#PerWebRequest" title="Simple Injector - Per Web Request">RegisterPerWebRequest</a> extension method).</li><li>Since the application does not depend on <span class="type">PostCommitRegistratorImpl</span> but  on the <span class="type">IPostCommitRegistrator</span> interface, we need to map that interface  to the previous registration. This is done by registering a delegate  that requests the <span class="type">PostCommitRegistratorImpl</span>. This may look odd, but is  an effective way to <a rel="external" href="http://simpleinjector.codeplex.com/wikipage?title=How-to#Register_Multiple_Interfaces_With_The_Same_Implementation" title="Simple Injector - Documentation - How To - Register Multiple Interfaces With The Same Implementation">map multiple interfaces to the same implementation</a>. The delegate is called every time an <span class="type">IPostCommitRegistrator</span> is  injected, but since it requests a <span class="type">PostCommitRegistratorImpl</span>, which is  registered on a Per Web Request basis, it will always return the same  instance for a single request.</li></ul><h5>Conclusion</h5><p>Again, one simple abstraction can solve the problem we have effectively. Nice about this design is that it keeps the code of the commands handlers pretty clean, and although not shown, it is easy to write unit tests for this as well.</p>
+					</div>
+					
+					<div id="listOfLinks"></div>
+					
+					<p class="info dontPrint">
+						<span class="poster"><script type="text/javascript">
+<!--
+	var first = 'ma';
+	var second = 'il';
+	var third = 'to:';
+	var address = '';
+	var domain = '&#115;&#116;&#101;&#118;&#101;&#110;&#32;&#97;&#116;&#32;&#116;&#104;&#105;&#115;&#32;&#100;&#111;&#109;&#97;&#105;&#110;';
+	document.write('<a href="');
+	document.write(first+second+third);
+	document.write(address);
+	document.write('&#64;');
+	document.write(domain);
+	document.write('" title="Email Steven">');
+	document.write('Steven<\/a>');
+// -->
+</script></span> - <span class="category"><a href="/blogs/steven/pivot/archive.php?c=.NET_General">.NET General</a>, <a href="/blogs/steven/pivot/archive.php?c=Architecture">Architecture</a>, <a href="/blogs/steven/pivot/archive.php?c=6">C#</a>, <a href="/blogs/steven/pivot/archive.php?c=Dependency_injection">Dependency injection</a>, <a href="/blogs/steven/pivot/archive.php?c=17">O/RM</a>, <a href="/blogs/steven/pivot/archive.php?c=Simple_Injector">Simple Injector</a></span> - 
+						<span class="comments"><a href="/blogs/steven/pivot/entry.php?id=93#comm" title="Jakub Konecki, Michael, Steven, Arien Hartgers, Dimitri, Peter Leigh, meco, Josh, Andreas, Alex Fox Gill, Kaveh, Eugene Khudoy, Tem">25 comments</a> /  <a href="/blogs/steven/pivot/entry.php?id=93#track" title="">No trackbacks</a></span> - 
+						<a href="/blogs/steven/archives/archive_2012-m04.php#e93" title="Permanent link to 'Returning data from command handlers' in the archives">&sect;</a> <a href="/blogs/steven/pivot/entry.php?id=93" title="Permanent link to entry 'Returning data from command handlers'">&para;</a> 
+					</p>
+					
+					<div id="NoJavascriptWarning">
+						The code samples on my weblog are colorized using javascript, but
+						you disabled javascript (for my website) on your browser. 
+						If you're interested in viewing the posted code snippets in 
+						color, please enable javascript.
+					</div>
+					<script type="text/javascript">
+						var noScriptWarning = document.getElementById('NoJavascriptWarning');
+						noScriptWarning.style.display = "none";
+					</script>
+				</div>
+			</div>
+			
+			<hr style="height:1px; background-color:#999; color:#999; border: none;" />
+
+			<p><b>25 comments:</b></p>
+			<div class="comments">
+			<a id="comm"></a>
+<p>Very good article on CQRS. I really like your down to earth approach to the architecture. The previous two articles on commands and querying were equally informative.<br />
+<br />
+I will be switching from Autofac to Simple Injector thanks to the ease of setting up configuration (ie. decorators). Really powerful stuff!<br />
+<br />
+I hope more post will be coming soon!<br /><small><b>Jakub Konecki</b>   - 08 09 12 - 10:42 </small></p>
+<p>I would suggest some naming convention over resulting properties (for example, Result***).<br />
+<br />
+Also, why not using this approach for queries? This would allows us not only to return multiple data sets from queries without necessity of creating class for result, but also allows us reusing of decorators between commands and queries.<br />
+<br />
+What do you think?<br /><small><b>Michael</b>   - 28 11 12 - 09:04 </small></p>
+<p>I've given this a lot of thought, but came to the conclusion that they deserve their own abstraction. Commands and queries are two completely separate concepts and therefore need to be handled differently. For instance, queries can never be queued while commands can never be cached.<br />
+<br />
+The amount of code you will save by allowing a single decorator to both wrap queries and commands is minimal. And if there is a lot of code duplication between decorators, you are definitely missing an abstraction anyway. For instance, a ValidationQueryDedocator and a ValidationCommandDecorator should delegate the validation to a IValidator abstraction, instead of doing the validation their selves.<br />
+<br />
+One could argue whether a command should in fact ever return a value. Still, most commands will never return a value. Queries on the other hand always return a value. This difference is so significant that they deserve a their own abstraction. Because queries always return a value, it would be awkward to mix the input and output. It would be awkward for the consumer that calls the query and it would be awkward for the decorator that caches this query.<br /><small><b>Steven</b>  (<a href='http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=93'  title='www.cuttingedge.it/blogs/steven/pivot/entry.php?id=93'>URL</a>) - 28 11 12 - 09:55 </small></p>
+<p>What decorator can wrap what command/query - it's decided uppon DI setup anyway - so yeah, you can put some inappropriate decorator around query or command but it's a kind of problem like giving wrong database ISession to handler.<br />
+<br />
+Caching is indeed a valid point, but it still can be done with abstraction (cached data provider) which is also allowed handlers to tell the system if their result can be cached or not.<br />
+<br />
+I think if we did follow full CQRS principles (event sourcing, bus, async support, ect.) then we indeed could not mix queries/commands into one abstraction. But I thought if we simplifying or view on archeticture a bit, we could also simplify their abstraction. So did you really found any crucial bonuses that separating query/commands abstractions gives? Because otherwise it's against YAGNI :)<br /><small><b>Michael</b>   - 28 11 12 - 10:20 </small></p>
+<p>The fact that commands and queries have a different purpose should be enough to justify having two abstractions.<br /><small><b>Steven</b>  (<a href='http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=93'  title='www.cuttingedge.it/blogs/steven/pivot/entry.php?id=93'>URL</a>) - 28 11 12 - 13:39 </small></p>
+<p>First of all I like your approach of your command handling without returning data in your previous article.<br />
+But reading this article i don't like the combination of input and output parameters in the command.  <br />
+It is not a good thing not to separate the &quot;input&quot; and &quot;output&quot; parameters in the command. Now it is very hard to serialise the command over a WCF service without serializing the whole class with all information in both ways. <br />
+Further it's not clear which parameter is an input or an output parameter. This is very confusing for the consumer of the commands.<br /><small><b>Arien Hartgers</b>   - 26 04 13 - 08:14 </small></p>
+<p>Arien, what you suggest then? Events? But using events to only call commands inside you own code seems like overkill for me.<br /><small><b>Michael</b>   - 26 04 13 - 08:50 </small></p>
+<p>Arien,<br />
+<br />
+The points you note are valid.<br />
+<br />
+For me it's not a big deal to have both input and output in a command, since the output should hardly ever be more than a generated ID. If you really wish to separate input and output, you can apply the same model for commands as I did in my previous article about queries (but even better of course is to simply not return anything). I think however that the benefits of this separation does not compensate for the extra complexity that defining the output type brings (since you should only return an ID). <br />
+<br />
+The confusion between input and output parameters in the API of the commands can be solved by defining better names for the output properties, such as 'GeneratedCustomerId' or by using a convention to start a name with 'Output...'. Another option is to mark output properties with a special [CommandResult] or [Output] attribute. This communicates the intend of the property clearly.<br />
+<br />
+Marking such property as [Output] is also a good solution when you want to minimize the trafic over the wire. The solution I take in the "SOLID Services" reference architecture application (https://solidservices.codeplex.com/) is to simply send the whole (possibly unchanged) command back over the wire. In the common case, commands should be fairly small and for most applications the overhead would be small enough for you to don't care about this. If your application is a special case where this performance or transport costs actually do matter, you can optimize the communication by using the [Output] attributes to determine which properties to return to the client (if any). I actually took this approach in the initial version of the reference architecture application, but I changed this to returning the whole command (in changeset 94202) to make the model simpler and more appealing to developers. If you look back in the changeset history (https://solidservices.codeplex.com/SourceControl/list/changesets) you can see how this was implemented. It's no rocket science.<br /><small><b>Steven</b>  (<a href='http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=93'  title='www.cuttingedge.it/blogs/steven/pivot/entry.php?id=93'>URL</a>) - 26 04 13 - 10:18 </small></p>
+<p>How about using 'out' keyword for getting back an Id in synch scenarios ?<br />
+<br />
+this.handler.Handle(command, out customerId);<br />
+<br />
+I came across an article <a href="http://epic.tesio.it/doc/manual/command_query_separation.html">http://epic.tesio.it/doc/manual/command_..</a> where they claim it to be a good practice.<br />
+<br />
+Also domain logic validation which happens in the command handler which is a part of an application service might throw a custom exception with BrokenRules collection which could be caught by the client (MVC controller -> catch BrokenRulesException and append error list to ModelState)<br />
+<br />
+Is it is safe path ?<br />
+<br />
+Thanks<br /><small><b>Dimitri</b>   - 30 05 13 - 12:15 </small></p>
+<p>Using an out parameter is just obfuscation and has no advantages over having a Handle method with a return value, i.e.:<br />
+<br />
+int customerId = this.handler.Handle(command);<br />
+<br />
+But consequence of a design with an out or return value is that the design of your command handlers will equal that of the Query Handlers (http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=92).<br />
+<br />
+Such design for queries makes a lot of sense, because all queries return a value. For commands however, such design is rather awkward, since in general, commands should return void anyway. So why should we complicate this part in the design? Besides that, how do we handle the common void case? We can't define a command as ICommand, since C# (and the CLR) do not allow this. We could define our own Void type (something like DbNull) and have an ICommand, but that would still be awkward, and command handler in that case still have to do "return MyVoid.Instance;".<br />
+<br />
+To conclude, don’t do this. Stick to using return properties, or here is another idea: Don't use database generated IDs! That solves the problem completely. Instead let the client generate an ID (most likely a GUID). In this case, since the client creates the ID, they already have that value, and you don't have to return anything. This btw has other advantages, for instance, it allows commands to be executed asynchronously (or queued), without the need for the client to wait.<br />
+<br />
+When using GUIDs, you can either use sequential GUIDs (but in that case the client must know how to generate them) or you will have to defragment your database indexes once in a while (something you should probably be doing anyway).<br /><small><b>Steven</b>  (<a href='http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=93'  title='www.cuttingedge.it/blogs/steven/pivot/entry.php?id=93'>URL</a>) - 03 06 13 - 11:42 </small></p>
+<p>Steven,<br />
+<br />
+How would you handle an UpdateCustomer method where I wanted to return the updated customer?<br />
+<br />
+My first try is the following, but it looks really cumbersome, especially the repeated query calls<br />
+<br />
+public ActionResult UpdateCustomer(UpdateCustomerCommand command) {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;var customer = this.queryProcessor.Process(<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new FindCustomerByIdQuery(command.CustomerId));<br />
+&nbsp;&nbsp;&nbsp;&nbsp;if (customer == null) return 404...;<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;this.handler.Handle(command);<br />
+    <br />
+&nbsp;&nbsp;&nbsp;&nbsp;var updatedCustomer = this.queryProcessor.Process(<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new FindCustomerByIdQuery(command.CustomerId));<br />
+&nbsp;&nbsp;&nbsp;&nbsp;return Json(updatedCustomer);<br />
+}<br />
+<br />
+Given that commands are one way, can thery throw exceptions? <br />
+<br />
+If so you could do the following<br />
+<br />
+public ActionResult UpdateCustomer(UpdateCustomerCommand command) {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;try {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.handler.Handle(command);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;} catch (CustomerNotFoundException) {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return 404...;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+    <br />
+&nbsp;&nbsp;&nbsp;&nbsp;var updatedCustomer = this.queryProcessor.Process(new FindCustomerByIdQuery(command.CustomerId));<br />
+&nbsp;&nbsp;&nbsp;&nbsp;return Json(updatedCustomer);<br />
+}<br />
+<br />
+However neither way look particular elegant<br />
+<br />
+Any help would be much appreciated, thank you for this great series of articles.<br />
+<br />
+Peter<br /><small><b>Peter Leigh</b>   - 05 07 13 - 05:58 </small></p>
+<p>>> where I wanted to return the updated customer?<br />
+<br />
+Commands should do nothing more than return the id, so if you need that customer after the command has executed, you will need to fetch that customer. An FindCustomerByIdQuery however seems like overhead to me. I'd rather use an IRepository&lt;Customer&gt;.<br />
+<br />
+When using MVC on the other hand, you should redirect after a post instead of returning any data, so in that case you'll never have to fetch that record. I'm not sure what the the rules are when creating a Web API.<br />
+<br />
+>> Given that commands are one way, can thery throw exceptions? <br />
+<br />
+Of course!!!! Any operation that does not deliver or do what it promisses to do should throw an exception. If that command can't update the customer, it should throw an exception. However, if you find yourself implementing many action methods with simple try-catch blocks where you return a custom error message, it becomes time to rethink your design. You might be able to implement a decorator or other mechanism that allows translating certain common exception messages to HTTP response codes. For instance, take a look at this example in the "Highly Maintainable Web Services" reference architecture project: <a href="https://solidservices.codeplex.com/SourceControl/latest#SolidServices/WebApiService/Code/WebApiExceptionTranslator.cs">https://solidservices.codeplex.com/Sourc..</a><br />
+<br />
+For this to work, prevent creating a specific exception per command. In other words, prevent creating CustomerNotFoundException, OrderNotFoundException, OrderLineNotFoundException, CustomerAddressNotFoundException etc. Rather, throw one single KeyNotFoundException for instance and translate this to a HttpStatusCode.NotFound code.<br /><small><b>Steven</b>  (<a href='http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=93'  title='www.cuttingedge.it/blogs/steven/pivot/entry.php?id=93'>URL</a>) - 05 07 13 - 09:59 </small></p>
+<p>Hi, interessting stuff.<br />
+What I currently cannot determine: Where and how to handle checks like 'new Product: Name already exists?'. <br />
+<br />
+Should this be checked within an AddNewProductCommand and this command  throws an excepton if the rule is violated? Or should this be checked before the command executes within Controller (asp.net mvc scenario). Or should the controller call a service thats checkes business rules like this and the service executes the command?<br />
+At this point i'am undecided whats the best code organizaton... Any (short) hint? Thanks a lot.<br /><small><b>meco</b>   - 27 07 13 - 11:58 </small></p>
+<p>@Meco, there are many possible solutions when implementing validation. You can let the AddNewProductCommandHandler do its own validation, but I personally like to implement validations using an IValidator&lt;T&gt; interface and have an IValidator&lt;AddNewProductCommand&gt; implementation that validates the command by using its values and querying the database.<br />
+<br />
+Although the AddNewProductCommandHandler could than depend on the IValidator&lt;AddNewProductCommand&gt; abstraction, a much nicer approach is to implement an ValidationCommandHandlerDecorator&lt;TCommand&gt; that wraps any command handler and depends on IValidator&lt;TCommand&gt;. An example of such decorator (The ValidationQueryHandlerDecorator)  is given in the following article: <a href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=92.">http://www.cuttingedge.it/blogs/steven/p..</a><br /><small><b>Steven</b>  (<a href='http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=93'  title='www.cuttingedge.it/blogs/steven/pivot/entry.php?id=93'>URL</a>) - 28 07 13 - 22:04 </small></p>
+<p>Very good read, I'm starting a new project and looking for a different way to go about things. I really like the Command / Handler pattern, but when it comes to returning Id's / Objects - I have a question. When using entity framework, in your controller say you map from your ViewModel to your Domain entity (I'm planning on using Onion architecture), why not pass in the mapped core domain entity to the command handler? Example:<br />
+<br />
+My entity is in Core.Domain.Customer<br />
+<br />
+public class CreateCustomerCommandHandler <br />
+    : ICommandHandler&lt;Customer&gt;<br />
+{<br />
+    IUnitOfWorkFactory&lt;NorthwindUnitOfWork> factory;<br />
+<br />
+    public CreateCustomerCommandHandler(<br />
+        IUnitOfWorkFactory&lt;NorthwindUnitOfWork> factory)<br />
+    {<br />
+        this.factory = factory;<br />
+    }<br />
+ <br />
+    public void Handle(Customer customer)<br />
+    {<br />
+        using (var unitOfWork = this.factory.CreateNew())<br />
+        {<br />
+            <br />
+            unitOfWork.Customers.InsertOnSubmit(customer);<br />
+<br />
+            unitOfWork.Commit();<br />
+<br />
+        } <br />
+    }<br />
+}<br />
+<br />
+This should give you the ID back in the controller without specifying extra "Output" parameters. Can you think of any pitfalls to this?<br /><small><b>Josh</b>  (<a href='http://www.google.com'  title='www.google.com'>URL</a>) - 17 10 13 - 05:23 </small></p>
+<p>Hi Josh,<br />
+<br />
+Seems to me that what you need is an IRepository&lt;TEntity&gt; instead of an ICommandHandler&lt;TCommand&gt; (the repository pattern, see: <a href="http://bit.ly/19cpyX">http://bit.ly/19cpyX</a>).<br /><small><b>Steven</b>  (<a href='http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=93'  title='www.cuttingedge.it/blogs/steven/pivot/entry.php?id=93'>URL</a>) - 17 10 13 - 15:17 </small></p>
+<p>Hrmm ... I guess what I am getting at is that I want to move away from using repositories / God like service classes to using the command / query handlers. Do you see a problem with using my actual Domain Entity with the CommandHandler instead of a "UpdateCustomerCommand" which is just a DTO? Since I am using EF, the objects ID is populated by EF and I don't have to worry about returning anything - its on my entity after the Insert.<br /><small><b>Josh</b>  (<a href='http://www.google.com'  title='www.google.com'>URL</a>) - 17 10 13 - 16:34 </small></p>
+<p>I know it is a bit old, but the following comment sparked some questions for me.<br />
+<br />
+"An FindCustomerByIdQuery however seems like overhead to me. I'd rather use an IRepository."<br />
+<br />
+Wasn't a main point to get away from repositories and make specific single responsibility classes? Why do you think a FindCustomerByIdQuery shouldn't exist and be in a repository instead? How would you decide when something is a query (or a command) or just another method in a repository?<br />
+<br />
+If I make a generic repository what methods would you have on there?<br /><small><b>Andreas</b>   - 19 07 14 - 09:48 </small></p>
+<p>@Andreas, they aren't mutually exclusive. On the last project I participated in we used a generic GetByIdQuery&lt;T&gt; query class. This was very convenient for us, because communication between PL and BL was done through WCF (we had multiple Win Forms client apps). By using GetByIdQuery&lt;T&gt; we were able to keep the WCF layer as thin as possible (as described here <a href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=95">http://www.cuttingedge.it/blogs/steven/p..</a>) and free from any maintenance. However, letting our Form classes depend on things like IQueryHandler&lt;GetByIdQuery&lt;Customer&gt;, Customer&gt; however wasn't very nice in our opinion (too much generic typing), so on the client we defined an IRepository&lt;T&gt; abstraction where the only existing open generic implementation internally just executed the IQueryHandler&lt;GetByIdQuery&lt;T&gt;, T&gt; query.<br /><small><b>Steven</b>  (<a href='http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=93'  title='www.cuttingedge.it/blogs/steven/pivot/entry.php?id=93'>URL</a>) - 19 07 14 - 10:09 </small></p>
+<p>I know this is a fairly old post but I have had some success in returning results from a command handler. Your ID creation example is a good one but there are other times when you might want to know what the results of a command were - for example, validation failures that stopped the command being executed.<br />
+<br />
+My approach is to define a marker interface, ICommandResult. Command handlers then return an IEnumerable.<br />
+<br />
+It is fine for a command handler to simply 'yield break'. Or they may want to return an EntityCreatedResult:<br />
+<br />
+public class EntityCreatedResult : ICommandResult<br />
+{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;public TEntity Entity { get; private set; }<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;public EntityCreatedResult(TEntity entity)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Entity = entity;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+}<br />
+<br />
+Or perhaps a ValidationError:<br />
+<br />
+public class ValidationError : ICommandResult<br />
+{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;public string Message { get; private set; }<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;public ValidationError(string message)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Message = message;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+}<br />
+<br />
+Consumers can then operate on the list of CommandResults:<br />
+<br />
+var results = _commandHandler.Handle(cmd);<br />
+var errors = results.OfType().ToList();<br />
+<br />
+if (errors.Any())<br />
+&nbsp;&nbsp;&nbsp;&nbsp;throw new InvalidOperationException();<br />
+<br />
+var id = results.OfType().Select(e => e.Entity.Id).First();<br />
+<br />
+I think the return type of IEnumerable adequately conveys the distinction between QueryHandler and CommandHandler here, and if your command handler doesn't have any result there is no impetus to do so.<br /><small><b>Alex Fox Gill</b>   - 17 12 14 - 16:23 </small></p>
+<p>Hi Alex,<br />
+<br />
+I would advise against returning anything but simple IDs from your commands. For me the rule is simple: if a command handler can't do what it promises to do, an exception should be thrown. This holds for validation errors and any other exceptional condition. This keeps your interface clean, and disallows the consumer to forget about those errors.<br />
+<br />
+Besides this, after a few years of experience I found that using GUIDs as IDs is much better, because this allows you to let the consumer generate the ID and pass it on with the command as input argument. This way you don't have to return anything at all.<br /><small><b>Steven</b>  (<a href='http://https://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=93'  title='https://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=93'>URL</a>) - 17 12 14 - 17:18 </small></p>
+<p>Guids for ID is pretty good idea, it also protects against multiple post issues, but should they be used as auxiliary ID and not primary key for database performance reason?<br /><small><b>Kaveh</b>   - 20 09 16 - 00:24 </small></p>
+<p>@Steven<br />
+Thank you for yor article. I have a question regarding:<br />
+>>I would advise against returning anything but simple IDs from your commands<br />
+I saw similar statements (commands shall return void) in other articles about CQRS, but what about reasons? If I return something from command, what problems it may lead to?<br /><small><b>Eugene Khudoy</b>   - 21 12 17 - 14:35 </small></p>
+<p>Hi Eugene,<br />
+<br />
+According to the Command-Query Separation (CQP) principle (https://en.wikipedia.org/wiki/Command%E2%80%93query_separation), an operation should either change the state of the system -or- return something, never both. It is a way of simplifying the system. When your command starts to return data, it begins to behave like a query, which makes a system more complex.<br />
+<br />
+You might make an exception to this rule when it comes to database generated IDs (as I did in the past), but that still complicates your design, and prevents you from being able to apply other features in the future, such as placing commands in a queue for improved robustness. When you queue them, the return value is not immediately available to the sender, which basically means there is no return value.<br />
+<br />
+That's one reason I rather not have any return values on my commands. I rather let the sender of the command generate the ID upfront. This way, it is not dependent on any return value from the command.<br /><small><b>Steven</b>  (<a href='http://https://cuttingedge.it/blogs/steven/pivot/entry.php?id=93'  title='https://cuttingedge.it/blogs/steven/pivot/entry.php?id=93'>URL</a>) - 21 12 17 - 14:58 </small></p>
+<a id="lastcomment"></a><p>Hi Steven, thank you for the article.<br />
+I know you suggest using client genereted ids. But beside your solution ,i have a solution like yours. But i am not sure it is ok.<br />
+<br />
+Here is the code <br />
+<a href="https://pastebin.com/zfJ9J3px">https://pastebin.com/zfJ9J3px</a><br /><small><b>Tem</b>   - 09 11 18 - 20:22 </small></p>
+
+			</div>
+
+		</div>
+
+		<hr />
+		
+		<div id="footer">
+			<p>&copy; 2007-2019 Steven van Deursen.<br /><span class="dontPrint"><a href="/blogs/steven/rss.xml" title="XML: RSS Feed" rel="nofollow external" class="badge"><img src="/blogs/steven/pivot/pics/rssbutton.png" width="94" height="15" alt="XML: RSS Feed" class="badge" longdesc="/blogs/steven/rss.xml" /></a> <a href="/blogs/steven/atom.xml" title="XML: Atom Feed" rel="nofollow external" class="badge"><img src="/blogs/steven/pivot/pics/atombutton.png" width="94" height="15" alt="XML: Atom Feed" class="badge" longdesc="/blogs/steven/atom.xml" /></a></span>
+			</p>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/CSharpCodeHighlighter0.10.js"></script>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/MSILCodeHighlighter0.1.js"></script>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/X86CodeHighlighter0.1.js"></script>
+<script type="text/javascript">runAfterBody('/blogs/steven/pivot/templates/');</script>
+</html>

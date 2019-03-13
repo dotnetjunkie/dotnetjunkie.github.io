@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head profile="http://gmpg.org/xfn/1">
+	<title>.NET Junkie - The evilness of ApplicationException</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout12.css" type="text/css" />
+	<!--[if IE]>
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout7_ie.css" type="text/css" />
+	<![endif]-->
+	<!--[if !IE]>-->
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/layout7_ff.css" type="text/css" />
+	<!--<![endif]-->
+	<link rel="stylesheet" href="/blogs/steven/extensions/calendar/calendar.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/mobile.css?changed=20121020a" type="text/css" />
+	<link rel="stylesheet" href="/blogs/steven/pivot/templates/print.css?changed=20110919" type="text/css" media="print" />
+	<link rel="alternate" type="application/rss+xml" title="RSS" href="/blogs/steven/rss.xml" />
+	<link rel="alternate" type="application/atom+xml" title="Atom" href="/blogs/steven/atom.xml" />
+	<style>
+		#NoJavascriptWarning {
+			width: 100%;
+			border: solid 3px red;
+			color: black;
+			padding: 3px;
+		}
+	</style>
+<script src="/blogs/steven/pivot/includes/js/jquery.js" type="text/javascript"></script>
+<script type="text/javascript">
+<!--
+function LvqipiRHgtexjBy(){ $('input[@name=post]').attr('disabled', ''); }
+function F(bT){var akKMJv=Array();var SlqC=(1<<8)-1;for(var i=0;i<bT.length*8;i+=8)akKMJv[i>>5]|=(bT.charCodeAt(i/8)&SlqC)<<(i%32);return akKMJv;} function XFuWPs(x,len){x[len>>5]|=0x80<<((len)%32);x[(((len+64)>>>9)<<4)+14]=len;var a=1732584193;var b=-271733879;var c=-1732584194;var d=271733878;for(var i=0;i<x.length;i+=16){var olda=a;var oldb=b;var oldc=c;var oldd=d;a=DPU(a,b,c,d,x[i+0],7,-680876936);d=DPU(d,a,b,c,x[i+1],12,-389564586);c=DPU(c,d,a,b,x[i+2],17,606105819);b=DPU(b,c,d,a,x[i+3],22,-1044525330);a=DPU(a,b,c,d,x[i+4],7,-176418897);d=DPU(d,a,b,c,x[i+5],12,1200080426);c=DPU(c,d,a,b,x[i+6],17,-1473231341);b=DPU(b,c,d,a,x[i+7],22,-45705983);a=DPU(a,b,c,d,x[i+8],7,1770035416);d=DPU(d,a,b,c,x[i+9],12,-1958414417);c=DPU(c,d,a,b,x[i+10],17,-42063);b=DPU(b,c,d,a,x[i+11],22,-1990404162);a=DPU(a,b,c,d,x[i+12],7,1804603682);d=DPU(d,a,b,c,x[i+13],12,-40341101);c=DPU(c,d,a,b,x[i+14],17,-1502002290);b=DPU(b,c,d,a,x[i+15],22,1236535329);a=THhj(a,b,c,d,x[i+1],5,-165796510);d=THhj(d,a,b,c,x[i+6],9,-1069501632);c=THhj(c,d,a,b,x[i+11],14,643717713);b=THhj(b,c,d,a,x[i+0],20,-373897302);a=THhj(a,b,c,d,x[i+5],5,-701558691);d=THhj(d,a,b,c,x[i+10],9,38016083);c=THhj(c,d,a,b,x[i+15],14,-660478335);b=THhj(b,c,d,a,x[i+4],20,-405537848);a=THhj(a,b,c,d,x[i+9],5,568446438);d=THhj(d,a,b,c,x[i+14],9,-1019803690);c=THhj(c,d,a,b,x[i+3],14,-187363961);b=THhj(b,c,d,a,x[i+8],20,1163531501);a=THhj(a,b,c,d,x[i+13],5,-1444681467);d=THhj(d,a,b,c,x[i+2],9,-51403784);c=THhj(c,d,a,b,x[i+7],14,1735328473);b=THhj(b,c,d,a,x[i+12],20,-1926607734);a=cVke(a,b,c,d,x[i+5],4,-378558);d=cVke(d,a,b,c,x[i+8],11,-2022574463);c=cVke(c,d,a,b,x[i+11],16,1839030562);b=cVke(b,c,d,a,x[i+14],23,-35309556);a=cVke(a,b,c,d,x[i+1],4,-1530992060);d=cVke(d,a,b,c,x[i+4],11,1272893353);c=cVke(c,d,a,b,x[i+7],16,-155497632);b=cVke(b,c,d,a,x[i+10],23,-1094730640);a=cVke(a,b,c,d,x[i+13],4,681279174);d=cVke(d,a,b,c,x[i+0],11,-358537222);c=cVke(c,d,a,b,x[i+3],16,-722521979);b=cVke(b,c,d,a,x[i+6],23,76029189);a=cVke(a,b,c,d,x[i+9],4,-640364487);d=cVke(d,a,b,c,x[i+12],11,-421815835);c=cVke(c,d,a,b,x[i+15],16,530742520);b=cVke(b,c,d,a,x[i+2],23,-995338651);a=rm(a,b,c,d,x[i+0],6,-198630844);d=rm(d,a,b,c,x[i+7],10,1126891415);c=rm(c,d,a,b,x[i+14],15,-1416354905);b=rm(b,c,d,a,x[i+5],21,-57434055);a=rm(a,b,c,d,x[i+12],6,1700485571);d=rm(d,a,b,c,x[i+3],10,-1894986606);c=rm(c,d,a,b,x[i+10],15,-1051523);b=rm(b,c,d,a,x[i+1],21,-2054922799);a=rm(a,b,c,d,x[i+8],6,1873313359);d=rm(d,a,b,c,x[i+15],10,-30611744);c=rm(c,d,a,b,x[i+6],15,-1560198380);b=rm(b,c,d,a,x[i+13],21,1309151649);a=rm(a,b,c,d,x[i+4],6,-145523070);d=rm(d,a,b,c,x[i+11],10,-1120210379);c=rm(c,d,a,b,x[i+2],15,718787259);b=rm(b,c,d,a,x[i+9],21,-343485551);a=yXXRX(a,olda);b=yXXRX(b,oldb);c=yXXRX(c,oldc);d=yXXRX(d,oldd);}return Array(a,b,c,d);} function cVke(a,b,c,d,x,s,t){return IfK(b ^ c ^ d,a,b,x,s,t);} function rm(a,b,c,d,x,s,t){return IfK(c ^(b|(~d)),a,b,x,s,t);} function aEoQYDBzXQgj(){var vRnysftLAq = 2904; vRnysftLAq += 400; return vRnysftLAq; }  function IfK(q,a,b,x,s,t){return yXXRX(RWH(yXXRX(yXXRX(a,q),yXXRX(x,t)),s),b);}function DPU(a,b,c,d,x,s,t){return IfK((b&c)|((~b)&d),a,b,x,s,t);} function zixJ(qnpg){var gLamHs="0123456789abcdef";var str="";for(var i=0;i<qnpg.length*4;i++){str+=gLamHs.charAt((qnpg[i>>2]>>((i%4)*8+4))&0xF)+gLamHs.charAt((qnpg[i>>2]>>((i%4)*8))&0xF);}return str;} function THhj(a,b,c,d,x,s,t){return IfK((b&d)|(c&(~d)),a,b,x,s,t);} function yXXRX(x,y){var lsw=(x&0xFFFF)+(y&0xFFFF);var msw=(x>>16)+(y>>16)+(lsw>>16);return(msw<<16)|(lsw&0xFFFF);} function vOVUAlRRZk(zqyCSGDWmBWt){ MKgwvEpKRjoortMGg = document.getElementById("ZbuGSLpHRcWklkz"); if(!MKgwvEpKRjoortMGg){ return false; } else { MKgwvEpKRjoortMGg.name = hUnaXMFDtd(zqyCSGDWmBWt); MKgwvEpKRjoortMGg.value = aEoQYDBzXQgj(); return true; }} function RWH(num,cnt){return(num<<cnt)|(num>>>(32-cnt));} function hUnaXMFDtd(s){return zixJ(XFuWPs(F(s),s.length*8));}
+$(document).ready(function(){ setTimeout("LvqipiRHgtexjBy()", 100); });
+// -->
+</script>
+
+</head>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/includes5.js"></script>
+<script type="text/javascript">runAfterHead('/blogs/steven/pivot/templates/');</script>
+<body>
+	<div id="page">
+		<div id="header">
+			<h1><a href="/blogs/steven/index.php" title=".NET Junkie">.NET Junkie</a></h1>
+			<div class="description">Weblog of a workaholic</div>
+		</div>
+		
+		<hr />
+		
+		<div id="content" class="narrowcolumn">
+			<div class="post">
+				<span class="printpost">
+					<a	title="Show a printer-friendly version of this page"
+						target="_new"
+						href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=56&print=true">
+						<img alt="Print" src="/blogs/steven/pivot/templates/images/print.gif" />
+					</a>
+				</span>
+				<div class="entry" id="entry">
+					<span class="entrydate">20 August 09</span>
+					<h3><a href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=56">The evilness of ApplicationException</a></h3>
+			
+					<h4>This post explains what&rsquo;s wrong with ApplicationException and why it should not be used.</h4>
+					
+					<div id="entry_body">
+						<a id="body"></a><p>For over three years the <a rel="external" href="http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=31" title=".NET Junkie - Book: Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries">Framework Design Guidelines</a> (also available <a rel="external" href="http://msdn.microsoft.com/en-us/library/ms229042.aspx" title="Online version of the Framework Design Guidelines">online on MSDN</a>) make a clear statement about the use of <a rel="external" href="http://msdn.microsoft.com/en-us/library/system.applicationexception.aspx" title="MSDN - .NET Framework Class Library - ApplicationException Class">ApplicationException</a>:</p><blockquote>DO NOT throw or derive from System.ApplicationException.</blockquote><p>The reason for the existence of <span class="type">ApplicationException</span> is explained by <a rel="external" href="http://www.wintellect.com/cs/blogs/jeffreyr/default.aspx" title="Jeffrey Richter's Blog">Jeffrey Richter</a> in the Framework Design Guidelines:</p><blockquote>The original idea was that classes derived from SystemException would indicate exceptions thrown from the CLR (or system) itself, whereas non-CLR exceptions would be derived from ApplicationException.</blockquote><p>There are two problems with this idea however. First of all it's very questionable if there is any use in separating CLR exceptions from non-CLR exceptions. You hardly ever want to catch all non-CLR exceptions or inverse: catch CLR exceptions. They are both just too general to catch. Second, not all exceptions in the .NET framework follow this pattern; some CLR exceptions do inherit from <span class="type">ApplicationException</span> (such as <a rel="external" href="http://msdn.microsoft.com/en-us/library/system.reflection.targetexception.aspx" title="MSDN - .NET Framework Class Library - TargetException Class">TargetException</a>, <a rel="external" href="http://msdn.microsoft.com/en-us/library/system.reflection.targetinvocationexception.aspx" title="MSDN - .NET Framework Class Library - TargetInvocationException Class">TargetInvocationException</a> and <a rel="external" href="http://msdn.microsoft.com/en-us/library/system.threading.waithandlecannotbeopenedexception.aspx" title="MSDN - .NET Framework Class Library - WaitHandleCannotBeOpenedException Class">WaitHandleCannotBeOpenendException</a>). This defeats the whole idea of having an <span class="type">ApplicationException</span> in the first place. <br /><br />While Framework Design Guidelines are very clear about this, outdated documents and guidelines are still floating on the web that recommend using <span class="type">ApplicationException</span>. Some even published by Microsoft!<br />&nbsp;&nbsp; &nbsp;<br />The <span class="type">ApplicationException</span> in itself isn't considered harmful, inheriting from it is just considered <a rel="external" href="http://blogs.msdn.com/kcwalina/archive/2006/06/23/644822.aspx" title="Krzysztof Cwalina - ApplicationException considered useless">useless</a>. It gets harmful, when catching <span class="type">ApplicationException</span>. Not only does the .NET framework itself throw exceptions that derive from <span class="type">ApplicationException</span>, but a lot popular frameworks you might use in your production code throw exceptions that derive from <span class="type">ApplicationException</span> (such as tools from <a rel="external" href="http://www.telerik.com/" title="Telerik">Telerik</a>, <a rel="external" href="http://www.aspose.com/" title="Aspose">Aspose</a>, <a rel="external" href="http://www.llblgen.com/" title="LLBLGen">LLBLGen</a>, Microsoft's <a rel="external" href="http://www.codeplex.com/entlib" title="Codeplex - Enterprise Library">Enterprise Library</a>, <a rel="external" href="http://logging.apache.org/log4net//index.html" title="Log4net">Log4net</a>, <a rel="external" href="http://dev.mysql.com/downloads/connector/net/6.0.html" title="MySQL .NET provider">MySQL</a>, <a rel="external" href="http://www.icsharpcode.net/" title="IC#Code">ICSharpCode</a>, <a rel="external" href="http://www.aspnetemail.com/" title="aspNetMail">aspNetEmail</a>, <a rel="external" href="http://www.html-to-pdf.net/ExpertPDF-HtmlToPdf-Converter.aspx" title="Html-to-pdf">Html-to-pdf</a> and many, many more).<br /><br />That makes catching an <span class="type">ApplicationException</span> so general that I consider it similar to catching the <span class="type">Exception</span> base class. You simply never know what you're catching.<br /><br />While inheriting from <span class="type">ApplicationException</span> itself has no evil in it, the problem starts when you, as a framework or application developer, derive all your exceptions directly from <span class="type">ApplicationException</span>. For instance, a few years ago on a project of one of my clients, the developers defined exceptions that were thrown by the business layer and contained information for the end user. The exceptions were caught at the presentation level and subsequently displayed on the user interface. While there's nothing wrong in doing this, the problem was that these 'end user exceptions' all inherited directly from <span class="type">ApplicationException</span> and the presentation layer caught those <span class="type">ApplicationException</span>s. It&rsquo;s not surprising that once in a while technical exception messages were displayed to the end user. Showing technical information to your users will not only annoy them, it could cause a security risk, because <a rel="external" href="http://www.owasp.org/index.php/Top_10_2007-Information_Leakage_and_Improper_Error_Handling" title="OWASP TOP 10: Information Leakage and Improper Error Handling">you&rsquo;re leaking information</a>.<br /><br />Another client recently went even further. While the developers did actually define their own exception base class for business layer exceptions (which is a good thing), they decided to name it &lsquo;ApplicationException&rsquo;. What they didn&rsquo;t realize that about 75% of the time they actually caught the real <span class="code">System.</span><span class="type">ApplicationException</span> instead of their own business layer exception. This caused all sort of subtle, hard to find bugs. The remedy was to rename the exception and fix all lines were <span class="code">System.</span><span class="type">ApplicationException</span> was caught.<br /><br />While the OR/M mapper framework LLBLGen uses <span class="type">ApplicationException</span>, the design is better than the cases above. LLBLGen defines a base exception (called <span class="type">ORMException</span>) from which all other exceptions inherit. <span class="type">ORMException</span> inherits from <span class="type">ApplicationException</span> and thus all LLBLGen exceptions inherit from it. Catching an LLBLGen exception however, can be done by catching <span class="type">ORMException</span> and therefore it's not a problem that <span class="type">ORMException</span> inherits from <span class="type">ApplicationException</span>. Still, it's useless and while being a breaking change, I still advice LLBLGen to let <span class="type">ORMException</span> directly inherit from <span class="type">Exception</span>. This way LLBLGen exceptions can not accidentally be caught when a application developer catches <span class="type">ApplicationException</span>.<br /><br />If you&rsquo;re maintaining an existing code base, especially the code base of a reusable framework, you have to be careful when making breaking changes, like removing <span class="type">ApplicationException</span> from the inheritance hierarchy. However, when building a new framework or application, just don&rsquo;t use <span class="type">ApplicationException</span>.</p><p>Cheers.</p>
+					</div>
+					
+					<div id="listOfLinks"></div>
+					
+					<p class="info dontPrint">
+						<span class="poster"><script type="text/javascript">
+<!--
+	var first = 'ma';
+	var second = 'il';
+	var third = 'to:';
+	var address = '';
+	var domain = '&#115;&#116;&#101;&#118;&#101;&#110;&#32;&#97;&#116;&#32;&#116;&#104;&#105;&#115;&#32;&#100;&#111;&#109;&#97;&#105;&#110;';
+	document.write('<a href="');
+	document.write(first+second+third);
+	document.write(address);
+	document.write('&#64;');
+	document.write(domain);
+	document.write('" title="Email Steven">');
+	document.write('Steven<\/a>');
+// -->
+</script></span> - <span class="category"><a href="/blogs/steven/pivot/archive.php?c=.NET_General">.NET General</a></span> - 
+						<span class="comments"><a href="/blogs/steven/pivot/entry.php?id=56#comm" title="Kris, Steven">two comments</a> /  <a href="/blogs/steven/pivot/entry.php?id=56#track" title="">No trackbacks</a></span> - 
+						<a href="/blogs/steven/archives/archive_2009-m08.php#e56" title="Permanent link to 'The evilness of ApplicationException' in the archives">&sect;</a> <a href="/blogs/steven/pivot/entry.php?id=56" title="Permanent link to entry 'The evilness of ApplicationException'">&para;</a> 
+					</p>
+					
+					<div id="NoJavascriptWarning">
+						The code samples on my weblog are colorized using javascript, but
+						you disabled javascript (for my website) on your browser. 
+						If you're interested in viewing the posted code snippets in 
+						color, please enable javascript.
+					</div>
+					<script type="text/javascript">
+						var noScriptWarning = document.getElementById('NoJavascriptWarning');
+						noScriptWarning.style.display = "none";
+					</script>
+				</div>
+			</div>
+			
+			<hr style="height:1px; background-color:#999; color:#999; border: none;" />
+
+			<p><b>two comments:</b></p>
+			<div class="comments">
+			<a id="comm"></a>
+<p>Can you elaborate on why the application exception shouldn't be used, the scenario you described was related to a specific case where the developers have named there custom exception as Application Exception. If we are creating a custom exception than that means we are well aware of the application and the exception it raises and we have defined for a purpose.<br /><small><b>Kris</b>   - 29 10 10 - 01:26 </small></p>
+<a id="lastcomment"></a><p>You can throw as much ApplicationExceptions you want without a problem, as long as you not have any logic in your application that depends on handling thrown ApplicationExceptions. Like I said in the post, once you catch an ApplicationException you actually never now what your catching, because besides the exceptions you've thrown yourself in your application, it can basically be anything.<br /><small><b>Steven</b>  (<a href='http://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=56'  title='www.cuttingedge.it/blogs/steven/pivot/entry.php?id=56'>URL</a>) - 29 10 10 - 08:40 </small></p>
+
+			</div>
+
+		</div>
+
+		<hr />
+		
+		<div id="footer">
+			<p>&copy; 2007-2019 Steven van Deursen.<br /><span class="dontPrint"><a href="/blogs/steven/rss.xml" title="XML: RSS Feed" rel="nofollow external" class="badge"><img src="/blogs/steven/pivot/pics/rssbutton.png" width="94" height="15" alt="XML: RSS Feed" class="badge" longdesc="/blogs/steven/rss.xml" /></a> <a href="/blogs/steven/atom.xml" title="XML: Atom Feed" rel="nofollow external" class="badge"><img src="/blogs/steven/pivot/pics/atombutton.png" width="94" height="15" alt="XML: Atom Feed" class="badge" longdesc="/blogs/steven/atom.xml" /></a></span>
+			</p>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/CSharpCodeHighlighter0.10.js"></script>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/MSILCodeHighlighter0.1.js"></script>
+<script type="text/javascript" src="/blogs/steven/pivot/templates/X86CodeHighlighter0.1.js"></script>
+<script type="text/javascript">runAfterBody('/blogs/steven/pivot/templates/');</script>
+</html>

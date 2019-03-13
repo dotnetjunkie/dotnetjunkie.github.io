@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Dependency Simple Injector on .NET Junkie - Weblog of a workaholic</title>
-    <link>https://blogs.cuttingedge.it/steven/tags/dependency-simple-injector/</link>
+    <link>http://blogs.cuttingedge.it/steven/tags/dependency-simple-injector/</link>
     <description>Recent content in Dependency Simple Injector on .NET Junkie - Weblog of a workaholic</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 19 Jul 2012 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://blogs.cuttingedge.it/steven/tags/dependency-simple-injector/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://blogs.cuttingedge.it/steven/tags/dependency-simple-injector/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Primitive Dependencies with Simple Injector</title>
-      <link>https://blogs.cuttingedge.it/steven/posts/2012/primitive-dependencies-with-simple-injector/</link>
+      <link>http://blogs.cuttingedge.it/steven/posts/2012/primitive-dependencies-with-simple-injector/</link>
       <pubDate>Thu, 19 Jul 2012 00:00:00 +0000</pubDate>
       
-      <guid>https://blogs.cuttingedge.it/steven/posts/2012/primitive-dependencies-with-simple-injector/</guid>
+      <guid>http://blogs.cuttingedge.it/steven/posts/2012/primitive-dependencies-with-simple-injector/</guid>
       <description>This article describes how to extend the Simple Injector with convension based configuration for primitive constructor arguments. UPDATE April 2017: For a Simple Injector v4 compatible version of these code samples, please see here. When working with dependency injection, services (classes that contain behavior) depend on other services. The general idea is to inject those services into the constructor of the consuming service. Primitive types are no services, since they contain no behavior, and I normally advice not to mix primitive types and services in a single constructor.</description>
     </item>
     

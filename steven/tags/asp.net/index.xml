@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Asp.net on .NET Junkie - Weblog of a workaholic</title>
-    <link>https://blogs.cuttingedge.it/steven/tags/asp.net/</link>
+    <link>http://blogs.cuttingedge.it/steven/tags/asp.net/</link>
     <description>Recent content in Asp.net on .NET Junkie - Weblog of a workaholic</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 14 May 2014 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://blogs.cuttingedge.it/steven/tags/asp.net/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://blogs.cuttingedge.it/steven/tags/asp.net/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Dependency Injection in Attributes: don’t do it!</title>
-      <link>https://blogs.cuttingedge.it/steven/posts/2014/dependency-injection-in-attributes-dont-do-it/</link>
+      <link>http://blogs.cuttingedge.it/steven/posts/2014/dependency-injection-in-attributes-dont-do-it/</link>
       <pubDate>Wed, 14 May 2014 00:00:00 +0000</pubDate>
       
-      <guid>https://blogs.cuttingedge.it/steven/posts/2014/dependency-injection-in-attributes-dont-do-it/</guid>
+      <guid>http://blogs.cuttingedge.it/steven/posts/2014/dependency-injection-in-attributes-dont-do-it/</guid>
       <description>A number of common frameworks have promoted the concept of using attributes as a way of implementing AOP. On the surface this seems perfectly acceptable but in reality the maintainability of these options degrades as you add behaviors by injecting dependencies into attributes. The point of this article is “don’t do it!” There are better ways and this article will describe one such alternative. A long time has passed since the early formative stages of the .</description>
     </item>
     

@@ -2,141 +2,141 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Dependency Injection on .NET Junkie - Weblog of a workaholic</title>
-    <link>https://blogs.cuttingedge.it/steven/tags/dependency-injection/</link>
+    <link>http://blogs.cuttingedge.it/steven/tags/dependency-injection/</link>
     <description>Recent content in Dependency Injection on .NET Junkie - Weblog of a workaholic</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 08 Mar 2019 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://blogs.cuttingedge.it/steven/tags/dependency-injection/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://blogs.cuttingedge.it/steven/tags/dependency-injection/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Dependency Injection Principles, Practices, and Patterns</title>
-      <link>https://blogs.cuttingedge.it/steven/posts/2019/dependency-injection-principles-practices-and-patterns/</link>
+      <link>http://blogs.cuttingedge.it/steven/posts/2019/dependency-injection-principles-practices-and-patterns/</link>
       <pubDate>Fri, 08 Mar 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://blogs.cuttingedge.it/steven/posts/2019/dependency-injection-principles-practices-and-patterns/</guid>
+      <guid>http://blogs.cuttingedge.it/steven/posts/2019/dependency-injection-principles-practices-and-patterns/</guid>
       <description>The book Dependency Injection Principles, Practices, and Patterns has gone to print. For the last two years I&amp;rsquo;ve been coauthoring the book Dependency Injection Principles, Practices, and Patterns. This is a revised and expanded edition of Manning&amp;rsquo;s bestselling classic Dependency Injection in .NET by Mark Seemann.
 I always loved the first edition as it was a game changer for me. I learned a lot about DI, DI Containers, and software design.</description>
     </item>
     
     <item>
       <title>Simple Injector v4</title>
-      <link>https://blogs.cuttingedge.it/steven/posts/2017/simple-injector-v4/</link>
+      <link>http://blogs.cuttingedge.it/steven/posts/2017/simple-injector-v4/</link>
       <pubDate>Sun, 02 Apr 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://blogs.cuttingedge.it/steven/posts/2017/simple-injector-v4/</guid>
+      <guid>http://blogs.cuttingedge.it/steven/posts/2017/simple-injector-v4/</guid>
       <description> For the last months we’ve been working on the next major release of Simple Injector, and it is finally here. We have removed legacy methods, simplified working with the library, and fixed many bugs and quirks. Take a look at the Simple Injector blog for more information about this new major release.
 Comments </description>
     </item>
     
     <item>
       <title>Abstract Factories are a Code Smell</title>
-      <link>https://blogs.cuttingedge.it/steven/posts/2016/abstract-factories-are-a-code-smell/</link>
+      <link>http://blogs.cuttingedge.it/steven/posts/2016/abstract-factories-are-a-code-smell/</link>
       <pubDate>Wed, 10 Aug 2016 00:00:00 +0000</pubDate>
       
-      <guid>https://blogs.cuttingedge.it/steven/posts/2016/abstract-factories-are-a-code-smell/</guid>
+      <guid>http://blogs.cuttingedge.it/steven/posts/2016/abstract-factories-are-a-code-smell/</guid>
       <description>When it comes to writing LOB applications, abstract factories are a code smell as they increase the complexity of the consumer instead of reducing it. This article describes why and offers alternatives. An Abstract Factory decouples the creation of a family of objects from usage. Compared to injecting a service into a constructor, a factory allow objects to be created lazily, instead of up front during object graph composition. Many applications make use of the Abstract Factory pattern extensively to create all sorts of objects.</description>
     </item>
     
     <item>
       <title>Dependency Injection Code Smell: Injecting runtime data into components</title>
-      <link>https://blogs.cuttingedge.it/steven/posts/2015/code-smell-injecting-runtime-data-into-components/</link>
+      <link>http://blogs.cuttingedge.it/steven/posts/2015/code-smell-injecting-runtime-data-into-components/</link>
       <pubDate>Sat, 07 Nov 2015 00:00:00 +0000</pubDate>
       
-      <guid>https://blogs.cuttingedge.it/steven/posts/2015/code-smell-injecting-runtime-data-into-components/</guid>
+      <guid>http://blogs.cuttingedge.it/steven/posts/2015/code-smell-injecting-runtime-data-into-components/</guid>
       <description>Injecting runtime data into your application components is a code smell. Runtime data should flow through the method calls of already constructed object graphs. A recurring theme when it comes to questions about dependency injection is how to wire up and resolve components a.k.a. injectables (the classes that contain the application&amp;rsquo;s behavior) that require runtime data during construction. My answer to this is always the same:
  Don&amp;rsquo;t inject runtime data into application components during construction—it causes ambiguity, complicates the composition root with an extra responsibility, and makes it extraordinarily hard to verify the correctness of your DI configuration.</description>
     </item>
     
     <item>
       <title>Dependency Injection in Attributes: don’t do it!</title>
-      <link>https://blogs.cuttingedge.it/steven/posts/2014/dependency-injection-in-attributes-dont-do-it/</link>
+      <link>http://blogs.cuttingedge.it/steven/posts/2014/dependency-injection-in-attributes-dont-do-it/</link>
       <pubDate>Wed, 14 May 2014 00:00:00 +0000</pubDate>
       
-      <guid>https://blogs.cuttingedge.it/steven/posts/2014/dependency-injection-in-attributes-dont-do-it/</guid>
+      <guid>http://blogs.cuttingedge.it/steven/posts/2014/dependency-injection-in-attributes-dont-do-it/</guid>
       <description>A number of common frameworks have promoted the concept of using attributes as a way of implementing AOP. On the surface this seems perfectly acceptable but in reality the maintainability of these options degrades as you add behaviors by injecting dependencies into attributes. The point of this article is “don’t do it!” There are better ways and this article will describe one such alternative. A long time has passed since the early formative stages of the .</description>
     </item>
     
     <item>
       <title>Dependency Injection anti-pattern: multiple constructors</title>
-      <link>https://blogs.cuttingedge.it/steven/posts/2013/di-anti-pattern-multiple-constructors/</link>
+      <link>http://blogs.cuttingedge.it/steven/posts/2013/di-anti-pattern-multiple-constructors/</link>
       <pubDate>Sat, 01 Jun 2013 00:00:00 +0000</pubDate>
       
-      <guid>https://blogs.cuttingedge.it/steven/posts/2013/di-anti-pattern-multiple-constructors/</guid>
+      <guid>http://blogs.cuttingedge.it/steven/posts/2013/di-anti-pattern-multiple-constructors/</guid>
       <description>When Dependency Injection is applied correctly and completely it is important that each type only has one constructor - multiple constructors are redundant, make your DI configuration fragile, and lead to maintainability issues. rom a dependency injection perspective, our applications have two kinds of types: newables and injectables. Newables are classes that the application news up manually using the new keyword. This is true for types such as primitives, entities, DTOs, view models and messages.</description>
     </item>
     
     <item>
       <title>Simple Injector 2 – The future is here</title>
-      <link>https://blogs.cuttingedge.it/steven/posts/2013/simple-injector-2-the-future-is-here/</link>
+      <link>http://blogs.cuttingedge.it/steven/posts/2013/simple-injector-2-the-future-is-here/</link>
       <pubDate>Mon, 04 Mar 2013 00:00:00 +0000</pubDate>
       
-      <guid>https://blogs.cuttingedge.it/steven/posts/2013/simple-injector-2-the-future-is-here/</guid>
+      <guid>http://blogs.cuttingedge.it/steven/posts/2013/simple-injector-2-the-future-is-here/</guid>
       <description>Announcing the new major release of Simple Injector. The Simple Injector is an easy-to-use Inversion of Control library for .NET and Silverlight. Last week Simple Injector 2 was released. This release was a major undertaking. I&amp;rsquo;ve been working on this release full time for the last few months and I got a lot of help from enthusiastic Simple Injector users and even got a new developer on the team. I think the results are awesome.</description>
     </item>
     
     <item>
       <title>Writing Highly Maintainable WCF Services</title>
-      <link>https://blogs.cuttingedge.it/steven/posts/2012/writing-highly-maintainable-wcf-services/</link>
+      <link>http://blogs.cuttingedge.it/steven/posts/2012/writing-highly-maintainable-wcf-services/</link>
       <pubDate>Thu, 30 Aug 2012 00:00:00 +0000</pubDate>
       
-      <guid>https://blogs.cuttingedge.it/steven/posts/2012/writing-highly-maintainable-wcf-services/</guid>
+      <guid>http://blogs.cuttingedge.it/steven/posts/2012/writing-highly-maintainable-wcf-services/</guid>
       <description>When it comes to writing maintainable software, there is no alternative to the five core principles of object-oriented design. When software is based on these principles, everything becomes significantly easier. When your software is based on these principles, writing a highly maintainable WCF web service on top of that can be done in just a matter of minutes. The code supporting this article can be found at github.com/dotnetjunkie/solidservices. Most of my clients have maintainability issues with their software.</description>
     </item>
     
     <item>
       <title>Returning data from command handlers</title>
-      <link>https://blogs.cuttingedge.it/steven/posts/2012/returning-data-from-command-handlers/</link>
+      <link>http://blogs.cuttingedge.it/steven/posts/2012/returning-data-from-command-handlers/</link>
       <pubDate>Sat, 14 Apr 2012 00:00:00 +0000</pubDate>
       
-      <guid>https://blogs.cuttingedge.it/steven/posts/2012/returning-data-from-command-handlers/</guid>
+      <guid>http://blogs.cuttingedge.it/steven/posts/2012/returning-data-from-command-handlers/</guid>
       <description>This article extends the architectural design of command handlers to allow command handlers to return data. UPDATE: Although the article below might still be very entertaining, my opionion on the subject has changed. The problems described below will go away completely when you stop using use database generated IDs! Instead let the consumer of that command generate an ID (most likely a GUID). In this case, since the client creates the ID, they already have that value, and you don&amp;rsquo;t have to return anything.</description>
     </item>
     
     <item>
       <title>Meanwhile... on the query side of my architecture</title>
-      <link>https://blogs.cuttingedge.it/steven/posts/2011/meanwhile-on-the-query-side-of-my-architecture/</link>
+      <link>http://blogs.cuttingedge.it/steven/posts/2011/meanwhile-on-the-query-side-of-my-architecture/</link>
       <pubDate>Sun, 18 Dec 2011 00:00:00 +0000</pubDate>
       
-      <guid>https://blogs.cuttingedge.it/steven/posts/2011/meanwhile-on-the-query-side-of-my-architecture/</guid>
+      <guid>http://blogs.cuttingedge.it/steven/posts/2011/meanwhile-on-the-query-side-of-my-architecture/</guid>
       <description>Command-query separation is a common concept in the software industry. Many architectures separate commands from the rest of the system and send command messages that are processed by command handlers. This same concept of messages and handlers can just as easily be applied to the query side of an architecture. There are not many systems using this technique and this article is an attempt to change that. Two simple interfaces will change the look of your architecture&amp;hellip; forever.</description>
     </item>
     
     <item>
       <title>Meanwhile... on the command side of my architecture</title>
-      <link>https://blogs.cuttingedge.it/steven/posts/2011/meanwhile-on-the-command-side-of-my-architecture/</link>
+      <link>http://blogs.cuttingedge.it/steven/posts/2011/meanwhile-on-the-command-side-of-my-architecture/</link>
       <pubDate>Sun, 11 Dec 2011 00:00:00 +0000</pubDate>
       
-      <guid>https://blogs.cuttingedge.it/steven/posts/2011/meanwhile-on-the-command-side-of-my-architecture/</guid>
+      <guid>http://blogs.cuttingedge.it/steven/posts/2011/meanwhile-on-the-command-side-of-my-architecture/</guid>
       <description>This article describes how a single interface can transform the design of your application to be much cleaner, and more flexible than you ever thought possible. Chapter 10 of my book contains a much more elaborate version of this article. Since I began writing applications in .NET I&amp;rsquo;ve been separating operations that mutate state (of the database mostly) from operations that return data. This is basically what the Command-query separation principle is about.</description>
     </item>
     
     <item>
       <title>Adding Covariance and Contravariance to Simple Injector</title>
-      <link>https://blogs.cuttingedge.it/steven/posts/2011/adding-covariance-and-contravariance-to-simple-injector/</link>
+      <link>http://blogs.cuttingedge.it/steven/posts/2011/adding-covariance-and-contravariance-to-simple-injector/</link>
       <pubDate>Sat, 01 Oct 2011 00:00:00 +0000</pubDate>
       
-      <guid>https://blogs.cuttingedge.it/steven/posts/2011/adding-covariance-and-contravariance-to-simple-injector/</guid>
+      <guid>http://blogs.cuttingedge.it/steven/posts/2011/adding-covariance-and-contravariance-to-simple-injector/</guid>
       <description>A few weeks back I read this question on Stack Overflow. The question was about applying covariance / contravariance (or variance for short) to the Autofac dependency injection container. The question triggered me to think about variance support in Simple Injector. I was wondering whether special changes were needed to the core framework to allow this. However, it didn&amp;rsquo;t take me long to realize that enabling variance is actually pretty easy for anyone using the Simple Injector.</description>
     </item>
     
     <item>
       <title>Dependency Injection in ASP.NET Web Forms</title>
-      <link>https://blogs.cuttingedge.it/steven/posts/2010/di-in-asp-net-web-forms/</link>
+      <link>http://blogs.cuttingedge.it/steven/posts/2010/di-in-asp-net-web-forms/</link>
       <pubDate>Sun, 03 Oct 2010 00:00:00 +0000</pubDate>
       
-      <guid>https://blogs.cuttingedge.it/steven/posts/2010/di-in-asp-net-web-forms/</guid>
+      <guid>http://blogs.cuttingedge.it/steven/posts/2010/di-in-asp-net-web-forms/</guid>
       <description>This article describes how to create and configure a custom PageHandlerFactory class that enables automatic constructor injection for System.Web.UI.Page classes. This keeps your application design clean and allows you to keep the application’s dependency to the IoC library to a minimum. IMPORTANT: Since the introduction of Web Forms v4.7.2, there is now better support for DI. That makes this article out-dated. When working with IoC frameworks, one should always try to minimize the amount of application code that takes a dependency on that framework.</description>
     </item>
     
     <item>
       <title>The death of LINQ to SQL</title>
-      <link>https://blogs.cuttingedge.it/steven/posts/2008/the-death-of-linq-to-sql/</link>
+      <link>http://blogs.cuttingedge.it/steven/posts/2008/the-death-of-linq-to-sql/</link>
       <pubDate>Sat, 01 Nov 2008 00:00:00 +0000</pubDate>
       
-      <guid>https://blogs.cuttingedge.it/steven/posts/2008/the-death-of-linq-to-sql/</guid>
+      <guid>http://blogs.cuttingedge.it/steven/posts/2008/the-death-of-linq-to-sql/</guid>
       <description>The Microsoft ADO.NET team blog made an important announcement yesterday about the future of LINQ to SQL. The ADO.NET team announced that Microsoft will continue to make some investments in LINQ to SQL, but they also made it pretty clear that LINQ to Entities is the recommended data access solution in the future frameworks. Microsoft will invest heavily in the Entity Framework.
 I always wondered why Microsoft focused on two different O/RM technologies for the .</description>
     </item>

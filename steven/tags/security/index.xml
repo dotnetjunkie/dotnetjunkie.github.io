@@ -2,41 +2,41 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Security on .NET Junkie - Weblog of a workaholic</title>
-    <link>https://blogs.cuttingedge.it/steven/tags/security/</link>
+    <link>http://blogs.cuttingedge.it/steven/tags/security/</link>
     <description>Recent content in Security on .NET Junkie - Weblog of a workaholic</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 05 May 2010 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://blogs.cuttingedge.it/steven/tags/security/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://blogs.cuttingedge.it/steven/tags/security/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Protecting against Regex DOS attacks</title>
-      <link>https://blogs.cuttingedge.it/steven/posts/2010/protecting-against-regex-dos-attacks/</link>
+      <link>http://blogs.cuttingedge.it/steven/posts/2010/protecting-against-regex-dos-attacks/</link>
       <pubDate>Wed, 05 May 2010 00:00:00 +0000</pubDate>
       
-      <guid>https://blogs.cuttingedge.it/steven/posts/2010/protecting-against-regex-dos-attacks/</guid>
+      <guid>http://blogs.cuttingedge.it/steven/posts/2010/protecting-against-regex-dos-attacks/</guid>
       <description>Bryan Sullivan describes in the May issue of his MSDN article a denial of service attack that abuses regular expressions. As Bryan explains, a poorly written regex can bring your server to its knees. Bryan demonstrates that even the simplest regular expressions can bring your server to its knees. Here are some examples of regular expressions that can easily cause this to happen:
 ^(\d+)+$ ^(\d+)*$ ^(\d*)*$ ^(\d+|\s+)*$ ^(\d|\d\d)+$ ^(\d|\d?)+$ Read more about the causes and the cures here.</description>
     </item>
     
     <item>
       <title>Protecting against XML Entity Expansion attacks</title>
-      <link>https://blogs.cuttingedge.it/steven/posts/2009/protecting-against-xml-expansion-attacks/</link>
+      <link>http://blogs.cuttingedge.it/steven/posts/2009/protecting-against-xml-expansion-attacks/</link>
       <pubDate>Sat, 23 May 2009 00:00:00 +0000</pubDate>
       
-      <guid>https://blogs.cuttingedge.it/steven/posts/2009/protecting-against-xml-expansion-attacks/</guid>
+      <guid>http://blogs.cuttingedge.it/steven/posts/2009/protecting-against-xml-expansion-attacks/</guid>
       <description>Tom Hollander describes on his blog a denial of service attack I never knew the existence of, called XML Entity Expansion attack. Tom explains how to bring a server to its knees when allowing any type of xml document as input and passing it directly to an XmlDocument for parsing. Tom uses the following XML document of less than 1 KB to demonstrate the attack:
 &amp;lt;!DOCTYPE foo [ &amp;lt;!ENTITY a &amp;#34;1234567890&amp;#34; &amp;gt; &amp;lt;!</description>
     </item>
     
     <item>
       <title>The death of LINQ to SQL</title>
-      <link>https://blogs.cuttingedge.it/steven/posts/2008/the-death-of-linq-to-sql/</link>
+      <link>http://blogs.cuttingedge.it/steven/posts/2008/the-death-of-linq-to-sql/</link>
       <pubDate>Sat, 01 Nov 2008 00:00:00 +0000</pubDate>
       
-      <guid>https://blogs.cuttingedge.it/steven/posts/2008/the-death-of-linq-to-sql/</guid>
+      <guid>http://blogs.cuttingedge.it/steven/posts/2008/the-death-of-linq-to-sql/</guid>
       <description>The Microsoft ADO.NET team blog made an important announcement yesterday about the future of LINQ to SQL. The ADO.NET team announced that Microsoft will continue to make some investments in LINQ to SQL, but they also made it pretty clear that LINQ to Entities is the recommended data access solution in the future frameworks. Microsoft will invest heavily in the Entity Framework.
 I always wondered why Microsoft focused on two different O/RM technologies for the .</description>
     </item>

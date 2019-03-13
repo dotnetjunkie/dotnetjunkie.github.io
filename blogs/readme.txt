@@ -1,0 +1,1 @@
+This folder contains old javascript and stylesheets for the archived blog posts. This way the html of the archived blog posts doesn't has to be changed. It points to /blogs/steven/pivot/

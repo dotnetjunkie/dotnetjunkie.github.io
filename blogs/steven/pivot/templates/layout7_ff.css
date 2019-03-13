@@ -1,0 +1,7 @@
+
+span.code { color: black; font-family: monospace; font-size: 140%; }
+span.keyword { color: blue; font-family: monospace; font-size: 140%; }
+span.comment { color: green; font-family: monospace; font-size: 140%; }
+span.xmlcomment { color: gray; font-family: monospace; font-size: 140%; }
+span.string { color: #A31515; font-family: monospace; font-size: 140%; }
+span.type { color: #2B91AF; font-family: monospace; font-size: 140%; }

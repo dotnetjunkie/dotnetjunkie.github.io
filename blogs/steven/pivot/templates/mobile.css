@@ -1,0 +1,52 @@
+@media only screen and (max-device-width: 720px) {
+
+body {
+	margin: 0;
+	padding: 0;
+	width: 480px;
+	}
+
+#page {
+	padding: 10px;
+	margin: 10px;
+	width: 100%;
+	}
+	
+#footer {
+	background: none;
+	width: 100%;
+	}
+
+#sidebar {
+	display: none;
+	}
+
+#commentform {
+	display: none;
+	}
+	
+#form {
+	display: none;
+}
+	
+.post span.printpost {
+	display: none;
+}
+
+.noMobile {
+	display: none;
+}
+
+.narrowcolumn {
+	float: center;
+	padding: 0px 0px 0px 0px;
+	width: 100%;
+	}
+	
+
+
+.mobileOnly {
+	display: block;
+}
+
+}

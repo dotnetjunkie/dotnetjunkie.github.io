@@ -134,7 +134,7 @@
     }
 }</code></pre></div>
 
-<p>All this meant I could leave all the other methods fail (since they were not expected to be called) which saved me from having to write too much code and reduced the chance of errors in my tests. But it still led to an explosion of test classes in my test projects.</p>
+<p>All this meant I could leave all the other methods fail (as they were not expected to be called) which saved me from having to write too much code and reduced the chance of errors in my tests. But it still led to an explosion of test classes in my test projects.</p>
 
 <p>Of course all these problems can be solved with the ‘proper’ tooling. For instance, cross-cutting concerns can be added by using compile-time code weaving (using <a href="https://www.postsharp.net/">PostSharp</a> for instance), or by configuring your DI container using convention based registration, mixed with interception (interception uses dynamic proxy generation and lightweight code generation). The testing problems can be resolved by using Mocking frameworks (which also generate proxy classes that act like the original class).</p>
 
@@ -288,7 +288,7 @@
     }
 }</code></pre></div>
 
-<p>The <code>UserController</code> now depends on a <code>IQueryProcessor</code> that can handle all of our queries. The <code>UserController</code>’s <code>SearchUsers</code> method calls the <code>IQueryProcessor.Process</code> method passing in an initialized query object. Since the <code>FindUsersBySearchTextQuery</code> implements the <code>IQuery&lt;User[]&gt;</code> interface, we can pass it to the generic <code>Execute&lt;TResult&gt;(IQuery&lt;TResult&gt; query)</code> method. Thanks to <a href="https://msdn.microsoft.com/en-us/library/twcad0zb%28v=vs.80%29.aspx">C# type inference</a>, the compiler is able to determine the generic type and this saves us having to explicitly state the type. The return type of the Process method is also known. So if we were to change the <code>FindUsersBySearchTextQuery</code> to implement a different interface (say <code>IQuery&lt;IQueryable&lt;User&gt;&gt;</code>) the <code>UserController</code> will no longer compile instead of miserably failing at runtime.</p>
+<p>The <code>UserController</code> now depends on a <code>IQueryProcessor</code> that can handle all of our queries. The <code>UserController</code>’s <code>SearchUsers</code> method calls the <code>IQueryProcessor.Process</code> method passing in an initialized query object. Because the <code>FindUsersBySearchTextQuery</code> implements the <code>IQuery&lt;User[]&gt;</code> interface, we can pass it to the generic <code>Execute&lt;TResult&gt;(IQuery&lt;TResult&gt; query)</code> method. Thanks to <a href="https://msdn.microsoft.com/en-us/library/twcad0zb%28v=vs.80%29.aspx">C# type inference</a>, the compiler is able to determine the generic type and this saves us having to explicitly state the type. The return type of the Process method is also known. So if we were to change the <code>FindUsersBySearchTextQuery</code> to implement a different interface (say <code>IQuery&lt;IQueryable&lt;User&gt;&gt;</code>) the <code>UserController</code> will no longer compile instead of miserably failing at runtime.</p>
 
 <p>It is now the responsibility of the implementation of the <code>IQueryProcessor</code> to find the right <code>IQueryHandler</code>. This requires some dynamic typing, and optionally the use of a Dependency Injection library, and can all be done with just a few lines of code:</p>
 
@@ -313,7 +313,7 @@
     }
 }</code></pre></div>
 
-<p>he <code>QueryProcessor</code> class constructs a specific <code>IQueryHandler&lt;TQuery, TResult&gt;</code> type based on the type of the supplied query instance. This type is used to ask the supplied container class to get an instance of that type. Unfortunately we need to call the <code>Handle</code> method using reflection (by using the C# 4.0 <code>dymamic</code> keyword in this case), because at this point it is impossible to cast the handler instance, since the generic <code>TQuery</code> argument is not available at compile time. However, unless the <code>Handle</code> method is renamed or gets other arguments, this call will never fail and if you want to, it is very easy to write a unit test for this class. Using reflection will give a slight drop, but is nothing to really worry about (especially when you&rsquo;re using <a href="https://simpleinjector.org">Simple Injector</a> as your DI library, because it is <a href="http://www.palmmedia.de/Blog/2011/8/30/ioc-container-benchmark-performance-comparison">blazingly fast</a>).</p>
+<p>he <code>QueryProcessor</code> class constructs a specific <code>IQueryHandler&lt;TQuery, TResult&gt;</code> type based on the type of the supplied query instance. This type is used to ask the supplied container class to get an instance of that type. Unfortunately we need to call the <code>Handle</code> method using reflection (by using the C# 4.0 <code>dymamic</code> keyword in this case), because at this point it is impossible to cast the handler instance, as the generic <code>TQuery</code> argument is not available at compile time. However, unless the <code>Handle</code> method is renamed or gets other arguments, this call will never fail and if you want to, it is very easy to write a unit test for this class. Using reflection will give a slight drop, but is nothing to really worry about (especially when you&rsquo;re using <a href="https://simpleinjector.org">Simple Injector</a> as your DI library, because it is <a href="http://www.palmmedia.de/Blog/2011/8/30/ioc-container-benchmark-performance-comparison">blazingly fast</a>).</p>
 
 <p>I did consider an alternative design of the <code>IQueryProcessor</code> interface, that looked like this:</p>
 
@@ -325,7 +325,7 @@
 
 <p>This version of the interface solves the problem of having to do dynamic typing in the <code>QueryProcessor</code> implementation completely, but sadly the C# compiler isn’t ‘smart’ enough to find out which types are needed (<a href="https://blogs.msdn.com/b/ericlippert/archive/2009/12/10/constraints-are-not-part-of-the-signature.aspx">damn you Anders</a>!), which forces us to completely write out the call to <code>Process</code>, including both generic arguments. This gets really ugly in the code and is therefore not advisable. I was a bit amazed by this, because I was under the assumption that the C# compiler could infer the types. (However, the more I think about it, the more it makes sense that the C# compiler doesn&rsquo;t try to do so.)</p>
 
-<p>There’s one very important point to note when using the <code>IQueryProcessor</code> abstraction. By injecting an <code>IQueryProcessor</code>, it is no longer clear which queries a consumer is using. This makes unit testing more fragile, since the constructor no longer tells us what services the class depends on. We also make it harder for our DI library to verify the object graph it is creating, since the creation of an <code>IQueryHandler</code> implementation is postponed by the <code>IQueryProcessor</code>. Being able to verify the container&rsquo;s configuration <a href="https://simpleinjector.org/howto#verify-configuration">is very important</a>. Using the <code>IQueryProcessor</code> means we have to write a test that confirms there is a corresponding query handler for every query in the system, because the DI library can not check this for you. I personally can live with that in the applications I work on, but I wouldn’t use such an abstraction too often. I certainly wouldn’t advocate an <code>ICommandProcessor</code> for executing commands - consumers are less likely to take a dependency on many command handlers and if they do it would probably be a violation of SRP.</p>
+<p>There’s one very important point to note when using the <code>IQueryProcessor</code> abstraction. By injecting an <code>IQueryProcessor</code>, it is no longer clear which queries a consumer is using. This makes unit testing more fragile, because the constructor no longer tells us what services the class depends on. We also make it harder for our DI library to verify the object graph it is creating, because the creation of an <code>IQueryHandler</code> implementation is postponed by the <code>IQueryProcessor</code>. Being able to verify the container&rsquo;s configuration <a href="https://simpleinjector.org/howto#verify-configuration">is very important</a>. Using the <code>IQueryProcessor</code> means we have to write a test that confirms there is a corresponding query handler for every query in the system, because the DI library can not check this for you. I personally can live with that in the applications I work on, but I wouldn’t use such an abstraction too often. I certainly wouldn’t advocate an <code>ICommandProcessor</code> for executing commands—consumers are less likely to take a dependency on many command handlers and if they do it would probably be a violation of SRP.</p>
 
 <h4 id="one-word-of-advice-when-you-start-using-this-design-start-out-without-the-iqueryprocessor-abstraction-because-of-the-reasons-i-described-it-can-always-be-added-later-on-without-any-problem"><strong>One word of advice:</strong> When you start using this design, start out without the <code>IQueryProcessor</code> abstraction because of the reasons I described. It can always be added later on without any problem.</h4>
 
@@ -468,7 +468,7 @@
 
 <h4 id="steven-15-september-12-1">Steven - 15 September 12</h4>
 
-<p>If you need to return data from commands, take a look at <a href="/blogs/p/data-commands">this article</a>. However, in the case of logging in a user, I don&rsquo;t think that&rsquo;s really suited for a command, since you are really asking a question here (while doing a side effect). Instead, I would use an <code>IAuthorizationService</code> or something like that.</p>
+<p>If you need to return data from commands, take a look at <a href="/blogs/p/data-commands">this article</a>. However, in the case of logging in a user, I don&rsquo;t think that&rsquo;s really suited for a command, because you are really asking a question here (while doing a side effect). Instead, I would use an <code>IAuthorizationService</code> or something like that.</p>
 
 <hr />
 
@@ -808,7 +808,7 @@ public sealed class GetAccountDetailsQueryHandler
 
 <p>Hi Alexander,</p>
 
-<p>As you noticed, the design given on that blog allows a <code>QueryProcessor</code> that doesn&rsquo;t require dynamic. But I already described in my article that having a <code>IQueryProcessor</code> with an <code>Execute&lt;TQuery, TResult&gt;</code> method doesn&rsquo;t really work, because this makes execution queries awkward, since you&rsquo;ll need to specify both the query and result generic parameter when calling <code>Execute</code>. If you re-read the article, you will see this point made.</p>
+<p>As you noticed, the design given on that blog allows a <code>QueryProcessor</code> that doesn&rsquo;t require dynamic. But I already described in my article that having a <code>IQueryProcessor</code> with an <code>Execute&lt;TQuery, TResult&gt;</code> method doesn&rsquo;t really work, because this makes execution queries awkward, as you&rsquo;ll need to specify both the query and result generic parameter when calling <code>Execute</code>. If you re-read the article, you will see this point made.</p>
 
 <p>While the blog post you referenced gives an example of executing a command, it lacks an example of executing a query using its processor. I wonder if this omission is intentional, because if the writer would have added such example, it would have become clear immediately.</p>
 
@@ -824,7 +824,7 @@ public sealed class GetAccountDetailsQueryHandler
 
 <p>Hi Brent,</p>
 
-<p>I usually just define one single generic caching decorator, but since you don&rsquo;t want to apply the same caching strategy per query, your registration needs might differ. But you could mark queries (or their handlers) with a customly defined <code>CachingAttribute</code> and apply your decorator conditionally, or register decorators one a per-handler basis. There are lots of options here, but I have never defined more than one caching decorator per application.</p>
+<p>I usually just define one single generic caching decorator, but because you don&rsquo;t want to apply the same caching strategy per query, your registration needs might differ. But you could mark queries (or their handlers) with a customly defined <code>CachingAttribute</code> and apply your decorator conditionally, or register decorators one a per-handler basis. There are lots of options here, but I have never defined more than one caching decorator per application.</p>
 
 <hr />
 
@@ -1001,7 +1001,7 @@ Rho</p>
 
 <p>You will have to decide what works best for you. Hiding your ORM from the command handlers can have interesting benefits such as testability and it allows to hide the quirks and complexities van the ORM tool. So injecting a <code>DbContext</code> into your command handler is not bad practice per se, it just depends on the system you are building.</p>
 
-<p>On the query side it&rsquo;s different though. Query handlers are typically more connected to the physical data store, so it typically makes no sense in trying to abstract the ORM tool away. For instance, if you are querying over your database using LINQ, you take a hard dependency on the ORM. It&rsquo;s naive to think that by depending on IQueryable, you have abstracted your ORM, since <code>IQueryable</code> <em>is</em> a Leaky Abstraction.</p>
+<p>On the query side it&rsquo;s different though. Query handlers are typically more connected to the physical data store, so it typically makes no sense in trying to abstract the ORM tool away. For instance, if you are querying over your database using LINQ, you take a hard dependency on the ORM. It&rsquo;s naive to think that by depending on <code>IQueryable</code>, you have abstracted your ORM, as <code>IQueryable</code> <em>is</em> a Leaky Abstraction.</p>
 
 <p>It can still be useful though to let query handlers depend on some sort of <code>IRepository</code> abstraction instead of depending on <code>DbContext</code>. I used this approach in one of my systems where we needed to filter search results based on the user’s permissions (row based security). We were able to apply these filters transparantly by supplying query handlers only with an <code>IQueryable</code> that was returned from an <code>IRepository</code>). The repository abstraction allowed us to apply these filters transparently, with made it impossible for us to introduce bugs by forgetting to apply that filter on the level of the query handler. Still however, our query handlers were completely tied to Entity Framework and we had integration tests for them to verify them.</p>
 
@@ -1023,7 +1023,7 @@ Rho</p>
 <p>What do you think about this approach?</p>
 </blockquote>
 
-<p>I don&rsquo;t have a clear answer to your repository model. Again, it depends on the application you are writing and what your needs are. If I understand your &ldquo;includes&rdquo;, you are probably referring how you can include entities that need to be joined in the result. To me the EF include model is really bad. Entity Framework is able to automatically include stuff that it needs and lazy load the rest. In my experience lazy loading is fine when running command handlers (since performance of command handlers is hardly ever a problem). When creating query handlers on the other hand, you don&rsquo;t want to &ldquo;include&rdquo; stuff either, you just write a LINQ query and map it to a data object. You should never return entities from your LINQ query. You should <em>always</em> map to a data object. If you do this, you don&rsquo;t need &ldquo;includes&rdquo;.</p>
+<p>I don&rsquo;t have a clear answer to your repository model. Again, it depends on the application you are writing and what your needs are. If I understand your &ldquo;includes&rdquo;, you are probably referring how you can include entities that need to be joined in the result. To me the EF include model is really bad. Entity Framework is able to automatically include stuff that it needs and lazy load the rest. In my experience lazy loading is fine when running command handlers (because performance of command handlers is hardly ever a problem). When creating query handlers on the other hand, you don&rsquo;t want to &ldquo;include&rdquo; stuff either, you just write a LINQ query and map it to a data object. You should never return entities from your LINQ query. You should <em>always</em> map to a data object. If you do this, you don&rsquo;t need &ldquo;includes&rdquo;.</p>
 
 <p>I hope this helps.</p>
 
@@ -1175,7 +1175,7 @@ I&rsquo;ll add some more fields for range filters and comparison operators where
 <p>Single file holding all queries or multiple files?</p>
 </blockquote>
 
-<p>Single file holding multiple queries is a model I use to get a team get accustomed to this model (since a typical model for developers is to group them around an entity, e.g. <code>IUserServices</code>, <code>IOrderServices</code>, <code>IProductServices</code>). After they are familiar with the model, developers typically start to place new queries in new classes by themselves, because that&rsquo;s simply more maintainable and browsable.</p>
+<p>Single file holding multiple queries is a model I use to get a team get accustomed to this model (because a typical model for developers is to group them around an entity, e.g. <code>IUserServices</code>, <code>IOrderServices</code>, <code>IProductServices</code>). After they are familiar with the model, developers typically start to place new queries in new classes by themselves, because that&rsquo;s simply more maintainable and browsable.</p>
 
 <blockquote>
 <p>Are there any problems you are aware of with your structure?</p>
@@ -1278,7 +1278,7 @@ I coauthored the book <a href="https://manning.com/seemann2">Dependency Injectio
 
         		<footer>
 			<span>
-			&copy; <time datetime="2019-03-25 16:21:16.9914221 &#43;0100 CET m=&#43;0.567230401">2019</time> Steven van Deursen. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
+			&copy; <time datetime="2019-03-29 16:46:43.7441624 &#43;0100 CET m=&#43;0.553609001">2019</time> Steven van Deursen. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
 			</span>
 		</footer>
 

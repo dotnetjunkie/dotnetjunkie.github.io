@@ -51,12 +51,12 @@
 
 		
 
-<h3 id="injecting-runtime-data-into-your-application-components-is-a-code-smell-runtime-data-should-flow-through-the-method-calls-of-already-constructed-object-graphs">Injecting runtime data into your application components is a code smell. Runtime data should flow through the method calls of already constructed object graphs.</h3>
+<h3 id="injecting-runtime-data-into-your-application-components-is-a-code-smell-runtime-data-should-flow-through-the-method-calls-of-already-constructed-object-graphs">Injecting runtime data into your application components is a code smell. Runtime data should flow through the method calls of already-constructed object graphs.</h3>
 
 <p>A recurring theme when it comes to questions about dependency injection is how to wire up and resolve components a.k.a. <a href="http://misko.hevery.com/2008/09/30/to-new-or-not-to-new/">injectables</a> (the classes that contain the application&rsquo;s behavior) that require runtime data during construction. My answer to this is always the same:</p>
 
 <blockquote>
-<p><strong>Don&rsquo;t inject runtime data into application components during construction—it causes ambiguity, complicates the composition root with an extra responsibility, and makes it extraordinarily hard to verify the correctness of your DI configuration. Instead, let runtime data flow through the method calls of constructed object graphs.</strong></p>
+<p><strong>Don&rsquo;t inject runtime data into application components during construction—it causes ambiguity, complicates the Composition Root with an extra responsibility, and makes it extraordinarily hard to verify the correctness of your DI configuration. Instead, let runtime data flow through the method calls of constructed object graphs.</strong></p>
 </blockquote>
 
 <p>Here&rsquo;s an example of a <code>MoveCustomerCommand</code> component that gets constructed with runtime data—the <code>CustomerId</code> and <code>DestinationAddress</code>.</p>
@@ -90,7 +90,7 @@
 
 <ul>
 <li>Creating the component in code is a <a href="https://en.wikipedia.org/wiki/Dependency_inversion_principle">Dependency Inversion Principle</a> violation and makes it impossible to decorate, intercept or replace the component without making sweeping changes throughout the code base.</li>
-<li>A factory will add a <a href="/steven/p/abstract-factories/">pointless extra layer of abstraction</a> to the application, increasing complexity and decreasing maintainability. Complexity is increased because the consumer now has to deal with an extra abstraction (the factory). Maintainability is decreased, because for each component a factory method must be created and maintained that will hand-wire the component with its dependencies.</li>
+<li>A factory will add a <a href="/steven/p/abstract-factories/">pointless extra layer of abstraction</a> to the application, increasing complexity and decreasing maintainability. Complexity is increased because the consumer now has to deal with an extra abstraction (the factory). Maintainability is decreased, because for each component, a factory method must be created and maintained that will handwire the component with its dependencies.</li>
 <li>Calling back into the container directly leads to the <a href="https://blog.ploeh.dk/2010/02/03/ServiceLocatorisanAnti-Pattern/">Service Locator anti-pattern</a>.</li>
 </ul>
 
@@ -129,13 +129,13 @@
 <ul>
 <li>The creation of object graphs can now be verified with a single automated test.</li>
 <li>No callbacks to a Service Locator are needed.</li>
-<li>No factory is needed; code can depend directly on <code>ICommandHandler&lt;T&gt;</code>.</li>
+<li>No factory is needed; code can depend directly on <code>ICommandHandler&lt;MoveCustomerCommand&gt;</code>.</li>
 <li>Creation of the object graph is not needlessly delayed until runtime.</li>
 </ul>
 
 <p>The general fix here is to change the public API to expose the runtime data through its contract so that the request-specific information can be passed through. This allows the component to become stateless.</p>
 
-<p>But not all violations can be solved like this. Sometimes you don&rsquo;t want to change the public API of our abstractions, especially when the runtime data is an implementation detail. To visualize this point let&rsquo;s take a look at the following example:</p>
+<p>But not all violations can be solved like this. Sometimes you don&rsquo;t want to change the public API of your abstractions, especially when the runtime data is an implementation detail. To visualize this point let&rsquo;s take a look at the following example:</p>
 
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CustomerRepository</span> : ICustomerRepository
 {
@@ -161,15 +161,15 @@
     }
 }</code></pre></div>
 
-<p>The example shows a <code>CustomerRepository</code> that in addition to depending on an <code>IUnitOfWork</code>, also requires the current user id and the current system time. The current user id is the <code>Id</code> of the logged in user on whose behalf the operation is executed. This <code>Id</code> and current time are both used to update the <code>Customer</code> entity before it is saved.</p>
+<p>The example shows a <code>CustomerRepository</code> that in addition to depending on an <code>IUnitOfWork</code>, also requires the current user id and the current system time. The current user id is the <code>Id</code> of the logged in user on whose behalf the operation is executed. This <code>Id</code> and current time are both used to update the <code>Customer</code> entity before it is persisted to the database.</p>
 
-<p>Just as in the previous example, this use of runtime data is problematic. In this component there is some ambiguity in the constructor because when examininf the type, it is unclear what is needed to inject. What <code>DateTime</code> value should be injected? Should it be the <code>Now</code>, <code>Today</code>, yesterday? In other words, it would be very easy to create the <code>CustomerRepository</code> with incorrect values, and the only way to verify whether the configuration is correct is through manual testing or a rather awkward integration test.</p>
+<p>Just as in the previous example, this use of runtime data is problematic. In this component there is some ambiguity in the constructor because when examining the type, it is unclear what is needed to inject. What <code>DateTime</code> value should be injected? Should it be the <code>Now</code>, <code>Today</code>, yesterday? In other words, it would be very easy to create the <code>CustomerRepository</code> with incorrect values, and the only way to verify whether the configuration is correct is through manual testing or a rather awkward integration test.</p>
 
-<p>In this example, however, you don&rsquo;t want to make the runtime data into input parameters of the <code>Save</code> method because that would mean the <code>Save</code> method gets two extra parameters. The addition of these parameters to the <code>Save</code> method will ripple through the system because the direct and indirect consumers of the <code>ICustomerRepository</code> abstraction will need to add these parameters to their API as well (all the way up the chain). Not only would this pollute the API, it would also force you to make sweeping changes throughout the code base for each and every piece of runtime data that some implementation requires in the future.</p>
+<p>In this example, however, you don&rsquo;t want to make the runtime data into input parameters of the <code>CustomerRepository</code>&rsquo;s <code>Save</code> method because that would mean the <code>Save</code> method gets two extra parameters. The addition of these parameters to the <code>Save</code> method will ripple through the system because the direct and indirect consumers of the <code>ICustomerRepository</code> abstraction will need to add these parameters to their API as well—all the way up the chain. Not only would this pollute the API, it would also force you to make sweeping changes throughout the code base for each and every piece of runtime data that some implementation requires in the future.</p>
 
 <p>When a component requires runtime state in its constructor, it becomes impossible to verify the configuration in a maintainable way. A unit test must be written for each component that verifies whether that particular object can be created, while supplied with fake—but valid—runtime data needed for the component to initialize.</p>
 
-<p>The current user id and current time are runtime data but they are implementation details and consumers of the repository should not be concerned with such details. You should place these runtime values behind clearly defined abstractions, removing the ambiguity in their definition and allowing the runtime data to flow through the system with the method calls:</p>
+<p>The current user id and current time are runtime values but they are implementation details and consumers of the repository should not be concerned with such details. You should place these runtime values behind clearly defined abstractions, removing the ambiguity in their definition and allowing the runtime data to flow through the system with the method calls, as shown in the following listing:</p>
 
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CustomerRepository</span> : ICustomerRepository
 {
@@ -293,7 +293,7 @@ I coauthored the book <a href="https://manning.com/seemann2">Dependency Injectio
 
         		<footer>
 			<span>
-			&copy; <time datetime="2019-04-01 11:01:54.971041 &#43;0200 CEST m=&#43;0.499498401">2019</time> Steven van Deursen. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
+			&copy; <time datetime="2019-04-03 10:57:55.6641683 &#43;0200 CEST m=&#43;0.475179501">2019</time> Steven van Deursen. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
 			</span>
 		</footer>
 

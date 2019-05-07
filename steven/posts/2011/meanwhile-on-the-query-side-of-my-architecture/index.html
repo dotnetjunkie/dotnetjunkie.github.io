@@ -484,7 +484,7 @@ But how do you test the query / command handler itself? I only see a way via int
 
 <p>Hi Daniel, this series focuses on using the right abstractions and not so much on a particular handler implementation, although a simple example is given. For what it&rsquo;s worth, the article could have used a handler implementation with an embedded SQL statement.</p>
 
-<p>The given handler example uses a unit of work that exposes an <code>IQueryable&lt;T&gt;</code>. <code>IQueryable&lt;T&gt;</code> is a leaky abstraction and this makes unit testing hard. I&rsquo;ve written <a href="/steven/pivot/entry.php?id=84">in the past</a> about a solution but the fact remains that <code>IQueryable&lt;T&gt;</code> is a leaky abstraction and is hard to test.</p>
+<p>The given handler example uses a unit of work that exposes an <code>IQueryable&lt;T&gt;</code>. <code>IQueryable&lt;T&gt;</code> is a leaky abstraction and this makes unit testing hard. I&rsquo;ve written <a href="https://cuttingedge.it/blogs/steven/pivot/entry.php?id=84">in the past</a> about a solution but the fact remains that <code>IQueryable&lt;T&gt;</code> is a leaky abstraction and is hard to test.</p>
 
 <p>But using an <code>IQueryHandler&lt;TQuery, TResult&gt;</code> or <code>ICommandHandler&lt;TCommand&gt;</code> abstraction in itself does not limit the testability of the handler implementation.</p>
 
@@ -506,7 +506,7 @@ But how do you test the query / command handler itself? I only see a way via int
 
 <p>Your layers will not be tightly coupled because of the use of this pattern, on the contrary. If two layers communicate with each other, they will have to send data. They simply need to have some communication contract; they must agree on what messages to send and accept. You can&rsquo;t build a system without passing data from one layer to the other. The communication contract is the absolute minimum amount of coupling you need between layers. <code>FindUsersBySearchTextQuery</code> is a message; it’s part of your <em>data contract</em>. On top of that data contract, the pattern defines just a single abstraction that describes how to communicate. This is the <code>IQueryHandler&lt;TQuery, TResult&gt;</code> interface. So the coupling is actually very low. I think it’s even safe to say that you can’t get any coupling that is lower than this.</p>
 
-<p>Also note that although using <code>DataTable</code>s as query messages and return types lowers the number of runtime types that you send between layers, it *does not make the communication contract any smaller*—each sent and recieved <code>DataTable</code> is still expected to have a unique structure; each still has its own unique signature. Both the sender and receiver depend on this structure. When using the query/handler pattern, you make this contract <em>explicit</em> and add compile-time support to this contract.</p>
+<p>Also note that although using <code>DataTable</code>s as query messages and return types lowers the number of runtime types that you send between layers, it <em>does not make the communication contract any smaller</em> —each sent and recieved <code>DataTable</code> is still expected to have a unique structure; each still has its own unique signature. Both the sender and receiver depend on this structure. When using the query/handler pattern, you make this contract <em>explicit</em> and add compile-time support to this contract.</p>
 
 <hr />
 
@@ -808,7 +808,7 @@ public sealed class GetAccountDetailsQueryHandler
 
 <p>Hi Alexander,</p>
 
-<p>As you noticed, the design given on that blog allows a <code>QueryProcessor</code> that doesn&rsquo;t require dynamic. But I already described in my article that having a <code>IQueryProcessor</code> with an <code>Execute&lt;TQuery, TResult&gt;</code> method doesn&rsquo;t really work, because this makes execution queries awkward, as you&rsquo;ll need to specify both the query and result generic parameter when calling <code>Execute</code>. If you re-read the article, you will see this point made.</p>
+<p>As you noticed, the design given on that blog allows a <code>QueryProcessor</code> that doesn&rsquo;t require dynamic. But I already described in my article that having a <code>IQueryProcessor</code> with an <code>Execute&lt;TQuery, TResult&gt;</code> method doesn&rsquo;t really work, because this makes executing queries awkward, as you&rsquo;ll need to specify both the query and result generic parameter when calling <code>Execute</code>. If you re-read the article, you will see this point made.</p>
 
 <p>While the blog post you referenced gives an example of executing a command, it lacks an example of executing a query using its processor. I wonder if this omission is intentional, because if the writer would have added such example, it would have become clear immediately.</p>
 
@@ -852,7 +852,9 @@ public sealed class GetAccountDetailsQueryHandler
 
 <p>Do you mind expounding on why you &ldquo;personally don&rsquo;t advise depending on an external library for things that are essential parts of your architecture&hellip;&rdquo;, specifically as it relates to MediatR? What are the disadvantages for example?</p>
 
-<h2 id="i-am-currently-considering-using-mediatr-for-my-next-project-i-have-used-this-architecture-based-on-your-articles-and-sample-code-in-the-past-with-success-and-was-thinking-mediatr-would-be-an-easier-and-quicker-way-to-get-started">I am currently considering using MediatR for my next project. I have used this architecture based on your articles and sample code in the past, with success, and was thinking MediatR would be an easier and quicker way to get started.</h2>
+<p>I am currently considering using MediatR for my next project. I have used this architecture based on your articles and sample code in the past, with success, and was thinking MediatR would be an easier and quicker way to get started.</p>
+
+<hr />
 
 <h4 id="steven-14-january-17">Steven - 14 January 17</h4>
 
@@ -995,7 +997,7 @@ Rho</p>
 
 <ul>
 <li>Command handlers depending and interacting directly with a <code>DbContext</code></li>
-<li>Command handlers interacting with a generic repositories, such as <code>IRepository</code> and <code>IEntityFactory</code>.</li>
+<li>Command handlers interacting with a generic repositories, such as <code>IRepository&lt;TEntity&gt;</code> and <code>IEntityFactory&lt;TEntity&gt;</code>.</li>
 <li>Command handlers that use inline SQL directly.</li>
 </ul>
 
@@ -1003,7 +1005,7 @@ Rho</p>
 
 <p>On the query side it&rsquo;s different though. Query handlers are typically more connected to the physical data store, so it typically makes no sense in trying to abstract the ORM tool away. For instance, if you are querying over your database using LINQ, you take a hard dependency on the ORM. It&rsquo;s naive to think that by depending on <code>IQueryable</code>, you have abstracted your ORM, as <code>IQueryable</code> <em>is</em> a Leaky Abstraction.</p>
 
-<p>It can still be useful though to let query handlers depend on some sort of <code>IRepository</code> abstraction instead of depending on <code>DbContext</code>. I used this approach in one of my systems where we needed to filter search results based on the user’s permissions (row based security). We were able to apply these filters transparantly by supplying query handlers only with an <code>IQueryable</code> that was returned from an <code>IRepository</code>). The repository abstraction allowed us to apply these filters transparently, with made it impossible for us to introduce bugs by forgetting to apply that filter on the level of the query handler. Still however, our query handlers were completely tied to Entity Framework and we had integration tests for them to verify them.</p>
+<p>It can still be useful though to let query handlers depend on some sort of <code>IRepository</code> abstraction instead of depending on <code>DbContext</code>. I used this approach in one of my systems where we needed to filter search results based on the user’s permissions (row based security). We were able to apply these filters transparantly by supplying query handlers only with an <code>IQueryable</code> that was returned from an <code>IRepository</code>). The repository abstraction allowed us to apply these filters transparently, with made it impossible for us to accidentally introduce bugs by forgetting to apply that filter on the level of the query handler. Still however, our query handlers were completely tied to Entity Framework and we had integration tests for them to verify them.</p>
 
 <blockquote>
 <p>2) In case of negative on first question, would you still use repository pattern with unit of work injected into the command handler to guarantee a single transaction in case a command inserts in multiple tables or would you just use a decorator to insure this single insert? and in this case how could we use a decorator to guarantee this single transaction?</p>

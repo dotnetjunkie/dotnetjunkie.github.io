@@ -1015,7 +1015,7 @@ such as abstracting the EF code behind an interface?</p>
 
 <p>Luc,</p>
 
-<p>I&rsquo;d have to see some conceptual code to see what your design is. To me however, cross-cutting concerns are not work flow. Work flow is about business-related concerns, while authorization, validation and execution are technical concerns. On top of that, having factories for commands and builders for workflows seems like am overkill and a lot of extra complexity.</p>
+<p>I&rsquo;d have to see some conceptual code to see what your design is. To me however, cross-cutting concerns are not work flow. Work flow is about business-related concerns, while authorization, validation and execution are technical concerns. On top of that, having factories for commands and builders for workflows seems like an overkill and a lot of extra complexity.</p>
 
 <p>But again, without some actual code, it&rsquo;s pretty hard to argue about this. If you create a new question with some code <a href="https://github.com/dotnetjunkie/solidservices/issues/new">here</a>, we could discuss this a bit more.</p>
 
@@ -1041,9 +1041,9 @@ such as abstracting the EF code behind an interface?</p>
 
 <p>In the case of your JWT tokens, for instance, the client can be made responsible for the creation of a valid token, after which it can supply it to the server, while requesting its logon.</p>
 
-<p>The rule that commands don&rsquo;t return data, however, doesn&rsquo;t mean that your REST API is required to do the same. Your API can happily return a value for something your command cannot. For instance, validation errors can happily be returned, even though the command might have through a <code>ValidationException</code> in that case.</p>
+<p>The rule that commands don&rsquo;t return data, however, doesn&rsquo;t mean that your REST API is required to do the same. Your API can happily return a value for something your command cannot. For instance, validation errors can happily be returned, even though the command might have thrown a <code>ValidationException</code> in that case.</p>
 
-<p>Still, there might be corner cases. I experienced those too often be centralized around logon process of an application, even though, I think that in many cases it can still be prevented.</p>
+<p>Still, there might be corner cases. I experienced those to often be centralized around logon process of an application, even though, I think that in many cases it can still be prevented.</p>
 
 <p>But for those exceptional scenarios, you might still be able to internally use commands, but at the API layer you might be forced to create some custom logic. This can happen, for instance, when it is not appropriate to let the client generate an ID. In that case, you can do that as part of your Web API Facade. For instance:</p>
 
@@ -1061,7 +1061,7 @@ public Token LogOn(string name, string pwd) {
 <p>Do you consider the Service class an unnecessary layer?</p>
 </blockquote>
 
-<p>Yes, I do. Since I&rsquo;m using this architecture, there is almost never a reason (except: see above exception) to create those Service classes any longer. The Command Handler has become the new Service. Even better, when you&rsquo;re building a Web API, I also prefer even stripping out controllers, since they become empty shells that only forward the operation. You can find more information about this, <a href="https://github.com/dotnetjunkie/solidservices/">here</a>.</p>
+<p>Yes, I do. I&rsquo;ve been using this design for over eight years now, and I&rsquo;ve almost never seen a reason (except: see above exception) to create those Service classes any longer. The Command Handler has become the new Service. Even better, when you&rsquo;re building a Web API, I also prefer even stripping out controllers, since they become empty shells that only forward the operation. You can find more information about this, <a href="https://github.com/dotnetjunkie/solidservices/">here</a>.</p>
 
 <hr />
 
@@ -1083,7 +1083,7 @@ public Token LogOn(string name, string pwd) {
 
 <p>It isn’t wrong, per see, to return data from commands. I used to do this myself, as you can read <a href="/steven/p/data-commands">here</a>. However, I found that disallowing the return of data from commands in general is an improvement, since it simplifies the command handlers, and makes it easier to make command handlers idempotent. Idempotency allows commands to be queued, resent, and retried, without causing unfortunate actions caused by commands executed twice.</p>
 
-<p>The result of such design decision is, of course, that you need to ‘work around’ cases where there is no alternative for returning data, which might very well be the case in your JWT example. Although you can chose to change your architecture and allow all commands return a value to accommodate this, I found this to be less ideal. I found that the need to return data is so rare in the applications I build, that I rather work around the few cases that do need to return data, instead of changing my architecture and complicating all command handlers to accommodate the few.</p>
+<p>The result of such design decision is, of course, that you need to ‘work around’ cases where there is no alternative for returning data, which might very well be the case in your JWT example. Although you can choose to change your architecture and allow all commands return a value to accommodate this, I found this to be less ideal. I found that the need to return data is so rare in the applications I build, that I rather work around the few cases that do need to return data, instead of changing my architecture and complicating all command handlers to accommodate the few.</p>
 
 <p>The thing about architecture is, though, that it’s always about striking a balance. You will have to find the architecture that strikes the most optimal situation in your particular application. For me, this is the rule that commands can’t return any data. This might be different in your case. For instance when you’re dealing with an already existing application that works with auto-increment database identifiers, rather than GUIDs, it might be easier to let commands return data.</p>
 

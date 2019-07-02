@@ -6,10 +6,19 @@
     <description>Recent content in Architecture on .NET Junkie - Weblog of a workaholic</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 08 Mar 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 02 Jul 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://blogs.cuttingedge.it/steven/tags/architecture/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>DI Composition Models: A Primer</title>
+      <link>https://blogs.cuttingedge.it/steven/posts/2019/di-composition-models-primer/</link>
+      <pubDate>Tue, 02 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://blogs.cuttingedge.it/steven/posts/2019/di-composition-models-primer/</guid>
+      <description>To be able to achieve anything useful, your application code makes use of runtime data that comes in many shapes and forms. Providing access to that data can be accomplished in many ways. The way you provide object graphs with runtime data can affect the way you compose them using Dependency Injection. There are two competing models to choose from. This article introduces these two models: the Closure Composition Model and the Ambient Composition Model.</description>
+    </item>
     
     <item>
       <title>Dependency Injection Principles, Practices, and Patterns</title>

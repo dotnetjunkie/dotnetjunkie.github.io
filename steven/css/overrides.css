@@ -3,19 +3,19 @@
 }
 
 div.callout {
- margin-left: 5%;
- margin-right: 5%;
+ margin-left:5%;
+ margin-right:5%;
 }
 
 div.DEFINITION {
 }
 
 div.callout .callout-title {
- font-weight: bold;
- font-size: 1.1em;
+ font-weight:bold;
+ font-size:1.1em;
 }
 div.callout .callout-body {
- font-style: italic;
+ font-style:italic;
 }
 
 code {
@@ -30,7 +30,7 @@ div.highlight {
 
 div.highlight pre {
  padding:0.1rem;
- line-height: 1.3;
+ line-height:1.3;
 }
 
 pre code {
@@ -42,10 +42,10 @@ pre code span {
 
 @media (max-width: 1000px) {
  pre code {
-  font-size:70%;
+  font-size:80%;
  }
  div.highlight pre {
-  line-height: 0.9;
+  line-height:0.9;
  }
  main {
   width:90%;
@@ -57,10 +57,14 @@ pre code span {
   font-size:65%;
  }	
  div.highlight pre {
-  line-height: 0.8;
+  line-height:0.8;
  }
  main {
   width:95%;
+ }
+ ul {
+  margin-left:1.5em;
+  padding-left:0;
  }
 }
 
@@ -91,7 +95,7 @@ pre code span {
 
 	div.highlight pre {
 		word-wrap:break-word;
-		line-height: 1.1;
+		line-height:1.1;
 	}
 	code {
 		color:black;

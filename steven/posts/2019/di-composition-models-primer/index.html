@@ -110,6 +110,10 @@
 
 <p>ASP.NET will provide the <code>AddItem</code> action method with the runtime data coming from the user. The following code listing shows <code>ShoppingBasketController</code> with its <code>AddItem</code> method:</p>
 
+
+
+
+
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ShoppingBasketController</span> : Controller
 {<span style="color:#a6e22e">
 </span><span style="color:#a6e22e">    [HttpPost]</span>
@@ -118,7 +122,8 @@
 </span><span style="color:#75715e"></span>    {
         ...
     }
-}</code></pre></div>
+}
+</code></pre></div>
 
 <p>The <code>AddItem</code>‘s <code>AddShoppingBasketItem</code> argument captures the request data. It is runtime data, unique to the request, its data posted by the client, and supplied by the ASP.NET framework to <code>ShoppingBasketController</code>. The <code>AddShoppingBasketItem</code> runtime data is passed from the caller (the framework) to the callee (<code>ShoppingBasketController</code>) through the class’s public API (the <code>AddItem</code> method). This works great for request/response-related runtime data—such as <code>AddShoppingBasketItem</code>—but might not work well in other cases, which brings me to the second group of runtime data.</p>
 
@@ -138,9 +143,14 @@
 
 <p>The following simplified object graph shows this. The application’s <code>ShoppingBasketDbContext</code> is created and supplied to the controller’s constructor:</p>
 
+
+
+
+
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> controller =
     <span style="color:#66d9ef">new</span> ShoppingBasketController(
-        <span style="color:#66d9ef">new</span> ShoppingBasketDbContext()); // &lt;- Constructor injection</code></pre></div>
+        <b><span style="color:#66d9ef">new</span> ShoppingBasketDbContext()</b>); <span style="color:#75715e">// &lt;- Constructor injection
+</span><span style="color:#75715e"></span></code></pre></div>
 
 <p>Later, when a web request comes in, the deserialized view model is passed along to the controller’s <code>AddItem</code> method. At that point, however, the controller’s object graph has long since been created.</p>
 

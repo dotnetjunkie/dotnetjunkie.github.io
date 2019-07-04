@@ -30,13 +30,35 @@ pre code span {
  }
  div.highlight pre {
   line-height: 0.9;
- } 
+ }
+ 
+  main {
+    width:95%;
+  }
 }
 
 @media (max-width: 750px) {
+ pre code {
+  font-size:65%;
+ }	
  div.highlight pre {
   line-height: 0.8;
- } 
+ }
+  main {
+    width:98%;
+  }
+}
+
+@media (max-width: 400px) {
+ pre code {
+  font-size:55%;
+ }	
+ div.highlight pre {
+  line-height: 0.7;
+ }
+  main {
+    width:99%;
+  }
 }
 
 @media print {

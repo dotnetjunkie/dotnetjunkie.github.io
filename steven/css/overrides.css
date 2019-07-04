@@ -81,6 +81,10 @@ pre code span {
 }
 
 @media print {
+	.noprint {
+		display:none;
+	}
+	
 	html body {
 		color:black;
 	}
@@ -96,18 +100,22 @@ pre code span {
 	div.highlight pre {
 		word-wrap:break-word;
 		line-height:1.1;
+		page-break-inside:avoid;
+		border-style:solid;
+		border-color:#777;
+		border-width:1.5px;
 	}
+	
 	code {
 		color:black;
 		word-wrap:break-word;
 	}
 
-	 pre code {
+	pre code {
 		font-size:90%;
 	}
 	
-	code span {
-		color:black;
+	pre code span {
 		background-color:white;
 		word-wrap:break-word;
 	}
@@ -153,5 +161,9 @@ pre code span {
 
 	a:not(:local-link):after {
 	   content:" (" attr(href) ") ";
+	}
+	
+	a.noprintlink:after {
+	   content:"";
 	}	
 }

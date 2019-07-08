@@ -240,10 +240,14 @@
 		var commentsLoaded = false;
 		var commentsElement = document.getElementById('dynamic_comments');
 		var apiUrl = 'https:\/\/api.github.com\/repos\/dotnetjunkie\/blog\/issues\/1\/comments';
+		var isPrintMode = document.getElementById('wish-to-comment').style.display != 'none';
 
 		function loadCommentsWhenVisible()
 		{
-			if (commentsLoaded == false && isElementInViewport(commentsElement)) {
+			if (commentsLoaded == true)
+				return;
+		
+			if (isElementInViewport(commentsElement) || isPrintMode) {
 				commentsLoaded = true;
 				commentsElement.innerHTML = 'Loading comments...';
 		
@@ -315,7 +319,6 @@
 <a href="https://manning.com/seemann2" class="noprintlink"><img src="/steven/images/book%20cover%20smaller.png" style="float:left;margin-right:10px;margin-bottom:5px;border:0px solid" title="Dependency Injection Principles, Practices, and Patterns" alt="Dependency Injection Principles, Practices, and Patterns Cover Small" /></a>
 I coauthored the book <a href="https://manning.com/seemann2">Dependency Injection Principles, Practices, and Patterns</a>. If you're interested to learn more about DI and software design in general, consider reading my book.
 </p>
-
 
 	</div>
 

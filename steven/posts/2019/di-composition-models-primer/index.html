@@ -218,13 +218,94 @@
 </ul></li>
 </ul>
 
+<h2 id="comments">Comments</h2>
+
 
 		<hr />
+	
+	
+	<p id="dynamic_comments" onscroll="loadComments()">
+		<noscript class="noprint">
+			The comments are not loaded because you disabled JavaScript. That's okay—I disable JavaScript myself all the time.
+			The comments for this blog post are loaded dynamically from GitHub. To read these comments,
+			just click <a href="https://github.com/dotnetjunkie/blog/issues/1">here</a>.
+		</noscript>
+	</p>
+	
+	<h2 id="wish-to-comment" class="noprint">Wish to comment?</h2>
+ 
+	<p class="noprint">You can add a comment to this post by commenting on <a href="https://github.com/dotnetjunkie/blog/issues/1">this GitHub issue</a>.</p>
 
-<h2 id="wish-to-comment" class="noprint">Wish to comment?</h2>
+	<script type="text/javascript">
+		var commentsLoaded = false;
+		var commentsElement = document.getElementById('dynamic_comments');
+		var apiUrl = 'https:\/\/api.github.com\/repos\/dotnetjunkie\/blog\/issues\/1\/comments';
 
-<p class="noprint">Comments are currently turned off as I switched to a static site generator. I will enable commenting again in the future, most likely using pull requests. Stay tuned...</p>
+		function loadCommentsWhenVisible()
+		{
+			if (commentsLoaded == false && isElementInViewport(commentsElement)) {
+				commentsLoaded = true;
+				commentsElement.innerHTML = 'Loading comments...';
+		
+				fetch(apiUrl, { headers: { 'Accept': 'application/vnd.github.v3.html+json' } })
+				  .then(response => { return response.json() })
+				  .then(comments => {
+					commentsElement.innerHTML = '';
+					if (comments.length == 0) {
+						commentsElement.innerHTML = 'There are currently no comments.';
+					}
+					for (var i = 0; i < comments.length; i++) {
+						appendComment(comments[i], comments[i].body_html);
+					}
+				  })
+				  .catch (err => {
+					commentsElement.innerHTML = 'I\'m sorry. Something went wrong during the loading of the comments. ' + err;
+				  });				
+			}
+		}
 
+		function appendComment(comment, bodyHtml)
+		{
+			var nameLink = document.createElement('a');
+			nameLink.setAttribute("href", comment.user.html_url); 
+			nameLink.appendChild(document.createTextNode(comment.user.login));
+			
+			if (comment.user.login == 'dotnetjunkie') {
+				nameLink = document.createTextNode('Steven');
+			}
+		
+			var titleElement = document.createElement('h4');
+			titleElement.id = 'comment-' + comment.id;
+			
+			titleElement.appendChild(nameLink);
+			
+			var createDate = new Date(comment.created_at).toLocaleString('en-us', { year: 'numeric', month: 'long', day: 'numeric' });
+			titleElement.appendChild(document.createTextNode(' - ' + createDate));
+			
+			if (comment.created_at != comment.updated_at) {
+				titleElement.appendChild(document.createTextNode(' (edited)'));
+			}
+			
+			commentsElement.appendChild(titleElement);
+			commentsElement.innerHTML += bodyHtml;
+			commentsElement.appendChild(document.createElement('hr'));		
+		}
+		
+		function isElementInViewport(el) {
+			var rect = el.getBoundingClientRect();
+			return (
+				rect.top >= 0 &&
+				rect.left >= 0 &&
+				rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+				rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+			);
+		}
+		
+		loadCommentsWhenVisible();
+		
+		window.onresize = function(){ loadCommentsWhenVisible() };
+		window.onscroll = function(){ loadCommentsWhenVisible() };
+	</script>	
 
 <hr class="noprint" />
 
@@ -234,6 +315,8 @@
 <a href="https://manning.com/seemann2" class="noprintlink"><img src="/steven/images/book%20cover%20smaller.png" style="float:left;margin-right:10px;margin-bottom:5px;border:0px solid" title="Dependency Injection Principles, Practices, and Patterns" alt="Dependency Injection Principles, Practices, and Patterns Cover Small" /></a>
 I coauthored the book <a href="https://manning.com/seemann2">Dependency Injection Principles, Practices, and Patterns</a>. If you're interested to learn more about DI and software design in general, consider reading my book.
 </p>
+
+
 	</div>
 
 	<div class="pagination noprint">

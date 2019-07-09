@@ -139,11 +139,13 @@
 
 
 
+
+
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ShoppingBasketController</span> : Controller
 {<span style="color:#a6e22e">
 </span><span style="color:#a6e22e">    [HttpPost]</span>
-    <span style="color:#66d9ef">public</span> IActionResult AddItem( <span style="color:#75715e">// &lt;- The application’s public API
-</span><span style="color:#75715e"></span>        AddShoppingBasketItem viewModel) <span style="color:#75715e">// &lt;- Runtime data
+    <span style="color:#66d9ef">public</span> IActionResult AddItem( <span style="color:#75715e"><annotation>The application’s public API</annotation>
+</span><span style="color:#75715e"></span>        AddShoppingBasketItem viewModel) <span style="color:#75715e"><annotation>Runtime data</annotation>
 </span><span style="color:#75715e"></span>    {
         ...
     }
@@ -172,9 +174,11 @@
 
 
 
+
+
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> controller =
     <span style="color:#66d9ef">new</span> ShoppingBasketController(
-        <b><span style="color:#66d9ef">new</span> ShoppingBasketDbContext()</b>); <span style="color:#75715e">// &lt;- Constructor injection
+        <b><span style="color:#66d9ef">new</span> ShoppingBasketDbContext()</b>); <span style="color:#75715e"><annotation>Constructor injection</annotation>
 </span><span style="color:#75715e"></span></code></pre></div>
 
 <p>Later, when a web request comes in, the deserialized view model is passed along to the controller’s <code>AddItem</code> method. At that point, however, the controller’s object graph has long since been created.</p>
@@ -271,8 +275,9 @@
 		function appendComment(comment, bodyHtml)
 		{
 			var nameLink = document.createElement('a');
-			nameLink.setAttribute("href", comment.user.html_url); 
+			nameLink.setAttribute('href', comment.user.html_url); 
 			nameLink.appendChild(document.createTextNode(comment.user.login));
+			nameLink.setAttribute('class', 'noprintlink');
 			
 			if (comment.user.login == 'dotnetjunkie') {
 				nameLink = document.createTextNode('Steven');
@@ -332,7 +337,8 @@ I coauthored the book <a href="https://manning.com/seemann2">Dependency Injectio
 
         		<footer>
 			<span>
-			&copy; <time datetime="2019">2019</time> Steven van Deursen. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
+			&copy; <time datetime="2019">2019</time>
+			Steven van Deursen. <span class="noprint">Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
 			</span>
 		</footer>
 

@@ -40,6 +40,19 @@ pre code {
 pre code span {
 }
 
+pre code annotation {
+ background-color: yellow;
+ color: black;
+ font-style: italic;
+ padding-left: 4px;
+ padding-right: 4px;
+}
+
+pre code annotation::before {
+ content:"← ";
+ font-size: 120%;
+}
+
 @media (max-width: 1000px) {
  pre code {
   font-size:80%;

@@ -99,7 +99,7 @@
 <p>The data flowing through your application can be categorized in many ways, but for the remainder of this article, I’ll divide it into two groups, as this serves us in the discussion that follows:</p>
 
 <ul>
-<li><strong><em>Data passing through the public API</em></strong>—Data that is received from or sent to external actors, such as data posted by a web browser or sent to a message queue, defines a system’s public API. Such information becomes the raw data input or output of a use case. This data might be transformed and reshaped when it is sent from layer to layer, but each layer still passes it through the public API of the next layer. The figure next depicts this.</li>
+<li><strong><em>Data passing through the public API</em></strong>—Data that is received from or sent to external actors, such as data posted by a web browser or sent to a message queue, defines a system’s public API. Such information becomes the raw data input or output of a use case. This data might be transformed and reshaped when it is sent from layer to layer, but each layer still passes it through the public API of the next layer. The figure following the next bullet depicts this.</li>
 <li><strong><em>Contextual or internally oriented data</em></strong>—This is data that isn’t passed through the system’s public API, but is instead an implementation detail of individual components in the system. Often this data is more contextual in nature, while still influencing business decisions. For instance, an application might decide not to execute a certain operation when the user isn’t in the correct role. Users can’t influence their role directly by clicking “Cancel Order.” Instead, their identity and role are already available as contextual information.</li>
 </ul>
 
@@ -119,7 +119,7 @@
 
 <p>This means that data can hop from one group to the next and back, depending on the use case in which it participates. To simplify things, however, I will ignore this possible group-hopping behavior for the remainder of this article—it’s not that relevant.</p>
 
-<p>In the next sections, I’ll discuss these two groups of data in more detail, starting with the first group. This will provide the necessary context for the remainder of the article, where I&rsquo;ll describe their significance in the creation of your application components. Finally, building upon that, I’ll introduce the two composition models that you can use to create an object graph.</p>
+<p>In the next sections, I’ll discuss these two groups of data in more detail, starting with the first group. This will provide the necessary context for the remainder of the article, where I&rsquo;ll describe their significance in the creation of your application components. Finally, building on that, I’ll introduce the two composition models that you can use to create an object graph.</p>
 
 <h2 id="data-passing-through-the-public-api">Data passing through the public API</h2>
 
@@ -152,7 +152,7 @@
 }
 </code></pre></div>
 
-<p>The <code>AddItem</code>‘s <code>AddShoppingBasketItem</code> argument captures the request data. It is runtime data, unique to the request, its data posted by the client, and supplied by the ASP.NET framework to <code>ShoppingBasketController</code>. The <code>AddShoppingBasketItem</code> runtime data is passed from the caller (the framework) to the callee (<code>ShoppingBasketController</code>) through the class’s public API (the <code>AddItem</code> method). This works great for request/response-related runtime data—such as <code>AddShoppingBasketItem</code>—but might not work well in other cases, which brings me to the second group of runtime data.</p>
+<p>The <code>AddItem</code>’s <code>AddShoppingBasketItem</code> argument captures the request data. It is runtime data, unique to the request, its data posted by the client, and supplied by the ASP.NET framework to <code>ShoppingBasketController</code>. The <code>AddShoppingBasketItem</code> runtime data is passed from the caller (the framework) to the callee (<code>ShoppingBasketController</code>) through the class’s public API (the <code>AddItem</code> method). This works great for request/response-related runtime data—such as <code>AddShoppingBasketItem</code>—but might not work well in other cases, which brings me to the second group of runtime data.</p>
 
 <h2 id="contextual-or-internally-oriented-data">Contextual or internally oriented data</h2>
 
@@ -192,7 +192,7 @@
 </div>
 
 
-<p>An alternative to letting your application components consume these contextual runtime data objects is the <em>Ambient Composition Model</em>. With that model, contextual runtime data is no longer captured in variables inside the object graph, but instead is managed by the <a href="https://mng.bz/K1qZ">Composition Root</a>. Application components requiring such data, request it through method calls on provided abstractions.</p>
+<p>An alternative to letting your application components consume these contextual runtime data objects is the <em>Ambient Composition Model</em>. With that model, contextual runtime data is no longer captured in variables inside the object graph, but instead is managed by the <a href="https://mng.bz/K1qZ">Composition Root</a>. Application components requiring such data request it through method calls on provided abstractions.</p>
 
 <div class="callout DEFINITION">
 	<span class="callout-title">DEFINITION</span>

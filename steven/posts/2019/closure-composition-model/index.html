@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<title>
+				The Closure Composition Model &middot; .NET Junkie - Weblog of a workaholic
+		</title>
+
+		
+		<link rel="stylesheet" href="/steven/css/style.css">
+		<link rel="stylesheet" href="/steven/css/overrides.css">
+		<link rel="stylesheet" href="/steven/css/Libre_Baskerville_400_400i_700.css">
+		
+		<link rel="icon" type="image/png" sizes="32x32" href="/steven/images/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/steven/images/favicon-16x16.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="/steven/images/apple-touch-icon.png">
+
+		
+		<link href="" rel="alternate" type="application/rss+xml" title=".NET Junkie - Weblog of a workaholic" />
+	</head>
+
+    <body>
+        		<nav class="nav">
+			<div class="nav-container">
+				<a href="/steven/">
+					<h2 class="nav-title">.NET Junkie - Weblog of a workaholic</h2>
+				</a>
+				<ul class="noprint">
+    <li><a href="/steven/about">About</a></li>
+    <li><a href="/steven/">Posts</a></li>
+</ul>
+			</div>
+		</nav>
+
+        
+
+<main>
+	<div class="post">
+		<div class="post-info">
+    <b><span>Written by</span>
+        Steven van Deursen
+	</b>
+        <br>
+        <span>on&nbsp;</span><time datetime="2019-07-09 00:00:00 &#43;0000 UTC">July 9, 2019</time>
+	<br>
+	
+	<span>10 minutes read.</span>
+</div>
+		<h1 class="post-title">The Closure Composition Model</h1>
+	<div class="post-info">
+		
+			
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+
+			<span>Reviewed by </span> <a href="https://www.linkedin.com/in/qujck/" class="noprintlink">Peter Parker</a> and <a href="https://www.linkedin.com/in/ricslappendel/" class="noprintlink">Ric Slappendel</a>
+			—
+			<span>Proofread by </span> Katie Tennant
+	</div>
+
+
+
+		
+
+		
+
+<h3 id="to-be-able-to-achieve-anything-useful-your-application-code-makes-use-of-runtime-data-that-comes-in-many-shapes-and-forms-providing-access-to-that-data-can-be-accomplished-in-many-ways-the-way-you-provide-object-graphs-with-runtime-data-can-affect-the-way-you-compose-them-using-dependency-injection-there-are-two-competing-models-to-choose-from-this-article-describes-the-closure-composition-model-it-is-the-second-of-a-five-part-series-on-dependency-injection-composition-models">To be able to achieve anything useful, your application code makes use of runtime data that comes in many shapes and forms. Providing access to that data can be accomplished in many ways. The way you provide object graphs with runtime data can affect the way you compose them using Dependency Injection. There are two competing models to choose from. This article describes the Closure Composition Model. It is the second of a five-part series on Dependency Injection composition models.</h3>
+
+<p>The goal of this article is to objectively describe the Closure Composition Model (CCM) by providing you with multiple examples, a definition, and its consequences. In the fourth part, I’ll compare the Closure Composition Model with the Ambient Composition Model, which I&rsquo;ll go into in the next article.</p>
+
+<p><a href="/steven/posts/2019/di-composition-models-primer/">The primer article</a> introduced a <code>ShoppingBasketController</code> for a hypothetical web shop. The next listing shows this controller again—now with a constructor, while folding its action method:</p>
+
+
+
+
+
+
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ShoppingBasketController</span> : Controller
+{
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IHandler&lt;AddShoppingBasketItem&gt; handler;
+    
+    <span style="color:#66d9ef">public</span> ShoppingBasketController(
+        IHandler&lt;AddShoppingBasketItem&gt; handler)
+    {
+        <span style="color:#66d9ef">this</span>.handler = handler;
+    }
+
+    <span style="color:#66d9ef">public</span> IActionResult AddItem(AddShoppingBasketItem viewModel) =&gt; ...
+}
+</code></pre></div>
+
+<p>The shopping application would likely contain many more classes than just this one controller. In this article, I’ll add a few more classes to the application to demonstrate the Closure Composition Model.</p>
+
+<p>When it comes to supplying application components with a data-centric object, such as a <code>DbContext</code>, a common practice is to inject the object directly into the constructor of the consuming class. The next code example shows the constructor of a <code>ShoppingBasketRepository</code> class that depends on a <code>DbContext</code> derivative—the <code>ShoppingBasketDbContext</code>:</p>
+
+
+
+
+
+
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ShoppingBasketRepository</span> : IShoppingBasketRepository
+{
+    <b><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> ShoppingBasketDbContext context;</b> <span style="color:#75715e"><annotation>Captured variable</annotation>
+</span><span style="color:#75715e"></span>    
+    <span style="color:#66d9ef">public</span> ShoppingBasketRepository(
+        <b>ShoppingBasketDbContext context</b>) <span style="color:#75715e"><annotation>Constructor Injection</annotation>
+</span><span style="color:#75715e"></span>    {
+        <span style="color:#66d9ef">this</span>.context = context;
+    }
+
+    <span style="color:#66d9ef">public</span> ShoppingBasket GetById(Guid id) =&gt;
+        <span style="color:#66d9ef">this</span>.context.ShoppingBaskets.Find(id)
+            ?? <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> KeyNotFoundException(id.ToString());
+}
+</code></pre></div>
+
+<p>In this example, <code>ShoppingBasketDbContext</code> is injected into <code>ShoppingBasketRepository</code> during the repository’s construction. It stores <code>DbContext</code> internally, like it would any other injected dependency.</p>
+
+<p><code>DbContext</code> is stored in a <code>private</code> <code>readonly</code> field and will, therefore, always be available when one of the repository’s methods is invoked. The stored <code>DbContext</code> becomes a <em>captured variable</em> that can be accessed by the class’s methods, effectively becoming a <a href="https://en.wikipedia.org/wiki/Closure(computer_programming)">closure</a>. I, therefore, call this model of injecting runtime data into application components during construction the <em>Closure Composition Model</em> (CCM).</p>
+
+<callout class="DEFINITION">
+	<span class="callout-title">DEFINITION</span>
+	<span class="callout-body"><p>The <em>Closure Composition Model</em> composes object graphs that capture runtime data in variables of the graph’s components.</p>
+</span>
+</callout>
+
+
+<p>The following figure captures the essence of the CCM.</p>
+
+<figure>
+    <img src="/steven/images/compositionmodels/ccmessence.svg"
+         alt="The essence of the Closure Composition Model" width="100%"/> 
+</figure>
+
+
+<p>You are likely familiar with this model on a conceptual level, as it is the prevalent practice. If you&rsquo;ve been practicing Dependency Injection for some time, you are almost certainly acquainted with injecting <code>DbContext</code>s and other runtime values directly into constructors. This means you are applying the CCM. Perhaps you haven’t even considered there to be alternatives to this ubiquitous model. Even in <a href="https://manning.com/seemann2">my book</a>, you’ll find this model to be ever present.</p>
+
+<p>The following sequence diagram shows the basic flow of data using the CCM.</p>
+
+<figure>
+    <img src="/steven/images/compositionmodels/cmmflow.svg"
+         alt="The basic flow of the Closure Composition Model" width="100%"/> 
+</figure>
+
+
+<p>The complete object graph for the shopping basket feature will likely consist of many more classes. Consider the following, a not unimaginable but still reasonably shallow graph, which will serve us for the duration of this article:</p>
+
+
+
+
+
+
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">new</span> ShoppingBasketController(
+    <span style="color:#66d9ef">new</span> AddShoppingBasketItemHandler(
+        <span style="color:#66d9ef">new</span> ShoppingBasketRepository(
+            <b><span style="color:#66d9ef">new</span> ShoppingBasketDbContext(</b> <span style="color:#75715e"><annotation>Injecting runtime data</annotation>
+</span><span style="color:#75715e"></span>                connectionString))));
+</code></pre></div>
+
+<p>In this graph, <code>ShoppingBasketDbContext</code> is injected directly into <code>ShoppingBasketRepository</code>, becoming a captured variable in the repository’s closure. Since <code>DbContext</code> instances contain request-specific data and are not thread-safe, each request should get its own <code>DbContext</code> instance. This implies that the consuming <code>ShoppingBasketRepository</code> should not be reused across requests—even if it contains no state of its own. <code>ShoppingBasketRepository</code> should not outlive the lifetime of a single web request.</p>
+
+<p>Letting <code>ShoppingBasketRepository</code> have a Singleton Lifestyle would cause <code>DbContext</code> to be kept alive for the application’s lifetime. This is dreadful because that would cause it to be used by multiple requests simultaneously—a horrible prospect. Again: <code>DbContext</code>s are not thread-safe.</p>
+
+<sidebar>
+	<span class="sidebar-title">The Singleton Lifestyle</span>
+	<span class="sidebar-body"><p>In the context of Dependency Injection, a <em>Lifestyle</em> is a formalized way of describing the intended lifetime of a dependency. One of those formalized lifestyles is the <em><a href="https://mng.bz/qXJw">Singleton Lifestyle</a></em>. When a component is configured/declared using the Singleton Lifestyle, it means that there will be only one instance of that component, and that instance is perpetually reused. The Singleton Lifestyle should <em>not</em> be confused with the <a href="https://en.wikipedia.org/wiki/Singleton_pattern">Singleton design pattern</a>. They both guarantee the existence of just one instance, but their similarity ends there.</p>
+</span>
+</sidebar>
+
+
+<p><code>ShoppingBasketRepository</code> shouldn’t be a singleton, and the same is true of its consumer—<code>AddShoppingBasketItemHandler</code>—for exactly the same reason; reusing the service would cause the repository to be reused, which again would cause <code>DbContext</code> to be reused. A pattern seems to emerge…</p>
+
+<h2 id="the-closure-s-lifetime-restriction">The closure’s lifetime restriction</h2>
+
+<p>This restriction on the consumer’s lifetime is transitive, meaning that it affects all the dependency’s direct and indirect consumers. It bubbles up the object graph all the way to the top-most object in the graph—<code>ShoppingBasketController</code>, in the example. Not adhering to this restriction causes a problem called <a href="https://blog.ploeh.dk/2014/06/02/captive-dependency/">Captive Dependencies</a>. The book defines it as follows:</p>
+
+<callout class="DEFINITION">
+	<span class="callout-title">DEFINITION</span>
+	<span class="callout-body"><p>A <em>Captive Dependency</em> is a dependency that’s inadvertently kept alive for too long because its consumer was given a lifetime that exceeds the dependency’s expected lifetime. [§8.4.1]</p>
+</span>
+</callout>
+
+
+<p>In the previous example, <code>DbContext</code> is supplied to the object graph during construction—an example of the CCM. The CCM infers that even stateless components should <em>not</em> be kept alive for the application&rsquo;s lifetime, as it would keep their stateful dependencies alive.</p>
+
+<h2 id="providing-a-closure-graph-with-external-runtime-data">Providing a closure graph with external runtime data</h2>
+
+<p>When you’re using a DI Container to compose your application’s object graphs, a <code>DbContext</code> can be easily injected into a class’s constructor. That’s because a <code>DbContext</code> itself does not depend on externally provided runtime data. The domain objects it maintains are created by the <code>DbContext</code> itself. Although it depends on a connection string, that string won’t change during the lifetime of the application, making it a (fixed) configuration value rather than a runtime value. Registering the <code>DbContext</code> using such a fixed value is rather straightforward, as shown in the following example, which uses <a href="https://simpleinjector.org">Simple Injector</a>:</p>
+
+
+
+
+
+
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">string</span> connectionString = LoadConnectionStringFromConfig();
+
+container.Register(
+    <b>() =&gt; <span style="color:#66d9ef">new</span> ShoppingBasketDbContext(</b> <span style="color:#75715e"><annotation>Runtime data</annotation>
+</span><span style="color:#75715e"></span>        <b>connectionString</b>), <span style="color:#75715e"><annotation>Configuration value</annotation>
+</span><span style="color:#75715e"></span>    Lifestyle.Scoped);
+</code></pre></div>
+
+<p><code>ShoppingBasketDbContext</code> is created by the lambda, rather than being supplied from the outside. When the graph requires externally provided runtime data, however, the previous registration will not work.</p>
+
+<p>Say, for instance, you need to process messages from a queue, but the handling code needs to run in the context of the user on whose behalf the message was published. In that case, the user’s identity is possibly provided to you by message infrastructure. When you build the object graph by hand (a.k.a. <a href="https://blog.ploeh.dk/2014/06/10/pure-di/">Pure DI</a>, instead of using a DI Container, that identity can easily be provided to the graph as follows:</p>
+
+
+
+
+
+
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"> IHandler&lt;OrderCancelled&gt; handler =
+    <span style="color:#66d9ef">new</span> OrderCancellationReportGenerator(
+        <span style="color:#66d9ef">new</span> OrderRepository(
+            <span style="color:#66d9ef">new</span> ClosureUserContext(
+                <b>queueContext.UserName</b>), <span style="color:#75715e"><annotation>External runtime data</annotation>
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">new</span> SalesDbContext(
+                connectionString)));
+
+handler.Handle(queueContext.Message); <span style="color:#75715e"><annotation>External runtime data</annotation>
+</span><span style="color:#75715e"></span></code></pre></div>
+
+<p>Both the user’s identity and the message are externally provided runtime values. But while the message is passed along the graph’s public API—in this case the <code>IHandler&lt;T&gt;.Handle</code> method—the user’s identity is an implementation detail, applied to the graph during construction.</p>
+
+<p>In this case, <code>OrderRepository</code> depends on the <code>IUserContext</code> abstraction, which is implemented by the <code>ClosureUserContext</code> class. <code>ClosureUserContext</code> can be as trivial as the following:</p>
+
+
+
+
+
+
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ClosureUserContext</span> : IUserContext
+{
+    <span style="color:#66d9ef">public</span> ClosureUserContext(<span style="color:#66d9ef">string</span> userName)
+    {
+        <span style="color:#66d9ef">this</span>.UserName = userName;
+    }
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> UserName { <span style="color:#66d9ef">get</span>; }
+}
+</code></pre></div>
+
+<p>When practicing Pure DI, it is relatively easy to provide an object graph with runtime data, as the previous two examples showed. When dealing with DI Containers, on the other hand, it can be harder to provide deeper parts of the graph with such externally provided data. In that case, you can choose to initialize the object graph after construction by feeding it with runtime data, for instance, using Property Injection. In the context of the queuing example, it would mean making a change to the <code>ClosureUserContext</code> implementation, by making it mutable instead:</p>
+
+
+
+
+
+
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ClosureUserContext</span> : IUserContext
+{
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> UserName { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; } <span style="color:#75715e"><annotation>Writable property</annotation>
+</span><span style="color:#75715e"></span>}
+</code></pre></div>
+
+<p>The following example demonstrates how to use this new ClosureUserContext using <a href="https://autofac.org">Autofac</a>, although the solution would be similar regardless of the chosen DI Container:</p>
+
+
+
+
+
+
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">using</span> (ILifetimeScope scope = container.BeginLifetimeScope())
+{
+    <span style="color:#66d9ef">var</span> userContext = scope.Resolve&lt;ClosureUserContext&gt;();
+    userContext.UserName = queueContext.UserName;
+
+    <span style="color:#75715e">// Let Autofac compose the object graph which consists of ClosureUserContext
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">var</span> handler = scope.Resolve&lt;IHandler&lt;OrderCancelled&gt;&gt;();
+
+    <span style="color:#75715e">// Invoking the constructed and initialized graph
+</span><span style="color:#75715e"></span>    handler.Handle(queueContext.Message);
+}
+</code></pre></div>
+
+<p>In this example, you start by creating an Autofac lifetime scope. A lifetime scope provides a cache for <em>scoped</em> instances. A scoped instance is cached and reused within a single lifetime scope. Configuring <code>ClosureUserContext</code> as scoped allows you to request the scope’s single <code>ClosureUserContext</code> instance and initialize it with the user’s identity. Because that user context is registered as scoped, that same instance will be injected into the handler’s graph.</p>
+
+<sidebar>
+	<span class="sidebar-title">The Scoped Lifestyle</span>
+	<span class="sidebar-body"><p>Similar to the Singleton Lifestyle, the Scoped Lifestyle is a formalized way of describing the intended lifetime of a dependency. Scoped dependencies behave much like Singleton dependencies, but within a single, well-defined scope. Scoped dependencies aren’t shared across scopes. Each scope has its own cache of associated dependencies.</p>
+</span>
+</sidebar>
+
+
+<p>For completeness, here are the required Autofac registrations to compose the discussed graph:</p>
+
+
+
+
+
+
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">builder.RegisterType&lt;OrderCancellationReportGenerator&gt;()
+    .As&lt;IHandler&lt;OrderCancelled&gt;&gt;();
+
+builder.RegisterType&lt;OrderRepository&gt;()
+    .As&lt;IOrderRepository&gt;();
+
+<b>builder.RegisterType&lt;ClosureUserContext&gt;()</b>
+<b>    .As&lt;ClosureUserContext&gt;()</b>
+<b>    .As&lt;IUserContext&gt;()</b>
+<b>    .InstancePerLifetimeScope();</b>
+
+builder.Register(c =&gt; <span style="color:#66d9ef">new</span> SalesDbContext(connectionString))
+    .InstancePerLifetimeScope();
+</code></pre></div>
+
+<p>Although the username is not supplied to the constructor, this initialization is still part of the object graph’s construction phase. It’s only after the graph is fully constructed and initialized that it is invoked—in the example, the call to <code>handler.Handle</code>.</p>
+
+<p>Just as before in the previous example, <em>runtime data</em> became a _captured variable_—in this case, the username. This data was accessed by <code>ClosureUserContext</code>&rsquo;s methods. In other words, this is another example of the CCM.</p>
+
+<p>Of the two DI composition models, the CCM is the best known and most used. Because of its prevalence, it’s easy to overlook the other existing model, which brings me to the lesser-known and somewhat competing model that you can use to compose object graphs: the Ambient Context Model, which I will discuss in the next article.</p>
+
+<h2 id="summary">Summary</h2>
+
+<ul>
+<li>The <em>Closure Composition Model</em> composes object graphs that capture runtime data in variables of the graph’s components.</li>
+<li>With the Closure Composition Model, you keep this data alive as long as the consuming component.</li>
+<li>Of the two composition models, the Closure Composition Model is the most commonly used and best known.</li>
+<li>One of the most prominent consequences of the Closure Composition Model is that you need to take care not to introduce Captive Dependencies.</li>
+<li>A <em>Captive Dependency</em> is a dependency that’s inadvertently kept alive for too long because its consumer was given a lifetime that exceeds the dependency’s expected lifetime.</li>
+</ul>
+
+<h2 id="comments">Comments</h2>
+
+
+		<hr />
+	
+	
+	<p id="dynamic_comments" onscroll="loadComments()">
+		<noscript class="noprint">
+			The comments are not loaded because you disabled JavaScript. That's okay—I disable JavaScript myself all the time.
+			The comments for this blog post are loaded dynamically from GitHub. To read these comments,
+			just click <a href="https://github.com/dotnetjunkie/blog/issues/2">here</a>.
+		</noscript>
+	</p>
+	
+	<h2 id="wish-to-comment" class="noprint">Wish to comment?</h2>
+ 
+	<p class="noprint">You can add a comment to this post by commenting on <a href="https://github.com/dotnetjunkie/blog/issues/2">this GitHub issue</a>.</p>
+
+	<script type="text/javascript">
+		var commentsLoaded = false;
+		var commentsElement = document.getElementById('dynamic_comments');
+		var apiUrl = 'https:\/\/api.github.com\/repos\/dotnetjunkie\/blog\/issues\/2\/comments';
+		var isPrintMode = document.getElementById('wish-to-comment').style.display != 'none';
+
+		function loadCommentsWhenVisible()
+		{
+			if (commentsLoaded == true)
+				return;
+		
+			if (isElementInViewport(commentsElement) || isPrintMode) {
+				commentsLoaded = true;
+				commentsElement.innerHTML = 'Loading comments...';
+		
+				fetch(apiUrl, { headers: { 'Accept': 'application/vnd.github.v3.html+json' } })
+				  .then(response => { return response.json() })
+				  .then(comments => {
+					commentsElement.innerHTML = '';
+					if (comments.length == 0) {
+						commentsElement.innerHTML = '<br />There are currently no comments.<br /><br /><hr />';
+					}
+					for (var i = 0; i < comments.length; i++) {
+						appendComment(comments[i], comments[i].body_html);
+					}
+				  })
+				  .catch (err => {
+					commentsElement.innerHTML = 'I\'m sorry. Something went wrong during the loading of the comments. ' + err;
+				  });				
+			}
+		}
+
+		function appendComment(comment, bodyHtml)
+		{
+			var nameLink = document.createElement('a');
+			nameLink.setAttribute('href', comment.user.html_url); 
+			nameLink.appendChild(document.createTextNode(comment.user.login));
+			nameLink.setAttribute('class', 'noprintlink');
+			
+			if (comment.user.login == 'dotnetjunkie') {
+				nameLink = document.createTextNode('Steven');
+			}
+		
+			var titleElement = document.createElement('h4');
+			titleElement.id = 'comment-' + comment.id;
+			
+			titleElement.appendChild(nameLink);
+			
+			var createDate = new Date(comment.created_at).toLocaleString('en-us', { year: 'numeric', month: 'long', day: 'numeric' });
+			titleElement.appendChild(document.createTextNode(' - ' + createDate));
+			
+			if (comment.created_at != comment.updated_at) {
+				titleElement.appendChild(document.createTextNode(' (edited)'));
+			}
+			
+			commentsElement.appendChild(titleElement);
+			commentsElement.innerHTML += bodyHtml;
+			commentsElement.appendChild(document.createElement('hr'));		
+		}
+		
+		function isElementInViewport(el) {
+			var rect = el.getBoundingClientRect();
+			return (
+				rect.top >= 0 &&
+				rect.left >= 0 &&
+				rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+				rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+			);
+		}
+		
+		loadCommentsWhenVisible();
+		
+		window.onresize = function(){ loadCommentsWhenVisible() };
+		window.onscroll = function(){ loadCommentsWhenVisible() };
+	</script>	
+
+<hr class="noprint" />
+
+<h2 id="buy-my-book">Buy my book</h2>
+
+<p style="margin-right:7%">
+<a href="https://manning.com/seemann2" class="noprintlink"><img src="/steven/images/book%20cover%20smaller.png" style="float:left;margin-right:10px;margin-bottom:5px;border:0px solid" title="Dependency Injection Principles, Practices, and Patterns" alt="Dependency Injection Principles, Practices, and Patterns Cover Small" /></a>
+I coauthored the book <a href="https://manning.com/seemann2">Dependency Injection Principles, Practices, and Patterns</a>. If you're interested to learn more about DI and software design in general, consider reading my book.
+</p>
+
+	</div>
+
+	<div class="pagination noprint">
+		<a href="/steven/posts/2019/di-composition-models-primer/" class="left arrow">&#8592;</a>
+
+		<a href="#" class="top">Top</a>
+	</div>
+</main>
+
+
+        		<footer>
+			<span>
+			&copy; <time datetime="2019">2019</time>
+			Steven van Deursen. <span class="noprint">Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+			</span>
+		</footer>
+
+    </body>
+</html>

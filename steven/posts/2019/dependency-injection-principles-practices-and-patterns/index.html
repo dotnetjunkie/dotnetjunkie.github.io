@@ -93,56 +93,97 @@
 
 <h2 id="comments">Comments</h2>
 
-<hr />
-
-<h4 id="steven-03-april-19">Steven - 03 April 19</h4>
-
-<p>The book forum on Manning&rsquo;s website contained a more detailed description of the changes we made in the second edition but, unfortunatelly, Manning pulled the plug on the forum. With it, all posts including that description turned to dust.</p>
-
-<p>Below is a (slightly altered) copy of that description:</p>
-
-<h5 id="what-the-motivation-is-for-the-second-edition-and-what-s-new"><em>What the motivation is for the second edition, and, what&rsquo;s new?</em></h5>
-
-<p>Our main motivation for writing a the second edition is to share our new knowledge with a broad audience. Although blog posts, presentations, and Pluralsight videos allow us to get this message across, there is no medium as suited to get a complicated story across as a book.</p>
-
-<p>Because writing a new book is a major undertaking, Mark has asked me to help him. It was simply too much to chew off for Mark alone.</p>
-
-<h5 id="what-will-not-change">What will not change:</h5>
-
-<ul>
-<li>The second edition will still be solely about implementing DI in statically typed object-oriented languages. Examples are still just in C#. Functional Programming has its own patterns and practices and deserves a book of its own.</li>
-<li>Each chapter will still start with a cooking analogy.</li>
-</ul>
-
-<h5 id="what-will-change">What will change:</h5>
-
-<p>The second edition focusses even more on patterns &amp; practices than the first edition already did. There are several areas you will notice this:</p>
-
-<ul>
-<li>The discussion of <strong>DI Containers</strong> is completely moved to Part 4. The first 3 parts of the book are completely container agnostic.</li>
-<li>More examples are added and many parts are completely re-written throughout the book.</li>
-<li>The <strong>Ambient Context</strong> pattern is now considered an anti-pattern and we describe in detail why that is (see <a href="https://livebook.manning.com/#!/book/dependency-injection-principles-practices-patterns/chapter-5/section-5-3">section 5.3</a>).</li>
-<li>The original <em>DI refactorings</em> chapter (6) is almost completely rewritten—it now describes code smells (see <a href="https://livebook.manning.com/#!/book/dependency-injection-principles-practices-patterns/chapter-6">chapter 6</a>).</li>
-<li>We added new sidebars and new sections where we warn about bad practices and bad design decisions and describe our own personal experiences.</li>
-<li>We start referring to the <strong>SOLID</strong> principles much earlier in the book (in the first edition they were first mentioned in chapter 9).</li>
-<li>We removed some complexity and ambiguity in the book&rsquo;s running code samples. This allows the reader to focus more on applying the patterns and practices.</li>
-<li>The <em>Interception</em> chapter (9) is rewritten for the most part. We added this much information that we decided to split up the chapter in three distinct chapters (9, 10, and 11. In <a href="https://livebook.manning.com/#!/book/dependency-injection-principles-practices-patterns/chapter-9">chapter 9</a>), we focus on the Decorator pattern as method of interception.</li>
-<li><a href="https://livebook.manning.com/#!/book/dependency-injection-principles-practices-patterns/chapter-10">Chapter 10</a> contains complete new material discussing how to apply <strong>Aspect-Oriented Programming</strong> (AOP) based on the SOLID design principles. In many ways, we consider chapter 10 to be the climax of the book.</li>
-<li><a href="https://livebook.manning.com/#!/book/dependency-injection-principles-practices-patterns/chapter-11">Chapter 11</a> focusses on applying AOP using <strong>Dynamic Interception</strong> and <strong>Compile-Time Weaving</strong> tooling. This information was available in chapter 9 of the first edition, but we elaborated the discussion to explain all the downsides that these approaches have compared to the methods described in chapter 10.</li>
-<li>We now consider compile-time weaving a DI anti-pattern and <a href="https://livebook.manning.com/#!/book/dependency-injection-principles-practices-patterns/chapter-11/section-11-2">section 11.2</a> describes in detail why compile-time weaving is a bad practice when it comes to applying <strong>Volatile Dependencies</strong>.</li>
-<li><a href="https://livebook.manning.com/#!/book/dependency-injection-principles-practices-patterns/chapter-12/">Chapter 12</a> describes the basics of DI Containers and goes into details how to choose between <strong>Pure DI</strong> and a DI Container. This chapter is an updated version of chapter 3 of the first edition.</li>
-<li>This edition discusses three DI Containers: Autofac, Simple Injector, and Microsoft.Extensions.DependencyInjection. Each container gets its own chapter, and although these chapters are based on the first edition, they also describe how to use those containers in combination with new concepts described in this edition, such as the &ldquo;AOP by design&rdquo; approach, laid out in chapter 10, and domain events from chapter 6.</li>
-<li><a href="https://livebook.manning.com/#!/book/dependency-injection-principles-practices-patterns/chapter-15/">Chapter 15</a> describes the <em>Microsoft.Extensions.DependencyInjection</em> container, and discusses in much detail what the limitations and downsides of this simplistic DI Container implementations are, while we do show how to work around some of its limitations. (spoiler alert: it won&rsquo;t be pretty)</li>
-<li>With the help of Manning’s readability experts, the second edition did an even better job to get the message across.</li>
-</ul>
-
-<p>The book focusses on .NET Core and its frameworks. Although there is still a lot of code that works for any .NET version, especially the parts that show how to integrate (most notably <a href="https://livebook.manning.com/#!/book/dependency-injection-principles-practices-patterns/chapter-7/">chapter 7</a>), are focused on .NET Core and ASP.NET Core.</p>
-
-<p>We incorporated many of the lessons we learned and knowledge we gained since the first edition was published. This will sometimes manifest itself in small notes or warnings, up to sidebars or even complete sections or chapters.</p>
-
 
 		<hr />
-	<p class="noprint">Comments are currently turned off for this blog post.</p>	
+	
+	
+	<p id="dynamic_comments" onscroll="loadComments()">
+		<noscript class="noprint">
+			The comments are not loaded because you disabled JavaScript. That's okay—I disable JavaScript myself all the time.
+			The comments for this blog post are loaded dynamically from GitHub. To read these comments,
+			just click <a href="https://github.com/dotnetjunkie/blog/issues/3">here</a>.
+		</noscript>
+	</p>
+	
+	<h2 id="wish-to-comment" class="noprint">Wish to comment?</h2>
+ 
+	<p class="noprint">You can add a comment to this post by commenting on <a href="https://github.com/dotnetjunkie/blog/issues/3">this GitHub issue</a>.</p>
+
+	<script type="text/javascript">
+		var commentsLoaded = false;
+		var commentsElement = document.getElementById('dynamic_comments');
+		var apiUrl = 'https:\/\/api.github.com\/repos\/dotnetjunkie\/blog\/issues\/3\/comments';
+		var isPrintMode = document.getElementById('wish-to-comment').style.display != 'none';
+
+		function loadCommentsWhenVisible()
+		{
+			if (commentsLoaded == true)
+				return;
+		
+			if (isElementInViewport(commentsElement) || isPrintMode) {
+				commentsLoaded = true;
+				commentsElement.innerHTML = 'Loading comments...';
+		
+				fetch(apiUrl, { headers: { 'Accept': 'application/vnd.github.v3.html+json' } })
+				  .then(response => { return response.json() })
+				  .then(comments => {
+					commentsElement.innerHTML = '';
+					if (comments.length == 0) {
+						commentsElement.innerHTML = '<br />There are currently no comments.<br /><br /><hr />';
+					}
+					for (var i = 0; i < comments.length; i++) {
+						appendComment(comments[i], comments[i].body_html);
+					}
+				  })
+				  .catch (err => {
+					commentsElement.innerHTML = 'I\'m sorry. Something went wrong during the loading of the comments. ' + err;
+				  });				
+			}
+		}
+
+		function appendComment(comment, bodyHtml)
+		{
+			var nameLink = document.createElement('a');
+			nameLink.setAttribute('href', comment.user.html_url); 
+			nameLink.appendChild(document.createTextNode(comment.user.login));
+			nameLink.setAttribute('class', 'noprintlink');
+			
+			if (comment.user.login == 'dotnetjunkie') {
+				nameLink = document.createTextNode('Steven');
+			}
+		
+			var titleElement = document.createElement('h4');
+			titleElement.id = 'comment-' + comment.id;
+			
+			titleElement.appendChild(nameLink);
+			
+			var createDate = new Date(comment.created_at).toLocaleString('en-us', { year: 'numeric', month: 'long', day: 'numeric' });
+			titleElement.appendChild(document.createTextNode(' - ' + createDate));
+			
+			if (comment.created_at != comment.updated_at) {
+				titleElement.appendChild(document.createTextNode(' (edited)'));
+			}
+			
+			commentsElement.appendChild(titleElement);
+			commentsElement.innerHTML += bodyHtml;
+			commentsElement.appendChild(document.createElement('hr'));		
+		}
+		
+		function isElementInViewport(el) {
+			var rect = el.getBoundingClientRect();
+			return (
+				rect.top >= 0 &&
+				rect.left >= 0 &&
+				rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+				rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+			);
+		}
+		
+		loadCommentsWhenVisible();
+		
+		window.onresize = function(){ loadCommentsWhenVisible() };
+		window.onscroll = function(){ loadCommentsWhenVisible() };
+	</script>	
 
 <hr class="noprint" />
 

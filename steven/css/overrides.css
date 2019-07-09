@@ -2,20 +2,45 @@
  font-size:3rem;
 }
 
-div.callout {
+callout {
  margin-left:5%;
  margin-right:5%;
+ display: block;
 }
 
-div.DEFINITION {
+callout.DEFINITION {
 }
 
-div.callout .callout-title {
+.callout-title {
  font-weight:bold;
  font-size:1.1em;
 }
-div.callout .callout-body {
+.callout-body {
  font-style:italic;
+}
+
+sidebar {
+ background-color: #E7E7E7;
+ padding-top:1%;
+ padding-bottom:0.3%;
+ padding-left:5%;
+ padding-right:5%;
+ display:block;
+ margin-bottom:10px;
+}
+
+.sidebar-title {
+ font-weight:bold;
+ font-color:black;
+ font-size:1.1em;
+ display:block;
+ padding-bottom:10px;
+}
+
+.sidebar-body {
+ font-size:1.0em;
+ margin-top:10px;
+ font-size:0.95em;
 }
 
 code {
@@ -41,11 +66,11 @@ pre code span {
 }
 
 pre code annotation {
- background-color: yellow;
- color: black;
- font-style: italic;
- padding-left: 4px;
- padding-right: 4px;
+ background-color:yellow;
+ color:black;
+ font-style:italic;
+ padding-left:4px;
+ padding-right:4px;
 }
 
 pre code annotation::before {
@@ -161,7 +186,8 @@ pre code annotation::before {
 	}
 
 	a[href^=http]:after {
-		  content:" (" attr(href) ") ";
+		content:" (" attr(href) ")";
+		font-size:0.85em;
 	}
 
 	$a:after > img {
@@ -173,10 +199,17 @@ pre code annotation::before {
 	}
 
 	a:not(:local-link):after {
-	   content:" (" attr(href) ") ";
+	   content:" (" attr(href) ")";
+	   font-size:0.85em;
 	}
 	
 	a.noprintlink:after {
 	   content:"";
-	}	
+	}
+	
+	sidebar {
+		border-style:solid;
+		border-color:#777;
+		border-width:1.5px;
+	}
 }

@@ -6,10 +6,19 @@
     <description>Recent content in Posts on .NET Junkie - Weblog of a workaholic</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 02 Jul 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 09 Jul 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://blogs.cuttingedge.it/steven/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>The Closure Composition Model</title>
+      <link>https://blogs.cuttingedge.it/steven/posts/2019/closure-composition-model/</link>
+      <pubDate>Tue, 09 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://blogs.cuttingedge.it/steven/posts/2019/closure-composition-model/</guid>
+      <description>To be able to achieve anything useful, your application code makes use of runtime data that comes in many shapes and forms. Providing access to that data can be accomplished in many ways. The way you provide object graphs with runtime data can affect the way you compose them using Dependency Injection. There are two competing models to choose from. This article describes the Closure Composition Model. It is the second of a five-part series on Dependency Injection composition models.</description>
+    </item>
     
     <item>
       <title>DI Composition Models: A Primer</title>

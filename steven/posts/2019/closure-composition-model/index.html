@@ -46,7 +46,7 @@
         <span>on&nbsp;</span><time datetime="2019-07-09 00:00:00 &#43;0000 UTC">July 9, 2019</time>
 	<br>
 	
-	<span>10-minutes read</span>
+	<span>9-minute read</span>
 </div>
 		<h1 class="post-title">The Closure Composition Model</h1>
 	<div class="post-info">
@@ -90,7 +90,7 @@
 
 <p>The goal of this article is to objectively describe the Closure Composition Model (CCM) by providing you with multiple examples, a definition, and its consequences. In the fourth part, I’ll compare the Closure Composition Model with the Ambient Composition Model, which I&rsquo;ll go into in the next article.</p>
 
-<p><a href="/steven/posts/2019/di-composition-models-primer/">The primer article</a> introduced a <code>ShoppingBasketController</code> for a hypothetical web shop. The next listing shows this controller again—now with a constructor, while folding its action method:</p>
+<p><a href="/steven/posts/2019/di-composition-models-primer/">The primer article</a> introduced a <code>ShoppingBasketController</code> for a hypothetical web shop. The next listing shows this controller again&mdash;now with a constructor, while folding its action method:</p>
 
 
 
@@ -114,7 +114,7 @@
 
 <p>The shopping application would likely contain many more classes than just this one controller. In this article, I’ll add a few more classes to the application to demonstrate the Closure Composition Model.</p>
 
-<p>When it comes to supplying application components with a data-centric object, such as a <code>DbContext</code>, a common practice is to inject the object directly into the constructor of the consuming class. The next code example shows the constructor of a <code>ShoppingBasketRepository</code> class that depends on a <code>DbContext</code> derivative—the <code>ShoppingBasketDbContext</code>:</p>
+<p>When it comes to supplying application components with a data-centric object, such as a <code>DbContext</code>, a common practice is to inject the object directly into the constructor of the consuming class. The next code example shows the constructor of a <code>ShoppingBasketRepository</code> class that depends on a <code>DbContext</code> derivative&mdash;the <code>ShoppingBasketDbContext</code>:</p>
 
 
 
@@ -182,9 +182,9 @@
 </span><span style="color:#75715e"></span>                connectionString))));
 </code></pre></div>
 
-<p>In this graph, <code>ShoppingBasketDbContext</code> is injected directly into <code>ShoppingBasketRepository</code>, becoming a captured variable in the repository’s closure. Since <code>DbContext</code> instances contain request-specific data and are not thread-safe, each request should get its own <code>DbContext</code> instance. This implies that the consuming <code>ShoppingBasketRepository</code> should not be reused across requests—even if it contains no state of its own. <code>ShoppingBasketRepository</code> should not outlive the lifetime of a single web request.</p>
+<p>In this graph, <code>ShoppingBasketDbContext</code> is injected directly into <code>ShoppingBasketRepository</code>, becoming a captured variable in the repository’s closure. Since <code>DbContext</code> instances contain request-specific data and are not thread-safe, each request should get its own <code>DbContext</code> instance. This implies that the consuming <code>ShoppingBasketRepository</code> should not be reused across requests&mdash;even if it contains no state of its own. <code>ShoppingBasketRepository</code> should not outlive the lifetime of a single web request.</p>
 
-<p>Letting <code>ShoppingBasketRepository</code> have a Singleton Lifestyle would cause <code>DbContext</code> to be kept alive for the application’s lifetime. This is dreadful because that would cause it to be used by multiple requests simultaneously—a horrible prospect. Again: <code>DbContext</code>s are not thread-safe.</p>
+<p>Letting <code>ShoppingBasketRepository</code> have a Singleton Lifestyle would cause <code>DbContext</code> to be kept alive for the application’s lifetime. This is dreadful because that would cause it to be used by multiple requests simultaneously&mdash;a horrible prospect. Again: <code>DbContext</code>s are not thread-safe.</p>
 
 <sidebar>
 	<span class="sidebar-title">The Singleton Lifestyle</span>
@@ -193,11 +193,11 @@
 </sidebar>
 
 
-<p><code>ShoppingBasketRepository</code> shouldn’t be a singleton, and the same is true of its consumer—<code>AddShoppingBasketItemHandler</code>—for exactly the same reason; reusing the service would cause the repository to be reused, which again would cause <code>DbContext</code> to be reused. A pattern seems to emerge…</p>
+<p><code>ShoppingBasketRepository</code> shouldn’t be a singleton, and the same is true of its consumer&mdash;<code>AddShoppingBasketItemHandler</code>&mdash;for exactly the same reason; reusing the service would cause the repository to be reused, which again would cause <code>DbContext</code> to be reused. A pattern seems to emerge…</p>
 
 <h2 id="the-closure-s-lifetime-restriction">The closure’s lifetime restriction</h2>
 
-<p>This restriction on the consumer’s lifetime is transitive, meaning that it affects all the dependency’s direct and indirect consumers. It bubbles up the object graph all the way to the top-most object in the graph—<code>ShoppingBasketController</code>, in the example. Not adhering to this restriction causes a problem called <a href="https://blog.ploeh.dk/2014/06/02/captive-dependency/">Captive Dependencies</a>. The book defines it as follows:</p>
+<p>This restriction on the consumer’s lifetime is transitive, meaning that it affects all the dependency’s direct and indirect consumers. It bubbles up the object graph all the way to the top-most object in the graph&mdash;<code>ShoppingBasketController</code>, in the example. Not adhering to this restriction causes a problem called <a href="https://blog.ploeh.dk/2014/06/02/captive-dependency/">Captive Dependencies</a>. The book defines it as follows:</p>
 
 <callout class="DEFINITION">
 	<span class="callout-title">DEFINITION</span>
@@ -206,7 +206,7 @@
 </callout>
 
 
-<p>In the previous example, <code>DbContext</code> is supplied to the object graph during construction—an example of the CCM. The CCM infers that even stateless components should <em>not</em> be kept alive for the application&rsquo;s lifetime, as it would keep their stateful dependencies alive.</p>
+<p>In the previous example, <code>DbContext</code> is supplied to the object graph during construction&mdash;an example of the CCM. The CCM infers that even stateless components should <em>not</em> be kept alive for the application&rsquo;s lifetime, as it would keep their stateful dependencies alive.</p>
 
 <h2 id="providing-a-closure-graph-with-external-runtime-data">Providing a closure graph with external runtime data</h2>
 
@@ -228,7 +228,7 @@ container.Register(
 
 <p><code>ShoppingBasketDbContext</code> is created by the lambda, rather than being supplied from the outside. When the graph requires externally provided runtime data, however, the previous registration will not work.</p>
 
-<p>Say, for instance, you need to process messages from a queue, but the handling code needs to run in the context of the user on whose behalf the message was published. In that case, the user’s identity is possibly provided to you by message infrastructure. When you build the object graph by hand (a.k.a. <a href="https://blog.ploeh.dk/2014/06/10/pure-di/">Pure DI</a>, instead of using a DI Container, that identity can easily be provided to the graph as follows:</p>
+<p>Say, for instance, you need to process messages from a queue, but the handling code needs to run in the context of the user on whose behalf the message was published. In that case, the user’s identity is possibly provided to you by message infrastructure. When you build the object graph by hand (a.k.a. <a href="https://blog.ploeh.dk/2014/06/10/pure-di/">Pure DI</a>), instead of using a DI Container, that identity can easily be provided to the graph as follows:</p>
 
 
 
@@ -247,7 +247,7 @@ container.Register(
 handler.Handle(queueContext.Message); <span style="color:#75715e"><annotation>External runtime data</annotation>
 </span><span style="color:#75715e"></span></code></pre></div>
 
-<p>Both the user’s identity and the message are externally provided runtime values. But while the message is passed along the graph’s public API—in this case the <code>IHandler&lt;T&gt;.Handle</code> method—the user’s identity is an implementation detail, applied to the graph during construction.</p>
+<p>Both the user’s identity and the message are externally provided runtime values. But while the message is passed along the graph’s public API&mdash;in this case the <code>IHandler&lt;T&gt;.Handle</code> method&mdash;the user’s identity is an implementation detail, applied to the graph during construction.</p>
 
 <p>In this case, <code>OrderRepository</code> depends on the <code>IUserContext</code> abstraction, which is implemented by the <code>ClosureUserContext</code> class. <code>ClosureUserContext</code> can be as trivial as the following:</p>
 
@@ -335,9 +335,9 @@ builder.Register(c =&gt; <span style="color:#66d9ef">new</span> SalesDbContext(c
     .InstancePerLifetimeScope();
 </code></pre></div>
 
-<p>Although the username is not supplied to the constructor, this initialization is still part of the object graph’s construction phase. It’s only after the graph is fully constructed and initialized that it is invoked—in the example, the call to <code>handler.Handle</code>.</p>
+<p>Although the username is not supplied to the constructor, this initialization is still part of the object graph’s construction phase. It’s only after the graph is fully constructed and initialized that it is invoked&mdash;in the example, the call to <code>handler.Handle</code>.</p>
 
-<p>Just as before in the previous example, <em>runtime data</em> became a <em>captured variable</em> — in this case, the username. This data was accessed by <code>ClosureUserContext</code>&rsquo;s methods. In other words, this is another example of the CCM.</p>
+<p>Just as before in the previous example, <em>runtime data</em> became a <em>captured variable</em>&mdash;in this case, the username. This data was accessed by <code>ClosureUserContext</code>&rsquo;s methods. In other words, this is another example of the CCM.</p>
 
 <p>Of the two DI composition models, the CCM is the best known and most used. Because of its prevalence, it’s easy to overlook the other existing model, which brings me to the lesser-known and somewhat competing model that you can use to compose object graphs: the Ambient Context Model, which I will discuss in the next article.</p>
 
@@ -458,6 +458,7 @@ I coauthored the book <a href="https://manning.com/seemann2">Dependency Injectio
 
 	<div class="pagination noprint">
 		<a href="/steven/posts/2019/di-composition-models-primer/" class="left arrow">&#8592;</a>
+		<a href="/steven/posts/2019/ambient-composition-model/" class="right arrow">&#8594;</a>
 
 		<a href="#" class="top">Top</a>
 	</div>

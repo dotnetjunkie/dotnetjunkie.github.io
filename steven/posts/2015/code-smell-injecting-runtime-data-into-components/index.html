@@ -242,9 +242,9 @@
 
     <span style="color:#66d9ef">public</span> CustomerRepository(
         IUnitOfWork uow, 
-        IUserContext userContext,<span style="color:#75715e"><annotation>Runtime data hidden behind abstractions</annotation>
-</span><span style="color:#75715e"></span>        ITimeProvider timeProvider)
-    {
+        IUserContext userContext, <span style="color:#75715e"><annotation>Runtime data hidden behind abstractions</annotation>
+</span><span style="color:#75715e"></span>        ITimeProvider timeProvider) <span style="color:#75715e"><annotation>Abstraction</annotation>
+</span><span style="color:#75715e"></span>    {
         <span style="color:#66d9ef">this</span>.uow = uow;
         <span style="color:#66d9ef">this</span>.userContext = userContext;
         <span style="color:#66d9ef">this</span>.timeProvider = timeProvider;
@@ -252,9 +252,9 @@
     
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Save(Customer entity)
     {
-        entity.CreatedBy = <span style="color:#66d9ef">this</span>.userContext.CurrentUserId;
-        entity.CreatedOn = <span style="color:#66d9ef">this</span>.timeProvider.Now;
-        <span style="color:#66d9ef">this</span>.uow.Save(entity);
+        entity.CreatedBy = <span style="color:#66d9ef">this</span>.userContext.CurrentUserId; <span style="color:#75715e"><annotation>Using abstraction</annotation>
+</span><span style="color:#75715e"></span>        entity.CreatedOn = <span style="color:#66d9ef">this</span>.timeProvider.Now; <span style="color:#75715e"><annotation>Using abstraction</annotation>
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">this</span>.uow.Save(entity);
     }
 }
 </code></pre></div>

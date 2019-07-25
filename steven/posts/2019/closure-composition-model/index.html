@@ -90,7 +90,7 @@
 
 <p>The goal of this article is to objectively describe the Closure Composition Model (CCM) by providing you with multiple examples, a definition, and its consequences. In the fourth part, I’ll compare the Closure Composition Model with the Ambient Composition Model, which I&rsquo;ll go into in the next article.</p>
 
-<p><a href="/steven/posts/2019/di-composition-models-primer/">The primer article</a> introduced a <code>ShoppingBasketController</code> for a hypothetical web shop. The next listing shows this controller again&mdash;now with a constructor, while folding its action method:</p>
+<p><a href="/steven/p/compositionmodels/">The primer article</a> introduced a <code>ShoppingBasketController</code> for a hypothetical web shop. The next listing shows this controller again&mdash;now with a constructor, while folding its action method:</p>
 
 
 
@@ -339,7 +339,7 @@ builder.Register(c =&gt; <span style="color:#66d9ef">new</span> SalesDbContext(c
 
 <p>Just as before in the previous example, <em>runtime data</em> became a <em>captured variable</em>&mdash;in this case, the username. This data was accessed by <code>ClosureUserContext</code>&rsquo;s methods. In other words, this is another example of the CCM.</p>
 
-<p>Of the two DI composition models, the CCM is the best known and most used. Because of its prevalence, it’s easy to overlook the other existing model, which brings me to the lesser-known and somewhat competing model that you can use to compose object graphs: the Ambient Context Model, which I will discuss in the next article.</p>
+<p>Of the two DI composition models, the CCM is the best known and most used. Because of its prevalence, it’s easy to overlook the other existing model, which brings me to the lesser-known and somewhat competing model that you can use to compose object graphs: the Ambient Context Model, which I will discuss in <a href="/steven/p/acm/">the next article</a>.</p>
 
 <h2 id="summary">Summary</h2>
 

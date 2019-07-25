@@ -55,6 +55,7 @@ div.highlight {
 
 div.highlight pre {
  padding:0.1rem;
+ padding-left: 1%;
  line-height:1.3;
 }
 

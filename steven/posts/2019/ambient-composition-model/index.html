@@ -88,7 +88,7 @@
 
 <h3 id="to-be-able-to-achieve-anything-useful-your-application-code-makes-use-of-runtime-data-that-comes-in-many-shapes-and-forms-providing-access-to-that-data-can-be-accomplished-in-many-ways-the-way-you-provide-object-graphs-with-runtime-data-can-affect-the-way-you-compose-them-using-dependency-injection-there-are-two-competing-models-to-choose-from-this-article-describes-the-less-common-model-the-ambient-composition-model-this-article-is-the-third-of-a-five-part-series-on-dependency-injection-composition-models">To be able to achieve anything useful, your application code makes use of runtime data that comes in many shapes and forms. Providing access to that data can be accomplished in many ways. The way you provide object graphs with runtime data can affect the way you compose them using Dependency Injection. There are two competing models to choose from. This article describes the less common model: the Ambient Composition Model. This article is the third of a five-part series on Dependency Injection composition models.</h3>
 
-<p>The goal of this article is to objectively describe the Ambient Composition Model by providing examples to highlight the difference between it and the <a href="/steven/posts/2019/closure-composition-model/">Closure Composition Model</a> (CCM). In the fourth part, I’ll discuss the respective advantages and disadvantages of both models.</p>
+<p>The goal of this article is to objectively describe the Ambient Composition Model by providing examples to highlight the difference between it and the <a href="/steven/p/ccm/">Closure Composition Model</a> (CCM). In the fourth part, I’ll discuss the respective advantages and disadvantages of both models.</p>
 
 <p>Let’s continue the example of the hypothetical web shop with its <code>ShoppingBasketController</code> and <code>ShoppingBasketRepository</code>, which I introduced in the previous articles. The following example shows the construction of the <code>ShoppingBasketController</code>’s object graph once more:</p>
 
@@ -374,7 +374,7 @@ handler.Handle(queueContext.Message); <span style="color:#75715e"><annotation>Ex
 
 <p>In this example, it might seem weird to have <code>AmbientUserContextAdapter</code> injected into the graph, while its ambient data is set directly after. But don’t forget that usually the construction of the graph is not done as close to initialization as shown here. The construction of such a graph is likely moved to another method, or done by the DI Container.</p>
 
-<p>This completes the description of the ACM. In the next article, I will compare the ACM with the CCM and show why one might be preferred.</p>
+<p>This completes the description of the ACM. In <a href="/steven/p/cmcompare/">the next article</a>, I will compare the ACM with the CCM and show why one might be preferred.</p>
 
 <h2 id="summary">Summary</h2>
 
@@ -493,6 +493,7 @@ I coauthored the book <a href="https://manning.com/seemann2">Dependency Injectio
 
 	<div class="pagination noprint">
 		<a href="/steven/posts/2019/closure-composition-model/" class="left arrow">&#8592;</a>
+		<a href="/steven/posts/2019/di-composition-models-comparison/" class="right arrow">&#8594;</a>
 
 		<a href="#" class="top">Top</a>
 	</div>

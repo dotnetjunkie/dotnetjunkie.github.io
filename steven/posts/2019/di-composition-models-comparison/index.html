@@ -229,7 +229,7 @@
 <li><em><strong>Ambiguous Lifestyles</strong></em>&mdash;An accidental coding error in your <a href="https://mng.bz/K1qZ">Composition Root</a> or a misconfiguration of your DI Container can cause a component to be registered with different, and, therefore, <a href="https://simpleinjector.org/diaal">ambiguous lifestyles</a>. The effect is similar to that of a Torn Lifestyle; too many or too few instances of that component are used at a certain point in time. The resulting misbehavior is often hard to spot.</li>
 </ul>
 
-<p>These are problems you will <em>not</em> encounter when applying one simple rule that the ACM prescribes: All components that are part of the constructed object graphs should be <strong>immutable</strong> and&mdash;apart from configuration values&mdash;<strong>stateless</strong>.</p>
+<p>These are problems you will <em>not</em> encounter when applying one simple rule that the ACM prescribes: <em>All components that are part of the constructed object graphs should be <strong>immutable</strong> and&mdash;apart from configuration values&mdash;<strong>stateless</strong>.</em></p>
 
 <p>When all of a graph’s components are stateless, it doesn’t matter how many instances of the component you create. You can never accidentally keep a dependency captive, as its lifetime becomes irrelevant. Similarly, the component’s lifestyle can never become torn or ambiguous for the same reason.</p>
 

@@ -1,0 +1,253 @@
+@media (max-width: 1000px), print {
+/* Support for hyphenation in most browsers is quite limiting, causing words to break on inpractical places, hindering the readability. I, therefore, only enabled this feature on smaller displays, as it is more important to hyphenate there. */
+main {
+ overflow-wrap:break-word;
+ word-wrap:break-word;
+
+ /* Hyphenation, see: https://medium.com/clear-left-thinking/all-you-need-to-know-about-hyphenation-in-css-2baee2d89179 */
+ -webkit-hyphens:auto;
+ -webkit-hyphenate-limit-before:3;
+ -webkit-hyphenate-limit-after:3;
+ -webkit-hyphenate-limit-chars:7 3 3;
+ -webkit-hyphenate-limit-lines:2;
+ -webkit-hyphenate-limit-last:always;
+ -webkit-hyphenate-limit-zone:8%;
+
+ -moz-hyphens:auto;
+ -moz-hyphenate-limit-chars:7 3 3;
+ -moz-hyphenate-limit-lines:2;
+ -moz-hyphenate-limit-last:always;
+ -moz-hyphenate-limit-zone:8%;
+
+ -ms-hyphens:auto;
+ -ms-hyphenate-limit-chars:7 3 3;
+ -ms-hyphenate-limit-lines:2;
+ -ms-hyphenate-limit-last:always;
+ -ms-hyphenate-limit-zone:8%;
+
+ hyphens:auto;
+ hyphenate-limit-chars:7 3 3;
+ hyphenate-limit-lines:2;
+ hyphenate-limit-last:always;
+ hyphenate-limit-zone:8%;
+}
+}
+
+.post-title {
+ font-size:3rem;
+}
+
+callout {
+ margin-left:5%;
+ margin-right:5%;
+ display: block;
+}
+
+callout.DEFINITION {
+}
+
+.callout-title {
+ font-weight:bold;
+ font-size:1.1em;
+}
+.callout-body {
+ font-style:italic;
+}
+
+sidebar {
+ background-color: #E7E7E7;
+ padding-top:1%;
+ padding-bottom:0.3%;
+ padding-left:5%;
+ padding-right:5%;
+ display:block;
+ margin-bottom:10px;
+}
+
+.sidebar-title {
+ font-weight:bold;
+ font-color:black;
+ font-size:1.1em;
+ display:block;
+ padding-bottom:10px;
+}
+
+.sidebar-body {
+ font-size:1.0em;
+ margin-top:10px;
+ font-size:0.95em;
+}
+
+code {
+ background-color:white;
+ padding:.0em .0em;
+ font-size:100%; 
+}
+
+div.highlight {
+ padding:0;
+}
+
+div.highlight pre {
+ padding:0.1rem;
+ padding-left: 1%;
+ line-height:1.3;
+}
+
+pre code {
+ font-size:90%;
+}
+
+pre code span {
+}
+
+pre code annotation {
+ background-color:yellow;
+ color:black;
+ font-style:italic;
+ padding-left:4px;
+ padding-right:4px;
+}
+
+pre code annotation::before {
+ content:"← ";
+ font-size: 120%;
+}
+
+@media (max-width: 1000px) {
+ pre code {
+  font-size:80%;
+ }
+ div.highlight pre {
+  line-height:0.9;
+ }
+ main {
+  width:90%;
+ }
+}
+
+@media (max-width: 750px) {
+ pre code {
+  font-size:65%;
+ }	
+ div.highlight pre {
+  line-height:0.8;
+ }
+ main {
+  width:95%;
+ }
+ ul {
+  margin-left:1.5em;
+  padding-left:0;
+ }
+}
+
+@media (max-width: 400px) {
+ pre code {
+  font-size:55%;
+ }	
+ div.highlight pre {
+  line-height: 0.7;
+ }
+ main {
+  width:98%;
+ }
+}
+
+@media print {
+	.noprint {
+		display:none;
+	}
+	
+	html body {
+		color:black;
+	}
+
+	main {
+		width:98%;
+	}
+
+	h1.post-title {
+		font-size:200%;
+	}
+
+	div.highlight pre {
+		word-wrap:break-word;
+		line-height:1.1;
+		page-break-inside:avoid;
+		border-style:solid;
+		border-color:#777;
+		border-width:1.5px;
+	}
+	
+	code {
+		color:black;
+		word-wrap:break-word;
+	}
+
+	pre code {
+		font-size:90%;
+	}
+	
+	pre code span {
+		background-color:white;
+		word-wrap:break-word;
+	}
+	
+	/* source: https://www.jotform.com/blog/css-perfect-print-stylesheet-98272/ */
+	a {
+		page-break-inside:avoid
+	}
+	blockquote {
+		page-break-inside:avoid;
+	}
+	
+	h1, h2, h3, h4, h5, h6 {
+		page-break-after:avoid; 
+		page-break-inside:avoid
+	}
+	img {
+		page-break-inside:avoid; 
+		page-break-after:avoid;
+	}
+		
+	/* Displaying link color and link behaviour */
+	a:link, a:visited, a {
+		background: transparent;
+		color: black;
+	}
+
+	a {
+		page-break-inside:avoid
+	}
+
+	a[href^=http]:after {
+		content:" (" attr(href) ")";
+		font-size:0.85em;
+		overflow-wrap:anywhere;
+	}
+
+	$a:after > img {
+	   content: "";
+	}
+
+	article a[href^="#"]:after {
+	   content: "";
+	}
+
+	a:not(:local-link):after {
+		content:" (" attr(href) ")";
+		font-size:0.85em;
+		overflow-wrap:anywhere;
+	}
+	
+	a.noprintlink:after {
+	   content:"";
+	}
+	
+	sidebar {
+		border-style:solid;
+		border-color:#777;
+		border-width:1.5px;
+	}
+}

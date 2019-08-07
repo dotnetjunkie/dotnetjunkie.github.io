@@ -40,6 +40,19 @@
     <h1>Tag Dependency Injection</h1>
 	<div class="catalogue">
 		
+			<a href="https://blogs.cuttingedge.it/steven/posts/2019/in-praise-of-the-singleton-object-graph/" class="catalogue-item">
+    <div>
+        <time datetime="2019-08-07 00:00:00 &#43;0000 UTC" class="catalogue-time">August 7, 2019</time>
+        <h1 class="catalogue-title">In Praise of the Singleton Object Graph</h1>
+        <div class="catalogue-line"></div>
+
+        <p>
+            To be able to achieve anything useful, your application code makes use of runtime data that comes in many shapes and forms. Providing access to that data can be accomplished in many ways. The way you provide object graphs with runtime data can affect the way you compose them using Dependency Injection. There are two competing models to choose from. This article suggests the use of the less common, more restrictive model, as it helps you reason about the correctness of the graph and reduces the chance of errors.
+        </p>
+    </div>
+</a>
+
+		
 			<a href="https://blogs.cuttingedge.it/steven/posts/2019/di-composition-models-comparison/" class="catalogue-item">
     <div>
         <time datetime="2019-07-25 00:00:00 &#43;0000 UTC" class="catalogue-time">July 25, 2019</time>
@@ -207,19 +220,6 @@ Comments
 
         <p>
             This article extends the architectural design of command handlers to allow command handlers to return data. UPDATE: Although the article below might still be very entertaining, my opionion on the subject has changed. The problems described below will go away completely when you stop using use database generated IDs! Instead let the consumer of that command generate an ID (most likely a GUID). In this case, since the client creates the ID, they already have that value, and you don&rsquo;t have to return anything.
-        </p>
-    </div>
-</a>
-
-		
-			<a href="https://blogs.cuttingedge.it/steven/posts/2011/meanwhile-on-the-query-side-of-my-architecture/" class="catalogue-item">
-    <div>
-        <time datetime="2011-12-18 00:00:00 &#43;0000 UTC" class="catalogue-time">December 18, 2011</time>
-        <h1 class="catalogue-title">Meanwhile... on the query side of my architecture</h1>
-        <div class="catalogue-line"></div>
-
-        <p>
-            Command-query separation is a common concept in the software industry. Many architectures separate commands from the rest of the system and send command messages that are processed by command handlers. This same concept of messages and handlers can just as easily be applied to the query side of an architecture. There are not many systems using this technique and this article is an attempt to change that. Two simple interfaces will change the look of your architecture&hellip; forever.
         </p>
     </div>
 </a>

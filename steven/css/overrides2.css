@@ -1,3 +1,19 @@
+div.post table {
+ font-size:90%;
+ border-collapse:collapse;
+ margin-bottom: 1rem;
+}
+
+div.post table thead {
+ background-color:#EEE;
+ vertical-align:top;
+}
+
+div.post table, th, td {
+ border:solid 1px #333;
+}
+
+
 @media (max-width: 1000px), print {
 /* Support for hyphenation in most browsers is quite limiting, causing words to break on inpractical places, hindering the readability. I, therefore, only enabled this feature on smaller displays, as it is more important to hyphenate there. */
 main {

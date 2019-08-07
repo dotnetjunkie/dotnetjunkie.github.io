@@ -88,6 +88,16 @@
 
 <h3 id="to-be-able-to-achieve-anything-useful-your-application-code-makes-use-of-runtime-data-that-comes-in-many-shapes-and-forms-providing-access-to-that-data-can-be-accomplished-in-many-ways-the-way-you-provide-object-graphs-with-runtime-data-can-affect-the-way-you-compose-them-using-dependency-injection-there-are-two-competing-models-to-choose-from-this-article-describes-the-less-common-model-the-ambient-composition-model-this-article-is-the-third-of-a-five-part-series-on-dependency-injection-composition-models">To be able to achieve anything useful, your application code makes use of runtime data that comes in many shapes and forms. Providing access to that data can be accomplished in many ways. The way you provide object graphs with runtime data can affect the way you compose them using Dependency Injection. There are two competing models to choose from. This article describes the less common model: the Ambient Composition Model. This article is the third of a five-part series on Dependency Injection composition models.</h3>
 
+<p>Posts in this series:</p>
+
+<ul>
+<li><a href="/steven/p/compositionmodels">DI Composition Models: A Primer</a></li>
+<li><a href="/steven/p/ccm">The Closure Composition Model</a></li>
+<li><a href="/steven/p/acm">The Ambient Composition Model</a> (this article)</li>
+<li><a href="/steven/p/cmcompare">DI Composition Models: A Comparison</a></li>
+<li><a href="/steven/p/singleton">In Praise of the Singleton Object Graph</a></li>
+</ul>
+
 <p>The goal of this article is to objectively describe the Ambient Composition Model by providing examples to highlight the difference between it and the <a href="/steven/p/ccm/">Closure Composition Model</a> (CCM). In the fourth part, I’ll discuss the respective advantages and disadvantages of both models.</p>
 
 <p>Let’s continue the example of the hypothetical web shop with its <code>ShoppingBasketController</code> and <code>ShoppingBasketRepository</code>, which I introduced in the previous articles. The following example shows the construction of the <code>ShoppingBasketController</code>’s object graph once more:</p>

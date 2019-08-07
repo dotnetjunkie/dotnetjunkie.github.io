@@ -7,6 +7,7 @@ div.post table {
 div.post table thead {
  background-color:#EEE;
  vertical-align:top;
+ page-break-inside:avoid;
 }
 
 div.post table, th, td {

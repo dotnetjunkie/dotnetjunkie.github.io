@@ -303,15 +303,20 @@
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#75715e">// This class will be part of your Composition Root
 </span><span style="color:#75715e"></span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AmbientShoppingBasketContextProvider</span> : IShoppingBasketContextProvider
 {
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> <span style="color:#66d9ef">string</span> connectionString;
     <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> AsyncLocal&lt;ShoppingBasketDbContext&gt; context;
 
     <span style="color:#66d9ef">public</span> AmbientShoppingBasketContextProvider(<span style="color:#66d9ef">string</span> connectionString)
     {
-        <span style="color:#66d9ef">this</span>.context = <span style="color:#66d9ef">new</span> AsyncLocal&lt;ShoppingBasketDbContext&gt;(
-            () =&gt; <span style="color:#66d9ef">new</span> ShoppingBasketDbContext(connectionString));
+        <span style="color:#66d9ef">this</span>.connectionString = connectionString;
+        <span style="color:#66d9ef">this</span>.context = <span style="color:#66d9ef">new</span> AsyncLocal&lt;ShoppingBasketDbContext&gt;();
     }
 
-    <span style="color:#66d9ef">public</span> ShoppingBasketDbContext Context =&gt; <span style="color:#66d9ef">this</span>.context.Value;
+    <span style="color:#66d9ef">public</span> ShoppingBasketDbContext Context =&gt;
+        <span style="color:#66d9ef">this</span>.context.Value ?? (<span style="color:#66d9ef">this</span>.context.Value = <span style="color:#66d9ef">this</span>.CreateNew());
+    
+    <span style="color:#66d9ef">private</span> ShoppingBasketDbContext CreateNew() =&gt;
+        <span style="color:#66d9ef">new</span> ShoppingBasketDbContext(<span style="color:#66d9ef">this</span>.connectionString);
 }
 </code></pre></div>
 

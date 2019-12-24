@@ -3,11 +3,11 @@
     <head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+	
 		<title>
 				DI Composition Models: A Comparison &middot; .NET Junkie - Weblog of a workaholic
 		</title>
-
+	
 		
 		<link rel="stylesheet" href="/steven/css/style.css">
 		<link rel="stylesheet" href="/steven/css/overrides2.css">
@@ -16,11 +16,11 @@
 		<link rel="icon" type="image/png" sizes="32x32" href="/steven/images/favicon-32x32.png">
 		<link rel="icon" type="image/png" sizes="16x16" href="/steven/images/favicon-16x16.png">
 		<link rel="apple-touch-icon" sizes="180x180" href="/steven/images/apple-touch-icon.png">
-
+	
 		
 		<link href="" rel="alternate" type="application/rss+xml" title=".NET Junkie - Weblog of a workaholic" />
 	</head>
-
+	
     <body>
         		<nav class="nav">
 			<div class="nav-container">
@@ -151,6 +151,7 @@
 
 
 
+
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
 <span style="color:#75715e">// Composes the graph using the Closure Composition Model
 </span><span style="color:#75715e"></span>IHandler&lt;OrderCancelled&gt; handler =
@@ -184,6 +185,7 @@
 
 
 
+
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
 <span style="color:#66d9ef">using</span> (ILifetimeScope scope = container.BeginLifetimeScope())
 {
@@ -204,6 +206,7 @@
 <p>When using the CCM, there are some tricks you can apply to move the verification of the availability of this runtime data to an earlier point in time, ideally when calling <code>Resolve</code>. A discussion about how to achieve this, however, is outside the scope of this article.</p>
 
 <p>Even though tricks can be applied—thanks to the dynamic nature of DI Containers—you will never be able to completely prevent Temporal Coupling. To make matters worse, when using a DI Container, the resolve will typically be dynamic, meaning that you don’t know which type to resolve at compile time. This means that you will generally have to set <em>all</em> declared runtime data in the scope. As an example, with a DI Container, you wouldn’t explicitly request the <code>OrderCancellationReportGenerator</code>, but instead request the handler(s) for a message type that is unknown at compile time:</p>
+
 
 
 

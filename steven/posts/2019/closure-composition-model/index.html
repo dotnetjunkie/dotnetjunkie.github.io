@@ -3,11 +3,11 @@
     <head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+	
 		<title>
 				The Closure Composition Model &middot; .NET Junkie - Weblog of a workaholic
 		</title>
-
+	
 		
 		<link rel="stylesheet" href="/steven/css/style.css">
 		<link rel="stylesheet" href="/steven/css/overrides2.css">
@@ -16,11 +16,11 @@
 		<link rel="icon" type="image/png" sizes="32x32" href="/steven/images/favicon-32x32.png">
 		<link rel="icon" type="image/png" sizes="16x16" href="/steven/images/favicon-16x16.png">
 		<link rel="apple-touch-icon" sizes="180x180" href="/steven/images/apple-touch-icon.png">
-
+	
 		
 		<link href="" rel="alternate" type="application/rss+xml" title=".NET Junkie - Weblog of a workaholic" />
 	</head>
-
+	
     <body>
         		<nav class="nav">
 			<div class="nav-container">
@@ -109,7 +109,9 @@
 
 
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ShoppingBasketController</span> : Controller
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ShoppingBasketController</span> : Controller
 {
     <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IHandler&lt;AddShoppingBasketItem&gt; handler;
     
@@ -133,7 +135,9 @@
 
 
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ShoppingBasketRepository</span> : IShoppingBasketRepository
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ShoppingBasketRepository</span> : IShoppingBasketRepository
 {
     <b><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> ShoppingBasketDbContext context;</b> <span style="color:#75715e"><annotation>Captured variable</annotation>
 </span><span style="color:#75715e"></span>    
@@ -151,7 +155,7 @@
 
 <p>In this example, <code>ShoppingBasketDbContext</code> is injected into <code>ShoppingBasketRepository</code> during the repository’s construction. It stores <code>DbContext</code> internally, like it would any other injected dependency.</p>
 
-<p><code>DbContext</code> is stored in a <code>private</code> <code>readonly</code> field and will, therefore, always be available when one of the repository’s methods is invoked. The stored <code>DbContext</code> becomes a <em>captured variable</em> that can be accessed by the class’s methods, effectively becoming a <a href="https://en.wikipedia.org/wiki/Closure(computer_programming)">closure</a>. I, therefore, call this model of injecting runtime data into application components during construction the <em>Closure Composition Model</em> (CCM).</p>
+<p><code>DbContext</code> is stored in a <code>private</code> <code>readonly</code> field and will, therefore, always be available when one of the repository’s methods is invoked. The stored <code>DbContext</code> becomes a <em>captured variable</em> that can be accessed by the class’s methods, effectively becoming a <a href="https://en.wikipedia.org/wiki/Closure_(computer_programming)">closure</a>. I, therefore, call this model of injecting runtime data into application components during construction the <em>Closure Composition Model</em> (CCM).</p>
 
 <callout class="DEFINITION">
 	<span class="callout-title">DEFINITION</span>
@@ -186,7 +190,9 @@
 
 
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">new</span> ShoppingBasketController(
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
+<span style="color:#66d9ef">new</span> ShoppingBasketController(
     <span style="color:#66d9ef">new</span> AddShoppingBasketItemHandler(
         <span style="color:#66d9ef">new</span> ShoppingBasketRepository(
             <b><span style="color:#66d9ef">new</span> ShoppingBasketDbContext(</b> <span style="color:#75715e"><annotation>Injecting runtime data</annotation>
@@ -229,7 +235,9 @@
 
 
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">string</span> connectionString = LoadConnectionStringFromConfig();
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
+<span style="color:#66d9ef">string</span> connectionString = LoadConnectionStringFromConfig();
 
 container.Register(
     <b>() =&gt; <span style="color:#66d9ef">new</span> ShoppingBasketDbContext(</b> <span style="color:#75715e"><annotation>Runtime data</annotation>
@@ -247,7 +255,9 @@ container.Register(
 
 
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"> IHandler&lt;OrderCancelled&gt; handler =
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
+ IHandler&lt;OrderCancelled&gt; handler =
     <span style="color:#66d9ef">new</span> OrderCancellationReportGenerator(
         <span style="color:#66d9ef">new</span> OrderRepository(
             <span style="color:#66d9ef">new</span> ClosureUserContext(
@@ -268,7 +278,9 @@ handler.Handle(queueContext.Message); <span style="color:#75715e"><annotation>Ex
 
 
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ClosureUserContext</span> : IUserContext
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ClosureUserContext</span> : IUserContext
 {
     <span style="color:#66d9ef">public</span> ClosureUserContext(<span style="color:#66d9ef">string</span> userName)
     {
@@ -287,7 +299,9 @@ handler.Handle(queueContext.Message); <span style="color:#75715e"><annotation>Ex
 
 
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ClosureUserContext</span> : IUserContext
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ClosureUserContext</span> : IUserContext
 {
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> UserName { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; } <span style="color:#75715e"><annotation>Writable property</annotation>
 </span><span style="color:#75715e"></span>}
@@ -301,7 +315,9 @@ handler.Handle(queueContext.Message); <span style="color:#75715e"><annotation>Ex
 
 
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">using</span> (ILifetimeScope scope = container.BeginLifetimeScope())
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
+<span style="color:#66d9ef">using</span> (ILifetimeScope scope = container.BeginLifetimeScope())
 {
     <span style="color:#66d9ef">var</span> userContext = scope.Resolve&lt;ClosureUserContext&gt;();
     userContext.UserName = queueContext.UserName;
@@ -331,7 +347,9 @@ handler.Handle(queueContext.Message); <span style="color:#75715e"><annotation>Ex
 
 
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">builder.RegisterType&lt;OrderCancellationReportGenerator&gt;()
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
+builder.RegisterType&lt;OrderCancellationReportGenerator&gt;()
     .As&lt;IHandler&lt;OrderCancelled&gt;&gt;();
 
 builder.RegisterType&lt;OrderRepository&gt;()

@@ -3,11 +3,11 @@
     <head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+	
 		<title>
 				Dependency Injection Code Smell: Injecting runtime data into components &middot; .NET Junkie - Weblog of a workaholic
 		</title>
-
+	
 		
 		<link rel="stylesheet" href="/steven/css/style.css">
 		<link rel="stylesheet" href="/steven/css/overrides2.css">
@@ -16,11 +16,11 @@
 		<link rel="icon" type="image/png" sizes="32x32" href="/steven/images/favicon-32x32.png">
 		<link rel="icon" type="image/png" sizes="16x16" href="/steven/images/favicon-16x16.png">
 		<link rel="apple-touch-icon" sizes="180x180" href="/steven/images/apple-touch-icon.png">
-
+	
 		
 		<link href="" rel="alternate" type="application/rss+xml" title=".NET Junkie - Weblog of a workaholic" />
 	</head>
-
+	
     <body>
         		<nav class="nav">
 			<div class="nav-container">
@@ -101,6 +101,7 @@
 
 
 
+
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">interface</span> ICommand
 {
     <span style="color:#66d9ef">void</span> Execute();
@@ -138,6 +139,7 @@
 <p>Both the factory and Service Locator approach cause the creation of this part of the object graph to be delayed until runtime. Although delaying the creation of the object graph until runtime isn&rsquo;t a bad thing per se, it makes it harder to verify your configuration because resolving the root object will only test some of the object graph.</p>
 
 <p>The solution to these issues is actually quite simple: remove the injection of runtime data out of the construction phase of the component and pass it on using method calls after construction. <a href="/steven/p/commands/">Not surprisingly</a>, the following design solves these problems:</p>
+
 
 
 
@@ -191,6 +193,7 @@
 
 
 
+
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CustomerRepository</span> : ICustomerRepository
 {
     <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IUnitOfWork uow;
@@ -235,6 +238,7 @@
 
 
 
+
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CustomerRepository</span> : ICustomerRepository
 {
     <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IUnitOfWork uow;
@@ -261,6 +265,7 @@
 </code></pre></div>
 
 <p>Creating implementations for the two newly defined abstractions could be as simple as the following:</p>
+
 
 
 

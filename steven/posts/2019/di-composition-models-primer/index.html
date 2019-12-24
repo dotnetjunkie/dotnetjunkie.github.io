@@ -3,11 +3,11 @@
     <head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+	
 		<title>
 				DI Composition Models: A Primer &middot; .NET Junkie - Weblog of a workaholic
 		</title>
-
+	
 		
 		<link rel="stylesheet" href="/steven/css/style.css">
 		<link rel="stylesheet" href="/steven/css/overrides2.css">
@@ -16,11 +16,11 @@
 		<link rel="icon" type="image/png" sizes="32x32" href="/steven/images/favicon-32x32.png">
 		<link rel="icon" type="image/png" sizes="16x16" href="/steven/images/favicon-16x16.png">
 		<link rel="apple-touch-icon" sizes="180x180" href="/steven/images/apple-touch-icon.png">
-
+	
 		
 		<link href="" rel="alternate" type="application/rss+xml" title=".NET Junkie - Weblog of a workaholic" />
 	</head>
-
+	
     <body>
         		<nav class="nav">
 			<div class="nav-container">
@@ -152,6 +152,7 @@
 
 
 
+
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ShoppingBasketController</span> : Controller
 {<span style="color:#a6e22e">
 </span><span style="color:#a6e22e">    [HttpPost]</span>
@@ -180,6 +181,7 @@
 <p>When it comes to composing object graphs using DI, the difference between <code>AddShoppingBasketItem</code> and <code>DbContext</code> becomes significant. While both constitute runtime data, you design your classes differently around them. As explained, the application’s abstractions and external-facing APIs expose runtime data objects such as <code>AddShoppingBasketItem</code>. Runtime data objects such as <code>DbContext</code>, however, are instead hidden behind these same abstractions, making them mere implementation details of their direct consumers. This means that whereas <code>AddShoppingBasketItem</code> is passed to the public methods of an already composed object graph, <code>DbContext</code> is supplied using a different mechanism—one option being <a href="https://mng.bz/oN9j">Constructor Injection</a>.</p>
 
 <p>The following simplified object graph shows this. The application’s <code>ShoppingBasketDbContext</code> is created and supplied to the controller’s constructor:</p>
+
 
 
 

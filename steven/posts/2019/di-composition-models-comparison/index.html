@@ -151,7 +151,6 @@
 
 
 
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
 <span style="color:#75715e">// Composes the graph using the Closure Composition Model
 </span><span style="color:#75715e"></span>IHandler&lt;OrderCancelled&gt; handler =
@@ -185,7 +184,6 @@
 
 
 
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
 <span style="color:#66d9ef">using</span> (ILifetimeScope scope = container.BeginLifetimeScope())
 {
@@ -206,7 +204,6 @@
 <p>When using the CCM, there are some tricks you can apply to move the verification of the availability of this runtime data to an earlier point in time, ideally when calling <code>Resolve</code>. A discussion about how to achieve this, however, is outside the scope of this article.</p>
 
 <p>Even though tricks can be applied—thanks to the dynamic nature of DI Containers—you will never be able to completely prevent Temporal Coupling. To make matters worse, when using a DI Container, the resolve will typically be dynamic, meaning that you don’t know which type to resolve at compile time. This means that you will generally have to set <em>all</em> declared runtime data in the scope. As an example, with a DI Container, you wouldn’t explicitly request the <code>OrderCancellationReportGenerator</code>, but instead request the handler(s) for a message type that is unknown at compile time:</p>
-
 
 
 
@@ -416,7 +413,7 @@ I coauthored the book <a href="https://mng.bz/BYNl">Dependency Injection Princip
 
         		<footer>
 			<span>
-			&copy; <time datetime="2019">2019</time>
+			&copy; <time datetime="2020">2020</time>
 			Steven van Deursen. <span class="noprint">Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
 			</span>
 		</footer>

@@ -152,7 +152,6 @@
 
 
 
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ShoppingBasketController</span> : Controller
 {<span style="color:#a6e22e">
 </span><span style="color:#a6e22e">    [HttpPost]</span>
@@ -181,7 +180,6 @@
 <p>When it comes to composing object graphs using DI, the difference between <code>AddShoppingBasketItem</code> and <code>DbContext</code> becomes significant. While both constitute runtime data, you design your classes differently around them. As explained, the application’s abstractions and external-facing APIs expose runtime data objects such as <code>AddShoppingBasketItem</code>. Runtime data objects such as <code>DbContext</code>, however, are instead hidden behind these same abstractions, making them mere implementation details of their direct consumers. This means that whereas <code>AddShoppingBasketItem</code> is passed to the public methods of an already composed object graph, <code>DbContext</code> is supplied using a different mechanism—one option being <a href="https://mng.bz/oN9j">Constructor Injection</a>.</p>
 
 <p>The following simplified object graph shows this. The application’s <code>ShoppingBasketDbContext</code> is created and supplied to the controller’s constructor:</p>
-
 
 
 
@@ -351,7 +349,7 @@ I coauthored the book <a href="https://mng.bz/BYNl">Dependency Injection Princip
 
         		<footer>
 			<span>
-			&copy; <time datetime="2019">2019</time>
+			&copy; <time datetime="2020">2020</time>
 			Steven van Deursen. <span class="noprint">Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
 			</span>
 		</footer>

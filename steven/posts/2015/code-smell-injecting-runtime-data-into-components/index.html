@@ -101,7 +101,6 @@
 
 
 
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">interface</span> ICommand
 {
     <span style="color:#66d9ef">void</span> Execute();
@@ -139,7 +138,6 @@
 <p>Both the factory and Service Locator approach cause the creation of this part of the object graph to be delayed until runtime. Although delaying the creation of the object graph until runtime isn&rsquo;t a bad thing per se, it makes it harder to verify your configuration because resolving the root object will only test some of the object graph.</p>
 
 <p>The solution to these issues is actually quite simple: remove the injection of runtime data out of the construction phase of the component and pass it on using method calls after construction. <a href="/steven/p/commands/">Not surprisingly</a>, the following design solves these problems:</p>
-
 
 
 
@@ -193,7 +191,6 @@
 
 
 
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CustomerRepository</span> : ICustomerRepository
 {
     <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IUnitOfWork uow;
@@ -238,7 +235,6 @@
 
 
 
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CustomerRepository</span> : ICustomerRepository
 {
     <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IUnitOfWork uow;
@@ -265,7 +261,6 @@
 </code></pre></div>
 
 <p>Creating implementations for the two newly defined abstractions could be as simple as the following:</p>
-
 
 
 
@@ -366,7 +361,7 @@ I coauthored the book <a href="https://mng.bz/BYNl">Dependency Injection Princip
 
         		<footer>
 			<span>
-			&copy; <time datetime="2019">2019</time>
+			&copy; <time datetime="2020">2020</time>
 			Steven van Deursen. <span class="noprint">Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
 			</span>
 		</footer>

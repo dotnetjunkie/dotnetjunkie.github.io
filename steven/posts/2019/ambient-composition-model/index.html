@@ -109,7 +109,6 @@
 
 
 
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
 <span style="color:#66d9ef">new</span> ShoppingBasketController(
     <span style="color:#66d9ef">new</span> AddShoppingBasketItemHandler(
@@ -119,7 +118,6 @@
 <p>Let’s assume for a moment that the web application’s basket feature requires the user’s identity&mdash;not an unusual assumption.</p>
 
 <p>Perhaps it is <code>AddShoppingBasketItemHandler</code> that requires access to the user’s identity. The following example shows the updated <code>ShoppingBasketController</code> object graph. This time, <code>AddShoppingBasketItemHandler</code> depends on an <code>IUserContext</code> abstraction, implemented by an <code>AspNetUserContextAdapter</code>:</p>
-
 
 
 
@@ -142,7 +140,6 @@
 
 
 
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
 <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Handle(AddShoppingBasketItem command)
 {
@@ -158,7 +155,6 @@
 </code></pre></div>
 
 <p>Inside your <a href="https://mng.bz/K1qZ">Composition Root</a> you can define this ASP.NET-specific <code>IUserContext</code> adapter as follows:</p>
-
 
 
 
@@ -214,7 +210,6 @@
 
 
 
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
 <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AspNetCoreUserContextAdapter</span> : IUserContext
 {
@@ -247,7 +242,6 @@
 
 
 
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
 <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DefaultTimeProvider</span> : ITimeProvider
 {
@@ -264,7 +258,6 @@
 <h2 id="applying-the-ambient-composition-model-to-a-dbcontext">Applying the Ambient Composition Model to a DbContext</h2>
 
 <p>Instead of supplying a <code>ShoppingBasketDbContext</code> to the constructor of <code>ShoppingBasketRepository</code>, you can supply an <code>IShoppingBasketContextProvider</code>&mdash;much like ASP.NET Core’s <code>IHttpContextAccessor</code>&mdash;that allows the repository to retrieve the correct <code>DbContext</code>. The provider’s implementation would be responsible for ensuring that the same <code>DbContext</code> is returned for every call within the same request&mdash;but a new one for another request. This changes <code>ShoppingBasketRepository</code> to the following:</p>
-
 
 
 
@@ -298,7 +291,6 @@
 
 
 
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
 <span style="color:#66d9ef">new</span> ShoppingBasketController(
     <span style="color:#66d9ef">new</span> AddShoppingBasketItemHandler(
@@ -309,7 +301,6 @@
 </code></pre></div>
 
 <p>In this example, <code>ShoppingBasketRepository</code> is injected with <code>AmbientShoppingBasketContextProvider</code>, which in turn is supplied with a connection string. The following example shows <code>AmbientShoppingBasketContextProvider</code>‘s code.</p>
-
 
 
 
@@ -354,7 +345,6 @@
 
 
 
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
 <span style="color:#75715e">// Composes the graph using the Closure Composition Model
 </span><span style="color:#75715e"></span>IHandler&lt;OrderCancelled&gt; handler =
@@ -376,7 +366,6 @@ handler.Handle(queueContext.Message); <span style="color:#75715e"><annotation>Ex
 
 
 
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
 <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AmbientUserContextAdapter</span> : IUserContext
 {
@@ -388,7 +377,6 @@ handler.Handle(queueContext.Message); <span style="color:#75715e"><annotation>Ex
 </code></pre></div>
 
 <p>As part of the Composition Root, this <code>AmbientUserContextAdapter</code> exposes an <code>AsyncLocal&lt;string&gt;</code> field that allows the user’s identity to be set before the graph is used. This allows the Composition Root to be written like the following:</p>
-
 
 
 
@@ -542,7 +530,7 @@ I coauthored the book <a href="https://mng.bz/BYNl">Dependency Injection Princip
 
         		<footer>
 			<span>
-			&copy; <time datetime="2019">2019</time>
+			&copy; <time datetime="2020">2020</time>
 			Steven van Deursen. <span class="noprint">Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
 			</span>
 		</footer>

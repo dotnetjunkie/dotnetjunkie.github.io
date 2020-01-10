@@ -109,7 +109,6 @@
 
 
 
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
 <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ShoppingBasketController</span> : Controller
 {
@@ -128,7 +127,6 @@
 <p>The shopping application would likely contain many more classes than just this one controller. In this article, I’ll add a few more classes to the application to demonstrate the Closure Composition Model.</p>
 
 <p>When it comes to supplying application components with a data-centric object, such as a <code>DbContext</code>, a common practice is to inject the object directly into the constructor of the consuming class. The next code example shows the constructor of a <code>ShoppingBasketRepository</code> class that depends on a <code>DbContext</code> derivative&mdash;the <code>ShoppingBasketDbContext</code>:</p>
-
 
 
 
@@ -190,7 +188,6 @@
 
 
 
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
 <span style="color:#66d9ef">new</span> ShoppingBasketController(
     <span style="color:#66d9ef">new</span> AddShoppingBasketItemHandler(
@@ -235,7 +232,6 @@
 
 
 
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
 <span style="color:#66d9ef">string</span> connectionString = LoadConnectionStringFromConfig();
 
@@ -248,7 +244,6 @@ container.Register(
 <p><code>ShoppingBasketDbContext</code> is created by the lambda, rather than being supplied from the outside. When the graph requires externally provided runtime data, however, the previous registration will not work.</p>
 
 <p>Say, for instance, you need to process messages from a queue, but the handling code needs to run in the context of the user on whose behalf the message was published. In that case, the user’s identity is possibly provided to you by message infrastructure. When you build the object graph by hand (a.k.a. <a href="https://blog.ploeh.dk/2014/06/10/pure-di/">Pure DI</a>), instead of using a DI Container, that identity can easily be provided to the graph as follows:</p>
-
 
 
 
@@ -278,7 +273,6 @@ handler.Handle(queueContext.Message); <span style="color:#75715e"><annotation>Ex
 
 
 
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
 <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ClosureUserContext</span> : IUserContext
 {
@@ -299,7 +293,6 @@ handler.Handle(queueContext.Message); <span style="color:#75715e"><annotation>Ex
 
 
 
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
 <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ClosureUserContext</span> : IUserContext
 {
@@ -308,7 +301,6 @@ handler.Handle(queueContext.Message); <span style="color:#75715e"><annotation>Ex
 </code></pre></div>
 
 <p>The following example demonstrates how to use this new ClosureUserContext using <a href="https://autofac.org">Autofac</a>, although the solution would be similar regardless of the chosen DI Container:</p>
-
 
 
 
@@ -340,7 +332,6 @@ handler.Handle(queueContext.Message); <span style="color:#75715e"><annotation>Ex
 
 
 <p>For completeness, here are the required Autofac registrations to compose the discussed graph:</p>
-
 
 
 
@@ -496,7 +487,7 @@ I coauthored the book <a href="https://mng.bz/BYNl">Dependency Injection Princip
 
         		<footer>
 			<span>
-			&copy; <time datetime="2019">2019</time>
+			&copy; <time datetime="2020">2020</time>
 			Steven van Deursen. <span class="noprint">Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
 			</span>
 		</footer>

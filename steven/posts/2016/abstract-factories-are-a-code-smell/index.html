@@ -96,7 +96,8 @@
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> IServiceFactory
 {
     IService Create();
-}</code></pre></div>
+}
+</code></pre></div>
 
 <p>When you consider the consumer of such factory, a factory is hardly ever the right abstraction. Instead of lowering complexity for the consumer, a factory increases complexity, because instead of having just a dependency on the service abstraction <code>IService</code>, the consumer now requires a dependency on both <code>IService</code> and the Abstract Factory <code>IServiceFactory</code>. Although some find this increase to be insignificant, the increase in complexity can be felt instantly when unit testing such classes. Not only does this force you to test the interaction the consumer has with the service, you have to test the interaction with the factory as well.</p>
 
@@ -136,7 +137,8 @@
 		
         handler.Handle(cmd);
     }
-}</code></pre></div>
+}
+</code></pre></div>
 
 <p>The code snippet shows the <code>ShipmentController</code> class that depends on the <code>ICommandHandlerFactory</code>, which is used to create an <code>ICommandHandler&lt;ShipOrder&gt;</code>. The returned handler is invoked by calling its <code>Handle</code> method to execute the command. In other words, <code>ShipmentController</code> depends on both <code>ICommandHandlerFactory</code> and <code>ICommandHandler&lt;ShipOrder&gt;</code>. Compare that to the alternative design using an adapter:</p>
 
@@ -146,7 +148,8 @@
 </span><span style="color:#75715e"></span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> ICommandDispatcher dispatcher;
 
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> ShipOrder(ShipOrder cmd) =&gt; <span style="color:#66d9ef">this</span>.dispatcher.Dispatch(cmd);
-}</code></pre></div>
+}
+</code></pre></div>
 
 <p>By creating the <code>ICommandDispatcher</code> abstraction, you effectively halved the complexity of the controller. In this case the complexity is reduced to the point that you probably could consider removing controllers altogether and replacing them with a single dispatcher (or Front Controller). But that’s a story for another day.</p>
 
@@ -161,7 +164,8 @@
 
     <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">dynamic</span> GetHandler(Type type) =&gt;
         container.GetInstance(<span style="color:#66d9ef">typeof</span>(ICommandHandler&lt;&gt;).MakeGenericType(type));
-}</code></pre></div>
+}
+</code></pre></div>
 
 <h2 id="defining-a-proxy">Defining a Proxy</h2>
 
@@ -172,7 +176,8 @@
     <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> ICommandHandler&lt;ShipOrder&gt; handler;
 
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> ShipOrder(ShipOrder command) =&gt; <span style="color:#66d9ef">this</span>.handler.Handle(command);
-}</code></pre></div>
+}
+</code></pre></div>
 
 <p>You define a proxy that wraps the original instance while allowing it creation to be delayed:</p>
 
@@ -182,7 +187,8 @@
     <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> Func&lt;ICommandHandler&lt;T&gt;&gt; handlerFactory;
 
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Handle(T command) =&gt; <span style="color:#66d9ef">this</span>.handlerFactory().Handle(command);
-}</code></pre></div>
+}
+</code></pre></div>
 
 <p>You probably already noticed the <code>handlerFactory</code> dependency. Whether or not you defined a proper abstraction like <code>ICommandHandlerFactory</code> or simply use a <code>Func&lt;T&gt;</code> is irrelevant to the question whether it is a factory—this is a factory. But note that <code>DelayedCommandHandlerProxy&lt;T&gt;</code> is an infrastructural component, located in your Composition Root. Because the Composition Root has intrinsic knowledge about building the object graphs (it can be considered to be a big factory itself), it is perfectly fine to depend on this <code>Func&lt;T&gt;</code> here, just as the previous <code>CommandDispatcher</code> depends on your DI container.</p>
 
@@ -190,7 +196,8 @@
 
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">new</span> ShipmentController(
     <span style="color:#66d9ef">new</span> DelayedCommandHandlerProxy&lt;ShipOrder&gt;(
-        () =&gt; <span style="color:#66d9ef">new</span> ShipOrderCommandHandler()));</code></pre></div>
+        () =&gt; <span style="color:#66d9ef">new</span> ShipOrderCommandHandler()));
+</code></pre></div>
 
 <p>Here you inject a lambda expression into the proxy class that effectively delays the creation of the real handler. When your Composition Root is structured correctly, it is usually trivial to add such proxy.</p>
 
@@ -199,7 +206,8 @@
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">container.RegisterDecorator(
     <span style="color:#66d9ef">typeof</span>(ICommandHandler&lt;&gt;),
     <span style="color:#66d9ef">typeof</span>(DelayedCommandHandlerProxy&lt;&gt;),
-    Lifestyle.Singleton);</code></pre></div>
+    Lifestyle.Singleton);
+</code></pre></div>
 
 <p>The previous code snippet shows the registration API of <a href="https://simpleinjector.org">Simple Injector</a>. Where Simple Injector is concerned, your proxy class is a <a href="https://en.wikipedia.org/wiki/Decorator_pattern">Decorator</a>. Simple Injector’s decorator sub system has special support for handling <code>Func&lt;T&gt;</code> dependencies that produce the decoratee. It handles this natively and the code that is compiled by Simple Injector for this object graph will be identical to the previous manually constructed object graph.</p>
 
@@ -229,7 +237,8 @@
     <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> Lazy&lt;IService&gt; lazyService;
 
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> DoSomething() =&gt; <span style="color:#66d9ef">this</span>.lazyService.Value.DoSomething();
-}</code></pre></div>
+}
+</code></pre></div>
 
 <p>An even more compelling argument against creating a factory for expensive components is that those components shouldn’t exist in the first place. Constructors of your components should do nothing more than storing the incoming dependencies. In other words, <a href="https://blog.ploeh.dk/2011/03/03/InjectionConstructorsshouldbesimple/">injection constructors should be simple and fast</a>. This diminishes the need for delayed creation.</p>
 
@@ -265,7 +274,8 @@
             handler.Handle(command);
         }
     }
-}</code></pre></div>
+}
+</code></pre></div>
 
 <p>If the service (in this case the <code>ICommandHandler&lt;T&gt;</code>) depends on any component that has a scoped lifestyle, the previous using block will ensure that the lifetime of that scoped component will end when the using block ends. This allows managing the lifetime of your components in a very fine-grained manner, without having to complicate application code while maintaining maximum flexibility.</p>
 

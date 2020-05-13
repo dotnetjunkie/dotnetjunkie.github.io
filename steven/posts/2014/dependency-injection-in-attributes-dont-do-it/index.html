@@ -137,7 +137,8 @@
         Debug.WriteLine(
             <span style="color:#e6db74">&#34;OnActionExecuting &#34;</span> + attribute.MinimumAge);
     }
-}</code></pre></div>
+}
+</code></pre></div>
 
 <p>The example shows an attribute that allows restricting access to parts of the API for users of a particular age. Do note that this class does not inherit from any Web API specific attribute, in other words, the attribute is truly a humble behaviorless data container. All the related logic has been removed from the attribute and can now be found in the accompanying <code>MinimumAgeActionFilter</code> service (that implements our customly defined <code>IActionFilter&lt;TAttribute&gt;</code> interface). The attribute is now a <em>Parameter Object</em>.</p>
 
@@ -169,19 +170,22 @@
         <span style="color:#66d9ef">this</span>.logger.Info(<span style="color:#e6db74">&#34;Decorated OnActionExecuting.&#34;</span>);
         <span style="color:#66d9ef">this</span>.decoratee.OnActionExecuting(attribute, context);
     }
-}</code></pre></div>
+}
+</code></pre></div>
 
 <p>There are a lot of differences between the popular DI containers in their support for decorators. So your mileage might vary, but with Simple Injector all the IActionFilter<TAttribute> implementations can be registered in a single call:</p>
 
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">container.Collection.Register(
     <span style="color:#66d9ef">typeof</span>(IActionFilter&lt;&gt;), 
-    <span style="color:#66d9ef">typeof</span>(IActionFilter&lt;&gt;).Assembly);</code></pre></div>
+    <span style="color:#66d9ef">typeof</span>(IActionFilter&lt;&gt;).Assembly);
+</code></pre></div>
 
 <p>And the decorator can simply be applied as follows:</p>
 
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">container.RegisterDecorator(
     <span style="color:#66d9ef">typeof</span>(IActionFilter&lt;&gt;), 
-    <span style="color:#66d9ef">typeof</span>(ProfilingActionFilterDecorator&lt;&gt;));</code></pre></div>
+    <span style="color:#66d9ef">typeof</span>(ProfilingActionFilterDecorator&lt;&gt;));
+</code></pre></div>
 
 <p>To get this working though, we inevitably need some infrastructure. In the case of Web API we need to create our own global filter that will dispatch the decorated attributes to our <code>IActionFilter&lt;TAttribute&gt;</code> implementations.</p>
 
@@ -221,7 +225,8 @@
     }
 
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">bool</span> AllowMultiple =&gt; <span style="color:#66d9ef">true</span>;
-}</code></pre></div>
+}
+</code></pre></div>
 
 <p>The <code>ActionFilterDispatcher</code> takes a Func delegate that allows resolving collections of types. During the call to <code>ExecuteActionFilterAsync</code>, the method will request all applicable attributes and will request the container for all <code>IActionFilter&lt;TAttribute&gt;</code> implemenations per attribute.</p>
 
@@ -232,7 +237,8 @@
 
 container.Collection.Register(
     <span style="color:#66d9ef">typeof</span>(IActionFilter&lt;&gt;), 
-    <span style="color:#66d9ef">typeof</span>(IActionFilter&lt;&gt;).Assembly);</code></pre></div>
+    <span style="color:#66d9ef">typeof</span>(IActionFilter&lt;&gt;).Assembly);
+</code></pre></div>
 
 <h2 id="wiring-asp-net-mvc">Wiring ASP.NET MVC</h2>
 
@@ -242,7 +248,8 @@ container.Collection.Register(
 {
     <span style="color:#66d9ef">void</span> OnActionExecuting(
         TAttribute attribute, ActionExecutingContext context);
-}</code></pre></div>
+}
+</code></pre></div>
 
 <p>Here is MVC&rsquo;s <code>ActionFilterDispatcher</code>:</p>
 
@@ -284,12 +291,14 @@ container.Collection.Register(
 
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> OnActionExecuted(
         ActionExecutedContext filterContext) { }
-}</code></pre></div>
+}
+</code></pre></div>
 
 <p>The following code allows our <code>ActionFilterDispatcher</code> for MVC to be added to MVC&rsquo;s pipeline:</p>
 
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">GlobalFilters.Filters.Add(
-    <span style="color:#66d9ef">new</span> ActionFilterDispatcher(container.GetAllInstances));</code></pre></div>
+    <span style="color:#66d9ef">new</span> ActionFilterDispatcher(container.GetAllInstances));
+</code></pre></div>
 
 <h2 id="asp-net-core-mvc">ASP.NET Core MVC</h2>
 
@@ -299,7 +308,8 @@ container.Collection.Register(
 {
     <span style="color:#66d9ef">void</span> OnActionExecuting(
         TAttribute attribute, ActionExecutingContext context);
-}</code></pre></div>
+}
+</code></pre></div>
 
 <p>Here is ASP.NET Core&rsquo;s <code>ActionFilterDispatcher</code>:</p>
 
@@ -349,7 +359,8 @@ container.Collection.Register(
     }
     
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> OnActionExecuted(ActionExecutedContext context) { }
-}</code></pre></div>
+}
+</code></pre></div>
 
 <p>The following code allows our <code>ActionFilterDispatcher</code> for ASP.NET Core to be added to ASP.NET&rsquo;s pipeline:</p>
 
@@ -363,7 +374,8 @@ container.Collection.Register(
     });
 
     ...
-}</code></pre></div>
+}
+</code></pre></div>
 
 <h2 id="conclusion">Conclusion</h2>
 

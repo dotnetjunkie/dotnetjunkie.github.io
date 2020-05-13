@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>.NET General on .NET Junkie - Weblog of a workaholic</title>
-    <link>https://blogs.cuttingedge.it/steven/tags/.net-general/</link>
-    <description>Recent content in .NET General on .NET Junkie - Weblog of a workaholic</description>
+    <title>C# on .NET Junkie - Weblog of a workaholic</title>
+    <link>https://blogs.cuttingedge.it/steven/tags/c#/</link>
+    <description>Recent content in C# on .NET Junkie - Weblog of a workaholic</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 07 Aug 2019 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://blogs.cuttingedge.it/steven/tags/.net-general/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://blogs.cuttingedge.it/steven/tags/c#/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -82,15 +82,6 @@ I always loved the first edition as it was a game changer for me. I learned a lo
       
       <guid>https://blogs.cuttingedge.it/steven/posts/2013/di-anti-pattern-multiple-constructors/</guid>
       <description>When Dependency Injection is applied correctly and completely it is important that each type only has one constructor—multiple constructors are redundant, make your DI configuration fragile, and lead to maintainability issues. From a DI perspective, your applications have two kinds of types: newables and injectables. Newables are classes that the application news up manually using the new keyword. This is true for types such as primitives, entities, DTOs, view models and messages.</description>
-    </item>
-    
-    <item>
-      <title>Simple Injector 2 – The future is here</title>
-      <link>https://blogs.cuttingedge.it/steven/posts/2013/simple-injector-2-the-future-is-here/</link>
-      <pubDate>Mon, 04 Mar 2013 00:00:00 +0000</pubDate>
-      
-      <guid>https://blogs.cuttingedge.it/steven/posts/2013/simple-injector-2-the-future-is-here/</guid>
-      <description>Announcing the new major release of Simple Injector. The Simple Injector is an easy-to-use Inversion of Control library for .NET and Silverlight. Last week Simple Injector 2 was released. This release was a major undertaking. I&amp;rsquo;ve been working on this release full time for the last few months and I got a lot of help from enthusiastic Simple Injector users and even got a new developer on the team. I think the results are awesome.</description>
     </item>
     
     <item>
@@ -176,16 +167,6 @@ I always loved the first edition as it was a game changer for me. I learned a lo
     </item>
     
     <item>
-      <title>Protecting against XML Entity Expansion attacks</title>
-      <link>https://blogs.cuttingedge.it/steven/posts/2009/protecting-against-xml-expansion-attacks/</link>
-      <pubDate>Sat, 23 May 2009 00:00:00 +0000</pubDate>
-      
-      <guid>https://blogs.cuttingedge.it/steven/posts/2009/protecting-against-xml-expansion-attacks/</guid>
-      <description>Tom Hollander describes on his blog a denial of service attack I never knew the existence of, called XML Entity Expansion attack. Tom explains how to bring a server to its knees when allowing any type of xml document as input and passing it directly to an XmlDocument for parsing. Tom uses the following XML document of less than 1 KB to demonstrate the attack:
-&amp;lt;!DOCTYPE foo [ &amp;lt;!ENTITY a &amp;#34;1234567890&amp;#34; &amp;gt; &amp;lt;!</description>
-    </item>
-    
-    <item>
       <title>The death of LINQ to SQL</title>
       <link>https://blogs.cuttingedge.it/steven/posts/2008/the-death-of-linq-to-sql/</link>
       <pubDate>Sat, 01 Nov 2008 00:00:00 +0000</pubDate>
@@ -202,15 +183,6 @@ I always wondered why Microsoft focused on two different O/RM technologies for t
       
       <guid>https://blogs.cuttingedge.it/steven/posts/2007/readonlydictionary/</guid>
       <description>This article describes an implementation of a ReadOnlyDictionary&amp;lt;TKey, TValue&amp;gt; that&amp;rsquo;s missing from the .NET framework. UPDATE 2012-06-05: .NET 4.5 will (finally finally!!) contain a ReadOnlyDictionary&amp;lt;TKey, TValue&amp;gt;, which will make this post (that has long be my top most googled article) finally redundant. If you&amp;rsquo;re still developing under .NET 4.0 or below, please read on. UPDATE 2013-04-11: Software license notice: I previously released this under the MIT license, but decided to change this.</description>
-    </item>
-    
-    <item>
-      <title>.NET Backwards compatibility, why should we?</title>
-      <link>https://blogs.cuttingedge.it/steven/posts/2006/net-backwards-compatibility/</link>
-      <pubDate>Tue, 23 May 2006 00:00:00 +0000</pubDate>
-      
-      <guid>https://blogs.cuttingedge.it/steven/posts/2006/net-backwards-compatibility/</guid>
-      <description>Microsofts corporate vice present of the Developer Division, Somasegar, wrote on his weblog about the backwards compatibility of the .NET framework version 2.0. But his readers doubt the usefulness of this compatibility, as do I. UPDATE 2010: This post was written in 2006. During the last couple of years I worked for many clients and found that the backwards compatibility of .NET was very important for many of my clients, because it allowed them to migrate slowly from one version to the next without making very big investments.</description>
     </item>
     
   </channel>

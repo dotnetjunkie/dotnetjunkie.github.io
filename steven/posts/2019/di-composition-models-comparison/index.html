@@ -136,12 +136,12 @@
 
 <p>One prominent advantage of the CCM is that it can guarantee the availability of runtime data by supplying that data through its constructor. Any initialization of a component that is done outside the constructor leads to the <a href="https://blog.ploeh.dk/2011/05/24/DesignSmellTemporalCoupling/">Temporal Coupling</a> design smell.</p>
 
-<callout class="DEFINITION">
-	<span class="callout-title">DEFINITION</span>
-	<span class="callout-body"><p><em>Temporal Coupling</em> occurs when there’s an implicit relationship between two or more members of a class, requiring clients to invoke one member before the other. This tightly couples the members in the temporal dimension.</p>
+<p><callout class="DEFINITION">
+    <span class="callout-title">DEFINITION</span>
+    <span class="callout-body">
+<em>Temporal Coupling</em> occurs when there’s an implicit relationship between two or more members of a class, requiring clients to invoke one member before the other. This tightly couples the members in the temporal dimension.
 </span>
-</callout>
-
+</callout></p>
 
 <p>This can be seen if we compare both variations of the <code>OrderCancellationReportGenerator</code> object graph from <a href="/steven/p/acm/">the previous article</a> once more:</p>
 

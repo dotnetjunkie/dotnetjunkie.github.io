@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Orm on .NET Junkie - Weblog of a workaholic</title>
+    <title>ORM on .NET Junkie - Weblog of a workaholic</title>
     <link>https://blogs.cuttingedge.it/steven/tags/orm/</link>
-    <description>Recent content in Orm on .NET Junkie - Weblog of a workaholic</description>
+    <description>Recent content in ORM on .NET Junkie - Weblog of a workaholic</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 14 Apr 2012 00:00:00 +0000</lastBuildDate>

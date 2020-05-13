@@ -149,7 +149,8 @@
     {
         ...
     }
-}</code></pre></div>
+}
+</code></pre></div>
 
 <p>The argument is that this makes it easier to use the type (since it has a default constructor). This argument makes sense when it comes to introducing dependency injection in a legacy code base. It allows classes to be unit tested easily while allowing the legacy system to be refactored incrementally.</p>
 
@@ -184,7 +185,8 @@
             <span style="color:#66d9ef">this</span>.logger.Log(<span style="color:#e6db74">&#34;MoveCustomerCommand&#34;</span>);
         ...
     }
-}</code></pre></div>
+}
+</code></pre></div>
 
 <p>This anti-pattern assumes we are working with the group 3 style of container (or at least assumes the container is configured to behave this way). In the example the <code>ILogger</code> dependency is optional (since the second constructor does not need it). When there is no registration for <code>ILogger</code>, a group 3 container will skip the first constructor, and select the second constructor to inject dependencies into.</p>
 
@@ -203,7 +205,8 @@
     {
         <span style="color:#75715e">// Do nothing.
 </span><span style="color:#75715e"></span>    }
-}</code></pre></div>
+}
+</code></pre></div>
 
 <p>I know that some developers make a dependency optional and argue that they’re not interested in testing the communication between the class being tested and the dependency, but this argument raises a big red flag for me. Assuming the previous <code>ILogger</code> dependency, how can we not be interested to know whether the consumer logs details correctly or not? If we’re not interested, why is it there? Any behavior that isn’t worth testing, isn’t worth writing! If it’s not interesting then please, stop wasting your boss’s money by writing irrelevant code.</p>
 
@@ -227,11 +230,13 @@
     Component.For&lt;DbContext&gt;()
     .ImplementedBy&lt;DbContext&gt;()
     .Parameters(
-        Parameter.ForKey(<span style="color:#e6db74">&#34;connectionString&#34;</span>).Eq(<span style="color:#e6db74">&#34;name=DbName&#34;</span>)))</code></pre></div>
+        Parameter.ForKey(<span style="color:#e6db74">&#34;connectionString&#34;</span>).Eq(<span style="color:#e6db74">&#34;name=DbName&#34;</span>)))
+</code></pre></div>
 
 <p>That’s just ugly! Why are we trying to use the container’s auto-wiring facility when we’re overriding all of the parameters anyway? All frameworks allow you to register a factory delegate that enables you to control the creation in your code. It’s much better to register such factory delegate for your 3rd party injectables. With Simple Injector this looks as follows:</p>
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">container.Register&lt;DbContext&gt;(() =&gt; <span style="color:#66d9ef">new</span> DbContext(<span style="color:#e6db74">&#34;name=DbName&#34;</span>));</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">container.Register&lt;DbContext&gt;(() =&gt; <span style="color:#66d9ef">new</span> DbContext(<span style="color:#e6db74">&#34;name=DbName&#34;</span>));
+</code></pre></div>
 
 <p>This is much simpler, more readable, and very stable, since the C# compiler resolves the constructor during compilation.</p>
 

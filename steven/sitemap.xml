@@ -3,8 +3,50 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://blogs.cuttingedge.it/steven/tags/.net-general/</loc>
+    <lastmod>2019-08-07T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blogs.cuttingedge.it/steven/</loc>
+    <lastmod>2019-08-07T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blogs.cuttingedge.it/steven/tags/architecture/</loc>
+    <lastmod>2019-08-07T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blogs.cuttingedge.it/steven/tags/c#/</loc>
+    <lastmod>2019-08-07T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blogs.cuttingedge.it/steven/tags/dependency-injection/</loc>
+    <lastmod>2019-08-07T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://blogs.cuttingedge.it/steven/posts/2019/in-praise-of-the-singleton-object-graph/</loc>
     <lastmod>2019-08-07T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blogs.cuttingedge.it/steven/posts/</loc>
+    <lastmod>2019-08-07T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blogs.cuttingedge.it/steven/tags/</loc>
+    <lastmod>2019-08-07T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
@@ -33,6 +75,12 @@
   </url>
   
   <url>
+    <loc>https://blogs.cuttingedge.it/steven/tags/simple-injector/</loc>
+    <lastmod>2017-04-02T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://blogs.cuttingedge.it/steven/posts/2017/simple-injector-v4/</loc>
     <lastmod>2017-04-02T00:00:00+00:00</lastmod>
   </url>
@@ -43,8 +91,26 @@
   </url>
   
   <url>
+    <loc>https://blogs.cuttingedge.it/steven/tags/oop/</loc>
+    <lastmod>2016-08-10T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blogs.cuttingedge.it/steven/tags/software-design/</loc>
+    <lastmod>2016-08-10T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://blogs.cuttingedge.it/steven/posts/2015/code-smell-injecting-runtime-data-into-components/</loc>
     <lastmod>2015-11-07T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blogs.cuttingedge.it/steven/tags/asp.net/</loc>
+    <lastmod>2014-05-14T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
@@ -68,8 +134,20 @@
   </url>
   
   <url>
+    <loc>https://blogs.cuttingedge.it/steven/tags/dependency-simple-injector/</loc>
+    <lastmod>2012-07-19T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://blogs.cuttingedge.it/steven/posts/2012/primitive-dependencies-with-simple-injector/</loc>
     <lastmod>2012-07-19T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blogs.cuttingedge.it/steven/tags/orm/</loc>
+    <lastmod>2012-04-14T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
@@ -108,6 +186,12 @@
   </url>
   
   <url>
+    <loc>https://blogs.cuttingedge.it/steven/tags/security/</loc>
+    <lastmod>2010-05-05T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://blogs.cuttingedge.it/steven/posts/2009/protecting-against-xml-expansion-attacks/</loc>
     <lastmod>2009-05-23T00:00:00+00:00</lastmod>
   </url>
@@ -133,37 +217,7 @@
   </url>
   
   <url>
-    <loc>https://blogs.cuttingedge.it/steven/</loc>
-    <lastmod>2019-08-07T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blogs.cuttingedge.it/steven/tags/.net-general/</loc>
-    <lastmod>2019-08-07T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://blogs.cuttingedge.it/steven/about/</loc>
-  </url>
-  
-  <url>
-    <loc>https://blogs.cuttingedge.it/steven/tags/architecture/</loc>
-    <lastmod>2019-08-07T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blogs.cuttingedge.it/steven/tags/asp.net/</loc>
-    <lastmod>2014-05-14T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blogs.cuttingedge.it/steven/tags/c/</loc>
-    <lastmod>2019-08-07T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
@@ -172,61 +226,7 @@
   </url>
   
   <url>
-    <loc>https://blogs.cuttingedge.it/steven/tags/dependency-injection/</loc>
-    <lastmod>2019-08-07T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blogs.cuttingedge.it/steven/tags/dependency-simple-injector/</loc>
-    <lastmod>2012-07-19T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blogs.cuttingedge.it/steven/tags/oop/</loc>
-    <lastmod>2016-08-10T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blogs.cuttingedge.it/steven/tags/orm/</loc>
-    <lastmod>2012-04-14T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blogs.cuttingedge.it/steven/posts/</loc>
-    <lastmod>2019-08-07T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://blogs.cuttingedge.it/steven/privacy/</loc>
-  </url>
-  
-  <url>
-    <loc>https://blogs.cuttingedge.it/steven/tags/security/</loc>
-    <lastmod>2010-05-05T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blogs.cuttingedge.it/steven/tags/simple-injector/</loc>
-    <lastmod>2017-04-02T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blogs.cuttingedge.it/steven/tags/software-design/</loc>
-    <lastmod>2016-08-10T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blogs.cuttingedge.it/steven/tags/</loc>
-    <lastmod>2019-08-07T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
 </urlset>

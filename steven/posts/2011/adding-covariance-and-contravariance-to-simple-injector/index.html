@@ -102,7 +102,8 @@
 	: IEventHandler&lt;CustomerMovedAbroadEvent&gt;
 {
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Handle(CustomerMovedAbroadEvent e) { ... }
-} </code></pre></div>
+} 
+</code></pre></div>
 
 <p>The use of the <code>in</code> keyword allows us to write the following (compiling) code:</p>
 
@@ -111,7 +112,8 @@
 <span style="color:#75715e">// This next line works because of the &#39;in&#39; keyword
 </span><span style="color:#75715e"></span>IEventHandler&lt;CustomerMovedAbroadEvent&gt; handler2 = handler;
 
-handler2.Handle(<span style="color:#66d9ef">new</span> CustomerMovedAbroadEvent());</code></pre></div>
+handler2.Handle(<span style="color:#66d9ef">new</span> CustomerMovedAbroadEvent());
+</code></pre></div>
 
 <p>As I explained, event handlers are a good example to show case variance support, because they are a likely part of the application design to need variance support. When raising a single <code>CustomerMovedAbroadEvent</code> event, it seems reasonably to set up the application in such way that all three previously defined event handlers will handle that event.</p>
 
@@ -125,7 +127,8 @@ handler2.Handle(<span style="color:#66d9ef">new</span> CustomerMovedAbroadEvent(
 
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> handler = container.GetInstance&lt;IEventHandler&lt;CustomerMovedAbroadEvent&gt;&gt;();
 
-handler.Handle(<span style="color:#66d9ef">new</span> CustomerMovedAbroadEvent());</code></pre></div>
+handler.Handle(<span style="color:#66d9ef">new</span> CustomerMovedAbroadEvent());
+</code></pre></div>
 
 <p>Note that the <code>CustomerMovedEventHandler</code> and the <code>NotifyStaffWhenCustomerMovedEventHandler</code> both handle the <code>CustomerMovedEvent</code> event and they are both assignable from <code>IEventHandler&lt;CustomerMovedAbroadEvent&gt;</code>. In other words, because <code>CustomerMovedAbroadEvent</code> inherits from <code>CustomerMovedEvent</code>, both handlers are able to handle a <code>CustomerMovedAbroadEvent</code>. And of course the container&rsquo;s configuration should enable this.</p>
 
@@ -153,7 +156,8 @@ handler.Handle(<span style="color:#66d9ef">new</span> CustomerMovedAbroadEvent()
             handler.Handle(e);
         }
     }
-}</code></pre></div>
+}
+</code></pre></div>
 
 <p>This class takes a dependency on <code>IEnumerable&lt;IEventHandler&lt;TEvent&gt;&gt;</code> and all it does is iterating that collection and calling <code>Handle(e)</code> on each handler in the collection. Note that although it takes a dependency on <code>IEnumerable&lt;IEventHandler&lt;TEvent&gt;&gt;</code>, the rest of the application will be oblivious of the <code>IEnumerable</code> and it can simply take a dependency on <code>IEventHandler&lt;TEvent&gt;</code>. Contravariance will make this class a bit more complex though, but let&rsquo;s get back on that later. Let&rsquo;s first focus on the registration of the event handlers.</p>
 
@@ -162,7 +166,8 @@ handler.Handle(<span style="color:#66d9ef">new</span> CustomerMovedAbroadEvent()
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">container.Register&lt;IEventHandler&lt;CustomerMovedEvent&gt;,
 	CustomerMovedEventHandler&gt;();
 container.Register&lt;IEventHandler&lt;CustomerMovedEvent&gt;,
-	NotifyStaffWhenCustomerMovedEventHandler&gt;();</code></pre></div>
+	NotifyStaffWhenCustomerMovedEventHandler&gt;();
+</code></pre></div>
 
 <p>When running this code, it will fail on the second line, because at that point <code>IEventHandler&lt;CustomerMovedEvent&gt;</code> has already been registered. The actual way to do this with Simple Injector is by using one of the <code>RegisterAll</code> methods, for instance:</p>
 
@@ -171,13 +176,14 @@ container.Register&lt;IEventHandler&lt;CustomerMovedEvent&gt;,
     <span style="color:#66d9ef">typeof</span>(NotifyStaffWhenCustomerMovedEventHandler));
 
 container.RegisterAll&lt;IEventHandler&lt;CustomerMovedAbroadEvent&gt;&gt;(
-    <span style="color:#66d9ef">typeof</span>(CustomerMovedAbroadEventHandler));</code></pre></div>
+    <span style="color:#66d9ef">typeof</span>(CustomerMovedAbroadEventHandler));
+</code></pre></div>
 
 <p>These <code>RegisterAll</code> methods actually register a single enumerable that calls back into the container on iteration. The actual types won&rsquo;t get registered themselves, but since they are concrete types, the container will be able to create them anyway. For educational purposes, the previous example is roughly translated by Simple Injector to the following:</p>
 
 <p>These <code>RegisterAll</code> methods actually register a single enumerable that calls back into the container on iteration. The actual types won&rsquo;t get registered themselves, but since they are concrete types, the container will be able to create them anyway. For educational purposes, the previous example is roughly translated by Simple Injector to the following:</p>
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> types = <span style="color:#66d9ef">new</span><span style="color:#a6e22e">[]</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> types = <span style="color:#66d9ef">new</span>[]
 {
     <span style="color:#66d9ef">typeof</span>(CustomerMovedEventHandler), 
     <span style="color:#66d9ef">typeof</span>(NotifyStaffWhenCustomerMovedEventHandler)
@@ -186,13 +192,15 @@ container.RegisterAll&lt;IEventHandler&lt;CustomerMovedAbroadEvent&gt;&gt;(
 container.RegisterSingle&lt;IEnumerable&lt;IEventHandler&lt;CustomerMovedEvent&gt;&gt;&gt;(
     <span style="color:#66d9ef">from</span> type <span style="color:#66d9ef">in</span> types
     <span style="color:#66d9ef">select</span> (IEventHandler&lt;CustomerMovedEvent&gt;)container.GetInstance(type)
-);</code></pre></div>
+);
+</code></pre></div>
 
 <p>Although the <code>RegisterAll</code> overloads are pretty easy to grasp, it gets cumbersome when the application has dozens of event handlers. The same can therefore be achieved in a more automated way by doing batch registration:</p>
 
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">container.RegisterManyForOpenGeneric(<span style="color:#66d9ef">typeof</span>(IEventHandler&lt;&gt;),
     (service, impls) =&gt; container.RegisterAll(service, impls),
-    AppDomain.CurrentDomain.GetAssemblies());</code></pre></div>
+    AppDomain.CurrentDomain.GetAssemblies());
+</code></pre></div>
 
 <p>This registration tells the container to go look for all concrete implementations of the <code>IEventHandler&lt;TEvent&gt;</code> interface in all (already loaded) assemblies of the current App Domain. The other <code>RegisterManyForOpenGeneric</code> overloads that don&rsquo;t take a delegate, directly register the found implementations in the container. Those overloads are however not able to handle service types with multiple registrations (as is the case with the <code>IEventHandler&lt;CustomerMovedEvent&gt;</code>). By supplying a delegate, we inform the container that it should not do the registration itself, but rather delegate that back to the supplied registration callback. For each found service type (in our case <code>IEventHandler&lt;CustomerMovedEvent&gt;</code> and <code>IEventHandler&lt;CustomerMovedAbroadEvent&gt;</code>) the delegate will be called once, and the supplied delegate will call the <code>RegisterAll</code> method to register a collection of the given service type. In the delegate we call the same <code>RegisterAll</code> overload as was done in the first example.</p>
 
@@ -229,7 +237,8 @@ container.RegisterSingle&lt;IEnumerable&lt;IEventHandler&lt;CustomerMovedEvent&g
             handler.Handle(e);
         }
     }
-}</code></pre></div>
+}
+</code></pre></div>
 
 <p>The code in the constructor isn&rsquo;t that hard to grasp, but it probably still needs some explanation. Instead of injecting an <code>IEnumerable&lt;IEventHandler&lt;TEvent&gt;&gt;</code> we now inject the container itself. The <code>MultipleDispatchEventHandler</code> constructor iterates over all registrations in the container and gets all registrations where <code>IEnumerable&lt;IEventHandler&lt;TEvent&gt;&gt;</code> is assignable from the registration&rsquo;s service type. Remember that we registered the handlers using <code>IEnumerable&lt;T&gt;</code>. Although the application contains three event handlers, they are contained in two <code>IEnumerable&lt;IEventHandler&lt;TEvent&gt;&gt;</code> registrations.</p>
 
@@ -240,7 +249,8 @@ container.RegisterSingle&lt;IEnumerable&lt;IEventHandler&lt;CustomerMovedEvent&g
 <p>The only thing missing now is the registration of the <code>MultipleDispatchEventHandler</code> itself, which is a simple one-liner:</p>
 
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">container.RegisterSingleOpenGeneric(<span style="color:#66d9ef">typeof</span>(IEventHandler&lt;&gt;),
-    <span style="color:#66d9ef">typeof</span>(MultipleDispatchEventHandler&lt;&gt;));</code></pre></div>
+    <span style="color:#66d9ef">typeof</span>(MultipleDispatchEventHandler&lt;&gt;));
+</code></pre></div>
 
 <p>With this in place we now have completed our first scenario.</p>
 
@@ -256,12 +266,14 @@ container.RegisterSingle&lt;IEnumerable&lt;IEventHandler&lt;CustomerMovedEvent&g
 
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">container.Register&lt;IEventHandler&lt;CustomerMovedEvent&gt;, CustomerMovedEventHandler&gt;();
 container.Register&lt;IEventHandler&lt;CustomerMovedAbroadEvent&gt;,
-    CustomerMovedAbroadEventHandler&gt;();</code></pre></div>
+    CustomerMovedAbroadEventHandler&gt;();
+</code></pre></div>
 
 <p>And of course we can achieve the same using batch registration:</p>
 
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">container.RegisterManyForOpenGeneric(<span style="color:#66d9ef">typeof</span>(IEventHandler&lt;&gt;),
-    <span style="color:#66d9ef">typeof</span>(IEventHandler&lt;&gt;).Assembly);</code></pre></div>
+    <span style="color:#66d9ef">typeof</span>(IEventHandler&lt;&gt;).Assembly);
+</code></pre></div>
 
 <p>Note that the <code>NotifyStaffWhenCustomerMovedEventHandler</code> is not included, since this scenario implies a single implementation per handler type, but that handler shares the same interface with the <code>CustomerMovedEventHandler</code>.</p>
 
@@ -295,7 +307,7 @@ container.Register&lt;IEventHandler&lt;CustomerMovedAbroadEvent&gt;,
 </span><span style="color:#75715e"></span>        }
         <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (registrations.Length == <span style="color:#ae81ff">1</span>)
         {
-            <span style="color:#66d9ef">var</span> registration = registrations<span style="color:#a6e22e">[0]</span>;
+            <span style="color:#66d9ef">var</span> registration = registrations[<span style="color:#ae81ff">0</span>];
             e.Register(registration.BuildExpression());
         }
         <span style="color:#66d9ef">else</span>
@@ -309,7 +321,8 @@ container.Register&lt;IEventHandler&lt;CustomerMovedAbroadEvent&gt;,
                 serviceType, registrations.Length, names));
         }
     };
-}</code></pre></div></p>
+}
+</code></pre></div></p>
 
 <p>This extension method registers a delegate to the container&rsquo;s ResolveUnregisteredType event. Every time an unregistered type is requested from the container, the container will first call the ResolveUnregisteredType to get a resolution for that type, before it will try to create that type itself. The delegate is supplied with an UnregisteredTypeEventArgs that contains a Register(Expression) method, which allows to register type. The delegate doesn&rsquo;t have to call the Register method, and that is what happens in this extension method; If the UnregisteredServiceType is not generic, the delegate returns immediately, which allows other registered delegates (if any) to respond by registering a Expression for that service type.</p>
 
@@ -321,13 +334,15 @@ container.Register&lt;IEventHandler&lt;CustomerMovedAbroadEvent&gt;,
 
 <p>With this extension method in place, we can add variance support to the container like this:</p>
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">container.AllowToResolveVariantTypes();</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">container.AllowToResolveVariantTypes();
+</code></pre></div>
 
 <p>With the previous registration we can now resolve the following type, even though it wasn&rsquo;t registered explicitly:</p>
 
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> handler = container.GetInstance&lt;IEventHandler&lt;SpecialCustomerMovedEvent&gt;&gt;();
 
-Assert.IsInstanceOfType(handler, <span style="color:#66d9ef">typeof</span>(CustomerMovedEventHandler));</code></pre></div>
+Assert.IsInstanceOfType(handler, <span style="color:#66d9ef">typeof</span>(CustomerMovedEventHandler));
+</code></pre></div>
 
 <h2 id="scenario-3">Scenario 3</h2>
 
@@ -339,7 +354,8 @@ Assert.IsInstanceOfType(handler, <span style="color:#66d9ef">typeof</span>(Custo
 
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">container.Register&lt;IEventHandler&lt;CustomerMovedEvent&gt;, CustomerMovedEventHandler&gt;();
 container.Register&lt;IEventHandler&lt;CustomerMovedAbroadEvent&gt;,
-    CustomerMovedAbroadEventHandler&gt;();</code></pre></div>
+    CustomerMovedAbroadEventHandler&gt;();
+</code></pre></div>
 
 <p>When we wrap this in a composite, we get a solution that looks very much like the first scenario. The MultipleDispatchEventHandler would look as follows:</p>
 
@@ -363,26 +379,30 @@ container.Register&lt;IEventHandler&lt;CustomerMovedAbroadEvent&gt;,
     }
 
     <span style="color:#66d9ef">void</span> IEventHandler&lt;TEvent&gt;.Handle(TEvent e) { ... }
-}</code></pre></div>
+}
+</code></pre></div>
 
 <p>However, there is a problem with this, that you will notice when trying to resolve this composite. Registering open generic types (using the RegisterOpenGeneric or RegisterSingleOpenGeneric) works by hooking onto the container&rsquo;s ResolveUnregisteredType event, which will only get called for unregistered types. We did however already register an <code>IEventHandler&lt;CustomerMovedEvent&gt;</code> and an <code>IEventHandler&lt;CustomerMovedAbroadEvent&gt;</code>. Resolving those handlers will therefore result in the return of a CustomerMovedEventHandler and CustomerMovedAbroadEventHandler respectively. All other <code>IEventHandler&lt;TEvent&gt;</code> versions will result in the return of the MultipleDispatchEventHandler. Of course, this is not what we want.</p>
 
 <p>We can fix this by registering the concrete types explicitly:</p>
 
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">container.Register&lt;CustomerMovedEventHandler&gt;();
-container.Register&lt;CustomerMovedAbroadEventHandler&gt;();</code></pre></div>
+container.Register&lt;CustomerMovedAbroadEventHandler&gt;();
+</code></pre></div>
 
 <p>Or of course using batch registration:</p>
 
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">container.RegisterManyForOpenGeneric(<span style="color:#66d9ef">typeof</span>(IEventHandler&lt;&gt;),
     (service, impls) =&gt; container.Register(impls.Single()),
-    AppDomain.CurrentDomain.GetAssemblies());</code></pre></div>
+    AppDomain.CurrentDomain.GetAssemblies());
+</code></pre></div>
 
 <p>The supplied registration callback in the RegisterManyForOpenGeneric method simply calls the non-generic Register method overload, and because there is only one implementation per service type, we can call impls.Single(). In case there were more implementations, we could simply do something like this:</p>
 
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">container.RegisterManyForOpenGeneric(<span style="color:#66d9ef">typeof</span>(IEventHandler&lt;&gt;),
     (_, impls) =&gt; impls.ToList().ForEach(i =&gt; container.Register(i)),
-    AppDomain.CurrentDomain.GetAssemblies());</code></pre></div>
+    AppDomain.CurrentDomain.GetAssemblies());
+</code></pre></div>
 
 <p>Now we have to ensure that the MultipleDispatchEventHandler queries for these concrete types:</p>
 
@@ -410,7 +430,8 @@ container.Register&lt;CustomerMovedAbroadEventHandler&gt;();</code></pre></div>
     }
 
     <span style="color:#66d9ef">void</span> IEventHandler&lt;TEvent&gt;.Handle(TEvent e) { ... }
-}</code></pre></div>
+}
+</code></pre></div>
 
 <p>Instead of querying the container for <code>IEventHandler&lt;TEvent&gt;</code> registrations, we query the container for service types that implement the <code>IEventHandler&lt;TEvent&gt;</code> interface.</p>
 
@@ -427,7 +448,7 @@ container.Register&lt;CustomerMovedAbroadEventHandler&gt;();</code></pre></div>
             <span style="color:#66d9ef">return</span>;
         }
 
-        Type serviceType = e.UnregisteredServiceType.GetGenericArguments()<span style="color:#a6e22e">[0]</span>;
+        Type serviceType = e.UnregisteredServiceType.GetGenericArguments()[<span style="color:#ae81ff">0</span>];
 
         <span style="color:#66d9ef">if</span> (!serviceType.IsGenericType)
         {
@@ -451,23 +472,26 @@ container.Register&lt;CustomerMovedAbroadEventHandler&gt;();</code></pre></div>
             <span style="color:#66d9ef">var</span> castMethod = <span style="color:#66d9ef">typeof</span>(Enumerable).GetMethod(<span style="color:#e6db74">&#34;Cast&#34;</span>)
                 .MakeGenericMethod(serviceType);
 
-            <span style="color:#66d9ef">var</span> castedInstances = castMethod.Invoke(<span style="color:#66d9ef">null</span>, <span style="color:#66d9ef">new</span><span style="color:#a6e22e">[]</span> { instances });
+            <span style="color:#66d9ef">var</span> castedInstances = castMethod.Invoke(<span style="color:#66d9ef">null</span>, <span style="color:#66d9ef">new</span>[] { instances });
 
             e.Register(() =&gt; castedInstances);
         }
     };
-}</code></pre></div>
+}
+</code></pre></div>
 
 <p>This extension method looks much like the extension method we&rsquo;ve seen in the second scenario, with a few differences. First of all, this extension method handles IEnumerable<T> types. Just like before it searches the container for assignable types, but if they are found, an IEnumerable<T> is constructed that will return all found services.</p>
 
 <p>We can use this extension method as follows:</p>
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">container.AllowToResolveVariantCollections();</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">container.AllowToResolveVariantCollections();
+</code></pre></div>
 
 <p>With the current configuration we can now request an <code>IEnumerable&lt;IEventHandler&lt;TEvent&gt;&gt;</code> and get all assignable implementations:</p>
 
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> handlers =
-    container.GetAllInstances&lt;IEventHandler&lt;CustomerMovedAbroadEvent&gt;&gt;();</code></pre></div>
+    container.GetAllInstances&lt;IEventHandler&lt;CustomerMovedAbroadEvent&gt;&gt;();
+</code></pre></div>
 
 <p>This will result in a list that contains both the CustomerMovedEventHandler and CustomerMovedAbroadEventHandler.</p>
 

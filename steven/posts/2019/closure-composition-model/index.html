@@ -155,12 +155,12 @@
 
 <p><code>DbContext</code> is stored in a <code>private</code> <code>readonly</code> field and will, therefore, always be available when one of the repository’s methods is invoked. The stored <code>DbContext</code> becomes a <em>captured variable</em> that can be accessed by the class’s methods, effectively becoming a <a href="https://en.wikipedia.org/wiki/Closure_(computer_programming)">closure</a>. I, therefore, call this model of injecting runtime data into application components during construction the <em>Closure Composition Model</em> (CCM).</p>
 
-<callout class="DEFINITION">
-	<span class="callout-title">DEFINITION</span>
-	<span class="callout-body"><p>The <em>Closure Composition Model</em> composes object graphs that capture runtime data in variables of the graph’s components.</p>
+<p><callout class="DEFINITION">
+    <span class="callout-title">DEFINITION</span>
+    <span class="callout-body">
+The <em>Closure Composition Model</em> composes object graphs that capture runtime data in variables of the graph’s components.
 </span>
-</callout>
-
+</callout></p>
 
 <p>The following figure captures the essence of the CCM.</p>
 
@@ -200,12 +200,12 @@
 
 <p>Letting <code>ShoppingBasketRepository</code> have a Singleton Lifestyle would cause <code>DbContext</code> to be kept alive for the application’s lifetime. This is dreadful because that would cause it to be used by multiple requests simultaneously&mdash;a horrible prospect. Again: <code>DbContext</code>s are not thread-safe.</p>
 
-<sidebar>
-	<span class="sidebar-title">The Singleton Lifestyle</span>
-	<span class="sidebar-body"><p>In the context of Dependency Injection, a <em>Lifestyle</em> is a formalized way of describing the intended lifetime of a dependency. One of those formalized lifestyles is the <em><a href="https://mng.bz/qXJw">Singleton Lifestyle</a></em>. When a component is configured/declared using the Singleton Lifestyle, it means that there will be only one instance of that component, and that instance is perpetually reused. The Singleton Lifestyle should <em>not</em> be confused with the <a href="https://en.wikipedia.org/wiki/Singleton_pattern">Singleton design pattern</a>. They both guarantee the existence of just one instance, but their similarity ends there.</p>
+<p><sidebar>
+    <span class="sidebar-title">The Singleton Lifestyle</span>
+    <span class="sidebar-body">
+In the context of Dependency Injection, a <em>Lifestyle</em> is a formalized way of describing the intended lifetime of a dependency. One of those formalized lifestyles is the <em><a href="https://mng.bz/qXJw">Singleton Lifestyle</a></em>. When a component is configured/declared using the Singleton Lifestyle, it means that there will be only one instance of that component, and that instance is perpetually reused. The Singleton Lifestyle should <em>not</em> be confused with the <a href="https://en.wikipedia.org/wiki/Singleton_pattern">Singleton design pattern</a>. They both guarantee the existence of just one instance, but their similarity ends there.
 </span>
-</sidebar>
-
+</sidebar></p>
 
 <p><code>ShoppingBasketRepository</code> shouldn’t be a singleton, and the same is true of its consumer&mdash;<code>AddShoppingBasketItemHandler</code>&mdash;for exactly the same reason; reusing the service would cause the repository to be reused, which again would cause <code>DbContext</code> to be reused. A pattern seems to emerge…</p>
 
@@ -213,12 +213,12 @@
 
 <p>This restriction on the consumer’s lifetime is transitive, meaning that it affects all the dependency’s direct and indirect consumers. It bubbles up the object graph all the way to the top-most object in the graph&mdash;<code>ShoppingBasketController</code>, in the example. Not adhering to this restriction causes a problem called <a href="https://blog.ploeh.dk/2014/06/02/captive-dependency/">Captive Dependencies</a>. The book defines it as follows:</p>
 
-<callout class="DEFINITION">
-	<span class="callout-title">DEFINITION</span>
-	<span class="callout-body"><p>A <em>Captive Dependency</em> is a dependency that’s inadvertently kept alive for too long because its consumer was given a lifetime that exceeds the dependency’s expected lifetime. [§8.4.1]</p>
+<p><callout class="DEFINITION">
+    <span class="callout-title">DEFINITION</span>
+    <span class="callout-body">
+A <em>Captive Dependency</em> is a dependency that’s inadvertently kept alive for too long because its consumer was given a lifetime that exceeds the dependency’s expected lifetime. [§8.4.1]
 </span>
-</callout>
-
+</callout></p>
 
 <p>In the previous example, <code>DbContext</code> is supplied to the object graph during construction&mdash;an example of the CCM. The CCM infers that even stateless components should <em>not</em> be kept alive for the application&rsquo;s lifetime, as it would keep their stateful dependencies alive.</p>
 
@@ -261,7 +261,7 @@ container.Register(
                 connectionString)));
 
 handler.Handle(queueContext.Message); <span style="color:#75715e"><annotation>External runtime data</annotation>
-</span><span style="color:#75715e"></span></code></pre></div>
+</span></code></pre></div>
 
 <p>Both the user’s identity and the message are externally provided runtime values. But while the message is passed along the graph’s public API&mdash;in this case the <code>IHandler&lt;T&gt;.Handle</code> method&mdash;the user’s identity is an implementation detail, applied to the graph during construction.</p>
 
@@ -324,12 +324,12 @@ handler.Handle(queueContext.Message); <span style="color:#75715e"><annotation>Ex
 
 <p>In this example, you start by creating an Autofac lifetime scope. A lifetime scope provides a cache for <em>scoped</em> instances. A scoped instance is cached and reused within a single lifetime scope. Configuring <code>ClosureUserContext</code> as scoped allows you to request the scope’s single <code>ClosureUserContext</code> instance and initialize it with the user’s identity. Because that user context is registered as scoped, that same instance will be injected into the handler’s graph.</p>
 
-<sidebar>
-	<span class="sidebar-title">The Scoped Lifestyle</span>
-	<span class="sidebar-body"><p>Similar to the Singleton Lifestyle, the Scoped Lifestyle is a formalized way of describing the intended lifetime of a dependency. Scoped dependencies behave much like Singleton dependencies, but within a single, well-defined scope. Scoped dependencies aren’t shared across scopes. Each scope has its own cache of associated dependencies.</p>
+<p><sidebar>
+    <span class="sidebar-title">The Scoped Lifestyle</span>
+    <span class="sidebar-body">
+Similar to the Singleton Lifestyle, the Scoped Lifestyle is a formalized way of describing the intended lifetime of a dependency. Scoped dependencies behave much like Singleton dependencies, but within a single, well-defined scope. Scoped dependencies aren’t shared across scopes. Each scope has its own cache of associated dependencies.
 </span>
-</sidebar>
-
+</sidebar></p>
 
 <p>For completeness, here are the required Autofac registrations to compose the discussed graph:</p>
 

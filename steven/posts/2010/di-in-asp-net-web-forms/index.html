@@ -71,7 +71,8 @@
     {
         <span style="color:#66d9ef">this</span>.userService = ServiceLocator.Current.GetInstance&lt;IUserService&gt;();
     }
-} </code></pre></div>
+} 
+</code></pre></div>
 
 <p>While this doesn’t look that bad, it creates a dependency on an particular implementation and even when your calling an abstraction (as I do with the Common Service Locator in the example) you might want to prevent this, because you’ve still got a dependency and a bit of plumbing in each and every page.</p>
 
@@ -93,7 +94,8 @@
     {
         <span style="color:#66d9ef">this</span>.userService = userService;
     }
-}</code></pre></div>
+}
+</code></pre></div>
 
 <p>Please note that the page must contain the default constructor. The code compilation model that ASP.NET uses behind the covers, creates a new type based on the defined _Default type. ASP.NET does this to allow the creation of the control hierarchy as it is defined in the markup. Because of this inheriting strategy, every Page class in your application must have a default constructor, although it doesn’t have to be public.</p>
 
@@ -169,7 +171,7 @@
         }
     }
 
-    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> Control<span style="color:#a6e22e">[]</span> GetChildControls(Control ctrl)
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> Control[] GetChildControls(Control ctrl)
     {
         <span style="color:#66d9ef">var</span> flags =
             BindingFlags.Instance | BindingFlags.NonPublic;
@@ -223,7 +225,7 @@
 
         <span style="color:#66d9ef">if</span> (overloadedPublicConstructors.Length == <span style="color:#ae81ff">1</span>)
         {
-            <span style="color:#66d9ef">return</span> overloadedPublicConstructors<span style="color:#a6e22e">[0]</span>;
+            <span style="color:#66d9ef">return</span> overloadedPublicConstructors[<span style="color:#ae81ff">0</span>];
         }
 
         <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ActivationException(<span style="color:#66d9ef">string</span>.Format(
@@ -231,14 +233,15 @@
             <span style="color:#e6db74">&#34;constructors and can&#39;t be initialized.&#34;</span>, type));
     }
 
-    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">object</span><span style="color:#a6e22e">[]</span> GetMethodArguments(MethodBase method)
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">object</span>[] GetMethodArguments(MethodBase method)
     {
         <span style="color:#66d9ef">return</span> (
             <span style="color:#66d9ef">from</span> parameter <span style="color:#66d9ef">in</span> method.GetParameters()
             <span style="color:#66d9ef">let</span> parameterType = parameter.ParameterType
             <span style="color:#66d9ef">select</span> GetInstance(parameterType)).ToArray();
     }
-}</code></pre></div>
+}
+</code></pre></div>
 
 <p>This implementation does one sneaky thing to achieve it’s goal. It is nearly impossible to instantiate the type our self, because that would mean that we need to rewrite the complete compilation engine of ASP.NET. Instead we delegate the creation to the PageHandlerFactory base class. After the creation of this type (created using the default constructor) we search for an overloaded constructor on its base type (remember that ASP.NET creates a sub type), find out what arguments this constructor has, and load those dependencies by calling the Common Service Locator. After that we invoke that overloaded constructor. I repeat: <em>we call an overloaded constructor on an already initialized class</em>.</p>
 

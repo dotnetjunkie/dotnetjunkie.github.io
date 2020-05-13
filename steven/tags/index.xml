@@ -12,7 +12,7 @@
     
     
     <item>
-      <title>.Net General</title>
+      <title>.NET General</title>
       <link>https://blogs.cuttingedge.it/steven/tags/.net-general/</link>
       <pubDate>Wed, 07 Aug 2019 00:00:00 +0000</pubDate>
       
@@ -30,20 +30,11 @@
     </item>
     
     <item>
-      <title>Asp.net</title>
-      <link>https://blogs.cuttingedge.it/steven/tags/asp.net/</link>
-      <pubDate>Wed, 14 May 2014 00:00:00 +0000</pubDate>
-      
-      <guid>https://blogs.cuttingedge.it/steven/tags/asp.net/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>C#</title>
-      <link>https://blogs.cuttingedge.it/steven/tags/c/</link>
+      <link>https://blogs.cuttingedge.it/steven/tags/c#/</link>
       <pubDate>Wed, 07 Aug 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://blogs.cuttingedge.it/steven/tags/c/</guid>
+      <guid>https://blogs.cuttingedge.it/steven/tags/c#/</guid>
       <description></description>
     </item>
     
@@ -57,6 +48,42 @@
     </item>
     
     <item>
+      <title>Simple Injector</title>
+      <link>https://blogs.cuttingedge.it/steven/tags/simple-injector/</link>
+      <pubDate>Sun, 02 Apr 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://blogs.cuttingedge.it/steven/tags/simple-injector/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>OOP</title>
+      <link>https://blogs.cuttingedge.it/steven/tags/oop/</link>
+      <pubDate>Wed, 10 Aug 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://blogs.cuttingedge.it/steven/tags/oop/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Software Design</title>
+      <link>https://blogs.cuttingedge.it/steven/tags/software-design/</link>
+      <pubDate>Wed, 10 Aug 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://blogs.cuttingedge.it/steven/tags/software-design/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ASP.NET</title>
+      <link>https://blogs.cuttingedge.it/steven/tags/asp.net/</link>
+      <pubDate>Wed, 14 May 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://blogs.cuttingedge.it/steven/tags/asp.net/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Dependency Simple Injector</title>
       <link>https://blogs.cuttingedge.it/steven/tags/dependency-simple-injector/</link>
       <pubDate>Thu, 19 Jul 2012 00:00:00 +0000</pubDate>
@@ -66,16 +93,7 @@
     </item>
     
     <item>
-      <title>Oop</title>
-      <link>https://blogs.cuttingedge.it/steven/tags/oop/</link>
-      <pubDate>Wed, 10 Aug 2016 00:00:00 +0000</pubDate>
-      
-      <guid>https://blogs.cuttingedge.it/steven/tags/oop/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Orm</title>
+      <title>ORM</title>
       <link>https://blogs.cuttingedge.it/steven/tags/orm/</link>
       <pubDate>Sat, 14 Apr 2012 00:00:00 +0000</pubDate>
       
@@ -89,24 +107,6 @@
       <pubDate>Wed, 05 May 2010 00:00:00 +0000</pubDate>
       
       <guid>https://blogs.cuttingedge.it/steven/tags/security/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Simple Injector</title>
-      <link>https://blogs.cuttingedge.it/steven/tags/simple-injector/</link>
-      <pubDate>Sun, 02 Apr 2017 00:00:00 +0000</pubDate>
-      
-      <guid>https://blogs.cuttingedge.it/steven/tags/simple-injector/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Software Design</title>
-      <link>https://blogs.cuttingedge.it/steven/tags/software-design/</link>
-      <pubDate>Wed, 10 Aug 2016 00:00:00 +0000</pubDate>
-      
-      <guid>https://blogs.cuttingedge.it/steven/tags/software-design/</guid>
       <description></description>
     </item>
     

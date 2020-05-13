@@ -75,8 +75,8 @@
 
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#a6e22e">[ServiceKnownType(nameof(GetKnownTypes))]</span>
 <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CommandService</span>
-{<span style="color:#a6e22e">
-</span><span style="color:#a6e22e">    [OperationContract]</span>
+{
+<span style="color:#a6e22e">    [OperationContract]</span>
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Execute(<span style="color:#66d9ef">dynamic</span> command)
     {
         Type commandHandlerType = <span style="color:#66d9ef">typeof</span>(ICommandHandler&lt;&gt;)
@@ -99,7 +99,8 @@
  
         <span style="color:#66d9ef">return</span> commandTypes.ToArray();
     }
-}</code></pre></div>
+}
+</code></pre></div>
 
 <p>This service has just one operation, decorated with the <code>OperationContractAttribute</code>. It can process any command. Since WCF needs to know what messages it must accept (to be able to generate a WSDL for instance), the service is decorated with the <code>ServiceKnownTypeAttribute</code>. This attribute points at the public <code>GetKnownTypes</code> method, which is part of the service. This method simply queries the metadata of the assembly containing all commands. This method uses <a href="https://en.wikipedia.org/wiki/Convention_over_configuration">convention over configuration</a>, since it expects all types in that assembly which name ends with &ldquo;Command&rdquo; to be command messages. However, other ways to retrieve the applicable command types (such as defining them by a common <code>ICommand</code> interface or marking commands with attributes) will do just fine.</p>
 
@@ -135,7 +136,8 @@
     {
         <span style="color:#66d9ef">return</span> container.GetInstance(serviceType);
     }
-}</code></pre></div>
+}
+</code></pre></div>
 
 <p>Not surprisingly, I use the <a href="https://simpleinjector.org">Simple Injector</a> to bootstrap the application; Simple Injector makes batch registering generic types and generic decorators embarrassingly easy. However, any descent DI container will allow you to do this in one way or another. The first call to the <code>Register</code> method iterates through all application assemblies and registers all concrete <code>ICommandHandler&lt;TCommand&gt;</code> implementations that it finds. This of course is just a simple example.</p>
 
@@ -147,7 +149,8 @@
     {
         Bootstrapper.Bootstrap();
     }
-}</code></pre></div>
+}
+</code></pre></div>
 
 <p>With these three pieces in place we have a working WCF service that can accept command messages from a client. If you haven’t already, you can start defining commands just like the following:</p>
 
@@ -155,7 +158,8 @@
 {
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> CustomerId { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
     <span style="color:#66d9ef">public</span> Address NewAddress { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
-}</code></pre></div>
+}
+</code></pre></div>
 
 <p>Notice how this type lacks any WCF <code>DataContractAttribute</code> and <code>DataMemberAttribute</code>. When working with <a href="https://en.wikipedia.org/wiki/Data_Transfer_Object">DTOs</a>, WCF allows you to skip using these attributes, which simply means that WCF will serialize the complete instance, which is exactly what you want. Not only removes this noise from your code, it keeps your commands simple <a href="https://en.wikipedia.org/wiki/POCO">POCOs</a>, free from any technology specific attributes, which is always a good thing.</p>
 
@@ -165,8 +169,8 @@
 
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#a6e22e">[ServiceKnownType(nameof(GetKnownTypes))]</span>
 <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">QueryService</span>
-{<span style="color:#a6e22e">
-</span><span style="color:#a6e22e">    [OperationContract]</span>
+{
+<span style="color:#a6e22e">    [OperationContract]</span>
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">object</span> Execute(<span style="color:#66d9ef">dynamic</span> query)
     {
         Type queryType = query.GetType();
@@ -201,7 +205,7 @@
         GetQueryInterface(type) != <span style="color:#66d9ef">null</span>;
 
     <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> Type GetQueryResultType(Type queryType) =&gt;
-        GetQueryInterface(queryType).GetGenericArguments()<span style="color:#a6e22e">[0]</span>;
+        GetQueryInterface(queryType).GetGenericArguments()[<span style="color:#ae81ff">0</span>];
  
     <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> Type GetQueryInterface(Type type) =&gt; (
         <span style="color:#66d9ef">from</span> interfaceType <span style="color:#66d9ef">in</span> type.GetInterfaces()
@@ -210,15 +214,17 @@
             interfaceType.GetGenericTypeDefinition())
         <span style="color:#66d9ef">select</span> interfaceType)
         .SingleOrDefault();
-}</code></pre></div>
+}
+</code></pre></div>
 
 <p>The structure of this <code>QueryService</code> is similar to what you&rsquo;ve seen with the <code>CommandService</code>. However, because queries return a value, a bit more wiring must be done. When executing queries, however, there is one catch. Because the command service doesn&rsquo;t return any data when processing commands, clients could easily let Visual Studio generate the service contract for them. Query objects, on the other hand, implement an interface that describes the data they return, for instance:</p>
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">GetUnshippedOrdersForCurrentCustomerQuery</span> : IQuery&lt;OrderInfo<span style="color:#a6e22e">[]</span>&gt;
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">GetUnshippedOrdersForCurrentCustomerQuery</span> : IQuery&lt;OrderInfo[]&gt;
 {
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> PageIndex { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; } 
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> PageSize { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
-}</code></pre></div>
+}
+</code></pre></div>
 
 <p>But WCF  doesn&rsquo;t communicate this interface through its WSDL definition and this part of the contract is lost. This problem can be solved by sharing the assembly that contains the query objects between the client and the service. Sharing an assembly between client and server is done by specifying it in the “Reuse types in specified referenced assemblies” option of the <em>Advanced</em> tab when adding the web service reference using Visual Studio’s “Add Service Reference” wizard:</p>
 

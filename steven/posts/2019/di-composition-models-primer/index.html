@@ -153,8 +153,8 @@
 
 
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ShoppingBasketController</span> : Controller
-{<span style="color:#a6e22e">
-</span><span style="color:#a6e22e">    [HttpPost]</span>
+{
+<span style="color:#a6e22e">    [HttpPost]</span>
     <span style="color:#66d9ef">public</span> IActionResult AddItem( <span style="color:#75715e"><annotation>The application’s public API</annotation>
 </span><span style="color:#75715e"></span>        AddShoppingBasketItem viewModel) <span style="color:#75715e"><annotation>Runtime data</annotation>
 </span><span style="color:#75715e"></span>    {
@@ -190,27 +190,27 @@
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> controller =
     <span style="color:#66d9ef">new</span> ShoppingBasketController(
         <b><span style="color:#66d9ef">new</span> ShoppingBasketDbContext()</b>); <span style="color:#75715e"><annotation>Constructor injection</annotation>
-</span><span style="color:#75715e"></span></code></pre></div>
+</span></code></pre></div>
 
 <p>Later, when a web request comes in, the deserialized view model is passed along to the controller’s <code>AddItem</code> method. At that point, however, the controller’s object graph has long since been created.</p>
 
 <p>This way of supplying <code>ShoppingBasketDbContext</code> to the object graph during construction is one model you can use to compose your object graphs, called the <em>Closure Composition Model</em>.</p>
 
-<callout class="DEFINITION">
-	<span class="callout-title">DEFINITION</span>
-	<span class="callout-body"><p>The <strong>Closure Composition Model</strong> composes object graphs that capture runtime data in variables of the graph’s components.</p>
+<p><callout class="DEFINITION">
+    <span class="callout-title">DEFINITION</span>
+    <span class="callout-body">
+The <strong>Closure Composition Model</strong> composes object graphs that capture runtime data in variables of the graph’s components.
 </span>
-</callout>
-
+</callout></p>
 
 <p>An alternative to letting your application components consume these contextual runtime data objects is the <em>Ambient Composition Model</em>. With that model, contextual runtime data is no longer captured in variables inside the object graph, but instead is managed by the <a href="https://mng.bz/K1qZ">Composition Root</a>. Application components requiring such data request it through method calls on provided abstractions.</p>
 
-<callout class="DEFINITION">
-	<span class="callout-title">DEFINITION</span>
-	<span class="callout-body"><p>The <strong>Ambient Composition Model</strong> composes object graphs that do not store runtime data inside captured variables. Instead, runtime data is kept outside the graph and stored as ambient data. This ambient data is managed by the Composition Root and is provided to application components on request, long after those components have been constructed.</p>
+<p><callout class="DEFINITION">
+    <span class="callout-title">DEFINITION</span>
+    <span class="callout-body">
+The <strong>Ambient Composition Model</strong> composes object graphs that do not store runtime data inside captured variables. Instead, runtime data is kept outside the graph and stored as ambient data. This ambient data is managed by the Composition Root and is provided to application components on request, long after those components have been constructed.
 </span>
-</callout>
-
+</callout></p>
 
 <p>This completes this primer on Object Composition models. At this point, much remains to be explained, such has how application components are designed in each model, what exactly <em>ambient data</em> is, and what the pros and cons are of both models. I will go into this in more detail in the following articles, starting with a description of the <a href="/steven/p/ccm/">Closure Composition Model</a>, and continuing with a description of the <a href="/steven/p/acm/">Ambient Composition Model</a>.</p>
 

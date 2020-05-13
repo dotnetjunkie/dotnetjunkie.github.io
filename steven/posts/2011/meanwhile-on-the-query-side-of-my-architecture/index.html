@@ -72,12 +72,13 @@
 
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> IUserQueries
 {
-    User<span style="color:#a6e22e">[]</span> FindUsersBySearchText(<span style="color:#66d9ef">string</span> searchText, <span style="color:#66d9ef">bool</span> includeInactiveUsers);
-    User<span style="color:#a6e22e">[]</span> GetUsersByRoles(<span style="color:#66d9ef">string</span><span style="color:#a6e22e">[]</span> roles);
-    UserInfo<span style="color:#a6e22e">[]</span> GetHighUsageUsers(<span style="color:#66d9ef">int</span> reqsPerDayThreshold);
+    User[] FindUsersBySearchText(<span style="color:#66d9ef">string</span> searchText, <span style="color:#66d9ef">bool</span> includeInactiveUsers);
+    User[] GetUsersByRoles(<span style="color:#66d9ef">string</span>[] roles);
+    UserInfo[] GetHighUsageUsers(<span style="color:#66d9ef">int</span> reqsPerDayThreshold);
 
     <span style="color:#75715e">// More methods here
-</span><span style="color:#75715e"></span>}</code></pre></div>
+</span><span style="color:#75715e"></span>}
+</code></pre></div>
 
 <p>There is a variation of this pattern that a lot of developers use today in their applications. They mix this query class with the <a href="https://martinfowler.com/eaaCatalog/repository.html">repository pattern</a>. The repository pattern is used for <a href="https://en.wikipedia.org/wiki/Create,_read,_update_and_delete">CRUD</a> operations. The following code may look familiar:</p>
 
@@ -92,13 +93,14 @@
 <span style="color:#75715e">// Custom entity-specific repository with query methods (awkward)
 </span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> IUserRepository : IRepository&lt;User&gt;
 {
-    User<span style="color:#a6e22e">[]</span> FindUsersBySearchText(
+    User[] FindUsersBySearchText(
         <span style="color:#66d9ef">string</span> searchText, <span style="color:#66d9ef">bool</span> includeInactiveUsers);
-    User<span style="color:#a6e22e">[]</span> GetUsersByRoles(<span style="color:#66d9ef">string</span><span style="color:#a6e22e">[]</span> roles);
-    UserInfo<span style="color:#a6e22e">[]</span> GetHighUsageUsers(<span style="color:#66d9ef">int</span> reqsPerDayThreshold);
+    User[] GetUsersByRoles(<span style="color:#66d9ef">string</span>[] roles);
+    UserInfo[] GetHighUsageUsers(<span style="color:#66d9ef">int</span> reqsPerDayThreshold);
 
     <span style="color:#75715e">// More methods here
-</span><span style="color:#75715e"></span>}</code></pre></div>
+</span><span style="color:#75715e"></span>}
+</code></pre></div>
 
 <p>Alongside the <code>IUserQueries</code> interface, my application contained interfaces such as        <code>IPatientInfoQueries</code>, <code>ISurgeryQueries</code>, and countless others, each with its own set of methods and its own set of parameters and return types. Every interface was different, which made adding <a href="https://en.wikipedia.org/wiki/Cross-cutting_concern">cross-cutting concerns</a>, such as logging, caching, profiling, security, etc very difficult. I was missing the uniformity in the design that I had with my command handlers. The query classes were just a bunch of random methods, often grouped around one concept or one entity. No matter how hard I tried, it would end up looking messy and each time a query method was added both the interface and the implementation would need to be changed.</p>
 
@@ -106,20 +108,20 @@
 
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FakeFailingUserQueries</span> : IUserQueries
 {
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">virtual</span> User<span style="color:#a6e22e">[]</span> FindUsersBySearchText(
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">virtual</span> User[] FindUsersBySearchText(
         <span style="color:#66d9ef">string</span> searchText, <span style="color:#66d9ef">bool</span> includeInactive)
     {
         Assert.Fail(<span style="color:#e6db74">&#34;Call to this method was not expected.&#34;</span>);
         <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span>;
     }
  
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">virtual</span> User<span style="color:#a6e22e">[]</span> GetUsersByRoles(<span style="color:#66d9ef">string</span><span style="color:#a6e22e">[]</span> roles)
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">virtual</span> User[] GetUsersByRoles(<span style="color:#66d9ef">string</span>[] roles)
     {
         Assert.Fail(<span style="color:#e6db74">&#34;Call to this method was not expected.&#34;</span>);
         <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span>;
     }
         
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">virtual</span> UserInfo<span style="color:#a6e22e">[]</span> GetHighUsageUsers(
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">virtual</span> UserInfo[] GetHighUsageUsers(
         <span style="color:#66d9ef">int</span> requestsPerDayThreshold)
     {
         Assert.Fail(<span style="color:#e6db74">&#34;Call to this method was not expected.&#34;</span>);
@@ -127,21 +129,23 @@
     }
 
     <span style="color:#75715e">// More methods here
-</span><span style="color:#75715e"></span>}</code></pre></div>
+</span><span style="color:#75715e"></span>}
+</code></pre></div>
 
 <p>For each test I would inherit from this base class and override the relevant the method:</p>
 
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FakeUserServicesUserQueries</span> : FakeFailingUserQueries
 {
-    <span style="color:#66d9ef">public</span> User<span style="color:#a6e22e">[]</span> UsersToReturn { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span><span style="color:#a6e22e">[]</span> CalledRoles { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">set</span>; }
+    <span style="color:#66d9ef">public</span> User[] UsersToReturn { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span>[] CalledRoles { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">set</span>; }
  
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> User<span style="color:#a6e22e">[]</span> GetUsersByRoles(<span style="color:#66d9ef">string</span><span style="color:#a6e22e">[]</span> roles)
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> User[] GetUsersByRoles(<span style="color:#66d9ef">string</span>[] roles)
     {
         <span style="color:#66d9ef">this</span>.CalledRoles = roles;
         <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>.UsersToReturn;
     }
-}</code></pre></div>
+}
+</code></pre></div>
 
 <p>All this meant I could leave all the other methods fail (as they were not expected to be called) which saved me from having to write too much code and reduced the chance of errors in my tests. But it still led to an explosion of test classes in my test projects.</p>
 
@@ -167,7 +171,8 @@
     <span style="color:#66d9ef">where</span> TQuery : IQuery&lt;TResult&gt;
 {
     TResult Handle(TQuery query);
-}</code></pre></div>
+}
+</code></pre></div>
 
 <p>The use of such  <code>IQuery&lt;TResult&gt;</code> interface is something that <a href="http://www.udidahan.com/">Udi Dahan</a> <a href="http://www.udidahan.com/2007/03/28/query-objects-vs-methods-on-a-repository/">mentioned back in 2007</a>. So in fact this concept isn&rsquo;t new at all. Unfortunately, Udi doesn&rsquo;t go into much details in his article.</p>
 
@@ -177,11 +182,12 @@
 
 <p>Using the previously defined interface we can define a query message:</p>
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FindUsersBySearchTextQuery</span> : IQuery&lt;User<span style="color:#a6e22e">[]</span>&gt;
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FindUsersBySearchTextQuery</span> : IQuery&lt;User[]&gt;
 {
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> SearchText { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">bool</span> IncludeInactiveUsers { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
-}</code></pre></div>
+}
+</code></pre></div>
 
 <p>This class defines a query operation with two parameters that returns an array of User objects. Just like a command, this query message class is a <a href="https://refactoring.com/catalog/introduceParameterObject.html">Parameter Object</a>.</p>
 
@@ -190,7 +196,7 @@
 <p>The class that handles this message can be defined as follows:</p>
 
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FindUsersBySearchTextQueryHandler</span>
-    : IQueryHandler&lt;FindUsersBySearchTextQuery, User<span style="color:#a6e22e">[]</span>&gt;
+    : IQueryHandler&lt;FindUsersBySearchTextQuery, User[]&gt;
 {
     <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> NorthwindUnitOfWork db;
  
@@ -199,7 +205,7 @@
         <span style="color:#66d9ef">this</span>.db = db;
     }
  
-    <span style="color:#66d9ef">public</span> User<span style="color:#a6e22e">[]</span> Handle(FindUsersBySearchTextQuery query)
+    <span style="color:#66d9ef">public</span> User[] Handle(FindUsersBySearchTextQuery query)
     {
         <span style="color:#66d9ef">return</span> (
             <span style="color:#66d9ef">from</span> user <span style="color:#66d9ef">in</span> <span style="color:#66d9ef">this</span>.db.Users
@@ -207,16 +213,17 @@
             <span style="color:#66d9ef">select</span> user)
             .ToArray();
     }
-}</code></pre></div>
+}
+</code></pre></div>
 
 <p>As we’ve seen with the command handlers, we can now let consumers depend on the generic <code>IQueryHandler</code> interface:</p>
 
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">UserController</span> : Controller
 {
-    IQueryHandler&lt;FindUsersBySearchTextQuery, User<span style="color:#a6e22e">[]</span>&gt; handler;
+    IQueryHandler&lt;FindUsersBySearchTextQuery, User[]&gt; handler;
  
     <span style="color:#66d9ef">public</span> UserController(
-        IQueryHandler&lt;FindUsersBySearchTextQuery, User<span style="color:#a6e22e">[]</span>&gt; hndler)
+        IQueryHandler&lt;FindUsersBySearchTextQuery, User[]&gt; hndler)
     {
         <span style="color:#66d9ef">this</span>.handler = handler;
     }
@@ -229,11 +236,12 @@
             IncludeInactiveUsers = <span style="color:#66d9ef">false</span>
         };
  
-        User<span style="color:#a6e22e">[]</span> users = <span style="color:#66d9ef">this</span>.handler.Handle(query);
+        User[] users = <span style="color:#66d9ef">this</span>.handler.Handle(query);
 
         <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>.View(users);
     }
-}</code></pre></div>
+}
+</code></pre></div>
 
 <p>This model gives us a lot of flexibility because we can now decide what to inject into the <code>UserController</code>. As we’ve seen in the previous article, we can inject a completely different implementation, or one that wraps the real implementation, without having to make any changes to the <code>UserController</code> (and all other consumers of that interface).</p>
 
@@ -260,7 +268,8 @@
         <span style="color:#66d9ef">this</span>.getUsers = getUsers;
         <span style="color:#66d9ef">this</span>.getHighUsage = getHighUsage;
     }
-}</code></pre></div>
+}
+</code></pre></div>
 
 <p>Wow!! That’s a lot of code for a class that only has three different queries that it needs to execute. This is in part due to the verbosity of the C# language. A workaround (besides switching to another language) would be to use a T4 template that generates the constructor in a new partial class. This would leave us with just the three lines defining the private fields. The generic typing would still be a bit verbose, but with C# there&rsquo;s nothing much we can do about that.</p>
 
@@ -269,7 +278,8 @@
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> IQueryProcessor
 {
     TResult Process&lt;TResult&gt;(IQuery&lt;TResult&gt; query);
-}</code></pre></div>
+}
+</code></pre></div>
 
 <p>The <code>IQueryProcessor</code> is a non-generic interface with one generic method. As you can see in the interface definition, the <code>IQueryProcessor</code> depends on the <code>IQuery&lt;TResult&gt;</code> interface. This allows us to have compile time support in our consumers that depend on the <code>IQueryProcessor</code>. Let’s rewrite the <code>UserController</code> to use the new <code>IQueryProcessor</code>:</p>
 
@@ -291,11 +301,12 @@
  
         <span style="color:#75715e">// Note how we omit the generic type argument,
 </span><span style="color:#75715e"></span>        <span style="color:#75715e">// but still have type safety.
-</span><span style="color:#75715e"></span>        User<span style="color:#a6e22e">[]</span> users = <span style="color:#66d9ef">this</span>.queries.Process(query);
+</span><span style="color:#75715e"></span>        User[] users = <span style="color:#66d9ef">this</span>.queries.Process(query);
 
         <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>.View(users);
     }
-}</code></pre></div>
+}
+</code></pre></div>
 
 <p>The <code>UserController</code> now depends on a <code>IQueryProcessor</code> that can handle all of our queries. The <code>UserController</code>’s <code>SearchUsers</code> method calls the <code>IQueryProcessor.Process</code> method passing in an initialized query object. Because the <code>FindUsersBySearchTextQuery</code> implements the <code>IQuery&lt;User[]&gt;</code> interface, we can pass it to the generic <code>Execute&lt;TResult&gt;(IQuery&lt;TResult&gt; query)</code> method. Thanks to <a href="https://msdn.microsoft.com/en-us/library/twcad0zb%28v=vs.80%29.aspx">C# type inference</a>, the compiler is able to determine the generic type and this saves us having to explicitly state the type. The return type of the Process method is also known. So if we were to change the <code>FindUsersBySearchTextQuery</code> to implement a different interface (say <code>IQuery&lt;IQueryable&lt;User&gt;&gt;</code>) the <code>UserController</code> will no longer compile instead of miserably failing at runtime.</p>
 
@@ -308,8 +319,8 @@
     <span style="color:#66d9ef">public</span> QueryProcessor(Container container)
     {
         <span style="color:#66d9ef">this</span>.container = container;
-    }<span style="color:#a6e22e">
-</span><span style="color:#a6e22e">
+    }
+<span style="color:#a6e22e">
 </span><span style="color:#a6e22e">    [DebuggerStepThrough]</span>
     <span style="color:#66d9ef">public</span> TResult Process&lt;TResult&gt;(IQuery&lt;TResult&gt; query)
     {
@@ -320,7 +331,8 @@
 
         <span style="color:#66d9ef">return</span> handler.Handle((<span style="color:#66d9ef">dynamic</span>)query);
     }
-}</code></pre></div>
+}
+</code></pre></div>
 
 <p>he <code>QueryProcessor</code> class constructs a specific <code>IQueryHandler&lt;TQuery, TResult&gt;</code> type based on the type of the supplied query instance. This type is used to ask the supplied container class to get an instance of that type. Unfortunately we need to call the <code>Handle</code> method using reflection (by using the C# 4.0 <code>dymamic</code> keyword in this case), because at this point it is impossible to cast the handler instance, as the generic <code>TQuery</code> argument is not available at compile time. However, unless the <code>Handle</code> method is renamed or gets other arguments, this call will never fail and if you want to, it is very easy to write a unit test for this class. Using reflection will give a slight drop, but is nothing to really worry about (especially when you&rsquo;re using <a href="https://simpleinjector.org">Simple Injector</a> as your DI library, because it is <a href="http://www.palmmedia.de/Blog/2011/8/30/ioc-container-benchmark-performance-comparison">blazingly fast</a>).</p>
 
@@ -330,7 +342,8 @@
 {
     TResult Process&lt;TQuery, TResult&gt;(TQuery query)
         <span style="color:#66d9ef">where</span> TQuery : IQuery&lt;TResult&gt;;
-}</code></pre></div>
+}
+</code></pre></div>
 
 <p>This version of the interface solves the problem of having to do dynamic typing in the <code>QueryProcessor</code> implementation completely, but sadly the C# compiler isn’t ‘smart’ enough to find out which types are needed (<a href="https://blogs.msdn.com/b/ericlippert/archive/2009/12/10/constraints-are-not-part-of-the-signature.aspx">damn you Anders</a>!), which forces us to completely write out the call to <code>Process</code>, including both generic arguments. This gets really ugly in the code and is therefore not advisable. I was a bit amazed by this, because I was under the assumption that the C# compiler could infer the types. (However, the more I think about it, the more it makes sense that the C# compiler doesn&rsquo;t try to do so.)</p>
 
@@ -348,22 +361,24 @@
 
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">container.Register(
     <span style="color:#66d9ef">typeof</span>(IQueryHandler&lt;,&gt;),
-    <span style="color:#66d9ef">typeof</span>(IQueryHandler&lt;,&gt;).Assembly);</code></pre></div>
+    <span style="color:#66d9ef">typeof</span>(IQueryHandler&lt;,&gt;).Assembly);
+</code></pre></div>
 
 <p>This code saves us from having to change the DI configuration any time we add a new query handler to the system. They will all be picked up automatically.</p>
 
 <p>With this design in place we can add cross-cutting concerns such as logging, audit trail, etc. Or let’s say you want to decorate properties of the query objects with <a href="https://www.asp.net/mvc/tutorials/older-versions/models-%28data%29/validation-with-the-data-annotation-validators-cs">Data Annotations</a> attributes, to enable validation:</p>
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FindUsersBySearchTextQuery</span> : IQuery&lt;User<span style="color:#a6e22e">[]</span>&gt;
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FindUsersBySearchTextQuery</span> : IQuery&lt;User[]&gt;
 {
     <span style="color:#75715e">// Required and StringLength are attributes from the
 </span><span style="color:#75715e"></span>    <span style="color:#75715e">// System.ComponentModel.DataAnnotations assembly.
-</span><span style="color:#75715e"></span><span style="color:#a6e22e">    [Required]
-</span><span style="color:#a6e22e">    [StringLength(1)]</span>
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">    [Required]</span>
+<span style="color:#a6e22e">    [StringLength(1)]</span>
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> SearchText { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
  
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">bool</span> IncludeInactiveUsers { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
-}</code></pre></div>
+}
+</code></pre></div>
 
 <p>Because we modeled our query handlers around a single <code>IQueryHandler&lt;TQuery, TResult&gt;</code> interface, we can define a simple decorator that validates all query messages before they are passed to their handlers:</p>
 
@@ -388,20 +403,23 @@
 
         <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>.decorated.Handle(query);
     }
-}</code></pre></div>
+}
+</code></pre></div>
 
 <p>All without changing any of the existing code in our system beyond adding the following new line of code in the <a href="https://freecontent.manning.com/dependency-injection-in-net-2nd-edition-understanding-the-composition-root/">Composition Root</a>:</p>
 
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">container.RegisterDecorator(
     <span style="color:#66d9ef">typeof</span>(IQueryHandler&lt;,&gt;),
-    <span style="color:#66d9ef">typeof</span>(ValidationQueryHandlerDecorator&lt;,&gt;));</code></pre></div>
+    <span style="color:#66d9ef">typeof</span>(ValidationQueryHandlerDecorator&lt;,&gt;));
+</code></pre></div>
 
 <p>If you&rsquo;re concerned about performance and worry that this would add too much overhead by wrapping query handlers that don&rsquo;t need validation with a decorator, a DI container such as Simple Injector allows you to easily configure a conditional decorator:</p>
 
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">container.RegisterDecorator(
     <span style="color:#66d9ef">typeof</span>(IQueryHandler&lt;,&gt;),
     <span style="color:#66d9ef">typeof</span>(ValidationQueryHandlerDecorator&lt;,&gt;),
-    context =&gt; ShouldQueryHandlerBeValidated(context.ServiceType));</code></pre></div>
+    context =&gt; ShouldQueryHandlerBeValidated(context.ServiceType));
+</code></pre></div>
 
 <p>The applied predicate is evaluated just once per closed generic <code>IQueryHandler&lt;TQuery, TResult&gt;</code> type, so there is no performance loss in registering such a conditional decorator (or at least, with Simple Injector there isn&rsquo;t). As I said, your mileage may vary when using other DI libraries.</p>
 
@@ -423,7 +441,8 @@
         <span style="color:#66d9ef">where</span> order.User.Id == currentUserId
         <span style="color:#66d9ef">where</span> order.CreateDate &gt;= currentTime.AddDays(-<span style="color:#ae81ff">30</span>)
         <span style="color:#66d9ef">select</span> order;
-}</code></pre></div>
+}
+</code></pre></div>
 
 <p>This query method is composed of other queries. Composing queries out of other queries is a great way to improve modularity and manage the complexity of the system. But still there is something smelly about this code. Personally, I find the following example easier to read:</p>
 
@@ -437,7 +456,8 @@
         <span style="color:#66d9ef">where</span> order.User.Id == <span style="color:#66d9ef">this</span>.userContext.UserId
         <span style="color:#66d9ef">where</span> order.CreateDate &gt;= <span style="color:#66d9ef">this</span>.timeProvider.Now.AddDays(-<span style="color:#ae81ff">30</span>)
         <span style="color:#66d9ef">select</span> order;
-}</code></pre></div>
+}
+</code></pre></div>
 
 <p>The previous sub queries are in this version replaced with the <code>IUserContext</code> and <code>ITimeProvider</code> services. Because of this, the method is now more concise and compact.</p>
 

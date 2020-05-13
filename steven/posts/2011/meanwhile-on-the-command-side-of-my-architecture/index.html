@@ -76,7 +76,8 @@
     NewAddress = address
 };
 
-command.Execute();</code></pre></div>
+command.Execute();
+</code></pre></div>
 
 <p>I tried to solve this problem by injecting the command into the constructor of a consumer (constructor injection), but this was awkward to say the least. It remained the responsibility of the consumer to set all the properties of the object that was passed in and didn&rsquo;t really solve the problem of abstracting away the command elegantly. To prevent the command&rsquo;s logic from being executed, I had to define a fake version of each command for testing and it did nothing to reduce the large and complicated base class.</p>
 
@@ -86,7 +87,8 @@ command.Execute();</code></pre></div>
 {
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> CustomerId { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
     <span style="color:#66d9ef">public</span> Address NewAddress { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
-}</code></pre></div>
+}
+</code></pre></div>
 
 <p>The logic gets its own separate class; my standard naming convention for these classes is to suffix them with &lsquo;CommandHandler&rsquo;:</p>
 
@@ -95,8 +97,8 @@ command.Execute();</code></pre></div>
     <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> UnitOfWork db;
 
     <span style="color:#66d9ef">public</span> MoveCustomerCommandHandler(
-        UnitOfWork db,<span style="color:#a6e22e">
-</span><span style="color:#a6e22e">        [Other dependencies here]</span>)
+        UnitOfWork db,
+<span style="color:#a6e22e">        [Other dependencies here]</span>)
     {
         <span style="color:#66d9ef">this</span>.db = db;
     }
@@ -105,7 +107,8 @@ command.Execute();</code></pre></div>
     {
         <span style="color:#75715e">// TODO: Logic here
 </span><span style="color:#75715e"></span>    }
-}</code></pre></div>
+}
+</code></pre></div>
 
 <p>This design gives us a lot; a command handler can be injected into a consumer, while the consumer can simply new up the related command object. Because the command only contains data, there no longer a reason to fake the command during testing. Here’s an example of how a consumer can use that command and command handler:</p>
 
@@ -128,7 +131,8 @@ command.Execute();</code></pre></div>
  
         <span style="color:#66d9ef">this</span>.handler.Handle(command);
     }
-}</code></pre></div>
+}
+</code></pre></div>
 
 <p>There is still a problem with this design. Although every handler class has a single (public) method (and therefore adheres the <a href="https://en.wikipedia.org/wiki/Interface_segregation_principle">Interface Segregation Principle</a>), all handlers define their own interface (there is no common interface). This makes it hard to extend the command handlers with new features and cross-cutting concerns. For example, we would like to measure the time it takes to execute every command and log this information to the database. How can we do this? In the past we would either change each and every command handler, or move the logic into a base class. Moving this feature into the base class is not ideal as the base class will soon contain lots of these common features, and would soon grow out of control (which I have seen happening). Besides, this would make it hard to test derived types and enable/disable such behavior for certain types (or instances) of command handlers because it would involve adding conditional logic into the base class, making it even more complicated!</p>
 
@@ -137,7 +141,8 @@ command.Execute();</code></pre></div>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> ICommandHandler&lt;TCommand&gt;
 {
     <span style="color:#66d9ef">void</span> Handle(TCommand command);
-}</code></pre></div>
+}
+</code></pre></div>
 
 <p>Using this interface, the <code>MoveCustomerCommandHandler</code> would now look like this:</p>
 
@@ -148,8 +153,8 @@ command.Execute();</code></pre></div>
     <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> UnitOfWork db;
 
     <span style="color:#66d9ef">public</span> MoveCustomerCommandHandler(
-        UnitOfWork db,<span style="color:#a6e22e">
-</span><span style="color:#a6e22e">        [Other dependencies here]</span>)
+        UnitOfWork db,
+<span style="color:#a6e22e">        [Other dependencies here]</span>)
     {
         <span style="color:#66d9ef">this</span>.db = db;
     }
@@ -158,7 +163,8 @@ command.Execute();</code></pre></div>
     {
         <span style="color:#75715e">// TODO: Logic here
 </span><span style="color:#75715e"></span>    }
-}</code></pre></div>
+}
+</code></pre></div>
 
 <p>One important benefit of this interface is that it allows the consumers to depend on the new abstraction, rather than a concrete implementation of the command handler:</p>
 
@@ -183,7 +189,8 @@ command.Execute();</code></pre></div>
  
         <span style="color:#66d9ef">this</span>.handler.Handle(command);
     }
-}</code></pre></div>
+}
+</code></pre></div>
 
 <p>What does adding an interface give us? Well frankly, a lot! As nothing depends directly on any implementation but instead depends on an interface, we can now replace the original command handlers with any class that implements the new interface. Ignoring, for now the usual argument of testability, look at this generic class:</p>
 
@@ -207,7 +214,8 @@ command.Execute();</code></pre></div>
             scope.Complete();
         }
     }
-}</code></pre></div>
+}
+</code></pre></div>
 
 <p>This class wraps an <code>ICommandHandler&lt;TCommand&gt;</code> instance (by accepting an instance of the same interface in its constructor), but at the same time it also implements the same <code>ICommandHandler&lt;TCommand&gt;</code> interface. It is an implementation of the <a href="https://en.wikipedia.org/wiki/Decorator_pattern">Decorator pattern</a>. This very simple class allows us to add transaction support to all of the command handlers.</p>
 
@@ -222,7 +230,8 @@ command.Execute();</code></pre></div>
     );
  
 <span style="color:#75715e">// Inject the handler into the controller’s constructor.
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> controller = <span style="color:#66d9ef">new</span> CustomerController(handler);</code></pre></div>
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> controller = <span style="color:#66d9ef">new</span> CustomerController(handler);
+</code></pre></div>
 
 <p>This single decorator class (containing just 5 lines of code) can be reused for all of the command handlers in the system.</p>
 
@@ -270,7 +279,8 @@ command.Execute();</code></pre></div>
                 ? <span style="color:#66d9ef">false</span>
                 : IsDeadlockException(ex.InnerException);
     }
-}</code></pre></div>
+}
+</code></pre></div>
 
 <p>This class should speak for itself—although it contains more code than the previous example, it is still only 14 lines of code. In the event of a database deadlock, it will retry the command 5 times before it leaves the exception bubble up through the call stack. As before we can use this class by wrapping the previous decorator, as follows:</p>
 
@@ -284,7 +294,8 @@ command.Execute();</code></pre></div>
         )
     );
 
-<span style="color:#66d9ef">var</span> controller = <span style="color:#66d9ef">new</span> CustomerController(handler);</code></pre></div>
+<span style="color:#66d9ef">var</span> controller = <span style="color:#66d9ef">new</span> CustomerController(handler);
+</code></pre></div>
 
 <p>By the way, did you notice how both decorators are completely focused? They each have just a single responsibility. This makes them easy to understand, easy to change—this is what the <a href="https://en.wikipedia.org/wiki/Single_responsibility_principle">Single Responsibility Principle</a> is about.</p>
 
@@ -348,7 +359,8 @@ command.Execute();</code></pre></div>
 <span style="color:#75715e">// Decorates all handlers with an authorization decorator.
 </span><span style="color:#75715e"></span>container.RegisterDecorator(
     <span style="color:#66d9ef">typeof</span>(ICommandHandler&lt;&gt;),
-    <span style="color:#66d9ef">typeof</span>(AuthorizationCommandHandlerDecorator&lt;&gt;));</code></pre></div>
+    <span style="color:#66d9ef">typeof</span>(AuthorizationCommandHandlerDecorator&lt;&gt;));
+</code></pre></div>
 
 <p>No matter how many command handlers you add to the system, these few lines of code won’t change, which also helps to underline the true power of a DI library. Once your application is built applying the SOLID principles, a good DI library will ensure that the startup path of your application remains maintainable.</p>
 

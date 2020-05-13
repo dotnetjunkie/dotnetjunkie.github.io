@@ -83,7 +83,7 @@
 
 		
 
-		<h3 id="to-be-able-to-achieve-anything-useful-your-application-code-makes-use-of-runtime-data-that-comes-in-many-shapes-and-forms-providing-access-to-that-data-can-be-accomplished-in-many-ways-the-way-you-provide-object-graphs-with-runtime-data-can-affect-the-way-you-compose-them-using-dependency-injection-there-are-two-competing-models-to-choose-from-this-article-describes-the-closure-composition-model-it-is-the-second-of-a-fivepart-series-on-dependency-injection-composition-models">To be able to achieve anything useful, your application code makes use of runtime data that comes in many shapes and forms. Providing access to that data can be accomplished in many ways. The way you provide object graphs with runtime data can affect the way you compose them using Dependency Injection. There are two competing models to choose from. This article describes the Closure Composition Model. It is the second of a five-part series on Dependency Injection composition models.</h3>
+		<h3 id="to-be-able-to-achieve-anything-useful-your-application-code-makes-use-of-runtime-data-that-comes-in-many-shapes-and-forms-providing-access-to-that-data-can-be-accomplished-in-many-ways-the-way-you-provide-object-graphs-with-runtime-data-can-affect-the-way-you-compose-them-using-dependency-injection-there-are-two-competing-models-to-choose-from-this-article-describes-the-closure-composition-model-it-is-the-second-of-a-five-part-series-on-dependency-injection-composition-models">To be able to achieve anything useful, your application code makes use of runtime data that comes in many shapes and forms. Providing access to that data can be accomplished in many ways. The way you provide object graphs with runtime data can affect the way you compose them using Dependency Injection. There are two competing models to choose from. This article describes the Closure Composition Model. It is the second of a five-part series on Dependency Injection composition models.</h3>
 <p>Posts in this series:</p>
 <ul>
 <li><a href="/steven/p/compositionmodels">DI Composition Models: A Primer</a></li>
@@ -92,7 +92,7 @@
 <li><a href="/steven/p/cmcompare">DI Composition Models: A Comparison</a></li>
 <li><a href="/steven/p/singleton">In Praise of the Singleton Object Graph</a></li>
 </ul>
-<p>The goal of this article is to objectively describe the Closure Composition Model (CCM) by providing you with multiple examples, a definition, and its consequences. In the fourth part, I’ll compare the Closure Composition Model with the Ambient Composition Model, which I'll go into in the next article.</p>
+<p>The goal of this article is to objectively describe the Closure Composition Model (CCM) by providing you with multiple examples, a definition, and its consequences. In the fourth part, I’ll compare the Closure Composition Model with the Ambient Composition Model, which I&rsquo;ll go into in the next article.</p>
 <p><a href="/steven/p/compositionmodels/">The primer article</a> introduced a <code>ShoppingBasketController</code> for a hypothetical web shop. The next listing shows this controller again&mdash;now with a constructor, while folding its action method:</p>
 
 
@@ -152,7 +152,7 @@ The <em>Closure Composition Model</em> composes object graphs that capture runti
          alt="The essence of the Closure Composition Model" width="100%"/> 
 </figure>
 
-<p>You are likely familiar with this model on a conceptual level, as it is the prevalent practice. If you've been practicing Dependency Injection for some time, you are almost certainly acquainted with injecting <code>DbContext</code>s and other runtime values directly into constructors. This means you are applying the CCM. Perhaps you haven’t even considered there to be alternatives to this ubiquitous model. Even in <a href="https://mng.bz/BYNl">my book</a>, you’ll find this model to be ever present.</p>
+<p>You are likely familiar with this model on a conceptual level, as it is the prevalent practice. If you&rsquo;ve been practicing Dependency Injection for some time, you are almost certainly acquainted with injecting <code>DbContext</code>s and other runtime values directly into constructors. This means you are applying the CCM. Perhaps you haven’t even considered there to be alternatives to this ubiquitous model. Even in <a href="https://mng.bz/BYNl">my book</a>, you’ll find this model to be ever present.</p>
 <p>The following sequence diagram shows the basic flow of data using the CCM.</p>
 <figure>
     <img src="/steven/images/compositionmodels/cmmflow.svg"
@@ -190,7 +190,7 @@ In the context of Dependency Injection, a _Lifestyle_ is a formalized way of des
 A <em>Captive Dependency</em> is a dependency that’s inadvertently kept alive for too long because its consumer was given a lifetime that exceeds the dependency’s expected lifetime. [§8.4.1]
 </span>
 </callout></p>
-<p>In the previous example, <code>DbContext</code> is supplied to the object graph during construction&mdash;an example of the CCM. The CCM infers that even stateless components should <em>not</em> be kept alive for the application's lifetime, as it would keep their stateful dependencies alive.</p>
+<p>In the previous example, <code>DbContext</code> is supplied to the object graph during construction&mdash;an example of the CCM. The CCM infers that even stateless components should <em>not</em> be kept alive for the application&rsquo;s lifetime, as it would keep their stateful dependencies alive.</p>
 <h2 id="providing-a-closure-graph-with-external-runtime-data">Providing a closure graph with external runtime data</h2>
 <p>When you’re using a DI Container to compose your application’s object graphs, a <code>DbContext</code> can be easily injected into a class’s constructor. That’s because a <code>DbContext</code> itself does not depend on externally provided runtime data. The domain objects it maintains are created by the <code>DbContext</code> itself. Although it depends on a connection string, that string won’t change during the lifetime of the application, making it a (fixed) configuration value rather than a runtime value. Registering the <code>DbContext</code> using such a fixed value is rather straightforward, as shown in the following example, which uses <a href="https://simpleinjector.org">Simple Injector</a>:</p>
 

@@ -54,7 +54,7 @@
 		
 
 		<h3 id="this-article-describes-how-to-create-and-configure-a-custom-pagehandlerfactory-class-that-enables-automatic-constructor-injection-for-systemwebuipage-classes-this-keeps-your-application-design-clean-and-allows-you-to-keep-the-applications-dependency-to-the-ioc-library-to-a-minimum">This article describes how to create and configure a custom PageHandlerFactory class that enables automatic constructor injection for System.Web.UI.Page classes. This keeps your application design clean and allows you to keep the application’s dependency to the IoC library to a minimum.</h3>
-<h4 id="important-since-the-introduction-of-web-forms-v472-there-is-now-better-support-for-di-that-makes-this-article-outdated"><strong>IMPORTANT</strong>: Since the introduction of Web Forms v4.7.2, there is now better support for DI. That makes this article out-dated.</h4>
+<h4 id="important-since-the-introduction-of-web-forms-v472-there-is-now-better-support-for-di-that-makes-this-article-out-dated"><strong>IMPORTANT</strong>: Since the introduction of Web Forms v4.7.2, there is now better support for DI. That makes this article out-dated.</h4>
 <p>When working with IoC frameworks, one should always try to minimize the amount of application code that takes a dependency on that framework. In an ideal world, there would only be a single place in the application were the container is queried for dependencies. ASP.NET Web Forms however, was never designed with these concepts in mind. It therefore is tempting to directly request for dependencies in the Page classes instead of looking for a workaround. This is what a Page could look like without such a workaround:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">partial</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">_Default</span> : System.Web.UI.Page
 {
@@ -68,7 +68,7 @@
 </code></pre></div>
 <p>While this doesn’t look that bad, it creates a dependency on an particular implementation and even when your calling an abstraction (as I do with the Common Service Locator in the example) you might want to prevent this, because you’ve still got a dependency and a bit of plumbing in each and every page.</p>
 <p>The way to intercept the creation of Page types in ASP.NET Web Forms, is by replacing the default PageHandlerFactory implementation. While some think that automatic constructor injection is not possible with Web Forms, I will show you otherwise.</p>
-<p>The code below shows my CommonServiceLocatorPageHandlerFactory. This is a PageHandlerFactory that uses automatic constructor injection to create new Page types by using the Common Service Locator (CSL) interface. I deliberately use the CSL for this, because my Simple Service Locator library depends on that interface. If you're not using the CSL, changing the code to work with your IoC library is can be done by changing a single line, as you will see below.</p>
+<p>The code below shows my CommonServiceLocatorPageHandlerFactory. This is a PageHandlerFactory that uses automatic constructor injection to create new Page types by using the Common Service Locator (CSL) interface. I deliberately use the CSL for this, because my Simple Service Locator library depends on that interface. If you&rsquo;re not using the CSL, changing the code to work with your IoC library is can be done by changing a single line, as you will see below.</p>
 <p>When using this custom PageHandlerFactory the previously shown Page class can be changed to the following:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">partial</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">_Default</span> : System.Web.UI.Page
 {
@@ -87,15 +87,15 @@
 <p>Please note that the page must contain the default constructor. The code compilation model that ASP.NET uses behind the covers, creates a new type based on the defined _Default type. ASP.NET does this to allow the creation of the control hierarchy as it is defined in the markup. Because of this inheriting strategy, every Page class in your application must have a default constructor, although it doesn’t have to be public.</p>
 <p>Registration of the CommonServiceLocatorPageHandlerFactory can be done in the web.config in the following way:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34;?&gt;</span>
-<span style="color:#f92672">&lt;configuration</span><span style="color:#f92672">&gt;</span>
-  <span style="color:#f92672">&lt;system.web</span><span style="color:#f92672">&gt;</span>
-    <span style="color:#f92672">&lt;httpHandlers</span><span style="color:#f92672">&gt;</span>
+<span style="color:#f92672">&lt;configuration&gt;</span>
+  <span style="color:#f92672">&lt;system.web&gt;</span>
+    <span style="color:#f92672">&lt;httpHandlers&gt;</span>
       <span style="color:#f92672">&lt;add</span> <span style="color:#a6e22e">verb=</span><span style="color:#e6db74">&#34;*&#34;</span> <span style="color:#a6e22e">path=</span><span style="color:#e6db74">&#34;*.aspx&#34;</span>
         <span style="color:#a6e22e">type=</span><span style="color:#e6db74">&#34;CSL.CommonServiceLocatorPageHandlerFactory, CSL&#34;</span><span style="color:#f92672">/&gt;</span>
     <span style="color:#f92672">&lt;/httpHandlers&gt;</span>
   <span style="color:#f92672">&lt;/system.web&gt;</span>
-  <span style="color:#f92672">&lt;system.webServer</span><span style="color:#f92672">&gt;</span>
-    <span style="color:#f92672">&lt;handlers</span><span style="color:#f92672">&gt;</span>
+  <span style="color:#f92672">&lt;system.webServer&gt;</span>
+    <span style="color:#f92672">&lt;handlers&gt;</span>
       <span style="color:#f92672">&lt;add</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;CSLPageHandler&#34;</span> <span style="color:#a6e22e">verb=</span><span style="color:#e6db74">&#34;*&#34;</span> <span style="color:#a6e22e">path=</span><span style="color:#e6db74">&#34;*.aspx&#34;</span>
         <span style="color:#a6e22e">type=</span><span style="color:#e6db74">&#34;CSL.CommonServiceLocatorPageHandlerFactory, CSL&#34;</span><span style="color:#f92672">/&gt;</span>
     <span style="color:#f92672">&lt;/handlers&gt;</span>
@@ -230,7 +230,7 @@
 <p>A few side notes: Keep in mind that this will fail in partially trusted environments. When doing this in partial trust, there is no good feasible workaround. In partial trust there is not much else we can do than seeing the Page as a <strong>Composition Root</strong> and calling the container from within the default constructor. Second note: This will only work for .aspx pages. For intercepting the creation of .ashx HTTP Handlers we will need to create a custom IHttpHandlerFactory, which is new since ASP.NET 2.0.</p>
 <p>Happy injecting!</p>
 <h2 id="comments">Comments</h2>
-<p>Comments haven't been migrated yet&hellip;</p>
+<p>Comments haven&rsquo;t been migrated yet&hellip;</p>
 
 
 		<hr />

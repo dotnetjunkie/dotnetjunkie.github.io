@@ -90,7 +90,7 @@
 <p>Another problem with property injection when working with MVC or Web API is that these frameworks <a href="https://stackoverflow.com/questions/27646196/asp-net-web-api-caches-action-filter-attributes-across-requests">cache attributes</a>, making them singletons. This makes it very easy to accidentally create <a href="https://blog.ploeh.dk/2014/06/02/captive-dependency/">captive dependencies</a> which can lead to all sorts of concurrency issues.</p>
 <p>But, more importantly than anything mentioned up to this point - mixing attribute metadata with service behavior means it is impossible to apply cross-cutting concerns to the behavior. The concept of applying AOP to AOP may sound extreme but it is only a matter of time before you reach the point of having enough logic before and/or after the execution of an action that you want to apply some new cross-cutting concern to that logic. Consider, for example, the simple requirement of profiling the time it takes to execute a piece of logic. You can hack that extra feature into your filter attribute but it is ugly and it violates both <a href="https://en.wikipedia.org/wiki/Don't_repeat_yourself">DRY</a> and the <a href="https://en.wikipedia.org/wiki/Single_responsibility_principle">Single Responsibility Principle</a>.</p>
 <p>Fundamentally there is nothing wrong with the concept of applying AOP using attributes but if take a step back and consider the original idea of the humble attribute as “declarative tags […] to specify additional information […] that can be retrieved at run time through reflection” (<a href="https://msdn.microsoft.com/en-us/library/aa288059(v=vs.71).aspx">see</a>). Attributes hold fixed, and specific, metadata relevant to their location within code. An attribute can realistically be seen as a sort of static <a href="https://refactoring.com/catalog/introduceParameterObject.html">Parameter Object</a>.</p>
-<p>It's only as you consider the details of what it means to mix attributes with behavior in the conventional way, i.e. by injecting the behavior into the attribute, that you start to see how this goes against the principle of keeping the necessary boundaries between these two object types (data/behavior). The blending of data and behavior is a bad thing and the solution to this that follows is to explicitly separate the data from the behavior. You may have seen this done before <a href="/steven/p/commands">here</a> and <a href="/steven/p/queries">here</a> and the examples that follow, despite being specific to the ASP.NET Web API, should clearly demonstrate an attribute without behavior and its accompanying service:</p>
+<p>It&rsquo;s only as you consider the details of what it means to mix attributes with behavior in the conventional way, i.e. by injecting the behavior into the attribute, that you start to see how this goes against the principle of keeping the necessary boundaries between these two object types (data/behavior). The blending of data and behavior is a bad thing and the solution to this that follows is to explicitly separate the data from the behavior. You may have seen this done before <a href="/steven/p/commands">here</a> and <a href="/steven/p/queries">here</a> and the examples that follow, despite being specific to the ASP.NET Web API, should clearly demonstrate an attribute without behavior and its accompanying service:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> IActionFilter&lt;TAttribute&gt; <span style="color:#66d9ef">where</span> TAttribute : Attribute
 {
      <span style="color:#66d9ef">void</span> OnActionExecuting(TAttribute attribute, HttpActionContext context);
@@ -218,7 +218,7 @@ container.Collection.Register(
         TAttribute attribute, ActionExecutingContext context);
 }
 </code></pre></div>
-<p>Here is MVC's <code>ActionFilterDispatcher</code>:</p>
+<p>Here is MVC&rsquo;s <code>ActionFilterDispatcher</code>:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">using</span> System;
 <span style="color:#66d9ef">using</span> System.Collections;
 <span style="color:#66d9ef">using</span> System.Linq;
@@ -259,7 +259,7 @@ container.Collection.Register(
         ActionExecutedContext filterContext) { }
 }
 </code></pre></div>
-<p>The following code allows our <code>ActionFilterDispatcher</code> for MVC to be added to MVC's pipeline:</p>
+<p>The following code allows our <code>ActionFilterDispatcher</code> for MVC to be added to MVC&rsquo;s pipeline:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">GlobalFilters.Filters.Add(
     <span style="color:#66d9ef">new</span> ActionFilterDispatcher(container.GetAllInstances));
 </code></pre></div>
@@ -271,7 +271,7 @@ container.Collection.Register(
         TAttribute attribute, ActionExecutingContext context);
 }
 </code></pre></div>
-<p>Here is ASP.NET Core's <code>ActionFilterDispatcher</code>:</p>
+<p>Here is ASP.NET Core&rsquo;s <code>ActionFilterDispatcher</code>:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">using</span> System;
 <span style="color:#66d9ef">using</span> System.Collections.Generic;
 <span style="color:#66d9ef">using</span> System.Linq;
@@ -320,7 +320,7 @@ container.Collection.Register(
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> OnActionExecuted(ActionExecutedContext context) { }
 }
 </code></pre></div>
-<p>The following code allows our <code>ActionFilterDispatcher</code> for ASP.NET Core to be added to ASP.NET's pipeline:</p>
+<p>The following code allows our <code>ActionFilterDispatcher</code> for ASP.NET Core to be added to ASP.NET&rsquo;s pipeline:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> ConfigureServices(IServiceCollection services)
 {
     <span style="color:#75715e">// Add MVC services to the services container.
@@ -338,15 +338,15 @@ container.Collection.Register(
 <p>As always, happy injecting!</p>
 <h2 id="comments">Comments</h2>
 <hr>
-<h4 id="adriano--27-november-15">Adriano - 27 November 15</h4>
+<h4 id="adriano---27-november-15">Adriano - 27 November 15</h4>
 <p>Hi,</p>
-<p>Great post, thanks for that :) I would like to try do this at WCF and I have problem with Dispatcher. I don't know how to call BeforeCall from IParameterInspector with declaration container. Did you consider this problem with injection attributes at WCF? Thanks for help :)</p>
+<p>Great post, thanks for that :) I would like to try do this at WCF and I have problem with Dispatcher. I don&rsquo;t know how to call BeforeCall from IParameterInspector with declaration container. Did you consider this problem with injection attributes at WCF? Thanks for help :)</p>
 <hr>
-<h4 id="steven--27-november-15">Steven - 27 November 15</h4>
+<h4 id="steven---27-november-15">Steven - 27 November 15</h4>
 <p>Hi Adriano,</p>
 <p>With WCF the problem becomes much simpler IMO, because what I usually do is let my WCF service be this tiny little maintenance free wrapper around my business layer (see <a href="/steven/p/maintainable-wcf">this</a>). This means that attributes are defined on the message or handler level, and not as part of WCF service classes. This completely removes the problem.</p>
 <hr>
-<h4 id="daniel--04-december-15">Daniel - 04 December 15</h4>
+<h4 id="daniel---04-december-15">Daniel - 04 December 15</h4>
 <blockquote>
 <p>with Simple Injector all the <code>IActionFilter&lt;T&gt;</code> implementations can be registered in a single call:</p>
 </blockquote>
@@ -355,10 +355,10 @@ container.Collection.Register(
 <p>I was having issues with MVC using the first option, when I changed it to use <code>RegisterCollection</code> it worked :)</p>
 <p>Since this attribute is just a basic DTO, is it still possible to somehow use it as a global filter?</p>
 <hr>
-<h4 id="dave--17-january-16">Dave - 17 January 16</h4>
-<p>Is there a way to wire this up without a 3rd party injection framework in MVC 6 RC1: I can't figure out how to get this to work: new ActionFilterDispatcher(container.GetAllInstances) is container a part of another dependency framework and not something I can use by default in mvc 6? Thanks!</p>
+<h4 id="dave---17-january-16">Dave - 17 January 16</h4>
+<p>Is there a way to wire this up without a 3rd party injection framework in MVC 6 RC1: I can&rsquo;t figure out how to get this to work: new ActionFilterDispatcher(container.GetAllInstances) is container a part of another dependency framework and not something I can use by default in mvc 6? Thanks!</p>
 <hr>
-<h4 id="steven--15-april-16">Steven - 15 April 16</h4>
+<h4 id="steven---15-april-16">Steven - 15 April 16</h4>
 <p>Daniel,</p>
 <p>Thank you for your comment. The use of <code>container.Register</code> is a bit confusing, because the use of <code>container.RegisterCollection</code> is required, because filters are resolved using <code>GetAllInstances</code>. Simple Injector makes an explicit difference between one-to-one mappings and registration of collections. I updated the article accordingly.</p>
 <blockquote>
@@ -366,9 +366,9 @@ container.Collection.Register(
 </blockquote>
 <p>You can absolutely register a filter as global filter. As a matter of fact, the <code>ActionFilterDispatcher</code> is registered as global filter. You can also create your individual filters as MVC specific implementations that check whether a certain attribute is applied and handle the request accordingly. This does however couple the action filter implementations with MVC and requires you to let every filter have implement the check on attributes itself.</p>
 <hr>
-<h4 id="steven--15-april-161">Steven - 15 April 16</h4>
+<h4 id="steven---15-april-16-1">Steven - 15 April 16</h4>
 <p>Dave,</p>
-<p>You can configure this by storing the <code>IServiceProvider</code> in a private field inside the <code>Configure</code> method and use this instance and register the <code>ActionFilterDispatcher</code> in the <code>ConfigureServices</code> that resolves from the stored <code>IServiceProvider</code>. Here's an example:</p>
+<p>You can configure this by storing the <code>IServiceProvider</code> in a private field inside the <code>Configure</code> method and use this instance and register the <code>ActionFilterDispatcher</code> in the <code>ConfigureServices</code> that resolves from the stored <code>IServiceProvider</code>. Here&rsquo;s an example:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#"><span style="color:#66d9ef">private</span> IServiceProvider serviceProvider;
 
 <span style="color:#66d9ef">private</span> IEnumerable GetActionFilters(Type type) =&gt; <span style="color:#66d9ef">this</span>.serviceProvider.GetServices(type);
@@ -386,22 +386,22 @@ container.Collection.Register(
     <span style="color:#75715e">// more here
 </span><span style="color:#75715e"></span>}
 </code></pre></div><hr>
-<h4 id="joseph-vaughan--16-june-16">Joseph Vaughan - 16 June 16</h4>
+<h4 id="joseph-vaughan---16-june-16">Joseph Vaughan - 16 June 16</h4>
 <p>Hi Steven</p>
 <p>Great article again, thank you. I feel like this is too restrictive to the <code>IActionFilter</code> interface however. What should I do if I wish to implement attributes for Authorization, Authentication, etc. in order to keep the execution order correct?</p>
 <p>The solution I see currently is to define additional interfaces for <code>IAuthorizationFilter</code>, <code>IAuthenticationFilter</code>, etc. And then additionally implement <code>AuthorizationFilterDispatcher</code>, <code>AuthenticationFilterDispatcher</code>, and so on. Am I missing something that would make this simpler?</p>
 <p>Thanks.</p>
 <hr>
-<h4 id="steven--26-june-16">Steven - 26 June 16</h4>
+<h4 id="steven---26-june-16">Steven - 26 June 16</h4>
 <p>Hi Joseph,</p>
-<p>With this model, you don't inherit your attributes from MVC's <code>IAuthorizationFilter</code> or <code>IAuthenticationFilter</code>. You have framework-agnostic attributes and have one or multiple <code>IActionFilter&lt;T&gt;</code> implementations for each attribute.</p>
+<p>With this model, you don&rsquo;t inherit your attributes from MVC&rsquo;s <code>IAuthorizationFilter</code> or <code>IAuthenticationFilter</code>. You have framework-agnostic attributes and have one or multiple <code>IActionFilter&lt;T&gt;</code> implementations for each attribute.</p>
 <p>When it comes to authorization however, I prefer to mark my <a href="/steven/p/commands/">command messages</a> and <a href="/steven/p/queries/">query message</a> with an attribute that either sets a permission or role. On top of that you can apply a decorator that checks authorization of the user (see for instance <a href="https://github.com/dotnetjunkie/solidservices/issues/4">this discussion</a>). This keeps the authorization rules as close to the definition of your use cases as you possibly can from experience I can say that such model will prevent many security bugs in your application.</p>
 <hr>
-<h4 id="daniel--20-january-17">Daniel - 20 January 17</h4>
-<p>Hi Steven, let me clarify my previous question, I know the actual filter dispatcher is registered as a global filter, however, let's say that you want to attach the Minimum age attribute to all methods for all controllers, would it be possible to do this without having a base controller?</p>
+<h4 id="daniel---20-january-17">Daniel - 20 January 17</h4>
+<p>Hi Steven, let me clarify my previous question, I know the actual filter dispatcher is registered as a global filter, however, let&rsquo;s say that you want to attach the Minimum age attribute to all methods for all controllers, would it be possible to do this without having a base controller?</p>
 <hr>
-<h4 id="steven--25-february-17">Steven - 25 February 17</h4>
-<p>Attaching behavior to <em>all</em> methods of all controllers basically means you want to have a &lsquo;global&rsquo; filter. This is where you actually use the framework's <code>GlobalFilters</code> feature.</p>
+<h4 id="steven---25-february-17">Steven - 25 February 17</h4>
+<p>Attaching behavior to <em>all</em> methods of all controllers basically means you want to have a &lsquo;global&rsquo; filter. This is where you actually use the framework&rsquo;s <code>GlobalFilters</code> feature.</p>
 
 
 		<hr />

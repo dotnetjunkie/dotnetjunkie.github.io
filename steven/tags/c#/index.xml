@@ -62,7 +62,7 @@
       <pubDate>Fri, 08 Mar 2019 00:00:00 +0000</pubDate>
       
       <guid>https://blogs.cuttingedge.it/steven/posts/2019/dependency-injection-principles-practices-and-patterns/</guid>
-      <description>The book Dependency Injection Principles, Practices, and Patterns has gone to print. For the last two years I&#39;ve been coauthoring the book Dependency Injection Principles, Practices, and Patterns. This is a revised and expanded edition of Manning&amp;lsquo;s bestselling classic Dependency Injection in .NET by Mark Seemann.
+      <description>The book Dependency Injection Principles, Practices, and Patterns has gone to print. For the last two years I&amp;rsquo;ve been coauthoring the book Dependency Injection Principles, Practices, and Patterns. This is a revised and expanded edition of Manning&amp;lsquo;s bestselling classic Dependency Injection in .NET by Mark Seemann.
 I always loved the first edition as it was a game changer for me. I learned a lot about DI, DI Containers, and software design.</description>
     </item>
     
@@ -108,7 +108,7 @@ I always loved the first edition as it was a game changer for me. I learned a lo
       <pubDate>Sat, 14 Apr 2012 00:00:00 +0000</pubDate>
       
       <guid>https://blogs.cuttingedge.it/steven/posts/2012/returning-data-from-command-handlers/</guid>
-      <description>This article extends the architectural design of command handlers to allow command handlers to return data. UPDATE: Although the article below might still be very entertaining, my opionion on the subject has changed. The problems described below will go away completely when you stop using use database generated IDs! Instead let the consumer of that command generate an ID (most likely a GUID). In this case, since the client creates the ID, they already have that value, and you don&#39;t have to return anything.</description>
+      <description>This article extends the architectural design of command handlers to allow command handlers to return data. UPDATE: Although the article below might still be very entertaining, my opionion on the subject has changed. The problems described below will go away completely when you stop using use database generated IDs! Instead let the consumer of that command generate an ID (most likely a GUID). In this case, since the client creates the ID, they already have that value, and you don&amp;rsquo;t have to return anything.</description>
     </item>
     
     <item>
@@ -126,7 +126,7 @@ I always loved the first edition as it was a game changer for me. I learned a lo
       <pubDate>Sun, 11 Dec 2011 00:00:00 +0000</pubDate>
       
       <guid>https://blogs.cuttingedge.it/steven/posts/2011/meanwhile-on-the-command-side-of-my-architecture/</guid>
-      <description>This article describes how a single interface can transform the design of your application to be much cleaner, and more flexible than you ever thought possible. Chapter 10 of my book contains a much more elaborate version of this article. Since I began writing applications in .NET I&#39;ve been separating operations that mutate state (of the database mostly) from operations that return data. This is basically what the Command-query separation principle is about.</description>
+      <description>This article describes how a single interface can transform the design of your application to be much cleaner, and more flexible than you ever thought possible. Chapter 10 of my book contains a much more elaborate version of this article. Since I began writing applications in .NET I&amp;rsquo;ve been separating operations that mutate state (of the database mostly) from operations that return data. This is basically what the Command-query separation principle is about.</description>
     </item>
     
     <item>
@@ -135,7 +135,7 @@ I always loved the first edition as it was a game changer for me. I learned a lo
       <pubDate>Sat, 01 Oct 2011 00:00:00 +0000</pubDate>
       
       <guid>https://blogs.cuttingedge.it/steven/posts/2011/adding-covariance-and-contravariance-to-simple-injector/</guid>
-      <description>A few weeks back I read this question on Stack Overflow. The question was about applying covariance / contravariance (or variance for short) to the Autofac dependency injection container. The question triggered me to think about variance support in Simple Injector. I was wondering whether special changes were needed to the core framework to allow this. However, it didn&#39;t take me long to realize that enabling variance is actually pretty easy for anyone using the Simple Injector.</description>
+      <description>A few weeks back I read this question on Stack Overflow. The question was about applying covariance / contravariance (or variance for short) to the Autofac dependency injection container. The question triggered me to think about variance support in Simple Injector. I was wondering whether special changes were needed to the core framework to allow this. However, it didn&amp;rsquo;t take me long to realize that enabling variance is actually pretty easy for anyone using the Simple Injector.</description>
     </item>
     
     <item>
@@ -182,7 +182,7 @@ I always wondered why Microsoft focused on two different O/RM technologies for t
       <pubDate>Thu, 22 Nov 2007 00:00:00 +0000</pubDate>
       
       <guid>https://blogs.cuttingedge.it/steven/posts/2007/readonlydictionary/</guid>
-      <description>This article describes an implementation of a ReadOnlyDictionary&amp;lt;TKey, TValue&amp;gt; that&#39;s missing from the .NET framework. UPDATE 2012-06-05: .NET 4.5 will (finally finally!!) contain a ReadOnlyDictionary&amp;lt;TKey, TValue&amp;gt;, which will make this post (that has long be my top most googled article) finally redundant. If you&#39;re still developing under .NET 4.0 or below, please read on. UPDATE 2013-04-11: Software license notice: I previously released this under the MIT license, but decided to change this.</description>
+      <description>This article describes an implementation of a ReadOnlyDictionary&amp;lt;TKey, TValue&amp;gt; that&amp;rsquo;s missing from the .NET framework. UPDATE 2012-06-05: .NET 4.5 will (finally finally!!) contain a ReadOnlyDictionary&amp;lt;TKey, TValue&amp;gt;, which will make this post (that has long be my top most googled article) finally redundant. If you&amp;rsquo;re still developing under .NET 4.0 or below, please read on. UPDATE 2013-04-11: Software license notice: I previously released this under the MIT license, but decided to change this.</description>
     </item>
     
   </channel>

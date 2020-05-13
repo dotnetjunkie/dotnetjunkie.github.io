@@ -100,8 +100,7 @@
 
 
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#66d9ef">new</span> ShoppingBasketController(
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">new</span> ShoppingBasketController(
     <span style="color:#66d9ef">new</span> AddShoppingBasketItemHandler(
         <span style="color:#66d9ef">new</span> ShoppingBasketRepository(...)));
 </code></pre></div>
@@ -113,8 +112,7 @@
 
 
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#66d9ef">new</span> ShoppingBasketController(
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">new</span> ShoppingBasketController(
     <span style="color:#66d9ef">new</span> AddShoppingBasketItemHandler(
         <b><span style="color:#66d9ef">new</span> AspNetUserContextAdapter()</b>,
         <span style="color:#66d9ef">new</span> ShoppingBasketRepository(...)));
@@ -126,8 +124,7 @@
 
 
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Handle(AddShoppingBasketItem command)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Handle(AddShoppingBasketItem command)
 {
     <span style="color:#66d9ef">var</span> basket = <span style="color:#66d9ef">this</span>.repository.GetBasket(<b><span style="color:#66d9ef">this</span>.userContext.UserName</b>)
         ?? <span style="color:#66d9ef">new</span> ShoppingBasket(<b><span style="color:#66d9ef">this</span>.userContext.UserName</b>);
@@ -146,8 +143,7 @@
 
 
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AspNetUserContextAdapter</span> : IUserContext
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AspNetUserContextAdapter</span> : IUserContext
 {
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> UserName =&gt; HttpContext.Current.User.Identity.Name;
 }
@@ -180,8 +176,7 @@
 
 
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AspNetCoreUserContextAdapter</span> : IUserContext
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AspNetCoreUserContextAdapter</span> : IUserContext
 {
     <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IHttpContextAccessor accessor;
 
@@ -205,8 +200,7 @@
 
 
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DefaultTimeProvider</span> : ITimeProvider
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DefaultTimeProvider</span> : ITimeProvider
 {
     <span style="color:#66d9ef">public</span> DateTime Now =&gt; DateTime.Now;
 }
@@ -222,8 +216,7 @@
 
 
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ShoppingBasketRepository</span> : IShoppingBasketRepository
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ShoppingBasketRepository</span> : IShoppingBasketRepository
 {
     <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IShoppingBasketContextProvider provider;
     
@@ -245,8 +238,7 @@
 
 
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#66d9ef">new</span> ShoppingBasketController(
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">new</span> ShoppingBasketController(
     <span style="color:#66d9ef">new</span> AddShoppingBasketItemHandler(
         <span style="color:#66d9ef">new</span> AspNetUserContextAdapter(),
         <span style="color:#66d9ef">new</span> ShoppingBasketRepository(
@@ -260,8 +252,7 @@
 
 
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#75715e">// This class will be part of your Composition Root
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#75715e">// This class will be part of your Composition Root
 </span><span style="color:#75715e"></span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AmbientShoppingBasketContextProvider</span> : IShoppingBasketContextProvider
 {
     <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> <span style="color:#66d9ef">string</span> connectionString;
@@ -291,8 +282,7 @@
 
 
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#75715e">// Composes the graph using the Closure Composition Model
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#75715e">// Composes the graph using the Closure Composition Model
 </span><span style="color:#75715e"></span>IHandler&lt;OrderCancelled&gt; handler =
     <span style="color:#66d9ef">new</span> OrderCancellationReportGenerator(
         <span style="color:#66d9ef">new</span> OrderRepository(
@@ -310,8 +300,7 @@ handler.Handle(queueContext.Message); <span style="color:#75715e"><annotation>Ex
 
 
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AmbientUserContextAdapter</span> : IUserContext
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AmbientUserContextAdapter</span> : IUserContext
 {
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> AsyncLocal&lt;<span style="color:#66d9ef">string</span>&gt; Name = <span style="color:#66d9ef">new</span> AsyncLocal&lt;<span style="color:#66d9ef">string</span>&gt;();
 
@@ -326,8 +315,7 @@ handler.Handle(queueContext.Message); <span style="color:#75715e"><annotation>Ex
 
 
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#75715e">// Composes the graph using the Ambient Composition Model
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#75715e">// Composes the graph using the Ambient Composition Model
 </span><span style="color:#75715e"></span>IHandler&lt;OrderCancelled&gt; handler =
     <span style="color:#66d9ef">new</span> OrderCancellationReportGenerator(
         <span style="color:#66d9ef">new</span> OrderRepository(

@@ -126,8 +126,7 @@
 
 
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#75715e">// Composes the graph using the Closure Composition Model
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#75715e">// Composes the graph using the Closure Composition Model
 </span><span style="color:#75715e"></span>IHandler&lt;OrderCancelled&gt; handler =
     <span style="color:#66d9ef">new</span> OrderCancellationReportGenerator(
         <span style="color:#66d9ef">new</span> OrderRepository(
@@ -156,8 +155,7 @@
 
 
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#66d9ef">using</span> (ILifetimeScope scope = container.BeginLifetimeScope())
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">using</span> (ILifetimeScope scope = container.BeginLifetimeScope())
 {
     <span style="color:#66d9ef">var</span> userContext = scope.Resolve&lt;ClosureUserContext&gt;();
 
@@ -179,8 +177,7 @@
 
 
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#66d9ef">void</span> ConsumeMessage(<span style="color:#66d9ef">object</span> message)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">void</span> ConsumeMessage(<span style="color:#66d9ef">object</span> message)
 {
     Type handlerType =
         <span style="color:#66d9ef">typeof</span>(IHandler&lt;&gt;).MakeGenericType(message.GetType());

@@ -100,8 +100,7 @@
 
 
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ShoppingBasketController</span> : Controller
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ShoppingBasketController</span> : Controller
 {
     <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IHandler&lt;AddShoppingBasketItem&gt; handler;
     
@@ -122,8 +121,7 @@
 
 
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ShoppingBasketRepository</span> : IShoppingBasketRepository
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ShoppingBasketRepository</span> : IShoppingBasketRepository
 {
     <b><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> ShoppingBasketDbContext context;</b> <span style="color:#75715e"><annotation>Captured variable</annotation>
 </span><span style="color:#75715e"></span>    
@@ -164,8 +162,7 @@
 
 
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#66d9ef">new</span> ShoppingBasketController(
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">new</span> ShoppingBasketController(
     <span style="color:#66d9ef">new</span> AddShoppingBasketItemHandler(
         <span style="color:#66d9ef">new</span> ShoppingBasketRepository(
             <b><span style="color:#66d9ef">new</span> ShoppingBasketDbContext(</b> <span style="color:#75715e"><annotation>Injecting runtime data</annotation>
@@ -195,8 +192,7 @@ In the context of Dependency Injection, a _Lifestyle_ is a formalized way of des
 
 
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#66d9ef">string</span> connectionString = LoadConnectionStringFromConfig();
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">string</span> connectionString = LoadConnectionStringFromConfig();
 
 container.Register(
     <b>() =&gt; <span style="color:#66d9ef">new</span> ShoppingBasketDbContext(</b> <span style="color:#75715e"><annotation>Runtime data</annotation>
@@ -211,8 +207,7 @@ container.Register(
 
 
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
- IHandler&lt;OrderCancelled&gt; handler =
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"> IHandler&lt;OrderCancelled&gt; handler =
     <span style="color:#66d9ef">new</span> OrderCancellationReportGenerator(
         <span style="color:#66d9ef">new</span> OrderRepository(
             <span style="color:#66d9ef">new</span> ClosureUserContext(
@@ -230,8 +225,7 @@ handler.Handle(queueContext.Message); <span style="color:#75715e"><annotation>Ex
 
 
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ClosureUserContext</span> : IUserContext
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ClosureUserContext</span> : IUserContext
 {
     <span style="color:#66d9ef">public</span> ClosureUserContext(<span style="color:#66d9ef">string</span> userName)
     {
@@ -248,8 +242,7 @@ handler.Handle(queueContext.Message); <span style="color:#75715e"><annotation>Ex
 
 
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ClosureUserContext</span> : IUserContext
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ClosureUserContext</span> : IUserContext
 {
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> UserName { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; } <span style="color:#75715e"><annotation>Writable property</annotation>
 </span><span style="color:#75715e"></span>}
@@ -261,8 +254,7 @@ handler.Handle(queueContext.Message); <span style="color:#75715e"><annotation>Ex
 
 
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-<span style="color:#66d9ef">using</span> (ILifetimeScope scope = container.BeginLifetimeScope())
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">using</span> (ILifetimeScope scope = container.BeginLifetimeScope())
 {
     <span style="color:#66d9ef">var</span> userContext = scope.Resolve&lt;ClosureUserContext&gt;();
     userContext.UserName = queueContext.UserName;
@@ -288,8 +280,7 @@ Similar to the Singleton Lifestyle, the Scoped Lifestyle is a formalized way of 
 
 
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">
-builder.RegisterType&lt;OrderCancellationReportGenerator&gt;()
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">builder.RegisterType&lt;OrderCancellationReportGenerator&gt;()
     .As&lt;IHandler&lt;OrderCancelled&gt;&gt;();
 
 builder.RegisterType&lt;OrderRepository&gt;()

@@ -164,16 +164,12 @@
 <p>This way of supplying <code>ShoppingBasketDbContext</code> to the object graph during construction is one model you can use to compose your object graphs, called the <em>Closure Composition Model</em>.</p>
 <p><callout class="DEFINITION">
     <span class="callout-title">DEFINITION</span>
-    <span class="callout-body">
-The <strong>Closure Composition Model</strong> composes object graphs that capture runtime data in variables of the graph’s components.
-</span>
+    <span class="callout-body">The <strong>Closure Composition Model</strong> composes object graphs that capture runtime data in variables of the graph’s components.</span>
 </callout></p>
 <p>An alternative to letting your application components consume these contextual runtime data objects is the <em>Ambient Composition Model</em>. With that model, contextual runtime data is no longer captured in variables inside the object graph, but instead is managed by the <a href="https://mng.bz/K1qZ">Composition Root</a>. Application components requiring such data request it through method calls on provided abstractions.</p>
 <p><callout class="DEFINITION">
     <span class="callout-title">DEFINITION</span>
-    <span class="callout-body">
-The <strong>Ambient Composition Model</strong> composes object graphs that do not store runtime data inside captured variables. Instead, runtime data is kept outside the graph and stored as ambient data. This ambient data is managed by the Composition Root and is provided to application components on request, long after those components have been constructed.
-</span>
+    <span class="callout-body">The <strong>Ambient Composition Model</strong> composes object graphs that do not store runtime data inside captured variables. Instead, runtime data is kept outside the graph and stored as ambient data. This ambient data is managed by the Composition Root and is provided to application components on request, long after those components have been constructed.</span>
 </callout></p>
 <p>This completes this primer on Object Composition models. At this point, much remains to be explained, such has how application components are designed in each model, what exactly <em>ambient data</em> is, and what the pros and cons are of both models. I will go into this in more detail in the following articles, starting with a description of the <a href="/steven/p/ccm/">Closure Composition Model</a>, and continuing with a description of the <a href="/steven/p/acm/">Ambient Composition Model</a>.</p>
 <p>Stay tuned.</p>

@@ -142,9 +142,7 @@
 <p><code>DbContext</code> is stored in a <code>private readonly</code> field and will, therefore, always be available when one of the repository’s methods is invoked. The stored <code>DbContext</code> becomes a <em>captured variable</em> that can be accessed by the class’s methods, effectively becoming a <a href="https://en.wikipedia.org/wiki/Closure_(computer_programming)">closure</a>. I, therefore, call this model of injecting runtime data into application components during construction the <em>Closure Composition Model</em> (CCM).</p>
 <p><callout class="DEFINITION">
     <span class="callout-title">DEFINITION</span>
-    <span class="callout-body">
-The <em>Closure Composition Model</em> composes object graphs that capture runtime data in variables of the graph’s components.
-</span>
+    <span class="callout-body">The <em>Closure Composition Model</em> composes object graphs that capture runtime data in variables of the graph’s components.</span>
 </callout></p>
 <p>The following figure captures the essence of the CCM.</p>
 <figure>
@@ -186,9 +184,7 @@ In the context of Dependency Injection, a _Lifestyle_ is a formalized way of des
 <p>This restriction on the consumer’s lifetime is transitive, meaning that it affects all the dependency’s direct and indirect consumers. It bubbles up the object graph all the way to the top-most object in the graph&mdash;<code>ShoppingBasketController</code>, in the example. Not adhering to this restriction causes a problem called <a href="https://blog.ploeh.dk/2014/06/02/captive-dependency/">Captive Dependencies</a>. The book defines it as follows:</p>
 <p><callout class="DEFINITION">
     <span class="callout-title">DEFINITION</span>
-    <span class="callout-body">
-A <em>Captive Dependency</em> is a dependency that’s inadvertently kept alive for too long because its consumer was given a lifetime that exceeds the dependency’s expected lifetime. [§8.4.1]
-</span>
+    <span class="callout-body">A <em>Captive Dependency</em> is a dependency that’s inadvertently kept alive for too long because its consumer was given a lifetime that exceeds the dependency’s expected lifetime. [§8.4.1]</span>
 </callout></p>
 <p>In the previous example, <code>DbContext</code> is supplied to the object graph during construction&mdash;an example of the CCM. The CCM infers that even stateless components should <em>not</em> be kept alive for the application&rsquo;s lifetime, as it would keep their stateful dependencies alive.</p>
 <h2 id="providing-a-closure-graph-with-external-runtime-data">Providing a closure graph with external runtime data</h2>

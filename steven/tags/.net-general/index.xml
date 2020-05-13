@@ -213,5 +213,14 @@ I always wondered why Microsoft focused on two different O/RM technologies for t
       <description>Microsofts corporate vice present of the Developer Division, Somasegar, wrote on his weblog about the backwards compatibility of the .NET framework version 2.0. But his readers doubt the usefulness of this compatibility, as do I. UPDATE 2010: This post was written in 2006. During the last couple of years I worked for many clients and found that the backwards compatibility of .NET was very important for many of my clients, because it allowed them to migrate slowly from one version to the next without making very big investments.</description>
     </item>
     
+    <item>
+      <title>Title</title>
+      <link></link>
+      <pubDate>Sat, 01 Jan 2000 00:00:00 +0000</pubDate>
+      
+      <guid></guid>
+      <description></description>
+    </item>
+    
   </channel>
 </rss>

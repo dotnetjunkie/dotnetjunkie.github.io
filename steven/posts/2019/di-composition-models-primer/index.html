@@ -276,7 +276,9 @@ The <strong>Ambient Composition Model</strong> composes object graphs that do no
 					}
 				  })
 				  .catch (err => {
-					commentsElement.innerHTML = 'I\'m sorry. Something went wrong during the loading of the comments. ' + err;
+					commentsElement.innerHTML =
+						'<i>I\'m sorry. Something went wrong during the loading of the comments. ' +
+						'You can view this post\'s comments by visiting <a href="https:\/\/github.com\/dotnetjunkie\/blog\/issues\/1">this GitHub issue</a>.</i>';
 				  });				
 			}
 		}

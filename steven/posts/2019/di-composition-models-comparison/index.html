@@ -340,7 +340,9 @@ One area where you will feel a strong CCM current is when building ASP.NET Core 
 					}
 				  })
 				  .catch (err => {
-					commentsElement.innerHTML = 'I\'m sorry. Something went wrong during the loading of the comments. ' + err;
+					commentsElement.innerHTML =
+						'<i>I\'m sorry. Something went wrong during the loading of the comments. ' +
+						'You can view this post\'s comments by visiting <a href="https:\/\/github.com\/dotnetjunkie\/blog\/issues\/5">this GitHub issue</a>.</i>';
 				  });				
 			}
 		}

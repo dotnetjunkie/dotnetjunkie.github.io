@@ -457,7 +457,9 @@ handler.Handle(queueContext.Message); <span style="color:#75715e"><annotation>Ex
 					}
 				  })
 				  .catch (err => {
-					commentsElement.innerHTML = 'I\'m sorry. Something went wrong during the loading of the comments. ' + err;
+					commentsElement.innerHTML =
+						'<i>I\'m sorry. Something went wrong during the loading of the comments. ' +
+						'You can view this post\'s comments by visiting <a href="https:\/\/github.com\/dotnetjunkie\/blog\/issues\/4">this GitHub issue</a>.</i>';
 				  });				
 			}
 		}

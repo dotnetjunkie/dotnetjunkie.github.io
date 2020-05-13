@@ -56,18 +56,11 @@
 
 		
 
-		
-
-<h3 id="this-article-describes-how-a-single-interface-can-transform-the-design-of-your-application-to-be-much-cleaner-and-more-flexible-than-you-ever-thought-possible">This article describes how a single interface can transform the design of your application to be much cleaner, and more flexible than you ever thought possible.</h3>
-
-<h4 id="chapter-10-of-my-book-https-mng-bz-bynl-contains-a-much-more-elaborate-version-of-this-article">Chapter 10 of <a href="https://mng.bz/BYNl">my book</a> contains a much more elaborate version of this article.</h4>
-
-<p>Since I began writing applications in .NET I&rsquo;ve been separating operations that mutate state (of the database mostly) from operations that return data. This is basically what the <a href="https://en.wikipedia.org/wiki/Command-query_separation">Command-query separation principle</a> is about. Over time the designs I have used have evolved. Initially triggered by a former colleague of mine I started to use the <a href="https://en.wikipedia.org/wiki/Command_pattern">Command Pattern</a> about four years ago. Back then we called them <em>business commands</em> and a single command would represent an atomic business operation, or <a href="https://en.wikipedia.org/wiki/Use_case">use case</a>.</p>
-
+		<h3 id="this-article-describes-how-a-single-interface-can-transform-the-design-of-your-application-to-be-much-cleaner-and-more-flexible-than-you-ever-thought-possible">This article describes how a single interface can transform the design of your application to be much cleaner, and more flexible than you ever thought possible.</h3>
+<h4 id="chapter-10-of-my-bookhttpsmngbzbynl-contains-a-much-more-elaborate-version-of-this-article">Chapter 10 of <a href="https://mng.bz/BYNl">my book</a> contains a much more elaborate version of this article.</h4>
+<p>Since I began writing applications in .NET I've been separating operations that mutate state (of the database mostly) from operations that return data. This is basically what the <a href="https://en.wikipedia.org/wiki/Command-query_separation">Command-query separation principle</a> is about. Over time the designs I have used have evolved. Initially triggered by a former colleague of mine I started to use the <a href="https://en.wikipedia.org/wiki/Command_pattern">Command Pattern</a> about four years ago. Back then we called them <em>business commands</em> and a single command would represent an atomic business operation, or <a href="https://en.wikipedia.org/wiki/Use_case">use case</a>.</p>
 <p>Over the years, the projects I have participated on have increased in complexity and I have adopted newer techniques such as <a href="https://en.wikipedia.org/wiki/Test-driven_development">Test Driven Development</a> and <a href="https://en.wikipedia.org/wiki/Dependency_injection">Dependency Injection</a> (DI). The flaws in this approach to the Command Pattern have become obvious to me. DI has a tendency of exposing violations of the <a href="https://en.wikipedia.org/wiki/SOLID">SOLID principles</a> and this implementation hindered the maintainability of these applications.</p>
-
 <p>In the early days my implementation of the Command Pattern design consisted of classes that contained both properties to hold the data and an <code>Execute()</code> method that would start the operation. The design had an abstract <code>Command</code> base class that contained all of logic for handling transactions, re-executing commands after a deadlock occurred, measuring performance, security checks, etc. This base class was a big <a href="https://en.wikipedia.org/wiki/Code_smell">code smell</a> and was a form of <a href="https://en.wikipedia.org/wiki/God_object">God Object</a> with many responsibilities. Furthermore, having data and behavior interleaved made it very difficult to mock/abstract that logic during unit testing. For example a consumer of a command would typically new up a command instance and call <code>Execute()</code> directly on it, as shown in the following example:</p>
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> command = <span style="color:#66d9ef">new</span> MoveCustomerCommand
 {
     CustomerId = customerId,
@@ -76,20 +69,15 @@
 
 command.Execute();
 </code></pre></div>
-
-<p>I tried to solve this problem by injecting the command into the constructor of a consumer (constructor injection), but this was awkward to say the least. It remained the responsibility of the consumer to set all the properties of the object that was passed in and didn&rsquo;t really solve the problem of abstracting away the command elegantly. To prevent the command&rsquo;s logic from being executed, I had to define a fake version of each command for testing and it did nothing to reduce the large and complicated base class.</p>
-
+<p>I tried to solve this problem by injecting the command into the constructor of a consumer (constructor injection), but this was awkward to say the least. It remained the responsibility of the consumer to set all the properties of the object that was passed in and didn't really solve the problem of abstracting away the command elegantly. To prevent the command's logic from being executed, I had to define a fake version of each command for testing and it did nothing to reduce the large and complicated base class.</p>
 <p>All of these experiences led me to try a design that I had seen others use, but that I had never seen the benefits of. In this new design, data and behavior are separated. Each business operation has a simple data container called the <em>command object</em>; my standard naming convention for these classes is to suffix them with <em>Command</em>:</p>
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MoveCustomerCommand</span>
 {
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> CustomerId { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
     <span style="color:#66d9ef">public</span> Address NewAddress { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
 }
 </code></pre></div>
-
 <p>The logic gets its own separate class; my standard naming convention for these classes is to suffix them with &lsquo;CommandHandler&rsquo;:</p>
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MoveCustomerCommandHandler</span>
 {
     <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> UnitOfWork db;
@@ -107,9 +95,7 @@ command.Execute();
 </span><span style="color:#75715e"></span>    }
 }
 </code></pre></div>
-
 <p>This design gives us a lot; a command handler can be injected into a consumer, while the consumer can simply new up the related command object. Because the command only contains data, there no longer a reason to fake the command during testing. Here’s an example of how a consumer can use that command and command handler:</p>
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CustomerController</span> : Controller
 {
     <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> MoveCustomerCommandHandler handler;
@@ -131,19 +117,14 @@ command.Execute();
     }
 }
 </code></pre></div>
-
 <p>There is still a problem with this design. Although every handler class has a single (public) method (and therefore adheres the <a href="https://en.wikipedia.org/wiki/Interface_segregation_principle">Interface Segregation Principle</a>), all handlers define their own interface (there is no common interface). This makes it hard to extend the command handlers with new features and cross-cutting concerns. For example, we would like to measure the time it takes to execute every command and log this information to the database. How can we do this? In the past we would either change each and every command handler, or move the logic into a base class. Moving this feature into the base class is not ideal as the base class will soon contain lots of these common features, and would soon grow out of control (which I have seen happening). Besides, this would make it hard to test derived types and enable/disable such behavior for certain types (or instances) of command handlers because it would involve adding conditional logic into the base class, making it even more complicated!</p>
-
 <p>All these problems can be solved elegantly by having all command handlers implement a single generic interface:</p>
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> ICommandHandler&lt;TCommand&gt;
 {
     <span style="color:#66d9ef">void</span> Handle(TCommand command);
 }
 </code></pre></div>
-
 <p>Using this interface, the <code>MoveCustomerCommandHandler</code> would now look like this:</p>
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#75715e">// Exactly the same as before, but now with the interface.
 </span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MoveCustomerCommandHandler</span>
     : ICommandHandler&lt;MoveCustomerCommand&gt;
@@ -163,11 +144,9 @@ command.Execute();
 </span><span style="color:#75715e"></span>    }
 }
 </code></pre></div>
-
 <p>One important benefit of this interface is that it allows the consumers to depend on the new abstraction, rather than a concrete implementation of the command handler:</p>
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#75715e">// Again, same implementation as before, but now we depend
-</span><span style="color:#75715e">// upon the ICommandHandler abstraction.
+</span><span style="color:#75715e"></span><span style="color:#75715e">// upon the ICommandHandler abstraction.
 </span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CustomerController</span> : Controller
 {
     <span style="color:#66d9ef">private</span> ICommandHandler&lt;MoveCustomerCommand&gt; handler;
@@ -189,9 +168,7 @@ command.Execute();
     }
 }
 </code></pre></div>
-
 <p>What does adding an interface give us? Well frankly, a lot! As nothing depends directly on any implementation but instead depends on an interface, we can now replace the original command handlers with any class that implements the new interface. Ignoring, for now the usual argument of testability, look at this generic class:</p>
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TransactionCommandHandlerDecorator</span>&lt;TCommand&gt;
     : ICommandHandler&lt;TCommand&gt;
 {
@@ -214,11 +191,8 @@ command.Execute();
     }
 }
 </code></pre></div>
-
 <p>This class wraps an <code>ICommandHandler&lt;TCommand&gt;</code> instance (by accepting an instance of the same interface in its constructor), but at the same time it also implements the same <code>ICommandHandler&lt;TCommand&gt;</code> interface. It is an implementation of the <a href="https://en.wikipedia.org/wiki/Decorator_pattern">Decorator pattern</a>. This very simple class allows us to add transaction support to all of the command handlers.</p>
-
 <p>Instead of injecting a <code>MoveCustomerCommandHandler</code> directly into the <code>CustomerController</code>, we can now inject the following:</p>
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> handler =
     <span style="color:#66d9ef">new</span> TransactionCommandHandlerDecorator&lt;MoveCustomerCommand&gt;(
         <span style="color:#66d9ef">new</span> MoveCustomerCommandHandler(
@@ -230,11 +204,8 @@ command.Execute();
 <span style="color:#75715e">// Inject the handler into the controller’s constructor.
 </span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> controller = <span style="color:#66d9ef">new</span> CustomerController(handler);
 </code></pre></div>
-
 <p>This single decorator class (containing just 5 lines of code) can be reused for all of the command handlers in the system.</p>
-
-<p>In case you&rsquo;re still not convinced, let&rsquo;s define another decorator:</p>
-
+<p>In case you're still not convinced, let's define another decorator:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DeadlockRetryCommandHandlerDecorator</span>&lt;TCommand&gt;
     : ICommandHandler&lt;TCommand&gt;
 {
@@ -262,7 +233,7 @@ command.Execute();
             <span style="color:#66d9ef">if</span> (retries &lt;= <span style="color:#ae81ff">0</span> || !IsDeadlockException(ex))
                 <span style="color:#66d9ef">throw</span>;
  
-            Thread.Sleep(<span style="color:#ae81ff">300</span>);
+            Thread.Sleep(<span style="color:#ae81ff">3</span><span style="color:#ae81ff">0</span><span style="color:#ae81ff">0</span>);
  
             <span style="color:#66d9ef">this</span>.HandleWithRetry(command, retries - <span style="color:#ae81ff">1</span>);
         }
@@ -279,9 +250,7 @@ command.Execute();
     }
 }
 </code></pre></div>
-
 <p>This class should speak for itself—although it contains more code than the previous example, it is still only 14 lines of code. In the event of a database deadlock, it will retry the command 5 times before it leaves the exception bubble up through the call stack. As before we can use this class by wrapping the previous decorator, as follows:</p>
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> handler =
     <span style="color:#66d9ef">new</span> DeadlockRetryCommandHandlerDecorator&lt;MoveCustomerCommand&gt;(
         <span style="color:#66d9ef">new</span> TransactionCommandHandlerDecorator&lt;MoveCustomerCommand&gt;(
@@ -294,15 +263,10 @@ command.Execute();
 
 <span style="color:#66d9ef">var</span> controller = <span style="color:#66d9ef">new</span> CustomerController(handler);
 </code></pre></div>
-
 <p>By the way, did you notice how both decorators are completely focused? They each have just a single responsibility. This makes them easy to understand, easy to change—this is what the <a href="https://en.wikipedia.org/wiki/Single_responsibility_principle">Single Responsibility Principle</a> is about.</p>
-
 <p>The downside of these changes is that it can require a lot of boilerplate code to wire up all the classes that depend on a command handler; but at least the rest of the application is oblivious to this change. When dealing with any more than a few dozen of command handlers you should consider using a Dependency Injection library. Such a library can automate this wiring for you and will assist in making this area of your application maintainable.</p>
-
 <p>The system obviously depends on the correct wiring of these dependencies. Wrapping the deadlock retry behavior with the transaction behavior, for instance, would lead to unexpected behavior (a database deadlock typically has the effect of the database rolling back the transaction, while leaving the connection open), but this is isolated to the part of the application that wires everything together. Again, the rest of the application is oblivious.</p>
-
 <p>Both the transaction logic and deadlock retry logic are examples of <a href="https://en.wikipedia.org/wiki/Cross-cutting_concern">cross-cutting concerns</a>. The use of decorators to add cross-cutting concerns is the cleanest and most effective way to apply these common features I ever came across. It is a form of <a href="https://en.wikipedia.org/wiki/Aspect-oriented_programming">aspect-oriented programming</a>. Besides these two examples, there are many other cross-cutting concerns I can think of that can be added fairly easy using decorators:</p>
-
 <ul>
 <li><a href="https://github.com/dotnetjunkie/solidservices/issues/4">checking the authorization</a> of the current user before commands get executed,</li>
 <li><a href="https://simpleinjector.org/aop#decoration">validating</a> commands before commands get executed,</li>
@@ -312,43 +276,36 @@ command.Execute();
 <li>executing commands <a href="https://simpleinjector.org/aop#decorators-with-func-t-decoratee-factories">in the background</a>, or</li>
 <li>queuing commands to be processed in a different process.</li>
 </ul>
-
 <blockquote>
-<p><strong>Background story:</strong> This last point is a very interesting one. Years ago I worked on an application that used a database table as queue for commands that would be executed in the future. We wrote business processes (commands by themselves) that sometimes queued dozens of other (sub) commands, which could be processed in parallel by different processes (multiple Windows services on different machines). These commands did things like sending mail or heavy stuff such as payroll calculations, generating PDF documents that would be merged by another command, and sending those merged documents to a printer by yet another command. The queue was transactional, which allowed us to—in a sense—send mails and upload files to FTP in a transactional manner. However, We didn&rsquo;t use Dependency Injection back then, which made everything so much harder (if only we knew).</p>
+<p><strong>Background story:</strong> This last point is a very interesting one. Years ago I worked on an application that used a database table as queue for commands that would be executed in the future. We wrote business processes (commands by themselves) that sometimes queued dozens of other (sub) commands, which could be processed in parallel by different processes (multiple Windows services on different machines). These commands did things like sending mail or heavy stuff such as payroll calculations, generating PDF documents that would be merged by another command, and sending those merged documents to a printer by yet another command. The queue was transactional, which allowed us to—in a sense—send mails and upload files to FTP in a transactional manner. However, We didn't use Dependency Injection back then, which made everything so much harder (if only we knew).</p>
 </blockquote>
-
-<p>Because commands are simple data containers without behavior, it is very easy to serialize them (as JSON or XML for instance) or send them over the wire (using WCF for instance), which makes it not only easy to queue them for later processing, but also makes it very easy to log them in an audit trail—yet another reason to separate data and behavior. All these features can be added, without changing a single line of code in the application (except perhaps a line at the application&rsquo;s entry point).</p>
-
-<p>This design makes maintaining web services much easier too. Your (WCF) web service can consist of only one &lsquo;handle&rsquo; method that takes in any command (that you explicitly expose) and can execute these commands (after doing the usual authentication, authorization, and validation of course). Because you will be defining commands and their handlers anyway, your web service project won&rsquo;t have to be changed. If you&rsquo;re interested in that approach, take a look at my article <a href="/steven/p/maintainable-wcf/">Writing Highly Maintainable WCF Services</a>.</p>
-
+<p>Because commands are simple data containers without behavior, it is very easy to serialize them (as JSON or XML for instance) or send them over the wire (using WCF for instance), which makes it not only easy to queue them for later processing, but also makes it very easy to log them in an audit trail—yet another reason to separate data and behavior. All these features can be added, without changing a single line of code in the application (except perhaps a line at the application's entry point).</p>
+<p>This design makes maintaining web services much easier too. Your (WCF) web service can consist of only one &lsquo;handle&rsquo; method that takes in any command (that you explicitly expose) and can execute these commands (after doing the usual authentication, authorization, and validation of course). Because you will be defining commands and their handlers anyway, your web service project won't have to be changed. If you're interested in that approach, take a look at my article <a href="/steven/p/maintainable-wcf/">Writing Highly Maintainable WCF Services</a>.</p>
 <p>One simple <code>ICommandHandler&lt;TCommand&gt;</code> interface has made all this possible. While it may seem complex at first, once you get the hang of it (together with Dependency Injection), well&hellip; the possibilities are endless. You may think that you don’t need all of this up front when you first design your applications but this design allows you to make many unforeseen changes to the system later without much difficulty. One can hardly argue a system with this design is over-engineered—every business operation has its own class and we have put a single generic interface over them all. It’s hard to over-engineer that—even really small systems can benefit from <a href="https://en.wikipedia.org/wiki/Separation_of_concerns">separating concerns</a>.</p>
-
-<p>This doesn&rsquo;t mean things can’t get complicated. Correct wiring all of these dependencies, and writing and adding the decorators in the right order can be challenging. But at least this complexity is focused in a single part of the application (the startup path a.k.a. <a href="https://freecontent.manning.com/dependency-injection-in-net-2nd-edition-understanding-the-composition-root/">Composition Root</a>), and it leaves the rest of the application unaware and unaffected. You will rarely need to make sweeping changes across your application, which is what the <a href="https://en.wikipedia.org/wiki/Open/closed_principle">Open/Closed Principle</a> is all about.</p>
-
+<p>This doesn't mean things can’t get complicated. Correct wiring all of these dependencies, and writing and adding the decorators in the right order can be challenging. But at least this complexity is focused in a single part of the application (the startup path a.k.a. <a href="https://freecontent.manning.com/dependency-injection-in-net-2nd-edition-understanding-the-composition-root/">Composition Root</a>), and it leaves the rest of the application unaware and unaffected. You will rarely need to make sweeping changes across your application, which is what the <a href="https://en.wikipedia.org/wiki/Open/closed_principle">Open/Closed Principle</a> is all about.</p>
 <p>By the way, you might think the way I created all those decorators around a single command handler is rather awkward, and imagined the big ball of mud that it would become after we have created a few dozen command handlers. Yes—this might not scale well. But as I already mentioned, this problem is best resolved with a DI library. For instance, when using <a href="https://simpleinjector.org">Simple Injector</a>, registering all command handlers in the system can be done with a single line of code. Registering a decorator is another single line. Here is an example configuration when when using Simple Injector:</p>
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> container = <span style="color:#66d9ef">new</span> Container();
 
 <span style="color:#75715e">// Go look in all assemblies and register all implementations
-</span><span style="color:#75715e">// of ICommandHandler&lt;T&gt; by their closed interface:
+</span><span style="color:#75715e"></span><span style="color:#75715e">// of ICommandHandler&lt;T&gt; by their closed interface:
 </span><span style="color:#75715e"></span>container.Register(
     <span style="color:#66d9ef">typeof</span>(ICommandHandler&lt;&gt;),
     AppDomain.CurrentDomain.GetAssemblies());
 
 <span style="color:#75715e">// Decorate each returned ICommandHandler&lt;T&gt; object with
-</span><span style="color:#75715e">// a TransactionCommandHandlerDecorator&lt;T&gt;.
+</span><span style="color:#75715e"></span><span style="color:#75715e">// a TransactionCommandHandlerDecorator&lt;T&gt;.
 </span><span style="color:#75715e"></span>container.RegisterDecorator(
     <span style="color:#66d9ef">typeof</span>(ICommandHandler&lt;&gt;),
     <span style="color:#66d9ef">typeof</span>(TransactionCommandHandlerDecorator&lt;&gt;));
 
 <span style="color:#75715e">// Decorate each returned ICommandHandler&lt;T&gt; object with
-</span><span style="color:#75715e">// a DeadlockRetryCommandHandlerDecorator&lt;T&gt;.
+</span><span style="color:#75715e"></span><span style="color:#75715e">// a DeadlockRetryCommandHandlerDecorator&lt;T&gt;.
 </span><span style="color:#75715e"></span>container.RegisterDecorator(
     <span style="color:#66d9ef">typeof</span>(ICommandHandler&lt;&gt;),
     <span style="color:#66d9ef">typeof</span>(DeadlockRetryCommandHandlerDecorator&lt;&gt;));
 
 <span style="color:#75715e">// Decorate handlers conditionally with validation. In
-</span><span style="color:#75715e">// this case based on their metadata.
+</span><span style="color:#75715e"></span><span style="color:#75715e">// this case based on their metadata.
 </span><span style="color:#75715e"></span>container.RegisterDecorator(
     <span style="color:#66d9ef">typeof</span>(ICommandHandler&lt;&gt;),
     <span style="color:#66d9ef">typeof</span>(ValidationCommandHandlerDecorator&lt;&gt;),
@@ -359,88 +316,49 @@ command.Execute();
     <span style="color:#66d9ef">typeof</span>(ICommandHandler&lt;&gt;),
     <span style="color:#66d9ef">typeof</span>(AuthorizationCommandHandlerDecorator&lt;&gt;));
 </code></pre></div>
-
 <p>No matter how many command handlers you add to the system, these few lines of code won’t change, which also helps to underline the true power of a DI library. Once your application is built applying the SOLID principles, a good DI library will ensure that the startup path of your application remains maintainable.</p>
-
 <p>This is how I roll on the command side of my architecture.</p>
-
 <h2 id="further-reading">Further reading</h2>
-
 <ul>
 <li>If you found this article interesting, you should also read my follow up: <a href="/steven/p/queries/">Meanwhile&hellip; on the query side of my architecture</a>.</li>
 <li>In <a href="/steven/p/maintainable-wcf/">Writing Highly Maintainable WCF Services</a> I talk about sending commands over the wire</li>
 <li>If you want to learn how to migrate your existing application to use this model, please read <a href="https://github.com/simpleinjector/SimpleInjector/issues/520#issuecomment-368907098">this thread</a>.</li>
 <li>Chapter 10 of <a href="https://mng.bz/BYNl">my book</a> contains a much more elaborate version of this article.</li>
 </ul>
-
 <h2 id="comments">Comments</h2>
-
-<hr />
-
-<h4 id="evaldas-dauksevičius-23-december-11">Evaldas Dauksevičius - 23 December 11</h4>
-
+<hr>
+<h4 id="evaldas-daukseviius--23-december-11">Evaldas Dauksevičius - 23 December 11</h4>
 <p>SOLID article! thanks! :)</p>
-
-<hr />
-
-<h4 id="ian-27-august-12">Ian - 27 August 12</h4>
-
+<hr>
+<h4 id="ian--27-august-12">Ian - 27 August 12</h4>
 <p>I had been playing with a few similar concepts, reading your article really helped me get to grip on what it was I was trying to achieve, a great help thanks!</p>
-
-<hr />
-
-<h4 id="alexey-zuev-11-november-12">Alexey Zuev - 11 November 12</h4>
-
+<hr>
+<h4 id="alexey-zuev--11-november-12">Alexey Zuev - 11 November 12</h4>
 <p>Nice article, thanks! Interesting ideas and well explained.</p>
-
 <p>I have a question of how you handle cases (or how you manage not to have them) when a consumer is interested in a result of the command handling? For example, when command is - entity creation and consumer is interested in entity id which is generated during command handling.</p>
-
-<hr />
-
-<h4 id="steven-11-november-12">Steven - 11 November 12</h4>
-
+<hr>
+<h4 id="steven--11-november-12">Steven - 11 November 12</h4>
 <p>Hi Alexey,</p>
-
 <p>Returning data from command handlers is something I explain in <a href="/steven/p/data-commands">one of my later articles</a>.</p>
-
-<hr />
-
-<h4 id="rick-28-november-12">Rick - 28 November 12</h4>
-
+<hr>
+<h4 id="rick--28-november-12">Rick - 28 November 12</h4>
 <p>Great series of articles.</p>
-
 <p>Should there only ever be one command handler for a command? My assumption is yes and that the handler can raise domain events for further participation. This makes sense if you consider a command &amp; handler as corresponding to use cases.</p>
-
-<hr />
-
-<h4 id="steven-29-november-12">Steven - 29 November 12</h4>
-
+<hr>
+<h4 id="steven--29-november-12">Steven - 29 November 12</h4>
 <p>Rick, if you have more than one command handler per command, there might be something wrong with your design. A command handler is the implementation of a use case and it should be atomic, so IMO it makes little sense to split this up in multiple handlers. For event handlers on the other hand, it would be very likely to have multiple.</p>
-
-<hr />
-
-<h4 id="dzenan-24-february-13">Dzenan - 24 February 13</h4>
-
+<hr>
+<h4 id="dzenan--24-february-13">Dzenan - 24 February 13</h4>
 <p>Hi Steven,</p>
-
 <p>great article thank you for sharing it.</p>
-
 <p>I wonder if <code>MoveCustomerCommand</code> could be interface instead? Do you see any problems with it?</p>
-
 <p>Best regards</p>
-
-<hr />
-
-<h4 id="steven-24-february-13">Steven - 24 February 13</h4>
-
+<hr>
+<h4 id="steven--24-february-13">Steven - 24 February 13</h4>
 <p>Hi Dzenan,</p>
-
 <p>Let me turn it the other way around: what would be the use of adding an interface to a command message? Since a command message only contains data, and no logic, there should be no reason ever to abstract that type, as you would typically only abstract <em>behavior</em>, not data.</p>
-
 <p>So the problem is that you will create a useless abstraction that will only be in the way when writing your application, writing your tests and wiring your application in the DI Container.</p>
-
-<p>This doesn&rsquo;t mean, however, that your commands can&rsquo;t implement any interfaces. On the contrary, interfaces can help you in applying cross-cutting concerns conditionally in a very natural way. Take a look at this command and decorator:</p>
-
+<p>This doesn't mean, however, that your commands can't implement any interfaces. On the contrary, interfaces can help you in applying cross-cutting concerns conditionally in a very natural way. Take a look at this command and decorator:</p>
 <pre><code>public class ShipOrderCommand : IAsyncCommand { }
 
 public class AsyncCommandHandlerDecorator&lt;T&gt; : ICommandHandler&lt;T&gt;
@@ -454,36 +372,21 @@ public class AsyncCommandHandlerDecorator&lt;T&gt; : ICommandHandler&lt;T&gt;
 container.RegisterDecorator(
     typeof(ICommandHandler&lt;&gt;),
     typeof(AsyncCommandHandlerDecorator&lt;&gt;));
-</code></pre>
-
-<hr />
-
-<h4 id="mike-01-june-13">mike - 01 June 13</h4>
-
+</code></pre><hr>
+<h4 id="mike--01-june-13">mike - 01 June 13</h4>
 <p>Hello great article.
 Would it be bad practice to call commands from within a command? Or should you call each single command from the controller?</p>
-
-<hr />
-
-<h4 id="steven-01-june-13">Steven - 01 June 13</h4>
-
-<p>Mike, although this isn&rsquo;t bad practice per see, I think it&rsquo;s best to define a command as an atomic operation and use <code>ICommandHandler&lt;T&gt;</code> only as abstraction between the presentation layer and the business layer (not within the BL). This makes it much easier to apply cross-cutting concerns to command handlers, since most cross-cutting concerns should not be applied to the inner command handlers (i.e. you don&rsquo;t want to start a new transaction for an inner command).</p>
-
-<hr />
-
-<h4 id="sean-07-june-13">sean - 07 June 13</h4>
-
+<hr>
+<h4 id="steven--01-june-13">Steven - 01 June 13</h4>
+<p>Mike, although this isn't bad practice per see, I think it's best to define a command as an atomic operation and use <code>ICommandHandler&lt;T&gt;</code> only as abstraction between the presentation layer and the business layer (not within the BL). This makes it much easier to apply cross-cutting concerns to command handlers, since most cross-cutting concerns should not be applied to the inner command handlers (i.e. you don't want to start a new transaction for an inner command).</p>
+<hr>
+<h4 id="sean--07-june-13">sean - 07 June 13</h4>
 <p>Hello Steven,
-Excellent article. I got a lot from it. Thanks. Was just wondering if you implemented this behind an MVC site which used ViewModels to display data, would you recommend still having the command DTO&rsquo;s to pass to the command handlers? Then I will have 2 levels of mapping to do - View Model to Command, then Command to Domain Entity. Which will give me a nicer abstraction if a different client was to use the commands. But in my scenario it leads to some DTO repetition. What are your thoughts on this? Thanks for your time.</p>
-
-<hr />
-
-<h4 id="steven-07-june-13">Steven - 07 June 13</h4>
-
+Excellent article. I got a lot from it. Thanks. Was just wondering if you implemented this behind an MVC site which used ViewModels to display data, would you recommend still having the command DTO's to pass to the command handlers? Then I will have 2 levels of mapping to do - View Model to Command, then Command to Domain Entity. Which will give me a nicer abstraction if a different client was to use the commands. But in my scenario it leads to some DTO repetition. What are your thoughts on this? Thanks for your time.</p>
+<hr>
+<h4 id="steven--07-june-13">Steven - 07 June 13</h4>
 <p>Hi Sean,</p>
-
 <p>MVC has great model binding and compile time capabilities, so in general I would not recommend creating view models that are duplicates of your commands. Instead use the command as property in your view model. Example:</p>
-
 <pre><code>public class MoveCustomerViewModel
 {
     public MoveCustomerCommand Command { get; set; }
@@ -491,61 +394,36 @@ Excellent article. I got a lot from it. Thanks. Was just wondering if you implem
     // Extra properties needed to render the view
     public IEnumerable Customers { get; set; }
 }
-</code></pre>
-
-<hr />
-
-<h4 id="paul-seabury-03-july-13">Paul Seabury - 03 July 13</h4>
-
+</code></pre><hr>
+<h4 id="paul-seabury--03-july-13">Paul Seabury - 03 July 13</h4>
 <p>Steven - Great article &amp; info, thanks!</p>
-
-<p>One question I have is what if a controller might want to call 10 different commands&hellip; doesn&rsquo;t that get a bit burdensome with constructor injection? The registration part is easy with Simple Injector for example, but it seems unwieldy to inject so many dependencies via constructor.</p>
-
-<hr />
-
-<h4 id="daniel-hilgarth-https-www-fire-development-com-03-july-13"><a href="https://www.fire-development.com/">Daniel Hilgarth</a> - 03 July 13</h4>
-
+<p>One question I have is what if a controller might want to call 10 different commands&hellip; doesn't that get a bit burdensome with constructor injection? The registration part is easy with Simple Injector for example, but it seems unwieldy to inject so many dependencies via constructor.</p>
+<hr>
+<h4 id="daniel-hilgarthhttpswwwfiredevelopmentcom--03-july-13"><a href="https://www.fire-development.com/">Daniel Hilgarth</a> - 03 July 13</h4>
 <p>Paul,
 I take the liberty to answer that.</p>
-
 <p>If your class needs ten different commands it most likely violates the Single Responsibility Principle.</p>
-
 <p>There are two different ways you can fix it. Which one is appropriate depends on your actual class.</p>
-
 <p>Scenario 1:
 Your class has several public methods, each of which uses only a subset of the provided commands.
 Solution: Break your class apart into smaller classes, each with a focused responsibility</p>
-
 <p>Scenario 2:
 All ten commands are used by one method.
-This means that there probably is an abstraction that you didn&rsquo;t yet extract.
+This means that there probably is an abstraction that you didn't yet extract.
 Solution: Extract an abstraction that encapsulates a part of your method and exposes a higher level interface and internally uses some of the commands.
 <a href="https://blog.ploeh.dk/2010/02/02/RefactoringtoAggregateServices/">Further reading</a> for this scenario.</p>
-
-<hr />
-
-<h4 id="steven-03-july-13">Steven - 03 July 13</h4>
-
+<hr>
+<h4 id="steven--03-july-13">Steven - 03 July 13</h4>
 <p>Paul,</p>
-
-<p>Daniel is spot on with his answer. But I like to extend Daniel&rsquo;s second scenario a bit.</p>
-
+<p>Daniel is spot on with his answer. But I like to extend Daniel's second scenario a bit.</p>
 <p>A command should have (or at least in IMO) a one-to-one correspondence with a use case. When you handle a request for a user (when MVC calls one of your action methods) that is always one use case; never more. So you should never execute more than one command in a action method.</p>
-
 <p>Although in general, the answer would be to wrap this in an <a href="https://blog.ploeh.dk/2010/02/02/RefactoringtoAggregateServices/">Facade Service</a>, as Daniel says, in this case that Facade Service itself would become the use case and thus the command handler.</p>
-
 <p>Command handlers, however, should not depend (directly or indirectly) on other command handlers. The <code>ICommandHandler&lt;T&gt;</code> abstraction should just be a thin layer between your Presentation Layer and Business Layer. This command handler can still depend on other dependencies that might do the actual work, but not on other command handlers. This flat hierarchy is easier to follow, but more importantly, nesting command handler makes it much harder to apply cross-cutting concerns, since most cross-cutting concerns should only be applied to the handler that it triggered directly from the Presentation Layer. Think about applying transactions and deadlock retry for instance. See your <code>ICommandHandler&lt;T&gt;</code> as your gateway to the business layer.</p>
-
-<hr />
-
-<h4 id="paul-seabury-03-july-13-1">Paul Seabury - 03 July 13</h4>
-
+<hr>
+<h4 id="paul-seabury--03-july-131">Paul Seabury - 03 July 13</h4>
 <p>hanks both Daniel &amp; Steven!</p>
-
-<p>Very good info that I&rsquo;ve had a little while to digest, and in fact am implementing some code now based upon the over-injection post that Daniel directed me to.</p>
-
+<p>Very good info that I've had a little while to digest, and in fact am implementing some code now based upon the over-injection post that Daniel directed me to.</p>
 <p>My question still sort of remains though - what if I have a scenario, say a Message Processing Server, where they may be many commands:</p>
-
 <ul>
 <li>CreateNewUserCommand</li>
 <li>UpdateUserPrefsCommand</li>
@@ -553,47 +431,27 @@ Solution: Extract an abstraction that encapsulates a part of your method and exp
 <li>SendUserNotificationCommand</li>
 <li>&hellip; (My imagination fails me, but there could be many more)</li>
 </ul>
-
-<p>This could be in a controller, or just a standalone server. Now, I want all of these handlers to be available to the Server/Controller, but I still may suffer from the same over-injection disease without breaking any of the other principals. No command interdependency etc. You can imagine that in a <code>UserAccountController</code> for example, you wouldn&rsquo;t be breaking the SRP but still may have a lot of Commands.</p>
-
+<p>This could be in a controller, or just a standalone server. Now, I want all of these handlers to be available to the Server/Controller, but I still may suffer from the same over-injection disease without breaking any of the other principals. No command interdependency etc. You can imagine that in a <code>UserAccountController</code> for example, you wouldn't be breaking the SRP but still may have a lot of Commands.</p>
 <p>BTW - To remedy my current situation I aggregated like-commands into command processors and will inject 2 of them instead of 6 handlers.</p>
-
-<hr />
-
-<h4 id="steven-03-july-13-1">Steven - 03 July 13</h4>
-
+<hr>
+<h4 id="steven--03-july-131">Steven - 03 July 13</h4>
 <p>This would be an unusual case for a Controller to need, but not for a Windows Service or WCF service. A Windows Service would typically be used to read from a queue with commands and execute those commands. WCF will process incoming commands.</p>
-
 <p>Both services will deserialize objects from XML, JSON or some other format back into .NET classes and use and use metadata to get the actual command type and resolve the corresponding command handler. You can see an example of this <a href="/p/maintainable-wcf/">here</a> (see the <code>CommandService</code> class).</p>
-
 <p>But if you have multiple types of applications that need to have this same processing logic, in that case you need some kind of factory for command handlers, a <code>ICommandProcessor</code>. Something like:</p>
-
 <pre><code>public interface ICommandProcessor
 {
     void Process(object command);
 }
-</code></pre>
-
-<p>Your WCF service, and Windows Service can both call the <code>ICommandProcessor</code> and its implementation will do the reflection as shown in the linked article.</p>
-
-<hr />
-
-<h4 id="mike-12-july-13">Mike - 12 July 13</h4>
-
-<p>This is perhaps one of the best posts I have read in a long time! It has really opened my eyes on the power of decorators and I&rsquo;ll have to be careful not to overuse the concept everywhere. Thank you for taking the time to write and share quality knowledge.</p>
-
-<hr />
-
-<h4 id="benjamin-08-january-14">Benjamin - 08 January 14</h4>
-
+</code></pre><p>Your WCF service, and Windows Service can both call the <code>ICommandProcessor</code> and its implementation will do the reflection as shown in the linked article.</p>
+<hr>
+<h4 id="mike--12-july-13">Mike - 12 July 13</h4>
+<p>This is perhaps one of the best posts I have read in a long time! It has really opened my eyes on the power of decorators and I'll have to be careful not to overuse the concept everywhere. Thank you for taking the time to write and share quality knowledge.</p>
+<hr>
+<h4 id="benjamin--08-january-14">Benjamin - 08 January 14</h4>
 <p>Hi Steven, this is a very interesting article with some great ideas.</p>
-
 <p>I was wondering how this relates to the command pattern. Would you consider this to be an implementation of the command pattern or is the name where the similarity ends?</p>
-
 <p>In the standard implementation, the command objects have a uniform, no-arg execute method which makes it easy to pass the data around but most implementations I have seen end up becoming unwieldy when you start trying to add additional features such as undo (which usually add additional methods to the command classes, violating the SRP).</p>
-
 <p>I can see your architecture making some of these thing much easier, for example:</p>
-
 <pre><code>public class RegisterUndoCommandHandlerDecorator : CommandHandler
 {
     private UndoManager Manager { get; set; }
@@ -614,30 +472,17 @@ Solution: Extract an abstraction that encapsulates a part of your method and exp
         this.Wrapped.Handle(Command);
     }
 }
-</code></pre>
-
-<p>I would appreciate your thoughts on this.</p>
-
-<hr />
-
-<h4 id="steven-14-january-14">Steven - 14 January 14</h4>
-
+</code></pre><p>I would appreciate your thoughts on this.</p>
+<hr>
+<h4 id="steven--14-january-14">Steven - 14 January 14</h4>
 <p>Hi Benjamin,</p>
-
-<p>I don&rsquo;t consider this the <a href="https://en.wikipedia.org/wiki/Command_pattern">Command Pattern</a>, although the patterns are clearly related—both deal with commands. But they are also very different—the command pattern deals with a single <code>ICommand</code> interface that consumers can depend on. This allows them to know nothing about the commands they execute and it allows consumers to store, execute, and undo a list of unrelated commands. Take for instance a text processor or painting application where changes are made in lots of small steps and each step must be undoable. In such application it is pretty clear you need the command pattern. For Line of Business applications, however, you often deal with transactions and need to add a lot of cross-cutting concerns around those transactions. This is a clear case for the pattern described in this blog post.</p>
-
-<hr />
-
-<h4 id="graham-27-january-14">Graham - 27 January 14</h4>
-
+<p>I don't consider this the <a href="https://en.wikipedia.org/wiki/Command_pattern">Command Pattern</a>, although the patterns are clearly related—both deal with commands. But they are also very different—the command pattern deals with a single <code>ICommand</code> interface that consumers can depend on. This allows them to know nothing about the commands they execute and it allows consumers to store, execute, and undo a list of unrelated commands. Take for instance a text processor or painting application where changes are made in lots of small steps and each step must be undoable. In such application it is pretty clear you need the command pattern. For Line of Business applications, however, you often deal with transactions and need to add a lot of cross-cutting concerns around those transactions. This is a clear case for the pattern described in this blog post.</p>
+<hr>
+<h4 id="graham--27-january-14">Graham - 27 January 14</h4>
 <p>Hi Steven,</p>
-
 <p>How would you arrange these classes in a larger VS project/solution?</p>
-
 <p>Would you have the commands in one project and the handlers in another? Would you recommend having one single project just for interfaces?</p>
-
 <p>I currently have a structure of:</p>
-
 <ul>
 <li>Context (EF mappings, DBContext etc)</li>
 <li>Model (concrete)</li>
@@ -646,231 +491,126 @@ Solution: Extract an abstraction that encapsulates a part of your method and exp
 <li>Interfaces (repository and service interfaces)</li>
 <li>Core (contains useful helpers, extensions etc.)</li>
 </ul>
-
 <p>Would you split services into commands and handlers and wire up everything using IoC in the client app?</p>
-
-<hr />
-
-<h4 id="steven-02-february-14">Steven - 02 February 14</h4>
-
+<hr>
+<h4 id="steven--02-february-14">Steven - 02 February 14</h4>
 <p>Graham,</p>
-
 <p>It all depends on context. It all depends on the size of your project, the number of developers working on it, and your application requirements.</p>
-
 <p>If you are sending commands over the wire for instance (using a WCF service for instance), it becomes really useful to have some sort of &lsquo;Contract&rsquo; assembly that contains just the commands. This contract assembly can be shared by the server and the client, and you could even share it with third parties. This is the approach I took in a recent project.</p>
-
-<p>When you don&rsquo;t intend to send commands over the wire, you might as well place the command and its command handler in the same file. This makes it really easy to navigate to the handler from a consumer (by pressing F12 in Visual Studio). Tools like Resharper have better code navigation support than VS and they often make it easy to navigate to the implementation without having to place the command and the handler in the same file.</p>
-
+<p>When you don't intend to send commands over the wire, you might as well place the command and its command handler in the same file. This makes it really easy to navigate to the handler from a consumer (by pressing F12 in Visual Studio). Tools like Resharper have better code navigation support than VS and they often make it easy to navigate to the implementation without having to place the command and the handler in the same file.</p>
 <p>When the project becomes bigger, you might again want to prevent the presentation layer(s) from taking a dependency on the business layer. In that case again the commands and the <code>ICommandHandler&lt;T&gt;</code> interface must be in a different assembly. In such project it could be beneficial to again have a &lsquo;Contract&rsquo; assembly that contains interfaces and commands. But again, it all depends on context.</p>
-
 <blockquote>
 <p>Would you split services into commands and handlers and wire up everything using IoC in the client app?</p>
 </blockquote>
-
-<p>You should certainly not replace all services by commands and handlers; services still have their place in any application and in the applications I build command handlers always depend on other services. But services like <code>OrderServices</code> and <code>CustomerServices</code> will be gone. Those are a big design smell. On the other hand, any logic that two command handlers share, should be extracted into its own service. And of course everything should written using dependency injection. Whether you need to use a DI library depends on your needs, but you&rsquo;ll soon find out that a DI container is a really useful tool when you use the command/handler pattern.</p>
-
-<hr />
-
-<h4 id="ivaylo-dimov-13-april-14">Ivaylo Dimov - 13 April 14</h4>
-
+<p>You should certainly not replace all services by commands and handlers; services still have their place in any application and in the applications I build command handlers always depend on other services. But services like <code>OrderServices</code> and <code>CustomerServices</code> will be gone. Those are a big design smell. On the other hand, any logic that two command handlers share, should be extracted into its own service. And of course everything should written using dependency injection. Whether you need to use a DI library depends on your needs, but you'll soon find out that a DI container is a really useful tool when you use the command/handler pattern.</p>
+<hr>
+<h4 id="ivaylo-dimov--13-april-14">Ivaylo Dimov - 13 April 14</h4>
 <p>Hi Steven, the articles for commands and queries are one of the best I have red in the past year. Thank you!</p>
-
 <p>My question is should one use commands to perform the standard crud operation like Save? Generally save could be an method in the repository of the aggregate root that could be called from some domain services or directly from the controller. I imagine that we could have a save command that calls the save method of the corresponding repository an probably we could create generic SaveCommandHandler that can be inherited when needed to add some specific functionality. Am I on the right track?</p>
-
-<hr />
-
-<h4 id="steven-13-april-14">Steven - 13 April 14</h4>
-
-<p>Hi Ivaylo, it depends on what you&rsquo;re trying to achieve whether this is useful or not. In general I would say that the command/handler pattern is not a replacement of the repository pattern. If your command handlers contain one line of code to map to the repository it might be a useless abstraction, and it might be better to directly inject a repository in the consumer.</p>
-
-<p>On the other hand, using commands for CRUD operations does allow you to have a single abstraction to deal with in case communication goes through a web service (see one of my later articles about <a href="/steven/p/maintainable-wcf/">Highly Maintainable WCF Services</a> for instance). That&rsquo;s what we did in a precious project. We used generic <code>GetByIdQuery&lt;TEntity&gt;</code> query and <code>SaveOrUpdateCommand&lt;TEntity&gt;</code> command to simulate CRUD operations. On the client we hid those commands and queries behind a <code>IRepository&lt;TEntity&gt;</code> interface, but that abstraction did not exist on the server.</p>
-
-<hr />
-
-<h4 id="dalsoft-https-www-dalsoft-co-uk-blog-03-may-14"><a href="https://www.dalsoft.co.uk/blog/">DalSoft</a> - 03 May 14</h4>
-
-<p>This is one of the best blog posts I&rsquo;ve read in a long time (and the next post on queries is even better!). It pre dates posts by Rob Conery and Ayende on the same theme. I just don&rsquo;t know why some devs won&rsquo;t let the repository pattern go.</p>
-
+<hr>
+<h4 id="steven--13-april-14">Steven - 13 April 14</h4>
+<p>Hi Ivaylo, it depends on what you're trying to achieve whether this is useful or not. In general I would say that the command/handler pattern is not a replacement of the repository pattern. If your command handlers contain one line of code to map to the repository it might be a useless abstraction, and it might be better to directly inject a repository in the consumer.</p>
+<p>On the other hand, using commands for CRUD operations does allow you to have a single abstraction to deal with in case communication goes through a web service (see one of my later articles about <a href="/steven/p/maintainable-wcf/">Highly Maintainable WCF Services</a> for instance). That's what we did in a precious project. We used generic <code>GetByIdQuery&lt;TEntity&gt;</code> query and <code>SaveOrUpdateCommand&lt;TEntity&gt;</code> command to simulate CRUD operations. On the client we hid those commands and queries behind a <code>IRepository&lt;TEntity&gt;</code> interface, but that abstraction did not exist on the server.</p>
+<hr>
+<h4 id="dalsofthttpswwwdalsoftcoukblog--03-may-14"><a href="https://www.dalsoft.co.uk/blog/">DalSoft</a> - 03 May 14</h4>
+<p>This is one of the best blog posts I've read in a long time (and the next post on queries is even better!). It pre dates posts by Rob Conery and Ayende on the same theme. I just don't know why some devs won't let the repository pattern go.</p>
 <p>Thank you for sharing this</p>
-
-<hr />
-
-<h4 id="james-09-september-14">James - 09 September 14</h4>
-
-<p>Hi Steven thanks for the articles even if I am still trying to wrap my head around it all as I&rsquo;m still in the Repository mindset.</p>
-
+<hr>
+<h4 id="james--09-september-14">James - 09 September 14</h4>
+<p>Hi Steven thanks for the articles even if I am still trying to wrap my head around it all as I'm still in the Repository mindset.</p>
 <p>One question I have regarding updating a database, where would security checks fit into this?
-An example I have is a user record is being updated (multiple fields at once), some of those fields are lookups in a multi-customer system. I want to prevent a devious user from choosing a lookup (via ID) that doesn&rsquo;t belong to them.</p>
-
+An example I have is a user record is being updated (multiple fields at once), some of those fields are lookups in a multi-customer system. I want to prevent a devious user from choosing a lookup (via ID) that doesn't belong to them.</p>
 <p>The way I do this currently is to check via a validate method just before I update the database and fail if they have picked an ID from another organisation.</p>
-
 <p>Would a similar check be suitable in the <code>MoveCustomerCommandHandler.Handle</code> method here? The check in my case involves a read from the database that returns a boolean (user account has permission against lookup ID for organisation, or not).</p>
-
 <p>Anyway thanks for sharing.</p>
-
-<hr />
-
-<h4 id="guy-09-september-14">Guy - 09 September 14</h4>
-
+<hr>
+<h4 id="guy--09-september-14">Guy - 09 September 14</h4>
 <p>James, I am currently working on this exact requirement.</p>
-
 <p>I implemented an <code>AuthorisationCommandHandler</code> as a decorator of all commands, and ascertain whether the current user (injected as <code>IPrincipal</code>) has correct permissions to execute that specific command (which are mapped to the user via their full type name). If you have specific lookups per handler (which it sounds like you do), then you should create a validator handler for that specific command handler and decorate only that specific command handler in your container binding setup. Hope that helps.</p>
-
-<hr />
-
-<h4 id="james-09-september-14-1">James - 09 September 14</h4>
-
+<hr>
+<h4 id="james--09-september-141">James - 09 September 14</h4>
 <p>Hi Guy</p>
-
 <p>Thanks for the response, I am still new to this way of thinking and at the moment I am using Web Api and validating access to controller actions using an authorise attribute which seems to work and appears early enough in the pipeline.</p>
-
 <p>I will take a look at this further though and look at how I can implement the pattern described here and if it seems like a good replacement for our increasingly complex repository pattern implementation.</p>
-
 <p>I have started a thread <a href="https://github.com/dotnetjunkie/solidservices/issues/4">here</a> regarding the idea of row-based security and where it fits into the pipeline, hopefully it will spawn some debate.</p>
-
-<hr />
-
-<h4 id="andrejk-17-november-14">AndrejK - 17 November 14</h4>
-
+<hr>
+<h4 id="andrejk--17-november-14">AndrejK - 17 November 14</h4>
 <p>Thank you Steven for great article. I have one question:
 How would you evaluate whether command (represented by button in UI) is &ldquo;visible&rdquo; to user when some of the criteria are now split between different Handlers?
 Permissions, validation, command criteria/rules&hellip; would need to be somehow combined together and evaluate before/without executing the Command pipeline.</p>
-
-<p>(And solution when button always shows wouldn&rsquo;t work in more complex systems)</p>
-
-<hr />
-
-<h4 id="steven-17-november-14">Steven - 17 November 14</h4>
-
+<p>(And solution when button always shows wouldn't work in more complex systems)</p>
+<hr>
+<h4 id="steven--17-november-14">Steven - 17 November 14</h4>
 <p>Hi Andrej, it depends on your requirements, but what you can do is mark the command with an attribute that states the roles or permission that the user must have to be able to execute the command. Besides having a decorator that verifies this upon execution, and you can query this metadata in your presentation layer to make a certain button visible or not.</p>
-
-<hr />
-
-<h4 id="wayne-28-november-14">Wayne - 28 November 14</h4>
-
+<hr>
+<h4 id="wayne--28-november-14">Wayne - 28 November 14</h4>
 <p>When wrapping command handlers with a decorator that add transactional behavior, you need to make sure that the nested handlers run in the same transaction as the outer most handler.</p>
-
 <p>How would you handle this?</p>
-
-<hr />
-
-<h4 id="steven-29-november-14">Steven - 29 November 14</h4>
-
+<hr>
+<h4 id="steven--29-november-14">Steven - 29 November 14</h4>
 <p>Wayne,</p>
-
-<p>The way to handle this is to prevent having nested command handlers in the first place. As I see it, that ICommandHandler abstraction is a thin layer between the business layer and the outside world; don&rsquo;t let the business layer itself execute commands.</p>
-
+<p>The way to handle this is to prevent having nested command handlers in the first place. As I see it, that ICommandHandler abstraction is a thin layer between the business layer and the outside world; don't let the business layer itself execute commands.</p>
 <p>In my experience this makes your code much cleaner and this prevents having the problem of those &lsquo;conditional&rsquo; decorators altogether, because your transaction decorator will certainly not be the only decorator that you only want to apply to the outer command handler.</p>
-
 <p>If you find yourself in a situation that you have multiple command handlers that share the same logic, either extract that logic to a <a href="https://blog.ploeh.dk/2010/02/02/RefactoringtoAggregateServices/">Facade Service</a> or start publishing domain events.</p>
-
-<hr />
-
-<h4 id="andrejk-29-november-14">AndrejK - 29 November 14</h4>
-
+<hr>
+<h4 id="andrejk--29-november-14">AndrejK - 29 November 14</h4>
 <p>Steven (&amp; Wayne)</p>
-
 <p>Commiting transaction is not resposibility of CommandHandler. Commit is executed after Command(s) executes, so decorators or even multiple commands could be put under same transaction.</p>
-
 <p>Steven, I understand the suggestion about facade service but what is your experience using inheritance?
 (e.g <code>CommandHandler[Base]</code>, <code>CommandHandler[IBaseInterface]</code> would also be called when <code>Command: Base, IBaseInterface</code> is executed)</p>
-
-<hr />
-
-<h4 id="steven-29-november-14-1">Steven - 29 November 14</h4>
-
+<hr>
+<h4 id="steven--29-november-141">Steven - 29 November 14</h4>
 <p>Hi AndrejK,</p>
-
-<p>I agree that committing the transaction is not the responsibility of the command handler. It&rsquo;s a cross-cutting concern and should therefore be part of your infrastructure. But since the execution of a command itself should be transactional, this cross-cutting concern should be placed in between the consumer of the handler (e.g. an MVC controller) and the actual business logic itself (the command handler implementation), In other words, the right place to do so is using a decorator, because this allows both the consumer as the command handler implementation itself to be oblivious of this cross-cutting concern.</p>
-
-<p>Handling multiple commands in one transaction is something you shouldn&rsquo;t do IMO, because the command itself describes an action that should be atomic; if you have multiple commands that you want to execute in one transaction, you are really talking about one single command. The responsible command handler implementation for this command however, could still delegate the work to other services, and might call one service 100 times, to insert 100 records into the database.</p>
-
-<p>Don&rsquo;t use base classes for your command handlers. If you do that, this means that there is something wrong with your design. I speak from experience here, since I used to do that in the past, but since I use decorators and follow the SOLID principles, I&rsquo;ve never seen any good reason to use a CommandHandlerBase class again; ever.</p>
-
-<p>Those base classes make your code harder to test and harder to maintain. Ask yourself why you need such base class. Do you implement cross-cutting concerns in this base class? Don&rsquo;t do that! Use decorators instead, because this is much more flexible and maintainable. Do you let this base class hold some dependencies (properly injected using property injection) that are used by most handler implementations? Don&rsquo;t do that! This hides the fact that your implementations are violating the Single Responsibility Principle, i.e. they do too much and are too complex. You might be &lsquo;solving&rsquo; the problem of constructor over-injection, but you will not solve the problem of letting these classes do too much.</p>
-
-<hr />
-
-<h4 id="joe-21-january-15">Joe - 21 January 15</h4>
-
+<p>I agree that committing the transaction is not the responsibility of the command handler. It's a cross-cutting concern and should therefore be part of your infrastructure. But since the execution of a command itself should be transactional, this cross-cutting concern should be placed in between the consumer of the handler (e.g. an MVC controller) and the actual business logic itself (the command handler implementation), In other words, the right place to do so is using a decorator, because this allows both the consumer as the command handler implementation itself to be oblivious of this cross-cutting concern.</p>
+<p>Handling multiple commands in one transaction is something you shouldn't do IMO, because the command itself describes an action that should be atomic; if you have multiple commands that you want to execute in one transaction, you are really talking about one single command. The responsible command handler implementation for this command however, could still delegate the work to other services, and might call one service 100 times, to insert 100 records into the database.</p>
+<p>Don't use base classes for your command handlers. If you do that, this means that there is something wrong with your design. I speak from experience here, since I used to do that in the past, but since I use decorators and follow the SOLID principles, I've never seen any good reason to use a CommandHandlerBase class again; ever.</p>
+<p>Those base classes make your code harder to test and harder to maintain. Ask yourself why you need such base class. Do you implement cross-cutting concerns in this base class? Don't do that! Use decorators instead, because this is much more flexible and maintainable. Do you let this base class hold some dependencies (properly injected using property injection) that are used by most handler implementations? Don't do that! This hides the fact that your implementations are violating the Single Responsibility Principle, i.e. they do too much and are too complex. You might be &lsquo;solving&rsquo; the problem of constructor over-injection, but you will not solve the problem of letting these classes do too much.</p>
+<hr>
+<h4 id="joe--21-january-15">Joe - 21 January 15</h4>
 <p>Would it make sense to have a command with no parameters for example a command to disable an app setting?</p>
-
 <p>In this case do you create a class with no methods or properties to pass to <code>IQueryHandler&lt;T&gt;</code>? <code>DisableFeatureZZZCommandHandler : IQueryHandler&lt;DisableFeatureZZZCommand&gt;</code></p>
-
 <p>The query handler will mutate database state.</p>
-
-<hr />
-
-<h4 id="steven-21-january-15">Steven - 21 January 15</h4>
-
-<p>Hi Joe, that absolutely makes sense. It makes sense for both queries and commands, although it&rsquo;s a much more likely scenario for queries than commands. And although a command can be parameterless, its command handler could still use contextual information such as the user credentials, time settings, etc, to do the processing.</p>
-
-<p>There&rsquo;s only one particular thing that is worrying me about your example, and that is that you seem to be mixing the concepts of queries and commands. You should not have a command handler that implements the query handler interface. Keep them separate. A command is for mutating the system. A query is for getting data out of the system without side effects.</p>
-
-<hr />
-
-<h4 id="joe-21-january-15-1">Joe - 21 January 15</h4>
-
+<hr>
+<h4 id="steven--21-january-15">Steven - 21 January 15</h4>
+<p>Hi Joe, that absolutely makes sense. It makes sense for both queries and commands, although it's a much more likely scenario for queries than commands. And although a command can be parameterless, its command handler could still use contextual information such as the user credentials, time settings, etc, to do the processing.</p>
+<p>There's only one particular thing that is worrying me about your example, and that is that you seem to be mixing the concepts of queries and commands. You should not have a command handler that implements the query handler interface. Keep them separate. A command is for mutating the system. A query is for getting data out of the system without side effects.</p>
+<hr>
+<h4 id="joe--21-january-151">Joe - 21 January 15</h4>
 <p>Is there ever a case to have the command handler return a value such as a status or unique id of a new record? How would you handle this on <code>ICommandHandler&lt;T&gt;</code> as your example returns void?</p>
-
 <p>Do you have any posts on how you structure the domain / business logic of the command handlers? Do you write all the database update code inside of the handlers?</p>
-
 <p>Finally, do you abstract the libraries used for data access, such as abstracting the EF code behind an interface?</p>
-
 <p>Thank you.</p>
-
-<hr />
-
-<h4 id="joe-21-january-15-2">Joe - 21 January 15</h4>
-
+<hr>
+<h4 id="joe--21-january-152">Joe - 21 January 15</h4>
 <p>Thanks Steven and sorry I made a typo I meant to say command handler but typed query handler.</p>
-
 <p>I really like your examples here and trying if we can use it in a current project. The decorator for logging could solve the auditing requirement. Took your example and stored the command as json in a db. All the command properties are serialized to json along with the command class name. One class to log all the commands.</p>
-
-<hr />
-
-<h4 id="steven-21-january-15-1">Steven - 21 January 15</h4>
-
+<hr>
+<h4 id="steven--21-january-151">Steven - 21 January 15</h4>
 <blockquote>
 <p>Is there ever a case to have the command handler return a value such as a status or unique id</p>
 </blockquote>
-
 <p>Joe, please read <a href="/steven/p/data-commands">this article</a>.</p>
-
 <blockquote>
 <p>Do you have any posts on how you structure the domain / business
 logic of the command handlers?</p>
 </blockquote>
-
-<p>No, I&rsquo;m sorry. Nothing on that.</p>
-
+<p>No, I'm sorry. Nothing on that.</p>
 <blockquote>
 <p>Do you write all the database update code inside of the handlers?</p>
 </blockquote>
-
 <p>It depends on the application. Sometimes I publish events and have asynchronous event handlers process parts of the business logic.</p>
-
 <blockquote>
 <p>Finally do you abstract the libraries used for data access,
 such as abstracting the EF code behind an interface?</p>
 </blockquote>
-
 <p>That depends on the application.</p>
-
 <p>I like to invite you to ask any questions about implementing these patterns on <a href="https://github.com/dotnetjunkie/solidservices/issues">this forum</a>. My weblog is not suited for this type of Q/A.</p>
-
-<hr />
-
-<h4 id="matt-26-march-15">Matt - 26 March 15</h4>
-
-<p>I&rsquo;m struggling a bit understanding if my vision for the system I&rsquo;m working on is going to be heading toward a maintainability problem.</p>
-
-<p>In the past, I&rsquo;ve implemented controllers (MVC or WebAPI, doesn&rsquo;t matter for this discussion) centered around the logical entity; Product, Order, User - you get the idea.</p>
-
+<hr>
+<h4 id="matt--26-march-15">Matt - 26 March 15</h4>
+<p>I'm struggling a bit understanding if my vision for the system I'm working on is going to be heading toward a maintainability problem.</p>
+<p>In the past, I've implemented controllers (MVC or WebAPI, doesn't matter for this discussion) centered around the logical entity; Product, Order, User - you get the idea.</p>
 <p>The problem enters as the number of commands a given entity supports grows, the constructor injection method seems to break down. Paul Seabury already touched on this, but the linked suggestion seemingly punts the issue to a different interface that would wrap those dependencies.</p>
-
 <p>For example:</p>
-
 <pre><code>public ProductController
 {
     private ICommandHandler&lt;DeactivateProductCommand&gt; mDeactivate;
@@ -886,228 +626,123 @@ such as abstracting the EF code behind an interface?</p>
         //...surely you see where I'm going
     }
 }
-</code></pre>
-
-<p>The <a href="https://blog.ploeh.dk/2010/02/02/RefactoringtoAggregateServices/">refactoring</a> mentioned purporting to solve this seems a bit like it just punts the issue into a new class.</p>
-
-<p>I&rsquo;m sure there is a point that I don&rsquo;t see here; maybe introducing aggregate services allows you to only inject the aggregates you need for the actions you&rsquo;re testing?</p>
-
-<hr />
-
-<h4 id="steven-26-march-15">Steven - 26 March 15</h4>
-
+</code></pre><p>The <a href="https://blog.ploeh.dk/2010/02/02/RefactoringtoAggregateServices/">refactoring</a> mentioned purporting to solve this seems a bit like it just punts the issue into a new class.</p>
+<p>I'm sure there is a point that I don't see here; maybe introducing aggregate services allows you to only inject the aggregates you need for the actions you're testing?</p>
+<hr>
+<h4 id="steven--26-march-15">Steven - 26 March 15</h4>
 <p>Hi Matt,</p>
-
-<p>I think I touched this subject a bit in <a href="/steven/p/queries/">this article</a>, but focusing classes around a single entity leads to severe violations of the Single Responsibility Principle (as Daniel Hilgarth responded to Paul Seabury&rsquo;s question). Those classes will get big and unmaintainable and I think your example shows this very clearly.</p>
-
-<p>Falling back to facade services will not help at all in this case, because it doesn&rsquo;t resolve the SRP violation.</p>
-
+<p>I think I touched this subject a bit in <a href="/steven/p/queries/">this article</a>, but focusing classes around a single entity leads to severe violations of the Single Responsibility Principle (as Daniel Hilgarth responded to Paul Seabury's question). Those classes will get big and unmaintainable and I think your example shows this very clearly.</p>
+<p>Falling back to facade services will not help at all in this case, because it doesn't resolve the SRP violation.</p>
 <p>The real solution is to focus your controllers around use cases, just as command handlers do. So instead of having a <code>ProductController</code>, think about having a <code>DeactivateProductController</code>, <code>PublishProductController</code> and <code>DeleteProductController</code>. This is what I do in the applications I write. This keeps controllers really small and focused.</p>
-
-<hr />
-
-<h4 id="jonas-04-may-15">Jonas - 04 May 15</h4>
-
+<hr>
+<h4 id="jonas--04-may-15">Jonas - 04 May 15</h4>
 <p>Hi Steven,</p>
-
 <p>thx for a great post. I am thinking of using your approach in a project, but am a bit concerned of testability.</p>
-
 <p>Im interested in hearing your opinion regarding integration testing. Since we have now separated concerns into lets say a command and a commandvalidator class which decorates the command, how would you ensure that validation is performed before your command is executed? The 2 classes can be unit tested, but as the responsibility of the coupling is now tied to the DI-framework, I cannot see how the interation test can be done.</p>
-
 <p>What if someone accidently alters my (now much more complex) DI-code so that my command is no longer decorated with the validator? I would argue that moving responsibility to the DI-code makes it harder to do integration testing. Obviously someone will always be able to modify the code and then cause an error. In this case, using a traditional businesslayer method I would normally write an integration test, that ensured that every time I call the command, validation is performed prior to performing the action.</p>
-
 <p>Looking forward to hearing your opinion.</p>
-
-<hr />
-
-<h4 id="steven-04-may-15">Steven - 04 May 15</h4>
-
+<hr>
+<h4 id="steven--04-may-15">Steven - 04 May 15</h4>
 <p>Hi Jonas,</p>
-
 <p>When doing integration testing, it is quite usual to involve the container into the integration tests. This is quite obvious, because you want to test the whole integration chain in the application, which might mean you touch several layers, and a multitude of classes.</p>
-
 <p>Still, I would prefer testing both the command handler and its validator(s) each in isolation, preferably in a unit test, because this results in tests that are much more readable, trustworthy and maintainable. During unit testing you should not use the container at all, but test one single class in isolation.</p>
-
 <p>In the same way you would have a few unit tests that verifies whether the command handler decorator that executes the validators works as expected. You should check if that decorator executes all validators, executes them before the decoratee, and ensures that the decoratee isn’t called in case of a validation error.</p>
-
 <p>What’s left is a rather straightforward integration test that checks whether the DI configuration would pick up validators at all, and if they are injected correctly into the command handler decorator.</p>
-
 <p>As an extra check, you could search the code base for classes that contain a “Validate(X)” method, where X is some command class, and where the given class does not implement <code>IValidator&lt;T&gt;</code>. This might be useful, because forgetting to implement the <code>IValidator&lt;T&gt;</code> interface on a validator class will cause the container to skip its registration, while the code compiles and your unit tests will pass.</p>
-
-<hr />
-
-<h4 id="steven-26-may-15">Steven - 26 May 15</h4>
-
+<hr>
+<h4 id="steven--26-may-15">Steven - 26 May 15</h4>
 <p>Daniel Whittaker has a nice post where he explains the difference between the Gang of Four Command pattern and the pattern as described in <a href="https://danielwhittaker.me/2015/05/25/is-a-cqrs-command-gof-command/">this article</a>.</p>
-
-<hr />
-
-<h4 id="brent-http-www-ariasamp-net-19-january-16"><a href="http://www.ariasamp.net/">Brent</a> - 19 January 16</h4>
-
-<p>Suppose that command validation rules are complex, and perhaps even dynamic. If I build a multi-tenant application, the validation rules might be different for each tenant. I don&rsquo;t think I want one <code>ValidationCommandHandlerDecorator</code> for each rule. I probably want one <code>ValidationCommandHandlerDecorator</code> that is capable of addressing all the (dynamic) validation rules simultaneously, presumably through internal composition.</p>
-
+<hr>
+<h4 id="brenthttpwwwariasampnet--19-january-16"><a href="http://www.ariasamp.net/">Brent</a> - 19 January 16</h4>
+<p>Suppose that command validation rules are complex, and perhaps even dynamic. If I build a multi-tenant application, the validation rules might be different for each tenant. I don't think I want one <code>ValidationCommandHandlerDecorator</code> for each rule. I probably want one <code>ValidationCommandHandlerDecorator</code> that is capable of addressing all the (dynamic) validation rules simultaneously, presumably through internal composition.</p>
 <p>Is that the approach you would take?</p>
-
-<p>Incidentally, a little off-topic, is there a simple rules-engine that you&rsquo;ve been reasonably pleased with that can handle the dynamic scenario I&rsquo;m describing? What is it?</p>
-
-<hr />
-
-<h4 id="steven-19-january-16">Steven - 19 January 16</h4>
-
+<p>Incidentally, a little off-topic, is there a simple rules-engine that you've been reasonably pleased with that can handle the dynamic scenario I'm describing? What is it?</p>
+<hr>
+<h4 id="steven--19-january-16">Steven - 19 January 16</h4>
 <p>Hi Brent,</p>
-
 <p>When it comes to validating, it is really useful to have an <code>IValidator&lt;T&gt;</code> as abstraction for the validation of a single element (<code>T</code>). If you do this, it becomes trivial to have validator implementations that are specific to a tenant.</p>
-
 <p>If you give each Tenant its own app domain (own IIS site), you can place tenant specific validators in a seperate assembly that is loaded during startup.</p>
-
-<p>If, on the other hand, all tenants run in the same site and in the same app domain, you can mark validators with an attribute (or use convention over configuration) and have either a decorator or a composite validator that is able to filter out validators that don&rsquo;t belong to the currently active tenant.</p>
-
+<p>If, on the other hand, all tenants run in the same site and in the same app domain, you can mark validators with an attribute (or use convention over configuration) and have either a decorator or a composite validator that is able to filter out validators that don't belong to the currently active tenant.</p>
 <p>You can read <a href="https://github.com/dotnetjunkie/solidservices/issues/4">this</a> to get more ideas.</p>
-
-<hr />
-
-<h4 id="denis-11-july-16">Denis - 11 July 16</h4>
-
+<hr>
+<h4 id="denis--11-july-16">Denis - 11 July 16</h4>
 <p>Steven which O/RM suites better for CQRS architecture (both for command and query side) and which one you usually use to your applications?</p>
-
-<hr />
-
-<h4 id="steven-11-july-16">Steven - 11 July 16</h4>
-
+<hr>
+<h4 id="steven--11-july-16">Steven - 11 July 16</h4>
 <p>Hi Denis,</p>
-
 <p>I usually use Entity Framework, but I think you can use any ORM tool. Nice thing is that because of the separation between commands and queries, you can even select a different tool for each side. I use EF for both sides.</p>
-
-<hr />
-
-<h4 id="gavin-25-august-16">Gavin - 25 August 16</h4>
-
+<hr>
+<h4 id="gavin--25-august-16">Gavin - 25 August 16</h4>
 <p>Fantastic article. Nearly 5 years old and still completely relevant.</p>
-
 <p>For scenarios with complex business logic, e.g. when you need to update, and add to, multiple db tables in a single Web API HTTP post request, would an facade service be the best place for the numerous, atomic commands that need to be run?</p>
-
 <p>E.g. a <code>SignUpNewCustomer</code> service that encapsulates:</p>
-
 <ol>
 <li><code>AddCustomerCommand</code></li>
 <li><code>AddCustomerPaymentMethodCommand</code></li>
 <li><code>AddCustomerSubscription</code></li>
 </ol>
-
-<p>If feels like this is SRP violation but I don&rsquo;t see a clear alternative. The only possible exception being to have a web api call for each of the three commands. This would obviously be slower &amp; introduce some latency into the application. I&rsquo;d love to hear your thoughts.</p>
-
-<p>Also, have you read or have any opinions on <a href="https://rob.conery.io/2014/03/03/repositories-and-unitofwork-are-not-a-good-idea/">Rob Conery&rsquo;s take on CQRS</a>.</p>
-
-<hr />
-
-<h4 id="steven-25-august-16">Steven - 25 August 16</h4>
-
+<p>If feels like this is SRP violation but I don't see a clear alternative. The only possible exception being to have a web api call for each of the three commands. This would obviously be slower &amp; introduce some latency into the application. I'd love to hear your thoughts.</p>
+<p>Also, have you read or have any opinions on <a href="https://rob.conery.io/2014/03/03/repositories-and-unitofwork-are-not-a-good-idea/">Rob Conery's take on CQRS</a>.</p>
+<hr>
+<h4 id="steven--25-august-16">Steven - 25 August 16</h4>
 <p>Hi Gavin,</p>
-
 <blockquote>
 <p>would an aggregate service be the best place for the numerous, atomic commands that need to be run?</p>
 </blockquote>
-
 <p>In my view of the world, the command should by itself be the business transaction and should be atomic. In other words, your command should be <code>SignUpNewCustomerCommand</code> with its related <code>SignUpNewCustomerCommandHandler</code>. The <code>SignUpNewCustomerCommand</code> is what you process in a single Web API request.</p>
-
 <p>In case the handler has shared logic (logic that is used by other handlers as well), you can extract this logic to an facade service, like an <code>ICustomerAdditionService</code>. If you have a lot of this shared logic, it might be beneficial to add a common abstraction for this type of logic. For instance, you might define an <code>ILogicCommandHandler&lt;TLogicCommand&gt;</code> and create <code>AddCustomerLogicCommand</code>, <code>AddCustomerSubscriptionLogicCommand</code>, etc. This separates the main use case (<code>SignUpNewCustomerCommand</code> from the reusable building blocks). In other words, you make your abstractions <a href="http://scrapbook.qujck.com/holistic-abstractions-take-2/">holistic</a>. This makes boundaries for adding cross-cutting concerns very clear, since you often only want to add transaction handling, deadlock retry, security and authorization checks only at the outer layer.</p>
-
-<hr />
-
-<h4 id="luc-13-july-17">Luc - 13 July 17</h4>
-
+<hr>
+<h4 id="luc--13-july-17">Luc - 13 July 17</h4>
 <p>Hi Steven. Great article! I had a Command architecture which after adding features, those classes were growing with too many responsibilites. I was looking some kind of design like yours so after googling I ended up here.</p>
-
-<p>But I&rsquo;m thinking it with a slighlty different approach. Instead of Decorator pattern which chains the handlers, I&rsquo;m thinking in an independent list of handlers and an object (could also be a command handler) that knows the workflow of the execution. For instance, the most common workflow would be Authorize -&gt; Validate -&gt; Execute -&gt; Log</p>
-
+<p>But I'm thinking it with a slighlty different approach. Instead of Decorator pattern which chains the handlers, I'm thinking in an independent list of handlers and an object (could also be a command handler) that knows the workflow of the execution. For instance, the most common workflow would be Authorize -&gt; Validate -&gt; Execute -&gt; Log</p>
 <p>Other workflow could be Authorize -&gt; Validate -&gt; Asyn Execute -&gt; Log</p>
-
-<p>If you encapsulate this wiring knowledge in an object you shouldn&rsquo;t be repeating the wiring code, and also a CommandFactory could be using it to build a command given the command name. if, for instance, in a future I want to add a transaction number generator to some commands, i just create another workflow builder handler that add this generator handler after the executing handler, without having to change the wiring code in all the controllers (or in the factory).</p>
-
+<p>If you encapsulate this wiring knowledge in an object you shouldn't be repeating the wiring code, and also a CommandFactory could be using it to build a command given the command name. if, for instance, in a future I want to add a transaction number generator to some commands, i just create another workflow builder handler that add this generator handler after the executing handler, without having to change the wiring code in all the controllers (or in the factory).</p>
 <p>What do you think about this approach?</p>
-
-<p>(Besides that, I&rsquo;m wondering if is it really ok to decorate handlers, because actually you aren&rsquo;t adding features to handlers, instead we should add features and concerns to the <em>execution</em>)</p>
-
-<hr />
-
-<h4 id="steven-04-july-17">Steven - 04 July 17</h4>
-
+<p>(Besides that, I'm wondering if is it really ok to decorate handlers, because actually you aren't adding features to handlers, instead we should add features and concerns to the <em>execution</em>)</p>
+<hr>
+<h4 id="steven--04-july-17">Steven - 04 July 17</h4>
 <p>Luc,</p>
-
-<p>I&rsquo;d have to see some conceptual code to see what your design is. To me however, cross-cutting concerns are not work flow. Work flow is about business-related concerns, while authorization, validation and execution are technical concerns. On top of that, having factories for commands and builders for workflows seems like an overkill and a lot of extra complexity.</p>
-
-<p>But again, without some actual code, it&rsquo;s pretty hard to argue about this. If you create a new question with some code <a href="https://github.com/dotnetjunkie/solidservices/issues/new">here</a>, we could discuss this a bit more.</p>
-
-<hr />
-
-<h4 id="gizero-01-september-18">gizero - 01 September 18</h4>
-
-<p>I&rsquo;m having a hard time accepting that commands should not return values. Here&rsquo;s an example from a project I am working on now: in a REST API I want to generate an authentication token (JWT). In the REST controller I would like to execute a command to have the token generated in my business layer. Would you agree that this can be considered a command? If not, what is it? I&rsquo;m not requesting something that already exists, so it&rsquo;s not a query. I need to generate the token based on the user&rsquo;s identity and then return the generated token. Lets say I also want to update a flag in the database that holds the last authentication time for a user. In fact, I probably want to generate what&rsquo;s called a refresh token at the same time, so that an expired token can be renewed. This command both mutates a state and returns a value. What&rsquo;s so wrong with that? How would the client get hold of the generated token if the command cannot return a value? The only solution I can think of would be to split this operation into two: one <code>GenerateTokenCommand</code> and one <code>GetUserTokenQuery</code>. A user can have multiple valid tokens at the same time (authenticated on multiple computers) so I would have to add logic to figure out which token to return from the <code>GetUserTokenQuery</code> query. This also just seems like a completely unnecessary sequence, instead of just returning the generated token from the <code>GenerateTokenCommand</code>. Any insights would be highly appreciated.</p>
-
-<p>One more thing: I have seen in your examples that you inject your query and command handlers directly into your controllers. In my current design I instead have a traditional Service class (<code>TokenService</code> in this example) that exposes several methods, like <code>GenerateToken()</code> and <code>RefreshToken()</code>. I therefore inject the query and command handlers in the Service classes and only inject the Service classes into the controller. Do you consider the Service class an unnecessary layer? I&rsquo;m thinking I want to add some shared business logic in this Service class that doesn&rsquo;t belong in the command/query itself and that cannot be added by decorating the command/query.</p>
-
-<hr />
-
-<h4 id="steven-01-september-18">Steven - 01 September 18</h4>
-
+<p>I'd have to see some conceptual code to see what your design is. To me however, cross-cutting concerns are not work flow. Work flow is about business-related concerns, while authorization, validation and execution are technical concerns. On top of that, having factories for commands and builders for workflows seems like an overkill and a lot of extra complexity.</p>
+<p>But again, without some actual code, it's pretty hard to argue about this. If you create a new question with some code <a href="https://github.com/dotnetjunkie/solidservices/issues/new">here</a>, we could discuss this a bit more.</p>
+<hr>
+<h4 id="gizero--01-september-18">gizero - 01 September 18</h4>
+<p>I'm having a hard time accepting that commands should not return values. Here's an example from a project I am working on now: in a REST API I want to generate an authentication token (JWT). In the REST controller I would like to execute a command to have the token generated in my business layer. Would you agree that this can be considered a command? If not, what is it? I'm not requesting something that already exists, so it's not a query. I need to generate the token based on the user's identity and then return the generated token. Lets say I also want to update a flag in the database that holds the last authentication time for a user. In fact, I probably want to generate what's called a refresh token at the same time, so that an expired token can be renewed. This command both mutates a state and returns a value. What's so wrong with that? How would the client get hold of the generated token if the command cannot return a value? The only solution I can think of would be to split this operation into two: one <code>GenerateTokenCommand</code> and one <code>GetUserTokenQuery</code>. A user can have multiple valid tokens at the same time (authenticated on multiple computers) so I would have to add logic to figure out which token to return from the <code>GetUserTokenQuery</code> query. This also just seems like a completely unnecessary sequence, instead of just returning the generated token from the <code>GenerateTokenCommand</code>. Any insights would be highly appreciated.</p>
+<p>One more thing: I have seen in your examples that you inject your query and command handlers directly into your controllers. In my current design I instead have a traditional Service class (<code>TokenService</code> in this example) that exposes several methods, like <code>GenerateToken()</code> and <code>RefreshToken()</code>. I therefore inject the query and command handlers in the Service classes and only inject the Service classes into the controller. Do you consider the Service class an unnecessary layer? I'm thinking I want to add some shared business logic in this Service class that doesn't belong in the command/query itself and that cannot be added by decorating the command/query.</p>
+<hr>
+<h4 id="steven--01-september-18">Steven - 01 September 18</h4>
 <p>Hi Gizero,</p>
-
 <blockquote>
-<p>I&rsquo;m having a hard time accepting that commands should not return values.</p>
+<p>I'm having a hard time accepting that commands should not return values.</p>
 </blockquote>
-
 <p>Commands should not return a value. This is something I still strongly believe in. This can in most cases be achieved by letting the client supply the value to the server, instead of letting the server return some computed value. This, however, does mean you will have to start working with globally unique identifiers (GUIDs).</p>
-
 <p>In the case of your JWT tokens, for instance, the client can be made responsible for the creation of a valid token, after which it can supply it to the server, while requesting its logon.</p>
-
-<p>The rule that commands don&rsquo;t return data, however, doesn&rsquo;t mean that your REST API is required to do the same. Your API can happily return a value for something your command cannot. For instance, validation errors can happily be returned, even though the command might have thrown a <code>ValidationException</code> in that case.</p>
-
+<p>The rule that commands don't return data, however, doesn't mean that your REST API is required to do the same. Your API can happily return a value for something your command cannot. For instance, validation errors can happily be returned, even though the command might have thrown a <code>ValidationException</code> in that case.</p>
 <p>Still, there might be corner cases. I experienced those to often be centralized around logon process of an application, even though, I think that in many cases it can still be prevented.</p>
-
 <p>But for those exceptional scenarios, you might still be able to internally use commands, but at the API layer you might be forced to create some custom logic. This can happen, for instance, when it is not appropriate to let the client generate an ID. In that case, you can do that as part of your Web API Facade. For instance:</p>
-
 <pre><code>// Web API Action method
 public Token LogOn(string name, string pwd) {
     Guid id = Guid.NewGuid();
     this.logOnHandler.Handle(new LogOn(name, pwd, id));
     return this.getTokenHandler.Handle(new GetToken(id));
 }
-</code></pre>
-
-<p>Or, in such corner case, you can decide to circumvent commands and queries altogether, and instead use an old-fashioned service class. Which brings me to your next question.</p>
-
+</code></pre><p>Or, in such corner case, you can decide to circumvent commands and queries altogether, and instead use an old-fashioned service class. Which brings me to your next question.</p>
 <blockquote>
 <p>Do you consider the Service class an unnecessary layer?</p>
 </blockquote>
-
-<p>Yes, I do. I&rsquo;ve been using this design for over eight years now, and I&rsquo;ve almost never seen a reason (except: see above exception) to create those Service classes any longer. The Command Handler has become the new Service. Even better, when you&rsquo;re building a Web API, I also prefer even stripping out controllers, since they become empty shells that only forward the operation. You can find more information about this, <a href="https://github.com/dotnetjunkie/solidservices/">here</a>.</p>
-
-<hr />
-
-<h4 id="gizero-01-september-18-1">gizero - 01 September 18</h4>
-
+<p>Yes, I do. I've been using this design for over eight years now, and I've almost never seen a reason (except: see above exception) to create those Service classes any longer. The Command Handler has become the new Service. Even better, when you're building a Web API, I also prefer even stripping out controllers, since they become empty shells that only forward the operation. You can find more information about this, <a href="https://github.com/dotnetjunkie/solidservices/">here</a>.</p>
+<hr>
+<h4 id="gizero--01-september-181">gizero - 01 September 18</h4>
 <p>Hi,</p>
-
 <p>No, the client cannot generate the JWT token and supply it to the server; the JWT token is a security token that must be signed by the server, since it has the secret key.</p>
-
-<p>And I don&rsquo;t see any argument why it is wrong to just return the generated token from the command. Sure, I can call one command to generate the token and one to query it, inside the token endpoint in the controller, but I don&rsquo;t see any benefit from it.</p>
-
-<p>Skipping controllers when you&rsquo;re creating a REST API makes no sense to me, they are the REST API. I can&rsquo;t have a Angular client call a Command Handler directly&hellip;</p>
-
-<hr />
-
-<h4 id="steven-14-september-18">Steven - 14 September 18</h4>
-
+<p>And I don't see any argument why it is wrong to just return the generated token from the command. Sure, I can call one command to generate the token and one to query it, inside the token endpoint in the controller, but I don't see any benefit from it.</p>
+<p>Skipping controllers when you're creating a REST API makes no sense to me, they are the REST API. I can't have a Angular client call a Command Handler directly&hellip;</p>
+<hr>
+<h4 id="steven--14-september-18">Steven - 14 September 18</h4>
 <p>Hi Gizero,</p>
-
 <p>It isn’t wrong, per see, to return data from commands. I used to do this myself, as you can read <a href="/steven/p/data-commands">here</a>. However, I found that disallowing the return of data from commands in general is an improvement, since it simplifies the command handlers, and makes it easier to make command handlers idempotent. Idempotency allows commands to be queued, resent, and retried, without causing unfortunate actions caused by commands executed twice.</p>
-
 <p>The result of such design decision is, of course, that you need to ‘work around’ cases where there is no alternative for returning data, which might very well be the case in your JWT example. Although you can choose to change your architecture and allow all commands return a value to accommodate this, I found this to be less ideal. I found that the need to return data is so rare in the applications I build, that I rather work around the few cases that do need to return data, instead of changing my architecture and complicating all command handlers to accommodate the few.</p>
-
 <p>The thing about architecture is, though, that it’s always about striking a balance. You will have to find the architecture that strikes the most optimal situation in your particular application. For me, this is the rule that commands can’t return any data. This might be different in your case. For instance when you’re dealing with an already existing application that works with auto-increment database identifiers, rather than GUIDs, it might be easier to let commands return data.</p>
-
 <p>What I meant by skipping the controllers was not that the client would directly connect to the handlers. This will obviously not work, because you always need a piece of server infrastructure. But because writing controllers, however, is repetitive and error prone, there is much sense in trying to remove that layer althogether.</p>
-
 <p>You can do so by creating a single piece of middleware that dispatches an incoming request to the right command handler. This is what <a href="https://github.com/dotnetjunkie/solidservices/">the referenced sample project</a> does.</p>
 
 

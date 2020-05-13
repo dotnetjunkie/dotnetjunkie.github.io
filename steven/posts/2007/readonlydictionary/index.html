@@ -53,38 +53,21 @@
 
 		
 
-		
-
-<h3 id="this-article-describes-an-implementation-of-a-readonlydictionary-tkey-tvalue-that-s-missing-from-the-net-framework">This article describes an implementation of a <code>ReadOnlyDictionary&lt;TKey, TValue&gt;</code> that&rsquo;s missing from the .NET framework.</h3>
-
-<h4 id="update-2012-06-05-net-4-5-will-finally-finally-contain-a-readonlydictionary-tkey-tvalue-which-will-make-this-post-that-has-long-be-my-top-most-googled-article-finally-redundant-if-you-re-still-developing-under-net-4-0-or-below-please-read-on">UPDATE 2012-06-05: .NET 4.5 will (finally finally!!) contain a <code>ReadOnlyDictionary&lt;TKey, TValue&gt;</code>, which will make this post (that has long be my top most googled article) finally redundant. If you&rsquo;re still developing under .NET 4.0 or below, please read on.</h4>
-
-<h4 id="update-2013-04-11-software-license-notice-i-previously-released-this-under-the-mit-license-but-decided-to-change-this-the-source-code-presented-in-this-post-is-released-as-public-domain-this-means-that-you-can-do-whatever-you-want-with-it-no-need-to-tell-anyone-about-it-but-don-t-blame-me-if-shit-hits-the-fan">UPDATE 2013-04-11: Software license notice: I previously released this under the MIT license, but decided to change this. The source code presented in this post is released as &lsquo;public domain&rsquo;. This means that you can do whatever you want with it, no need to tell anyone about it, but don&rsquo;t blame me if shit hits the fan.</h4>
-
-<p>I always wondered why Microsoft didn&rsquo;t add a ReadOnlyDictionary class in the System.Collections.Generic or System.Collections.ObjectModel namespace. I&rsquo;m not alone. This feature request has been posted at least twice on the Microsoft Connect feedback website and many people decided to write their own implementation.</p>
-
-<p>None of the implementations I found on the internet appealed to me. The two biggest problems I had with them where that they weren&rsquo;t actually read-only and didn&rsquo;t implement interface members explicitly. The latter complicates the use of the dictionary unnecessarily while using it through IntelliSense.</p>
-
-<p>While I could try to fix one of those implementations, I decided to write my own and looked closely at the Dictionary<TKey, TValue> and <code>ReadOnlyCollection&lt;T&gt;</code> implementations that already were in the framework. In the code below you&rsquo;ll see that the implementation is rather straight forward. I&rsquo;ve implemented the correct interfaces, with most methods explicitly and I wrapped a <code>Dictionary&lt;TKey, TValue&gt;</code> internally. The internal dictionary is a copy of the provided constructor argument. This last point is rather important, because the other implementations I saw didn&rsquo;t make such a copy, allowing you to change the read-only dictionary after creation by using a reference to the original dictionary. Last but not least is the implementation of a ReadOnlyDictionaryDebugView class that helps you display the dictionary during debugging.</p>
-
-<h4 id="update-2008-03-02">UPDATE 2008-03-02:</h4>
-
+		<h3 id="this-article-describes-an-implementation-of-a-readonlydictionarytkey-tvalue-thats-missing-from-the-net-framework">This article describes an implementation of a <code>ReadOnlyDictionary&lt;TKey, TValue&gt;</code> that's missing from the .NET framework.</h3>
+<h4 id="update-20120605-net-45-will-finally-finally-contain-a-readonlydictionarytkey-tvalue-which-will-make-this-post-that-has-long-be-my-top-most-googled-article-finally-redundant-if-youre-still-developing-under-net-40-or-below-please-read-on">UPDATE 2012-06-05: .NET 4.5 will (finally finally!!) contain a <code>ReadOnlyDictionary&lt;TKey, TValue&gt;</code>, which will make this post (that has long be my top most googled article) finally redundant. If you're still developing under .NET 4.0 or below, please read on.</h4>
+<h4 id="update-20130411-software-license-notice-i-previously-released-this-under-the-mit-license-but-decided-to-change-this-the-source-code-presented-in-this-post-is-released-as-public-domain-this-means-that-you-can-do-whatever-you-want-with-it-no-need-to-tell-anyone-about-it-but-dont-blame-me-if-shit-hits-the-fan">UPDATE 2013-04-11: Software license notice: I previously released this under the MIT license, but decided to change this. The source code presented in this post is released as &lsquo;public domain&rsquo;. This means that you can do whatever you want with it, no need to tell anyone about it, but don't blame me if shit hits the fan.</h4>
+<p>I always wondered why Microsoft didn't add a ReadOnlyDictionary class in the System.Collections.Generic or System.Collections.ObjectModel namespace. I'm not alone. This feature request has been posted at least twice on the Microsoft Connect feedback website and many people decided to write their own implementation.</p>
+<p>None of the implementations I found on the internet appealed to me. The two biggest problems I had with them where that they weren't actually read-only and didn't implement interface members explicitly. The latter complicates the use of the dictionary unnecessarily while using it through IntelliSense.</p>
+<p>While I could try to fix one of those implementations, I decided to write my own and looked closely at the Dictionary&lt;TKey, TValue&gt; and <code>ReadOnlyCollection&lt;T&gt;</code> implementations that already were in the framework. In the code below you'll see that the implementation is rather straight forward. I've implemented the correct interfaces, with most methods explicitly and I wrapped a <code>Dictionary&lt;TKey, TValue&gt;</code> internally. The internal dictionary is a copy of the provided constructor argument. This last point is rather important, because the other implementations I saw didn't make such a copy, allowing you to change the read-only dictionary after creation by using a reference to the original dictionary. Last but not least is the implementation of a ReadOnlyDictionaryDebugView class that helps you display the dictionary during debugging.</p>
+<h4 id="update-20080302">UPDATE 2008-03-02:</h4>
 <p>Looking once more at .NET’s <code>ReadOnlyCollection&lt;T&gt;</code> implementation, I noticed that the implementation doesn’t make a copy of the supplied collection; it simply wraps it! After giving it some thought, it made a lot of sense to me. By wrapping the original collection, the read-only collection copies the original collection’s behavior. Copying the behavior is important, because otherwise you would end up creating a read-only version of each and every type implementing ICollection or IDictionary for which you’d like to have a read-only wrapper, simply because each type possibly behaves differently.</p>
-
 <p>For the <code>ReadOnlyDictionary&lt;TKey, TValue&gt;</code> it is even clearer. Whether the dictionary contains a key or not, is determined by how equality is defined for type TKey. I already noticed this behavioral problem in my original implementation, which is why I included a constructor with an <code>IEqualityComparer&lt;TKey&gt;</code> argument. But this simply isn’t enough, because supplying an <code>IEqualityComparer&lt;TKey&gt;</code> is possibly not suitable for every dictionary implementation. Remember that we expect an <code>IDictionary&lt;TKey, TValue&gt;</code> to be given by the user, so there actually isn’t that much we know about the implementation of the supplied object.</p>
-
 <p>My conclusion is that copying the supplied dictionary is actually a design flaw. The only reasonable thing the ReadOnlyDictionary can do is to wrap the given dictionary. This however leads to an implementation that is not truly read-only, but so is the framework’s ReadOnlyCollection implementation. Therefore we shift the responsibility for this to the user of our implementation.</p>
-
-<h4 id="update-2010-05-20">UPDATE 2010-05-20:</h4>
-
+<h4 id="update-20100520">UPDATE 2010-05-20:</h4>
 <p>I updated the formatting and XML comments in a way that StyleCop likes it.</p>
-
-<h4 id="update-2011-03-22">UPDATE 2011-03-22:</h4>
-
-<p>Jacek noted correctly in the comments that the ReadOnlyDictionary made the assumption that the wrapped dictionary always implemented the old non-generic ICollection and IDictionary interfaces. While most types in the framework that implement <code>IDictionary&lt;TKey, TValue&gt;</code> also implement ICollection and IDictionary, not all types do, and more importantly, types simply don&rsquo;t have to. To fix this, I had to remove the IDictionary interface from the ReadOnlyDictionary. It still implements ICollection though.</p>
-
+<h4 id="update-20110322">UPDATE 2011-03-22:</h4>
+<p>Jacek noted correctly in the comments that the ReadOnlyDictionary made the assumption that the wrapped dictionary always implemented the old non-generic ICollection and IDictionary interfaces. While most types in the framework that implement <code>IDictionary&lt;TKey, TValue&gt;</code> also implement ICollection and IDictionary, not all types do, and more importantly, types simply don't have to. To fix this, I had to remove the IDictionary interface from the ReadOnlyDictionary. It still implements ICollection though.</p>
 <p>Here is my (corrected) <code>ReadOnlyDictionary&lt;TKey, TValue&gt;</code> implementation.</p>
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">using</span> System;
 <span style="color:#66d9ef">using</span> System.Collections;
 <span style="color:#66d9ef">using</span> System.Collections.Generic;
@@ -448,10 +431,8 @@
     }
 }
 </code></pre></div>
-
 <h2 id="comments">Comments</h2>
-
-<p>Comments haven&rsquo;t been migrated yet&hellip;</p>
+<p>Comments haven't been migrated yet&hellip;</p>
 
 
 		<hr />

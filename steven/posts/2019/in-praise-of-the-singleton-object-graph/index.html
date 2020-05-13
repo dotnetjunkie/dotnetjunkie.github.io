@@ -83,12 +83,8 @@
 
 		
 
-		
-
-<h3 id="to-be-able-to-achieve-anything-useful-your-application-code-makes-use-of-runtime-data-that-comes-in-many-shapes-and-forms-providing-access-to-that-data-can-be-accomplished-in-many-ways-the-way-you-provide-object-graphs-with-runtime-data-can-affect-the-way-you-compose-them-using-dependency-injection-there-are-two-competing-models-to-choose-from-this-article-suggests-the-use-of-the-less-common-more-restrictive-model-as-it-helps-you-reason-about-the-correctness-of-the-graph-and-reduces-the-chance-of-errors-this-article-is-the-last-of-a-five-part-series-on-dependency-injection-composition-models">To be able to achieve anything useful, your application code makes use of runtime data that comes in many shapes and forms. Providing access to that data can be accomplished in many ways. The way you provide object graphs with runtime data can affect the way you compose them using Dependency Injection. There are two competing models to choose from. This article suggests the use of the less common, more restrictive model, as it helps you reason about the correctness of the graph and reduces the chance of errors. This article is the last of a five-part series on Dependency Injection composition models.</h3>
-
+		<h3 id="to-be-able-to-achieve-anything-useful-your-application-code-makes-use-of-runtime-data-that-comes-in-many-shapes-and-forms-providing-access-to-that-data-can-be-accomplished-in-many-ways-the-way-you-provide-object-graphs-with-runtime-data-can-affect-the-way-you-compose-them-using-dependency-injection-there-are-two-competing-models-to-choose-from-this-article-suggests-the-use-of-the-less-common-more-restrictive-model-as-it-helps-you-reason-about-the-correctness-of-the-graph-and-reduces-the-chance-of-errors-this-article-is-the-last-of-a-fivepart-series-on-dependency-injection-composition-models">To be able to achieve anything useful, your application code makes use of runtime data that comes in many shapes and forms. Providing access to that data can be accomplished in many ways. The way you provide object graphs with runtime data can affect the way you compose them using Dependency Injection. There are two competing models to choose from. This article suggests the use of the less common, more restrictive model, as it helps you reason about the correctness of the graph and reduces the chance of errors. This article is the last of a five-part series on Dependency Injection composition models.</h3>
 <p>Posts in this series:</p>
-
 <ul>
 <li><a href="/steven/p/compositionmodels">DI Composition Models: A Primer</a></li>
 <li><a href="/steven/p/ccm">The Closure Composition Model</a></li>
@@ -96,11 +92,8 @@
 <li><a href="/steven/p/cmcompare">DI Composition Models: A Comparison</a></li>
 <li><a href="/steven/p/singleton">In Praise of the Singleton Object Graph</a> (this article)</li>
 </ul>
-
 <p>The previous articles did a deep dive into the two DI composition models: the Closure Composition Model (CCM) and the Ambient Composition Model (ACM). The last article compared the two composition models, and explained the merits and demerits of both models.</p>
-
 <p>The following table summarizes their strengths and weaknesses, as discussed in the previous article.</p>
-
 <table>
 <thead>
 <tr>
@@ -110,7 +103,6 @@
 <th>ACM</th>
 </tr>
 </thead>
-
 <tbody>
 <tr>
 <td><strong>Environment limitations</strong></td>
@@ -118,35 +110,30 @@
 <td>Might be unsuited when dealing with tight memory constraints</td>
 <td>Unsuited  in environments that don’t allow storing ambient data</td>
 </tr>
-
 <tr>
 <td><strong>Temporal Coupling</strong></td>
 <td>+ No</td>
 <td>- Always</td>
 <td>- Always</td>
 </tr>
-
 <tr>
 <td><strong>Lifetime Management</strong></td>
 <td>+ Simple for small applications <br> -  Error prone for large applications</td>
 <td>- Always error prone</td>
 <td>+ Always simple</td>
 </tr>
-
 <tr>
 <td><strong>Code reviews</strong></td>
 <td>- Hard</td>
 <td>- Hard</td>
 <td>+ Easy</td>
 </tr>
-
 <tr>
 <td><strong>Performance</strong></td>
 <td>+ High</td>
 <td>- Complex to manage</td>
 <td>+ High</td>
 </tr>
-
 <tr>
 <td><strong>Acquaintance</strong></td>
 <td>- Well known</td>
@@ -155,31 +142,19 @@
 </tr>
 </tbody>
 </table>
-
 <p>In keeping with what I concluded in the previous article, this summary of strengths and weaknesses of both models reveals no absolute winner under all circumstances. In recent years, however, I started to appreciate the ACM more and more, because of its listed advantages. While building and maintaining <a href="https://simpleinjector.org">Simple Injector</a>, I spent an enormous amount of time adding features that prevent developers from stepping into the many pitfalls of DI Lifetime Management. But eventually I started to wonder whether this required tooling was actually an indication of a problem with the underlying model, just as badly designed code often forces the use of mocking frameworks during unit testing.</p>
-
 <p>One might even argue that DI Containers themselves are not the right solution, and there is certainly some truth in that because, as I explained in the comparison, applying <a href="https://blog.ploeh.dk/2014/06/10/pure-di/">Pure DI</a>  in combination with the CCM gives the strongest guarantee about the availability of runtime data. But, on the other hand, lifetime management with the CCM is hard—even in the context of Pure DI.</p>
-
 <p>In <a href="https://mng.bz/BYNl">our book</a>, <a href="https://blog.ploeh.dk/">Mark</a> and I give the following advice:</p>
-
 <blockquote>
 <p>[Y]ou should use Pure DI for Composition Roots that are small and switch to Auto-Registration [thus, using a DI Container] when maintaining such a Composition Root becomes a problem. Bigger applications with many classes that can be captured by several conventions can benefit from using Auto-Registration. [§ 12.3.3]</p>
 </blockquote>
-
 <p>In the book, however, we don’t define “small” and “bigger.” The fact is, though, that in recent years I realized that the ACM allowed me to stick with using Pure DI for a longer period of time. Pure DI <a href="https://mng.bz/K1qZ">Composition Roots</a> grow linearly with the size of the application. In my opinion, it is a good idea to start a new application without using a container—thus practicing Pure DI. When an application keeps growing, however, there comes a point in time when using a DI Container outperforms Pure DI. But I noticed that using the ACM moved this tipping point, allowing me to use Pure DI on bigger applications.</p>
-
 <p>This doesn’t mean that I think DI Containers are worthless—on the contrary, they can be immensely powerful. But I found that the ACM allows me to postpone the decision of whether or not to use a DI Container for much longer—possibly forever, depending on the size and structure of the final application.</p>
-
 <p>Although both models can be mixed and matched, it is when the ACM is used holistically that you see a simplified composition model emerge. I would, therefore, like to suggest that you start embracing its constraints: <em>make your components stateless and immutable, hide the retrieval of runtime data behind abstractions, and implement those abstractions using adapters in your Composition Root.</em></p>
-
 <p>You can even follow this recipe when you’re not applying the ACM. The advantage of this is that the choice of which model to use becomes purely an implementation detail of the Composition Root. This means you can postpone the decision of which model to use until <a href="https://blog.codinghorror.com/the-last-responsible-moment/">the last responsible moment</a>. It even allows you to switch from one model to the next, without having to make any changes outside your Composition Root.</p>
-
 <p>While you could still use the CCM, choose to apply the ACM by default. By doing so, you can start reusing your object graphs (using the Singleton Lifestyle). This makes constructing object graphs a one-time cost, <em>and</em> makes it easy to spot when ACM’s constraints are violated. In other words: <em>apply the ACM and embrace singleton object graphs.</em></p>
-
 <h2 id="conclusion">Conclusion</h2>
-
 <p>Even though no single model is perfect in all circumstances, the ACM is my preferred composition model for the majority of cases. Although you might find some resistance from your team members or suffer incompatibility with your frameworks at first, when you start applying the ACM, you’ll find that its constraints capture a mental model that is simpler to grasp and results in fewer bugs. This will boost your team’s productivity.</p>
-
 <h2 id="comments">Comments</h2>
 
 

@@ -53,23 +53,16 @@
 
 		
 
-		
-
-<h3 id="bryan-sullivan-describes-in-the-may-issue-of-his-msdn-article-a-denial-of-service-attack-that-abuses-regular-expressions-as-bryan-explains-a-poorly-written-regex-can-bring-your-server-to-its-knees">Bryan Sullivan describes in the May issue of his MSDN article a denial of service attack that abuses regular expressions. As Bryan explains, a poorly written regex can bring your server to its knees.</h3>
-
+		<h3 id="bryan-sullivan-describes-in-the-may-issue-of-his-msdn-article-a-denial-of-service-attack-that-abuses-regular-expressions-as-bryan-explains-a-poorly-written-regex-can-bring-your-server-to-its-knees">Bryan Sullivan describes in the May issue of his MSDN article a denial of service attack that abuses regular expressions. As Bryan explains, a poorly written regex can bring your server to its knees.</h3>
 <p>Bryan demonstrates that even the simplest regular expressions can bring your server to its knees. Here are some examples of regular expressions that can easily cause this to happen:</p>
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">^(\d+)+$
 ^(\d+)*$
 ^(\d*)*$
 ^(\d+|\s+)*$
 ^(\d|\d\d)+$
 ^(\d|\d?)+$</code></pre></div>
-
 <p>Read more about the causes and the cures <a href="https://msdn.microsoft.com/nl-nl/magazine/ff646973%28en-us%29.aspx">here</a>.</p>
-
-<h4 id="update-2012-06-04-net-4-5-contains-a-regex-timeout-property-to-specify-a-maximum-duration-for-the-regex">UPDATE 2012-06-04: .NET 4.5 contains a RegEx.Timeout property to specify a maximum duration for the regex.</h4>
-
+<h4 id="update-20120604-net-45-contains-a-regextimeout-property-to-specify-a-maximum-duration-for-the-regex">UPDATE 2012-06-04: .NET 4.5 contains a RegEx.Timeout property to specify a maximum duration for the regex.</h4>
 <h2 id="comments">Comments</h2>
 
 

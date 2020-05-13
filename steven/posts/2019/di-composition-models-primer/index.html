@@ -83,12 +83,8 @@
 
 		
 
-		
-
-<h3 id="to-be-able-to-achieve-anything-useful-your-application-code-makes-use-of-runtime-data-that-comes-in-many-shapes-and-forms-providing-access-to-that-data-can-be-accomplished-in-many-ways-the-way-you-provide-object-graphs-with-runtime-data-can-affect-the-way-you-compose-them-using-dependency-injection-there-are-two-competing-models-to-choose-from-this-article-introduces-these-two-models-the-closure-composition-model-and-the-ambient-composition-model-it-is-the-first-of-a-five-part-series-on-dependency-injection-composition-models">To be able to achieve anything useful, your application code makes use of runtime data that comes in many shapes and forms. Providing access to that data can be accomplished in many ways. The way you provide object graphs with runtime data can affect the way you compose them using Dependency Injection. There are two competing models to choose from. This article introduces these two models: the Closure Composition Model and the Ambient Composition Model. It is the first of a five-part series on Dependency Injection composition models.</h3>
-
+		<h3 id="to-be-able-to-achieve-anything-useful-your-application-code-makes-use-of-runtime-data-that-comes-in-many-shapes-and-forms-providing-access-to-that-data-can-be-accomplished-in-many-ways-the-way-you-provide-object-graphs-with-runtime-data-can-affect-the-way-you-compose-them-using-dependency-injection-there-are-two-competing-models-to-choose-from-this-article-introduces-these-two-models-the-closure-composition-model-and-the-ambient-composition-model-it-is-the-first-of-a-fivepart-series-on-dependency-injection-composition-models">To be able to achieve anything useful, your application code makes use of runtime data that comes in many shapes and forms. Providing access to that data can be accomplished in many ways. The way you provide object graphs with runtime data can affect the way you compose them using Dependency Injection. There are two competing models to choose from. This article introduces these two models: the Closure Composition Model and the Ambient Composition Model. It is the first of a five-part series on Dependency Injection composition models.</h3>
 <p>Posts in this series:</p>
-
 <ul>
 <li><a href="/steven/p/compositionmodels">DI Composition Models: A Primer</a> (this article)</li>
 <li><a href="/steven/p/ccm">The Closure Composition Model</a></li>
@@ -96,54 +92,39 @@
 <li><a href="/steven/p/cmcompare">DI Composition Models: A Comparison</a></li>
 <li><a href="/steven/p/singleton">In Praise of the Singleton Object Graph</a></li>
 </ul>
-
 <p>Most of your application code uses runtime data in one form or another. Runtime data flows through the system in many forms. Your application will get its data from and send its data to browsers, databases, queues, services, the filesystem, and many other sources.</p>
-
 <figure>
     <img src="/steven/images/compositionmodels/systemdata.svg"
          alt="Data flowing through the system" width="100%"/> 
 </figure>
 
-
 <p>The data flowing through your application can be categorized in many ways, but for the remainder of this article, I’ll divide it into two groups, as this serves us in the discussion that follows:</p>
-
 <ul>
-<li><strong><em>Data passing through the public API</em></strong>—Data that is received from or sent to external actors, such as data posted by a web browser or sent to a message queue, defines a system’s public API. Such information becomes the raw data input or output of a use case. This data might be transformed and reshaped when it is sent from layer to layer, but each layer still passes it through the public API of the next layer. The figure following the next bullet depicts this.</li>
-<li><strong><em>Contextual or internally oriented data</em></strong>—This is data that isn’t passed through the system’s public API, but is instead an implementation detail of individual components in the system. Often this data is more contextual in nature, while still influencing business decisions. For instance, an application might decide not to execute a certain operation when the user isn’t in the correct role. Users can’t influence their role directly by clicking “Cancel Order.” Instead, their identity and role are already available as contextual information.</li>
+<li><em><strong>Data passing through the public API</strong></em>—Data that is received from or sent to external actors, such as data posted by a web browser or sent to a message queue, defines a system’s public API. Such information becomes the raw data input or output of a use case. This data might be transformed and reshaped when it is sent from layer to layer, but each layer still passes it through the public API of the next layer. The figure following the next bullet depicts this.</li>
+<li><em><strong>Contextual or internally oriented data</strong></em>—This is data that isn’t passed through the system’s public API, but is instead an implementation detail of individual components in the system. Often this data is more contextual in nature, while still influencing business decisions. For instance, an application might decide not to execute a certain operation when the user isn’t in the correct role. Users can’t influence their role directly by clicking “Cancel Order.” Instead, their identity and role are already available as contextual information.</li>
 </ul>
-
 <figure>
     <img src="/steven/images/compositionmodels/datapassingpublicapi.svg"
          alt="Each layer passes runtime data through the public API of the next layer" width="100%"/> 
 </figure>
 
-
 <p>Note that the two groups are not strictly separated. Consider, for instance, how the user’s role can flow through the system with different use cases:</p>
-
 <ul>
 <li>The application administrator might change a user’s role by means of the administration screens. This means that the administrator supplies data to the application through the application’s <em>public API</em>.</li>
 <li>Later, when the user starts using the application, that same role data has become <em>contextual information</em> that allows the system to do the proper security checks.</li>
 <li>The application will likely show the user’s role on one of the user’s screens—in that case, the role has again become <em>publically exposed data</em>.</li>
 </ul>
-
 <p>This means that data can hop from one group to the next and back, depending on the use case in which it participates. To simplify things, however, I will ignore this possible group-hopping behavior for the remainder of this article—it’s not that relevant.</p>
-
-<p>In the next sections, I’ll discuss these two groups of data in more detail, starting with the first group. This will provide the necessary context for the remainder of the article, where I&rsquo;ll describe their significance in the creation of your application components. Finally, building on that, I’ll introduce the two composition models that you can use to create an object graph.</p>
-
+<p>In the next sections, I’ll discuss these two groups of data in more detail, starting with the first group. This will provide the necessary context for the remainder of the article, where I'll describe their significance in the creation of your application components. Finally, building on that, I’ll introduce the two composition models that you can use to create an object graph.</p>
 <h2 id="data-passing-through-the-public-api">Data passing through the public API</h2>
-
 <p>Let’s focus on the first group for a moment: consider web-request data, posted by a browser. If you’re building an ASP.NET (or ASP.NET Core) MVC application, a browser’s HTTP request is transformed by the framework into a view model object and passed to your MVC controller classes. The following sequence diagram visualizes this process:</p>
-
 <figure>
     <img src="/steven/images/compositionmodels/publicdatasequencediagram.svg"
          alt="Sequence diagram visualizing how a browser&#39;s HTTP request is transformed to public data" width="100%"/> 
 </figure>
 
-
-<p>In this sequence diagram, the user’s request is handled by the framework. The framework then transforms and forwards the call to a controller’s action method—in this case, the <code>AddItem</code> method on <code>ShoppingBasketController</code>. When the controller finishes, it returns an action result that&rsquo;s used to render HTML. The HTML is then sent back to the user.</p>
-
+<p>In this sequence diagram, the user’s request is handled by the framework. The framework then transforms and forwards the call to a controller’s action method—in this case, the <code>AddItem</code> method on <code>ShoppingBasketController</code>. When the controller finishes, it returns an action result that's used to render HTML. The HTML is then sent back to the user.</p>
 <p>ASP.NET will provide the <code>AddItem</code> action method with the runtime data coming from the user. The following code listing shows <code>ShoppingBasketController</code> with its <code>AddItem</code> method:</p>
-
 
 
 
@@ -160,25 +141,15 @@
     }
 }
 </code></pre></div>
-
 <p>The <code>AddItem</code>’s <code>AddShoppingBasketItem</code> argument captures the request data. It is runtime data, unique to the request, its data posted by the client, and supplied by the ASP.NET framework to <code>ShoppingBasketController</code>. The <code>AddShoppingBasketItem</code> runtime data is passed from the caller (the framework) to the callee (<code>ShoppingBasketController</code>) through the class’s public API (the <code>AddItem</code> method). This works great for request/response-related runtime data—such as <code>AddShoppingBasketItem</code>—but might not work well in other cases, which brings me to the second group of runtime data.</p>
-
 <h2 id="contextual-or-internally-oriented-data">Contextual or internally oriented data</h2>
-
 <p>The <code>AddShoppingBasketItem</code> view model specifies the runtime data required by the <code>AddItem</code> API. But not all runtime data should be supplied to a class through its public API. Some data is an implementation detail—leaking its existence through the public API could complicate things for the clients, cause maintainability issues, or even raise security concerns. In many cases, this implementation-specific runtime data is more contextual in nature.</p>
-
-<p>Take, for instance, the identity of the current user that is issuing the request. Part of the application needs to be aware of the user’s identity. Although the HTTP operation sends the identity, that information is not supplied to the controller’s public API. Making the identity part of <code>AddShoppingBasketItem</code>, for instance, could cause several problems—most likely, a security risk. It is not up to the user to supply an unverified identity through this request&rsquo;s POST information. The user’s identity has long been established, and a security token is typically sent using a different &ldquo;channel&rdquo; (a cookie). The user identity can, in the context of adding an item to a basket, be regarded as an implementation detail.</p>
-
+<p>Take, for instance, the identity of the current user that is issuing the request. Part of the application needs to be aware of the user’s identity. Although the HTTP operation sends the identity, that information is not supplied to the controller’s public API. Making the identity part of <code>AddShoppingBasketItem</code>, for instance, could cause several problems—most likely, a security risk. It is not up to the user to supply an unverified identity through this request's POST information. The user’s identity has long been established, and a security token is typically sent using a different &ldquo;channel&rdquo; (a cookie). The user identity can, in the context of adding an item to a basket, be regarded as an implementation detail.</p>
 <p>Another example of implementation-detail runtime data is Entity Framework’s <code>DbContext</code>. From the perspective of the application’s public API, it is an implementation detail. <code>AddShoppingBasketItem</code>, for example, should <em>not</em> have to change if you decide to change the application’s persistence layer.</p>
-
 <p><code>DbContext</code> is a glorified state bag with cached and mutated entities, ready to be persisted at some point. Each request gets its own local set of entities, cached for the duration of the web request, and reusing it across requests is a bad idea. You wouldn’t let the browser provide the controller with a <code>DbContext</code>—that would be a scary thought. But equally so, you wouldn’t pass on a <code>DbContext</code> through the public API of the individual layers.</p>
-
 <h2 id="the-significance-of-contextual-data-in-the-context-of-object-composition">The significance of contextual data in the context of Object Composition</h2>
-
 <p>When it comes to composing object graphs using DI, the difference between <code>AddShoppingBasketItem</code> and <code>DbContext</code> becomes significant. While both constitute runtime data, you design your classes differently around them. As explained, the application’s abstractions and external-facing APIs expose runtime data objects such as <code>AddShoppingBasketItem</code>. Runtime data objects such as <code>DbContext</code>, however, are instead hidden behind these same abstractions, making them mere implementation details of their direct consumers. This means that whereas <code>AddShoppingBasketItem</code> is passed to the public methods of an already composed object graph, <code>DbContext</code> is supplied using a different mechanism—one option being <a href="https://mng.bz/oN9j">Constructor Injection</a>.</p>
-
 <p>The following simplified object graph shows this. The application’s <code>ShoppingBasketDbContext</code> is created and supplied to the controller’s constructor:</p>
-
 
 
 
@@ -189,48 +160,38 @@
     <span style="color:#66d9ef">new</span> ShoppingBasketController(
         <b><span style="color:#66d9ef">new</span> ShoppingBasketDbContext()</b>); <span style="color:#75715e"><annotation>Constructor injection</annotation>
 </span></code></pre></div>
-
 <p>Later, when a web request comes in, the deserialized view model is passed along to the controller’s <code>AddItem</code> method. At that point, however, the controller’s object graph has long since been created.</p>
-
 <p>This way of supplying <code>ShoppingBasketDbContext</code> to the object graph during construction is one model you can use to compose your object graphs, called the <em>Closure Composition Model</em>.</p>
-
 <p><callout class="DEFINITION">
     <span class="callout-title">DEFINITION</span>
     <span class="callout-body">
 The <strong>Closure Composition Model</strong> composes object graphs that capture runtime data in variables of the graph’s components.
 </span>
 </callout></p>
-
 <p>An alternative to letting your application components consume these contextual runtime data objects is the <em>Ambient Composition Model</em>. With that model, contextual runtime data is no longer captured in variables inside the object graph, but instead is managed by the <a href="https://mng.bz/K1qZ">Composition Root</a>. Application components requiring such data request it through method calls on provided abstractions.</p>
-
 <p><callout class="DEFINITION">
     <span class="callout-title">DEFINITION</span>
     <span class="callout-body">
 The <strong>Ambient Composition Model</strong> composes object graphs that do not store runtime data inside captured variables. Instead, runtime data is kept outside the graph and stored as ambient data. This ambient data is managed by the Composition Root and is provided to application components on request, long after those components have been constructed.
 </span>
 </callout></p>
-
 <p>This completes this primer on Object Composition models. At this point, much remains to be explained, such has how application components are designed in each model, what exactly <em>ambient data</em> is, and what the pros and cons are of both models. I will go into this in more detail in the following articles, starting with a description of the <a href="/steven/p/ccm/">Closure Composition Model</a>, and continuing with a description of the <a href="/steven/p/acm/">Ambient Composition Model</a>.</p>
-
 <p>Stay tuned.</p>
-
 <h2 id="summary">Summary</h2>
-
 <ul>
 <li>Runtime data can be roughly divided into two groups:
-
 <ul>
 <li><em>Runtime data that is exposed by the application’s abstractions and public API</em>. This data is passed along public methods on already created object graphs.</li>
 <li><em>Runtime data that is more internal or contextual in nature</em>. Classes require this data, while hiding that information from their public API.</li>
-</ul></li>
-<li>While the first group does not influence the way object graphs are composed, the way you choose to provide the second group to your application components influences your choice of which Object Composition Model to use. You can provide internal and contextual runtime data using either of these:
-
-<ul>
-<li><em>The</em> <strong><em>Closure Composition Model</em></strong>—Lets you compose object graphs that capture runtime data in variables of a graph’s components</li>
-<li><em>The</em> <strong><em>Ambient Composition Model</em></strong>—Lets you store runtime data outside the object graph as ambient data, which is managed by the Composition Root</li>
-</ul></li>
 </ul>
-
+</li>
+<li>While the first group does not influence the way object graphs are composed, the way you choose to provide the second group to your application components influences your choice of which Object Composition Model to use. You can provide internal and contextual runtime data using either of these:
+<ul>
+<li><em>The</em> <em><strong>Closure Composition Model</strong></em>—Lets you compose object graphs that capture runtime data in variables of a graph’s components</li>
+<li><em>The</em> <em><strong>Ambient Composition Model</strong></em>—Lets you store runtime data outside the object graph as ambient data, which is managed by the Composition Root</li>
+</ul>
+</li>
+</ul>
 <h2 id="comments">Comments</h2>
 
 

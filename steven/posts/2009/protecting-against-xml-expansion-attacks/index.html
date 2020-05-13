@@ -53,12 +53,8 @@
 
 		
 
-		
-
-<h3 id="tom-hollander-describes-on-his-blog-a-denial-of-service-attack-i-never-knew-the-existence-of-called-xml-entity-expansion-attack-tom-explains-how-to-bring-a-server-to-its-knees-when-allowing-any-type-of-xml-document-as-input-and-passing-it-directly-to-an-xmldocument-for-parsing">Tom Hollander describes on his blog a denial of service attack I never knew the existence of, called XML Entity Expansion attack. Tom explains how to bring a server to its knees when allowing any type of xml document as input and passing it directly to an XmlDocument for parsing.</h3>
-
+		<h3 id="tom-hollander-describes-on-his-blog-a-denial-of-service-attack-i-never-knew-the-existence-of-called-xml-entity-expansion-attack-tom-explains-how-to-bring-a-server-to-its-knees-when-allowing-any-type-of-xml-document-as-input-and-passing-it-directly-to-an-xmldocument-for-parsing">Tom Hollander describes on his blog a denial of service attack I never knew the existence of, called XML Entity Expansion attack. Tom explains how to bring a server to its knees when allowing any type of xml document as input and passing it directly to an XmlDocument for parsing.</h3>
 <p>Tom uses the following XML document of less than 1 KB to demonstrate the attack:</p>
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;!DOCTYPE foo [ 
 </span><span style="color:#75715e">&lt;!ENTITY a &#34;1234567890&#34; &gt;</span> 
 <span style="color:#75715e">&lt;!ENTITY b &#34;&amp;a;&amp;a;&amp;a;&amp;a;&amp;a;&amp;a;&amp;a;&amp;a;&#34; &gt;</span> 
@@ -74,10 +70,8 @@
 <span style="color:#75715e">&lt;!ENTITY l &#34;&amp;k;&amp;k;&amp;k;&amp;k;&amp;k;&amp;k;&amp;k;&amp;k;&#34; &gt;</span> 
 <span style="color:#75715e">&lt;!ENTITY m &#34;&amp;l;&amp;l;&amp;l;&amp;l;&amp;l;&amp;l;&amp;l;&amp;l;&#34; &gt;</span> 
 ]&gt; 
-<span style="color:#f92672">&lt;foo&gt;</span>&amp;m;<span style="color:#f92672">&lt;/foo&gt;</span></code></pre></div>
-
+<span style="color:#f92672">&lt;foo</span><span style="color:#f92672">&gt;</span>&amp;m;<span style="color:#f92672">&lt;/foo&gt;</span></code></pre></div>
 <p>See <a href="https://blogs.msdn.com/tomholl/archive/2009/05/21/protecting-against-xml-entity-expansion-attacks.aspx">his post</a> for more information and the proposed remedy.</p>
-
 <h2 id="comments">Comments</h2>
 
 

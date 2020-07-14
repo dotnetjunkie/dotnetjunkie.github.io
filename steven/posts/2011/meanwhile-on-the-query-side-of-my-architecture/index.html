@@ -45,7 +45,7 @@
         <span>on&nbsp;</span><time datetime="2011-12-18 00:00:00 &#43;0000 UTC">December 18, 2011</time>
 	<br>
 	
-	<span>17-minute read</span>
+	<span>18-minute read</span>
 </div>
 		<h1 class="post-title">Meanwhile... on the query side of my architecture</h1>
 	<div class="post-info">
@@ -285,6 +285,37 @@
 }
 </code></pre></div>
 <p>he <code>QueryProcessor</code> class constructs a specific <code>IQueryHandler&lt;TQuery, TResult&gt;</code> type based on the type of the supplied query instance. This type is used to ask the supplied container class to get an instance of that type. Unfortunately we need to call the <code>Handle</code> method using reflection (by using the C# 4.0 <code>dymamic</code> keyword in this case), because at this point it is impossible to cast the handler instance, as the generic <code>TQuery</code> argument is not available at compile time. However, unless the <code>Handle</code> method is renamed or gets other arguments, this call will never fail and if you want to, it is very easy to write a unit test for this class. Using reflection will give a slight drop, but is nothing to really worry about (especially when you&rsquo;re using <a href="https://simpleinjector.org">Simple Injector</a> as your DI library, because it is <a href="http://www.palmmedia.de/Blog/2011/8/30/ioc-container-benchmark-performance-comparison">blazingly fast</a>).</p>
+<sidebar>
+	<span class="sidebar-title">Alternative QueryProcessor implementations</span>
+	<span class="sidebar-body">
+One of the major downsides of using `dynamic` in C# is that it can't invoke methods on an internal type, even when the method in question is part of a publicly defined interface. This would result in an exception like the following:
+<blockquote>
+<p>Microsoft.CSharp.RuntimeBinder.RuntimeBinderException: ''MyDecorator' does not contain a definition for 'Handle''</p>
+</blockquote>
+<p>I&rsquo;ve been bitten by this many times, especially when I accidentally defined one of my decorators as <code>internal</code>.</p>
+<p>Instead of using dynamic, an alternative is using the .NET Reflection API. For instance:</p>
+<pre><code>var method = handlerType.GetMethod(&quot;Handle&quot;);
+return (TResult)method.Invoke(handler, new object[] { query });
+</code></pre><p>.NET Reflection, however, comes with a downside of its own, which is that thrown exceptions are wrapped in a <code>TargetInvocationException</code>. This is very annoying, for instance when debugging and analyzing the log file, but especially when you need to handle exceptions higher up the call stack—for instance when catching <code>ValidationExceptions</code>. But rethrowing the inner exception, unfortunately, causes the loss of the original stack trace.</p>
+<p>Losing the stack trace can be prevented by making use of the <a href="https://docs.microsoft.com/en-us/dotnet/api/system.runtime.exceptionservices.exceptiondispatchinfo">ExceptionDispatchInfo</a> class. Using that approach, the <code>QueryProcessor</code>'s <code>Process</code> method becomes the following:</p>
+<pre><code>public TResult Process&lt;TResult&gt;(IQuery&lt;TResult&gt; query)
+{
+    var handlerType = typeof(IQueryHandler&lt;,&gt;)
+        .MakeGenericType(query.GetType(), typeof(TResult));
+    object handler = container.GetInstance(handlerType);
+    MethodInfo method = handlerType.GetMethod(&quot;Handle&quot;);
+
+    try
+    {
+        return (TResult)method.Invoke(handler, new object[] { query });
+    }
+    catch (TargetInvocationException ex)
+    {
+        ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
+    }
+}
+</code></pre></span>
+</sidebar>
 <p>I did consider an alternative design of the <code>IQueryProcessor</code> interface, that looked like this:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> IQueryProcessor
 {
@@ -385,7 +416,7 @@
 }
 </code></pre></div>
 <p>The previous sub queries are in this version replaced with the <code>IUserContext</code> and <code>ITimeProvider</code> services. Because of this, the method is now more concise and compact.</p>
-<p>So where do we draw the line between using an <code>IQuery&lt;TResult&gt;</code> and specifying an explicit separate service interface? I can’t really define any specific rules on that; a little bit of intuition and experience will have to guide you. But to give a little bit of guidance, when a query returns a (cached) value without really hitting an external resource, such as the file system, web service, or database, and it doesn’t contain any parameters, and you’re pretty sure you never want to wrap it with a decorator (no performance measuring, no audit trailing, no authorization) it’s pretty safe to define it as a specific service interface. Another way to view this is to use this design to define business questions: things the business wants to know. In other words, use the <code>IQueryHandler&lt;TQuery, TResult&gt;</code> and <code>ICommandHandler&lt;TCommand&gt;</code> abstractions as the communication layer between the business layer and the layers above.This comes down to the idea of <a href="http://scrapbook.qujck.com/holistic-abstractions-take-2/">holistic abstractions</a>.</p>
+<p>So where do we draw the line between using an <code>IQuery&lt;TResult&gt;</code> and specifying an explicit separate service interface? I can’t really define any specific rules on that; a little bit of intuition and experience will have to guide you. But to give a little bit of guidance, when a query returns a (cached) value without really hitting an external resource, such as the file system, web service, or database, and it doesn’t contain any parameters, and you’re pretty sure you never want to wrap it with a decorator (no performance measuring, no audit trailing, no authorization) it’s pretty safe to define it as a specific service interface. Another way to view this is to use this design to define business questions: things the business wants to know. In other words, use the <code>IQueryHandler&lt;TQuery, TResult&gt;</code> and <code>ICommandHandler&lt;TCommand&gt;</code> abstractions as the communication layer between the business layer and the layers above. This comes down to the idea of <a href="http://scrapbook.qujck.com/holistic-abstractions-take-2/">holistic abstractions</a>.</p>
 <p>That’s how I roll on the query side of my architecture.</p>
 <h2 id="comments">Comments</h2>
 <hr>

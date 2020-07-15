@@ -155,7 +155,7 @@ Comments </description>
       <pubDate>Sun, 18 Dec 2011 00:00:00 +0000</pubDate>
       
       <guid>https://blogs.cuttingedge.it/steven/posts/2011/meanwhile-on-the-query-side-of-my-architecture/</guid>
-      <description>Command-query separation is a common concept in the software industry. Many architectures separate commands from the rest of the system and send command messages that are processed by command handlers. This same concept of messages and handlers can just as easily be applied to the query side of an architecture. There are not many systems using this technique and this article is an attempt to change that. Two simple interfaces will change the look of your architecture&amp;hellip; forever.</description>
+      <description>Command-query separation is a common concept in the software industry. Many architectures separate commands from the rest of the system and send messages that are processed by handlers. This same concept of messages and handlers can just as easily be applied to the query side of an architecture. There are not many systems using this technique and this article is an attempt to change that. Two simple interfaces will change the look of your architecture&amp;hellip; forever.</description>
     </item>
     
     <item>

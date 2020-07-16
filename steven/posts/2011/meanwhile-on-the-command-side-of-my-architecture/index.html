@@ -57,9 +57,12 @@
 		
 
 		<h3 id="this-article-describes-how-a-single-interface-can-transform-the-design-of-your-application-to-be-much-cleaner-and-more-flexible-than-you-ever-thought-possible">This article describes how a single interface can transform the design of your application to be much cleaner, and more flexible than you ever thought possible.</h3>
-<h4 id="chapter-10-of-my-bookhttpsmngbzbynl-contains-a-much-more-elaborate-version-of-this-article">Chapter 10 of <a href="https://mng.bz/BYNl">my book</a> contains a much more elaborate version of this article.</h4>
+<p><callout class="TIP">
+    <span class="callout-title">TIP</span>
+    <span class="callout-body">Chapter 10 of <a href="https://mng.bz/BYNl">my book</a> contains a much more elaborate version of this article.</span>
+</callout></p>
 <p>Since I began writing applications in .NET I&rsquo;ve been separating operations that mutate state (of the database mostly) from operations that return data. This is basically what the <a href="https://en.wikipedia.org/wiki/Command-query_separation">Command-query separation principle</a> is about. Over time the designs I have used have evolved. Initially triggered by a former colleague of mine I started to use the <a href="https://en.wikipedia.org/wiki/Command_pattern">Command Pattern</a> about four years ago. Back then we called them <em>business commands</em> and a single command would represent an atomic business operation, or <a href="https://en.wikipedia.org/wiki/Use_case">use case</a>.</p>
-<p>Over the years, the projects I have participated on have increased in complexity and I have adopted newer techniques such as <a href="https://en.wikipedia.org/wiki/Test-driven_development">Test Driven Development</a> and <a href="https://en.wikipedia.org/wiki/Dependency_injection">Dependency Injection</a> (DI). The flaws in this approach to the Command Pattern have become obvious to me. DI has a tendency of exposing violations of the <a href="https://en.wikipedia.org/wiki/SOLID">SOLID principles</a> and this implementation hindered the maintainability of these applications.</p>
+<p>Over the years, the projects I have participated on have increased in complexity and I have adopted newer techniques such as <a href="https://en.wikipedia.org/wiki/Test-driven_development">Test-Driven Development</a> and <a href="https://en.wikipedia.org/wiki/Dependency_injection">Dependency Injection</a> (DI). The flaws in this approach to the Command Pattern have become obvious to me. DI has a tendency of exposing violations of the <a href="https://en.wikipedia.org/wiki/SOLID">SOLID principles</a> and this implementation hindered the maintainability of these applications.</p>
 <p>In the early days my implementation of the Command Pattern design consisted of classes that contained both properties to hold the data and an <code>Execute()</code> method that would start the operation. The design had an abstract <code>Command</code> base class that contained all of logic for handling transactions, re-executing commands after a deadlock occurred, measuring performance, security checks, etc. This base class was a big <a href="https://en.wikipedia.org/wiki/Code_smell">code smell</a> and was a form of <a href="https://en.wikipedia.org/wiki/God_object">God Object</a> with many responsibilities. Furthermore, having data and behavior interleaved made it very difficult to mock/abstract that logic during unit testing. For example a consumer of a command would typically new up a command instance and call <code>Execute()</code> directly on it, as shown in the following example:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> command = <span style="color:#66d9ef">new</span> MoveCustomerCommand
 {
@@ -117,7 +120,7 @@ command.Execute();
     }
 }
 </code></pre></div>
-<p>There is still a problem with this design. Although every handler class has a single (public) method (and therefore adheres the <a href="https://en.wikipedia.org/wiki/Interface_segregation_principle">Interface Segregation Principle</a>), all handlers define their own interface (there is no common interface). This makes it hard to extend the command handlers with new features and cross-cutting concerns. For example, we would like to measure the time it takes to execute every command and log this information to the database. How can we do this? In the past we would either change each and every command handler, or move the logic into a base class. Moving this feature into the base class is not ideal as the base class will soon contain lots of these common features, and would soon grow out of control (which I have seen happening). Besides, this would make it hard to test derived types and enable/disable such behavior for certain types (or instances) of command handlers because it would involve adding conditional logic into the base class, making it even more complicated!</p>
+<p>There is still a problem with this design. Although every handler class has a single (public) method (and therefore adheres the <a href="https://en.wikipedia.org/wiki/Interface_segregation_principle">Interface Segregation Principle</a>), all handlers define their own interface (there is no common interface). This makes it hard to extend the command handlers with new features and cross-cutting concerns. For example, I would like to measure the time it takes to execute every command and log this information to the database. How can we do this? In the past I would either change each and every command handler, or move the logic into a base class. Moving this feature into the base class is not ideal as the base class will soon contain lots of these common features, and would soon grow out of control (which I have seen happening). Besides, this would make it hard to test derived types and enable/disable such behavior for certain types (or instances) of command handlers because it would involve adding conditional logic into the base class, making it even more complicated!</p>
 <p>All these problems can be solved elegantly by having all command handlers implement a single generic interface:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> ICommandHandler&lt;TCommand&gt;
 {
@@ -125,16 +128,20 @@ command.Execute();
 }
 </code></pre></div>
 <p>Using this interface, the <code>MoveCustomerCommandHandler</code> would now look like this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#75715e">// Exactly the same as before, but now with the interface.
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MoveCustomerCommandHandler</span>
-    : ICommandHandler&lt;MoveCustomerCommand&gt;
-{
+
+
+
+
+
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MoveCustomerCommandHandler</span>   <span style="color:#75715e"><annotation>Exactly the same as before,</annotation>
+</span><span style="color:#75715e"></span>    : ICommandHandler&lt;MoveCustomerCommand&gt;<span style="color:#75715e"><annotation>but now with the interface.</annotation>
+</span><span style="color:#75715e"></span>{
     <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> UnitOfWork db;
 
     <span style="color:#66d9ef">public</span> MoveCustomerCommandHandler(
-        UnitOfWork db,
-<span style="color:#a6e22e">        [Other dependencies here]</span>)
-    {
+        UnitOfWork db) <span style="color:#75715e"><annotation>Could have more dependencies</annotation>
+</span><span style="color:#75715e"></span>    {
         <span style="color:#66d9ef">this</span>.db = db;
     }
  
@@ -145,14 +152,19 @@ command.Execute();
 }
 </code></pre></div>
 <p>One important benefit of this interface is that it allows the consumers to depend on the new abstraction, rather than a concrete implementation of the command handler:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#75715e">// Again, same implementation as before, but now we depend
-</span><span style="color:#75715e">// upon the ICommandHandler abstraction.
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CustomerController</span> : Controller
-{
+
+
+
+
+
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CustomerController</span> : Controller <span style="color:#75715e"><annotation>Same implementation as before</annotation>
+</span><span style="color:#75715e"></span>{
     <span style="color:#66d9ef">private</span> ICommandHandler&lt;MoveCustomerCommand&gt; handler;
  
-    <span style="color:#66d9ef">public</span> CustomerController(ICommandHandler&lt;MoveCustomerCommand&gt; handler)
-    {
+    <span style="color:#66d9ef">public</span> CustomerController(                       <span style="color:#75715e"><annotation>but now you depend upon the  </annotation>
+</span><span style="color:#75715e"></span>        ICommandHandler&lt;MoveCustomerCommand&gt; handler)<span style="color:#75715e"><annotation>ICommandHandler abstraction.</annotation>
+</span><span style="color:#75715e"></span>    {
         <span style="color:#66d9ef">this</span>.handler = handler;
     }
  
@@ -168,43 +180,69 @@ command.Execute();
     }
 }
 </code></pre></div>
-<p>What does adding an interface give us? Well frankly, a lot! As nothing depends directly on any implementation but instead depends on an interface, we can now replace the original command handlers with any class that implements the new interface. Ignoring, for now the usual argument of testability, look at this generic class:</p>
+<p>What does adding an interface give us? Well frankly, a lot! As nothing depends directly on any implementation but instead depends on an interface, you can now replace the original command handler with any class that implements the new interface. Ignoring, for now the usual argument of testability, look at this generic class:</p>
+
+
+
+
+
+
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TransactionCommandHandlerDecorator</span>&lt;TCommand&gt;
-    : ICommandHandler&lt;TCommand&gt;
-{
+    : ICommandHandler&lt;TCommand&gt; <span style="color:#75715e"><annotation>Implements ICommandHandler.</annotation>
+</span><span style="color:#75715e"></span>{
     <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> ICommandHandler&lt;TCommand&gt; decorated;
  
     <span style="color:#66d9ef">public</span> TransactionCommandHandlerDecorator(
-        ICommandHandler&lt;TCommand&gt; decorated)
-    {
+        ICommandHandler&lt;TCommand&gt; decorated) <span style="color:#75715e"><annotation>But also wraps ICommandHandler.</annotation>
+</span><span style="color:#75715e"></span>    {
         <span style="color:#66d9ef">this</span>.decorated = decorated;
     }
  
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Handle(TCommand command)
     {
-        <span style="color:#66d9ef">using</span> (<span style="color:#66d9ef">var</span> scope = <span style="color:#66d9ef">new</span> TransactionScope())
-        {
-            <span style="color:#66d9ef">this</span>.decorated.Handle(command);
- 
-            scope.Complete();
-        }
+        <span style="color:#66d9ef">using</span> (<span style="color:#66d9ef">var</span> scope = <span style="color:#66d9ef">new</span> TransactionScope())<span style="color:#75715e"><annotation>Starts a transaction.</annotation>
+</span><span style="color:#75715e"></span>        {
+            <span style="color:#66d9ef">this</span>.decorated.Handle(command);<span style="color:#75715e"><annotation>Forwards the call to the real handler.</annotation>
+</span><span style="color:#75715e"></span> 
+            scope.Complete();<span style="color:#75715e"><annotation>Commits the transaction.</annotation>
+</span><span style="color:#75715e"></span>        }
     }
 }
 </code></pre></div>
 <p>This class wraps an <code>ICommandHandler&lt;TCommand&gt;</code> instance (by accepting an instance of the same interface in its constructor), but at the same time it also implements the same <code>ICommandHandler&lt;TCommand&gt;</code> interface. It is an implementation of the <a href="https://en.wikipedia.org/wiki/Decorator_pattern">Decorator pattern</a>. This very simple class allows us to add transaction support to all of the command handlers.</p>
-<p>Instead of injecting a <code>MoveCustomerCommandHandler</code> directly into the <code>CustomerController</code>, we can now inject the following:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> handler =
-    <span style="color:#66d9ef">new</span> TransactionCommandHandlerDecorator&lt;MoveCustomerCommand&gt;(
+<p>Instead of injecting a <code>MoveCustomerCommandHandler</code> directly into the <code>CustomerController</code>, you can now inject the following:</p>
+
+
+
+
+
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> handler = <span style="color:#75715e"><annotation>Create handler wrapped in decorator.</annotation>
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">new</span> TransactionCommandHandlerDecorator&lt;MoveCustomerCommand&gt;(
         <span style="color:#66d9ef">new</span> MoveCustomerCommandHandler(
             <span style="color:#66d9ef">new</span> EntityFrameworkUnitOfWork(connectionString),
             <span style="color:#75715e">// Inject other dependencies for the handler here
 </span><span style="color:#75715e"></span>        )
     );
  
-<span style="color:#75715e">// Inject the handler into the controller’s constructor.
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> controller = <span style="color:#66d9ef">new</span> CustomerController(handler);
+<span style="color:#66d9ef">var</span> controller = <span style="color:#66d9ef">new</span> CustomerController(
+    handler);<span style="color:#75715e"><annotation>Inject the handler into the controller’s constructor.</annotation>
+</span></code></pre></div>
+<p>This single decorator class (containing just 8 lines of code) can be reused for all of the command handlers in the system. Take for instance this <code>CancelOrderCommandHandler</code>:</p>
+
+
+
+
+
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> handler =
+    <span style="color:#66d9ef">new</span> TransactionCommandHandlerDecorator&lt;CancelOrderCommand&gt;(
+        <span style="color:#66d9ef">new</span> CancelOrderCommandHandler(
+            <span style="color:#66d9ef">new</span> EntityFrameworkUnitOfWork(connectionString))
+    );
+ 
+<span style="color:#66d9ef">var</span> controller = <span style="color:#66d9ef">new</span> OrderController(handler);
 </code></pre></div>
-<p>This single decorator class (containing just 5 lines of code) can be reused for all of the command handlers in the system.</p>
 <p>In case you&rsquo;re still not convinced, let&rsquo;s define another decorator:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DeadlockRetryCommandHandlerDecorator</span>&lt;TCommand&gt;
     : ICommandHandler&lt;TCommand&gt;
@@ -250,7 +288,7 @@ command.Execute();
     }
 }
 </code></pre></div>
-<p>This class should speak for itself—although it contains more code than the previous example, it is still only 14 lines of code. In the event of a database deadlock, it will retry the command 5 times before it leaves the exception bubble up through the call stack. As before we can use this class by wrapping the previous decorator, as follows:</p>
+<p>This class should speak for itself—although it contains more code than the previous example, it is still only 21 lines of code. In the event of a database deadlock, it will retry the command 5 times before it leaves the exception bubble up through the call stack. As before we can use this class by wrapping the previous decorator, as follows:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> handler =
     <span style="color:#66d9ef">new</span> DeadlockRetryCommandHandlerDecorator&lt;MoveCustomerCommand&gt;(
         <span style="color:#66d9ef">new</span> TransactionCommandHandlerDecorator&lt;MoveCustomerCommand&gt;(
@@ -264,12 +302,15 @@ command.Execute();
 <span style="color:#66d9ef">var</span> controller = <span style="color:#66d9ef">new</span> CustomerController(handler);
 </code></pre></div>
 <p>By the way, did you notice how both decorators are completely focused? They each have just a single responsibility. This makes them easy to understand, easy to change—this is what the <a href="https://en.wikipedia.org/wiki/Single_responsibility_principle">Single Responsibility Principle</a> is about.</p>
-<p>The downside of these changes is that it can require a lot of boilerplate code to wire up all the classes that depend on a command handler; but at least the rest of the application is oblivious to this change. When dealing with any more than a few dozen of command handlers you should consider using a Dependency Injection library. Such a library can automate this wiring for you and will assist in making this area of your application maintainable.</p>
-<p>The system obviously depends on the correct wiring of these dependencies. Wrapping the deadlock retry behavior with the transaction behavior, for instance, would lead to unexpected behavior (a database deadlock typically has the effect of the database rolling back the transaction, while leaving the connection open), but this is isolated to the part of the application that wires everything together. Again, the rest of the application is oblivious.</p>
-<p>Both the transaction logic and deadlock retry logic are examples of <a href="https://en.wikipedia.org/wiki/Cross-cutting_concern">cross-cutting concerns</a>. The use of decorators to add cross-cutting concerns is the cleanest and most effective way to apply these common features I ever came across. It is a form of <a href="https://en.wikipedia.org/wiki/Aspect-oriented_programming">aspect-oriented programming</a>. Besides these two examples, there are many other cross-cutting concerns I can think of that can be added fairly easy using decorators:</p>
+<p>The consequence of these changes is that it can require a lot of boilerplate code to wire up all the classes that depend on a command handler; but at least the rest of the application is oblivious to this change. When dealing with any more than a few dozen of command handlers you should consider using a Dependency Injection library. Such a library can automate this wiring for you and will assist in making this area of your application maintainable.</p>
+<p><callout class="NOTE">
+    <span class="callout-title">NOTE</span>
+    <span class="callout-body">The system obviously depends on the correct wiring of these decorators. Wrapping the deadlock retry behavior with the transaction behavior, for instance, would lead to unexpected behavior, as a database deadlock typically has the effect of the database rolling back the transaction, while leaving the connection open. But this is isolated to the part of the application that wires everything together. Again, the rest of the application is oblivious.</span>
+</callout></p>
+<p>Both the transaction logic and deadlock retry logic are examples of <a href="https://en.wikipedia.org/wiki/Cross-cutting_concern">Cross-Cutting Concerns</a>. The use of decorators to add Cross-Cutting Concerns is the cleanest and most effective way to apply these common features I ever came across. It is a form of <a href="https://en.wikipedia.org/wiki/Aspect-oriented_programming">Aspect-Oriented Programming</a>. Besides these two examples, there are many other Cross-Cutting Concerns I can think of that can be added fairly easy using decorators:</p>
 <ul>
 <li><a href="https://github.com/dotnetjunkie/solidservices/issues/4">checking the authorization</a> of the current user before commands get executed,</li>
-<li><a href="https://simpleinjector.org/aop#decoration">validating</a> commands before commands get executed,</li>
+<li><a href="https://simpleinjector.org/aop+decoration">validating</a> commands before they get executed,</li>
 <li>profiling the duration of executing commands,</li>
 <li>building an audit trail of commands,</li>
 <li>logging execution failures</li>
@@ -278,45 +319,45 @@ command.Execute();
 </ul>
 <sidebar>
 	<span class="sidebar-title">Queuing commands</span>
-	<span class="sidebar-body">
-This last point is a very interesting one. Years ago I worked on an application that used a database table as queue for commands that would be executed in the future. We wrote business processes (commands by themselves) that sometimes queued dozens of other (sub) commands, which could be processed in parallel by different processes (multiple Windows services on different machines). These commands did things like sending mail or heavy stuff such as payroll calculations, generating PDF documents that would be merged by another command, and sending those merged documents to a printer by yet another command. The queue was transactional, which allowed us to—in a sense—send mails and upload files to FTP in a transactional manner. However, We didn't use Dependency Injection back then, which made everything so much harder (if only we knew).
-</span>
+	<span class="sidebar-body">This last point is a very interesting one. Years ago I worked on an application that used a database table as queue for commands that would be executed in the future. We wrote business processes (commands by themselves) that sometimes queued dozens of other (sub) commands, which could be processed in parallel by different processes (multiple Windows services on different machines). These commands did things like sending mail or heavy stuff such as payroll calculations, generating PDF documents that would be merged by another command, and sending those merged documents to a printer by yet another command. The queue was transactional, which allowed us to—in a sense—send mails and upload files to FTP in a transactional manner. However, We didn&rsquo;t use Dependency Injection back then, which made everything so much harder (if only we knew).</span>
 </sidebar>
-<p>Because commands are simple data containers without behavior, it is very easy to serialize them (as JSON or XML for instance) or send them over the wire (using WCF for instance), which makes it not only easy to queue them for later processing, but also makes it very easy to log them in an audit trail—yet another reason to separate data and behavior. All these features can be added, without changing a single line of code in the application (except perhaps a line at the application&rsquo;s entry point).</p>
-<p>This design makes maintaining web services much easier too. Your (WCF) web service can consist of only one &lsquo;handle&rsquo; method that takes in any command (that you explicitly expose) and can execute these commands (after doing the usual authentication, authorization, and validation of course). Because you will be defining commands and their handlers anyway, your web service project won&rsquo;t have to be changed. If you&rsquo;re interested in that approach, take a look at my article <a href="/steven/p/maintainable-wcf/">Writing Highly Maintainable WCF Services</a>.</p>
-<p>One simple <code>ICommandHandler&lt;TCommand&gt;</code> interface has made all this possible. While it may seem complex at first, once you get the hang of it (together with Dependency Injection), well&hellip; the possibilities are endless. You may think that you don’t need all of this up front when you first design your applications but this design allows you to make many unforeseen changes to the system later without much difficulty. One can hardly argue a system with this design is over-engineered—every business operation has its own class and we have put a single generic interface over them all. It’s hard to over-engineer that—even really small systems can benefit from <a href="https://en.wikipedia.org/wiki/Separation_of_concerns">separating concerns</a>.</p>
-<p>This doesn&rsquo;t mean things can’t get complicated. Correct wiring all of these dependencies, and writing and adding the decorators in the right order can be challenging. But at least this complexity is focused in a single part of the application (the startup path a.k.a. <a href="https://freecontent.manning.com/dependency-injection-in-net-2nd-edition-understanding-the-composition-root/">Composition Root</a>), and it leaves the rest of the application unaware and unaffected. You will rarely need to make sweeping changes across your application, which is what the <a href="https://en.wikipedia.org/wiki/Open/closed_principle">Open/Closed Principle</a> is all about.</p>
-<p>By the way, you might think the way I created all those decorators around a single command handler is rather awkward, and imagined the big ball of mud that it would become after we have created a few dozen command handlers. Yes—this might not scale well. But as I already mentioned, this problem is best resolved with a DI library. For instance, when using <a href="https://simpleinjector.org">Simple Injector</a>, registering all command handlers in the system can be done with a single line of code. Registering a decorator is another single line. Here is an example configuration when when using Simple Injector:</p>
+<p>Because commands are simple data containers without behavior, it is very easy to serialize them (as JSON or XML for instance) or send them over the wire (using WCF for instance), which makes it—not only—easy to queue them for later processing, but also makes it very easy to log them in an audit trail—yet another reason to separate data and behavior. All these features can be added, without changing a single line of code in the application (except changing single line at the application&rsquo;s entry point).</p>
+<p><callout class="TIP">
+    <span class="callout-title">TIP</span>
+    <span class="callout-body">This design makes maintaining web services much easier too. Your (WCF) web service can consist of only one &lsquo;handle&rsquo; method that takes in any command (that you explicitly expose) and can execute these commands (after doing the usual authentication, authorization, and validation of course). Because you will be defining commands and their handlers anyway, your web service project won&rsquo;t have to be changed. If you&rsquo;re interested in that approach, take a look at my article <a href="/steven/p/maintainable-wcf/">Writing Highly Maintainable WCF Services</a>.</span>
+</callout></p>
+<p>One simple <code>ICommandHandler&lt;TCommand&gt;</code> interface has made all this possible. While it may seem complex at first, once you get the hang of it (together with DI), well&hellip; the possibilities are endless. You may think that you don’t need all of this up front when you first design your applications but this design allows you to make many unforeseen changes to the system later without much difficulty. One can hardly argue a system with this design is over-engineered—every business operation has its own class and we have put a single generic interface over them all. It’s hard to over-engineer that—even really small systems can benefit from <a href="https://en.wikipedia.org/wiki/Separation_of_concerns">separating concerns</a>.</p>
+<p>This doesn&rsquo;t mean things can’t get complicated. Correct wiring all of dependencies, and writing and adding correctly functioning Cross-Cutting Concerns can be challenging. But at least this complexity is focused in a single part of the application (the startup path a.k.a. <a href="https://freecontent.manning.com/dependency-injection-in-net-2nd-edition-understanding-the-composition-root/">Composition Root</a>), and it leaves the rest of the application unaware and unaffected. You will rarely need to make sweeping changes across your application, which is what the <a href="https://en.wikipedia.org/wiki/Open/closed_principle">Open/Closed Principle</a> is all about.</p>
+<p>By the way, you might think the way I created all those decorators around a single command handler is rather awkward, and imagined the big ball of mud that it would become after you have created a few dozen command handlers. Yes—this might not scale well. But as I already mentioned, this problem is best resolved with a DI library. For instance, when using <a href="https://simpleinjector.org">Simple Injector</a>, registering all command handlers in the system can be done with a single line of code. Registering a decorator is another single line. Here is an example configuration when when using Simple Injector:</p>
+
+
+
+
+
+
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> container = <span style="color:#66d9ef">new</span> Container();
 
-<span style="color:#75715e">// Go look in all assemblies and register all implementations
-</span><span style="color:#75715e">// of ICommandHandler&lt;T&gt; by their closed interface:
-</span><span style="color:#75715e"></span>container.Register(
-    <span style="color:#66d9ef">typeof</span>(ICommandHandler&lt;&gt;),
-    AppDomain.CurrentDomain.GetAssemblies());
+<span style="color:#66d9ef">var</span> assemblies = AppDomain.CurrentDomain.GetAssemblies();
 
-<span style="color:#75715e">// Decorate each returned ICommandHandler&lt;T&gt; object with
-</span><span style="color:#75715e">// a TransactionCommandHandlerDecorator&lt;T&gt;.
-</span><span style="color:#75715e"></span>container.RegisterDecorator(
-    <span style="color:#66d9ef">typeof</span>(ICommandHandler&lt;&gt;),
-    <span style="color:#66d9ef">typeof</span>(TransactionCommandHandlerDecorator&lt;&gt;));
+container.Register(           <span style="color:#75715e"><annotation>Go look in all assemblies and register   </annotation>
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">typeof</span>(ICommandHandler&lt;&gt;),<span style="color:#75715e"><annotation>all implementations of ICommandHandler&lt;T&gt;</annotation>
+</span><span style="color:#75715e"></span>    assemblies);              <span style="color:#75715e"><annotation>by their closed interface.</annotation>
+</span><span style="color:#75715e"></span>
+container.RegisterDecorator(  <span style="color:#75715e"><annotation>Wrap each handler with  </annotation>
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">typeof</span>(ICommandHandler&lt;&gt;),<span style="color:#75715e"><annotation>a transaction decorator.</annotation>
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">typeof</span>(TransactionCommandHandlerDecorator&lt;&gt;));
 
-<span style="color:#75715e">// Decorate each returned ICommandHandler&lt;T&gt; object with
-</span><span style="color:#75715e">// a DeadlockRetryCommandHandlerDecorator&lt;T&gt;.
-</span><span style="color:#75715e"></span>container.RegisterDecorator(
-    <span style="color:#66d9ef">typeof</span>(ICommandHandler&lt;&gt;),
-    <span style="color:#66d9ef">typeof</span>(DeadlockRetryCommandHandlerDecorator&lt;&gt;));
+container.RegisterDecorator(  <span style="color:#75715e"><annotation>Wrap each handler with a </annotation>
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">typeof</span>(ICommandHandler&lt;&gt;),<span style="color:#75715e"><annotation>deadlock-retry decorator.</annotation>
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">typeof</span>(DeadlockRetryCommandHandlerDecorator&lt;&gt;));
 
-<span style="color:#75715e">// Decorate handlers conditionally with validation. In
-</span><span style="color:#75715e">// this case based on their metadata.
-</span><span style="color:#75715e"></span>container.RegisterDecorator(
-    <span style="color:#66d9ef">typeof</span>(ICommandHandler&lt;&gt;),
+container.RegisterDecorator( <span style="color:#75715e"><annotation>Wrap with a validation decorator.</annotation>
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">typeof</span>(ICommandHandler&lt;&gt;),
     <span style="color:#66d9ef">typeof</span>(ValidationCommandHandlerDecorator&lt;&gt;),
-    c =&gt; ContainsValidationAttributes(c.ServiceType));
-
-<span style="color:#75715e">// Decorates all handlers with an authorization decorator.
-</span><span style="color:#75715e"></span>container.RegisterDecorator(
-    <span style="color:#66d9ef">typeof</span>(ICommandHandler&lt;&gt;),
+    c =&gt; HasValidationAttributes(c.ServiceType));<span style="color:#75715e"><annotation>Makes decorator conditional.</annotation>
+</span><span style="color:#75715e"></span>
+container.RegisterDecorator( <span style="color:#75715e"><annotation>Wrap with a authorization logic.</annotation>
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">typeof</span>(ICommandHandler&lt;&gt;),
     <span style="color:#66d9ef">typeof</span>(AuthorizationCommandHandlerDecorator&lt;&gt;));
 </code></pre></div>
 <p>No matter how many command handlers you add to the system, these few lines of code won’t change, which also helps to underline the true power of a DI library. Once your application is built applying the SOLID principles, a good DI library will ensure that the startup path of your application remains maintainable.</p>
@@ -327,6 +368,7 @@ This last point is a very interesting one. Years ago I worked on an application 
 <li>In <a href="/steven/p/maintainable-wcf/">Writing Highly Maintainable WCF Services</a> I talk about sending commands over the wire</li>
 <li>If you want to learn how to migrate your existing application to use this model, please read <a href="https://github.com/simpleinjector/SimpleInjector/issues/520#issuecomment-368907098">this thread</a>.</li>
 <li>Chapter 10 of <a href="https://mng.bz/BYNl">my book</a> contains a much more elaborate version of this article.</li>
+<li>The comments below this article contain a myriad of interesting discussions—you should certainly check them out.</li>
 </ul>
 <h2 id="comments">Comments</h2>
 <hr>

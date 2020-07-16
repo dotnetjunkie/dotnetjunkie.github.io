@@ -293,8 +293,7 @@
 <p>The <code>QueryProcessor</code> class constructs a specific <code>IQueryHandler&lt;TQuery, TResult&gt;</code> type based on the type of the supplied query message. This type is used to ask the supplied container class to get an instance of that handler. Unfortunately you need to call the <code>Handle</code> method using reflection (I&rsquo;m using the C# <code>dymamic</code> keyword in this case), because at this point it is impossible to cast the handler instance, as the generic <code>TQuery</code> argument is not available at compile time. However, unless the <code>Handle</code> method is renamed or gets other arguments, this call will never fail and if you want to, it is very easy to write a unit test for this class. Using reflection will give a slight drop, but is nothing to really worry about (especially when you&rsquo;re using <a href="https://simpleinjector.org">Simple Injector</a> as your DI library.</p>
 <sidebar>
 	<span class="sidebar-title">Alternative QueryProcessor implementations</span>
-	<span class="sidebar-body">
-One of the major downsides of using `dynamic` in C# is that it can't invoke methods on an internal type, even when the method in question is part of a publicly defined interface. This would result in an exception like the following:
+	<span class="sidebar-body"><p>One of the major downsides of using <code>dynamic</code> in C# is that it can&rsquo;t invoke methods on an internal type, even when the method in question is part of a publicly defined interface. This would result in an exception like the following:</p>
 <blockquote>
 <p>Microsoft.CSharp.RuntimeBinder.RuntimeBinderException: ''MyDecorator' does not contain a definition for 'Handle''</p>
 </blockquote>
@@ -310,18 +309,18 @@ return (TResult)method.Invoke(handler, new object[] { query });
         .MakeGenericType(query.GetType(), typeof(TResult));
     object handler = container.GetInstance(handlerType);
     MethodInfo method = handlerType.GetMethod(&quot;Handle&quot;);
-
-    try
-    {
-        return (TResult)method.Invoke(handler, new object[] { query });
-    }
-    catch (TargetInvocationException ex)
-    {
-        ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-    }
+<pre><code>try
+{
+    return (TResult)method.Invoke(handler, new object[] { query });
 }
+catch (TargetInvocationException ex)
+{
+    ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
+}
+</code></pre>
+<p>}
 </code></pre></span>
-</sidebar>
+</sidebar></p>
 <p>I did consider an alternative design of the <code>IQueryProcessor</code> interface, that looked like this:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> IQueryProcessor
 {

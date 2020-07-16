@@ -45,7 +45,7 @@
         <span>on&nbsp;</span><time datetime="2012-04-14 00:00:00 &#43;0000 UTC">April 14, 2012</time>
 	<br>
 	
-	<span>11-minute read</span>
+	<span>12-minute read</span>
 </div>
 		<h1 class="post-title">Returning data from command handlers</h1>
 
@@ -54,10 +54,16 @@
 		
 
 		<h3 id="this-article-extends-the-architectural-design-of-command-handlers-to-allow-command-handlers-to-return-data">This article extends the architectural design of command handlers to allow command handlers to return data.</h3>
-<h4 id="update-although-the-article-below-might-still-be-very-entertaining-my-opionion-on-the-subject-has-changed-the-problems-described-below-will-go-away-completely-when-you-stop-using-use-database-generated-ids-instead-let-the-consumer-of-that-command-generate-an-id-most-likely-a-guid-in-this-case-since-the-client-creates-the-id-they-already-have-that-value-and-you-dont-have-to-return-anything-this-btw-has-other-advantages-for-instance-it-allows-commands-to-be-executed-asynchronously-or-queued-without-the-need-for-the-client-to-wait"><strong>UPDATE: Although the article below might still be very entertaining, my opionion on the subject has changed. The problems described below will go away completely when you stop using use database generated IDs! Instead let the consumer of that command generate an ID (most likely a GUID). In this case, since the client creates the ID, they already have that value, and you don&rsquo;t have to return anything. This btw has other advantages, for instance, it allows commands to be executed asynchronously (or queued), without the need for the client to wait.</strong></h4>
-<p>A few months back I described the <a href="/steven/p/commands/">command/handler architecture</a> that I (and many others) use to effectively model business operations in a system. Once in a while a question pops up in my mail or at Stackoverflow about returning data from a command.</p>
-<p>It seems strange at first to return data from commands, since the whole idea of the Command-query separation is that a function should either return a value or mutate state, but not both. So without any more context, I would respond to such question with: separate the returning of the data from the operation that mutates the state. Execute that command and <a href="/steven/p/queries/">execute a query</a> after the command has finished.</p>
-<p>When we take a closer look at the question however, we will usually see that the data being returned is an Identifier of some sort, which is the result of the creation of some entity in the system. Take a look at the following command:</p>
+<p><callout class="UPDATE">
+    <span class="callout-title">UPDATE</span>
+    <span class="callout-body">Although the article below might still be very entertaining, my opionion on the subject has changed. The problems described below will go away completely when you stop using use database generated IDs! Instead let the consumer of that command generate an ID (most likely a GUID). In this case, since the client creates the ID, they already have that value, and you don&rsquo;t have to return anything. This has other advantages—it allows commands to be executed asynchronously (or queued), for instance, without the need for the client to wait.</span>
+</callout></p>
+<p>A few months back I described the <a href="/steven/p/commands/">command/handler architecture</a> that I (and many others) use to effectively model business operations in a system. Once in a while a question pops up in my mail or at Stack Overflow about returning data from a command.</p>
+<p>It seems strange at first to return data from commands, since the whole idea of the Command-query separation is that a function should either return a value or mutate state, but not both. So without any more context, I would respond to such question with:</p>
+<blockquote>
+<p>separate the returning of the data from the operation that mutates the state. Execute that command and <a href="/steven/p/queries/">execute a query</a> after the command has finished.</p>
+</blockquote>
+<p>When you take a closer look at the question, however, you will often see that the data being returned is an identifier of some sort, which is the result of the creation of some entity in the system. Take a look at the following command:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CreateCustomerCommand</span>
 {
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> Name { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
@@ -73,28 +79,38 @@
     <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>.RedirectToAction(<span style="color:#e6db74">&#34;Index&#34;</span>, <span style="color:#66d9ef">new</span> { id = customerId });
 }
 </code></pre></div>
-<p>Still, do we really want to return values from commands? A few things to note here. First of all, returning values from commands does mean that a command can never be executed asynchronously anymore, something that architectures such as <a href="https://martinfowler.com/bliki/CQRS.html">CQRS</a> promote. Besides this, the <code>CreateCustomerCommand</code> seems very CRUDy, and probably doesn’t really fit an architecture like CQRS. In a CQRS like architecture, you are likely to report to your user the message “your request is being processed” or might want to poll until the operation has executed asynchronously.</p>
-<p>For the systems I’m working on, for my customers, my fellow developers, and even myself, CQRS is a bridge too far. The idea of having all commands (possibly) execute asynchronously –and CQRS itself- is a real mind shift that I’m currently not willing to make (yet), and I can’t expect other developers to do to. With my current state of mind, it is simply too useful to have commands handlers return data to the caller. So how do we do that?</p>
+<p>Still, do we really want to return values from commands? A few things to note here. First of all, returning values from commands does mean that a command can never be executed asynchronously, something that architectures such as <a href="https://martinfowler.com/bliki/CQRS.html">CQRS</a> promote. Besides this, the <code>CreateCustomerCommand</code> seems very CRUDy, and probably doesn’t really fit an architecture like CQRS. In a CQRS like architecture, you are likely to report to your user the message “your request is being processed” or might want to poll until the operation has executed asynchronously.</p>
+<p>For the systems I’m working on, for my customers, my fellow developers, and even myself, CQRS is a bridge too far. The idea of having all commands (possibly) execute asynchronously—and CQRS itself—is a real mind shift that I’m currently not willing to make (yet), and I can’t expect other developers to do to. With my current state of mind, it is simply too useful to have commands handlers return data to the caller. So how do we do that?</p>
 <p>The answer is actually very simple: Define an ‘output’ property on a command:</p>
+
+
+
+
+
+
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CreateCustomerCommand</span>
 {
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> Name { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
     <span style="color:#66d9ef">public</span> Address Address { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
     <span style="color:#66d9ef">public</span> DateTime? DateOfBirth { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
 
-    <span style="color:#75715e">// output property
-</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> CustomerId { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">internal</span> <span style="color:#66d9ef">set</span>; }
-}
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> CustomerId { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }<span style="color:#75715e"><annotation>Output property{{//annotate}}
+</span><span style="color:#75715e"></span>}
 </code></pre></div>
 <p>When a command handler sets this property during the execution, the caller can use it as follows:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> ActionResult CreateCustomer(CreateCustomerCommand command)
 {
     <span style="color:#66d9ef">this</span>.handler.Handle(command);
-    <span style="color:#66d9ef">int</span> customerId = command.CustomerId;
-    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>.RedirectToAction(<span style="color:#e6db74">&#34;Index&#34;</span>, <span style="color:#66d9ef">new</span> { id = customerId });
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>.RedirectToAction(<span style="color:#e6db74">&#34;Index&#34;</span>, <span style="color:#66d9ef">new</span> { id = command.CustomerId });
 }
 </code></pre></div>
-<p>We can set this id from within the command handler:</p>
+<p>You can set this id from within the command handler:</p>
+
+
+
+
+
+
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CreateCustomerCommandHandler</span>
     : ICommandHandler&lt;CreateCustomerCommand&gt;
 {
@@ -119,26 +135,41 @@
 
         <span style="color:#66d9ef">this</span>.unitOfWork.Commit();
 
-        <span style="color:#75715e">// Set the output property.
-</span><span style="color:#75715e"></span>        command.CustomerId = customer.Id;
-    }
+        command.CustomerId = customer.Id; <span style="color:#75715e"><annotation>Set the output property.</annotation>
+</span><span style="color:#75715e"></span>    }
 }
 </code></pre></div>
-<p>As you can see, the <code>CustomerId</code> property of the <code>CreateCustomerCommand</code> is set at the end of the <code>Handle</code> method of the handler. This sounds too good to be true, and well… it depends ;-).</p>
+<p>As you can see, the <code>CustomerId</code> property of the <code>CreateCustomerCommand</code> is set at the end of the <code>Handle</code> method. This sounds too good to be true, and well… it depends ;-).</p>
 <p>When the <code>Customer.Id</code> is generated by the database, the <code>Commit</code> will ensure that the <code>Customer</code> is persisted and will retrieve the auto-generated key and it will become available immediately after the <code>Commit</code>. We can therefore simply set the command’s <code>CustomerId</code> property after calling <code>Commit</code>.</p>
-<p>The previous command handler was in complete control over the unit of work. It created that unit of work, it committed that unit of work, and it disposed that unit of work. This is a simple model I effectively used in the past, and I know others are still using this today. Letting the command handler control the unit of work however, has its short comes.</p>
-<p>This design works great when commands are small and contain little logic. It starts to fall apart however, when commands get more complex and start to depend on other abstractions that need to run in the same context / unit of work. When the unit of work is controlled by the command handler, it is the handler&rsquo;s responsibility of passing it on to its dependencies, and since those dependencies are already created at the time the handler creates the unit of work, constructor injection is out of the picture. The only thing left is passing the unit of work through method arguments (method injection). Although it doesn’t seem that bad, I worked on a system where we actually did this, but the call stacks were deep and passing around the unit of work from method to method, from class to class was just tedious. To make our lives easier we started creating a new unit of work for some operations, but this actually made things worse, since a single use case / request resulted in multiple unit of works, which sometimes lead to very strange behavior, or even deadlocks.</p>
-<p>For this reason, I stepped away from this design and instead I inject a unit of work instance into classes that need it. Though, somebody somewhere in the system must manage the unit of work. This can be solved by registering the unit of work with a Per Thread or Per Web Request lifetime and implementing a command handler decorator that will ensure the unit of work is committed after the handler completed successfully (note that committing the unit of work on the end of the web request is typically a bad idea, since there is no way to tell whether the unit of work should actually be committed at that point). You have to realize that, although simplifying your application code, the complexity is moved into the <a href="https://freecontent.manning.com/dependency-injection-in-net-2nd-edition-understanding-the-composition-root/">Composition Root</a>. The size and complexity of your application must promote this. Although I must admit that once familiar with these types of constructions and configurations of your composition root, you will find it easy to apply in small systems as well.</p>
-<p>One note about database generated keys. CQRS models the business around aggregate roots (a <a href="https://en.wikipedia.org/wiki/Domain-driven_design">DDD</a> concept), and each aggregate root gets a unique key, usually generated as a Guid, which can be generated in .NET. This means that when using CQRS, you will never run into the problem of database generated keys, which is great of course.</p>
-<p>Aggregates in DDD are a group of domain objects that belong together. The Aggregate Root is the thing that holds them together. An <code>Order</code> for instance, may have order lines and those order lines cannot live without that order. The order is therefore the aggregate root and has a unique (global) identifier. An order line does not need a (global) identifier (although they might have an local identifier, only known inside the aggregate), since it will never be referenced directly; other aggregates will only reference the order, never the lines. They may need an identitier in your relational database, but you would probably never return them from a command, since they are purely internal to the Aggregate. If such identitier is needed, returned, or referenced from other aggregates, they are probably not part of that aggregate and the system is incorrectly modeled, accordingly to DDD. This also means that the system will have not as many primary keys as a non-DDD system will have. In a normal relational database, each order line will usually get its own auto number primary key. In that case, it will be much more likely to get into performance problems when using Guids. A <code>Guid</code> is 16 bytes (12 bytes bigger than an <code>Int32</code>) and every database index of a certain table will contain the primary key of that table, making each index 12 bytes times the number of records in the table bigger. Disk space is cheap, but I/O isn’t. When doing complex queries over large amounts of data, lowering the amount of I/O is important. And don’t forget the clustered index fragmentation that random Guids cause.</p>
-<p>Long story short, you might be in the situation where you don’t use DDD / CQRS, want to return a database generated value from your command handlers, while having a design were command handler don’t control the unit of work. How do we do this?</p>
-<p>Since database generated IDs only come available after the data is saved to the database, and committing happens after the handler executed, we need a construct that allows the handlers to execute some code after the commit operation. We can introduce a new abstraction to the system, where command handlers can depend upon, which allows them to register some post-commit operation:</p>
+<p>The previous command handler was in complete control over the unit of work. It created that unit of work, it committed that unit of work, and it disposed that unit of work. This is a simple model I used in the past, and I know others are still using this today. Letting the command handler control the unit of work, however, has its short comes.</p>
+<p>This design works great when commands are small and contain little logic. It starts to fall apart, unfortunately, when commands get more complex and start to depend on other abstractions that need to run in the same context / unit of work. When the unit of work is controlled by the command handler, it is the handler&rsquo;s responsibility of passing it on to its dependencies, and since those dependencies are already created at the time the handler creates the unit of work, constructor injection is out of the picture. The only thing left is passing the unit of work through method arguments (method injection). Although it doesn’t seem that bad, I worked on a system where we actually did this, but the call stacks were deep and passing around the unit of work from method to method, from class to class was just tedious. To make our lives easier we started creating a new unit of work for some operations, but this actually made things worse, because a single use case / request resulted in multiple unit of works, which sometimes lead to very strange behavior, or even deadlocks.</p>
+<p>For this reason, I stepped away from this design and instead I inject a unit of work instance into classes that need it. Though, somebody somewhere in the system must manage the unit of work. This can be solved by registering the unit of work with a Scoped lifetime and implementing a command handler decorator that will ensure the unit of work is committed after the handler completed successfully.</p>
+<p><callout class="NOTE">
+    <span class="callout-title">NOTE</span>
+    <span class="callout-body">Committing the unit of work on the end of the web request is typically a bad idea, as there is no way to tell whether the unit of work should actually be committed at that point. The operation could have failed with an exception.</span>
+</callout></p>
+<p>You have to realize that, although simplifying your application code, the complexity is moved into the <a href="https://freecontent.manning.com/dependency-injection-in-net-2nd-edition-understanding-the-composition-root/">Composition Root</a>. The size and complexity of your application must promote this. Although I must admit that once familiar with these types of constructions and configurations of your Composition Root, you will find it easy to apply in small systems as well.</p>
+<sidebar>
+	<span class="sidebar-title">Database-generated keys</span>
+	<span class="sidebar-body"><p>CQRS models the business around aggregate roots (a <a href="https://en.wikipedia.org/wiki/Domain-driven_design">DDD</a> concept), and each aggregate root gets a unique key, usually generated as a Guid, which can be generated in .NET. This means that when using CQRS, you will never run into the problem of database generated keys, which is great of course.</p>
+<p>Aggregates in DDD are a group of domain objects that belong together. The Aggregate Root is the thing that holds them together. An <code>Order</code> for instance, may have order lines and those order lines cannot live without that order. The order is therefore the aggregate root and has a unique (global) identifier. An order line does not need a (global) identifier (although they might have an local identifier, only known inside the aggregate), since it will never be referenced directly; other aggregates will only reference the order, never the lines. They may need an identitier in your relational database, but you would probably never return them from a command, since they are purely internal to the Aggregate. If such identitier is needed, returned, or referenced from other aggregates, they are probably not part of that aggregate and the system is incorrectly modeled, accordingly to DDD.</p>
+<p>This also means that the system will have not as many primary keys as a non-DDD system will have. In a normal relational database, each order line will usually get its own auto number primary key. In that case, it will be much more likely to get into performance problems when using Guids. A <code>Guid</code> is 16 bytes (12 bytes bigger than an <code>Int32</code>) and every database index of a certain table will contain the primary key of that table, making each index 12 bytes times the number of records in the table bigger. Disk space is cheap, but I/O isn’t. When doing complex queries over large amounts of data, lowering the amount of I/O is important. And don’t forget the clustered index fragmentation that random Guids cause.</p>
+<p>Long story short, you might be in the situation where you don’t use DDD / CQRS, want to return a database generated value from your command handlers, while having a design were command handler don’t control the unit of work. How do you do this?</p>
+</span>
+</sidebar>
+<p>Database generated IDs only come available after the data is saved to the database, and committing happens after the handler executed. This is why you need a construct that allows the handlers to execute some code after the commit operation. You can introduce a new abstraction to the system, where command handlers can depend upon, which allows them to register some post-commit operation:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> IPostCommitRegistrator
 {
     <span style="color:#66d9ef">event</span> Action Committed;
 }
 </code></pre></div>
 <p>This interface defines a single event, which command handlers can depend upon and register their post commit operation. The previously defined <code>CreateCustomerCommandHandler</code> will now look like this:</p>
+
+
+
+
+
+
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CreateCustomerCommandHandler</span>
     : ICommandHandler&lt;CreateCustomerCommand&gt;
 {
@@ -164,17 +195,26 @@
  
         <span style="color:#66d9ef">this</span>.unitOfWork.Customers.InsertOnSubmit(customer);
  
-        <span style="color:#75715e">// Register an event that will be called after commit.
-</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">this</span>.postCommit.Committed += () =&gt;
-        {
-            <span style="color:#75715e">// Set the output property.
-</span><span style="color:#75715e"></span>            command.CustomerId = customer.Id;
-        };
+        <span style="color:#66d9ef">this</span>.postCommit.Committed += <span style="color:#75715e"><annotation>Register an event that will</annotation>
+</span><span style="color:#75715e"></span>            () =&gt;                    <span style="color:#75715e"><annotation>be called after commit.</annotation>
+</span><span style="color:#75715e"></span>            {
+                command.CustomerId = customer.Id;<span style="color:#75715e"><annotation>Set the output property.</annotation>
+</span><span style="color:#75715e"></span>            };
     }
 }
 </code></pre></div>
-<p>This command handler registers a delegate to the <code>IPostCommitRegistrator</code>, which is injected through the constructor (note that you should only inject the <code>IPostCommitRegistrator</code> into a handler that actually needs it).</p>
-<p>From the application design, this really is all there’s to it. However, there is some more work to do inside the composition root. For instance, we need an implementation of this <code>IPostCommitRegistrator</code>:</p>
+<p>This command handler registers a delegate to the <code>IPostCommitRegistrator</code>, which is injected through the constructor.</p>
+<p><callout class="TIP">
+    <span class="callout-title">TIP</span>
+    <span class="callout-body">You should only inject the <code>IPostCommitRegistrator</code> into a handler that actually needs it.</span>
+</callout></p>
+<p>From the application design, this really is all there’s to it. However, there is some more work to do inside the Composition Root. For instance, you need an implementation of this <code>IPostCommitRegistrator</code>:</p>
+
+
+
+
+
+
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">sealed</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">PostCommitRegistratorImpl</span> : IPostCommitRegistrator
 {
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">event</span> Action Committed = () =&gt; { };
@@ -186,12 +226,11 @@
 
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Reset()
     {
-        <span style="color:#75715e">// Clears the list of actions.
-</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">this</span>.Committed = () =&gt; { };    
-    }
+        <span style="color:#66d9ef">this</span>.Committed = () =&gt; { };<span style="color:#75715e"><annotation>Clears the list of actions.</annotation> 
+</span><span style="color:#75715e"></span>    }
 }
 </code></pre></div>
-<p>This implementation is very simple. It just implements the <code>Committed</code> event and defines an <code>OnCommitted</code> method, which will be called from the code that manages the transactional behavior of the command handlers. In my previous post I defined an <code>TransactionCommandHandlerDecorator&lt;T&gt;</code>, which allowed executing the commands in a transactional manner. Although we can extend this class to add this post commit behavior, I like my classes to be focused, and have a single responsibility. Let’s define a <code>PostCommitCommandHandlerDecorator&lt;T&gt;</code>, that has the sole responsibility of executing the registered post commit delegates, after a transaction was committed successfully:</p>
+<p>This implementation is very simple. It just implements the <code>Committed</code> event and defines an <code>OnCommitted</code> method, which will be called from the code that manages the transactional behavior of the command handlers. In my previous post I defined an <code>TransactionCommandHandlerDecorator&lt;T&gt;</code>, which allowed executing the commands in a transactional manner. Although you can extend this class to add this post commit behavior, I like my classes to be focused—having a single responsibility. Let’s define a <code>PostCommitCommandHandlerDecorator&lt;T&gt;</code>, that has the sole responsibility of executing the registered post commit delegates, after a transaction was committed successfully:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">sealed</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">PostCommitCommandHandlerDecorator</span>&lt;T&gt; : ICommandHandler&lt;T&gt;
 {
     <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> ICommandHandler&lt;T&gt; decorated;
@@ -219,8 +258,8 @@
     }
 }
 </code></pre></div>
-<p>This decorator depends on the <code>PostCommitRegistratorImpl</code> directly and during the <code>Handle</code> method—after the transaction completes successfully—the <code>ExecuteActions</code> method of the <code>PostCommitRegistratorImpl</code> is called. Note that this decorator depends on the <code>PostCommitRegistratorImpl</code> implementation and not on the <code>IPostCommitRegistrator</code> interface. The interface does not implement the <code>ExecuteActions</code> method, and we don’t want it to, since we don’t want any command handler to call that method directly. We do however want this class to be able to execute the registered delegates, so we need it to access the implementation. Since both classes are part of the composition root, this is fine. The application code itself has no notion of the <code>PostCommitRegistratorImpl</code> nor the <code>PostCommitCommandHandlerDecorator&lt;T&gt;</code>.</p>
-<p>Our last task is to wire up all the dependencies correctly. This isn’t really difficult, but does need a certain state of mind, since you need to carefully consider the lifestyle of <code>PostCommitRegistratorImpl</code>. Up until this point this article was container agnostic. Here is an example of how to configure this using <a href="https://simpleinjector.org/">Simple Injector</a>:</p>
+<p>This decorator depends on the <code>PostCommitRegistratorImpl</code> directly and during the <code>Handle</code> method—after the transaction completes successfully—the <code>ExecuteActions</code> method of the <code>PostCommitRegistratorImpl</code> is called. Note that this decorator depends on the <code>PostCommitRegistratorImpl</code> implementation and not on the <code>IPostCommitRegistrator</code> interface. The interface does not implement the <code>ExecuteActions</code> method, and you don’t want it to, since you don’t want any command handler to call that method directly. You do, however, want this class to be able to execute the registered delegates, so you need it to access the implementation. Because both classes are part of the Composition Root, this is fine. The application code itself has no notion of the <code>PostCommitRegistratorImpl</code> nor the <code>PostCommitCommandHandlerDecorator&lt;T&gt;</code>.</p>
+<p>The last task is to wire up all the dependencies correctly. This isn’t really difficult, but does need a certain state of mind, since you need to carefully consider the lifestyle of <code>PostCommitRegistratorImpl</code>. Up until this point this article was container agnostic. Here is an example of how to configure this using <a href="https://simpleinjector.org/">Simple Injector</a>:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">container.Register(
     <span style="color:#66d9ef">typeof</span>(ICommandHandler&lt;&gt;), 
     <span style="color:#66d9ef">typeof</span>(ICommandHandler&lt;&gt;).Assembly);
@@ -239,11 +278,11 @@ container.Register&lt;IPostCommitRegistrator, PostCommitRegistratorImpl&gt;(
 </code></pre></div>
 <p>The previous registration does a few things:</p>
 <ul>
-<li>First it registers all public <code>ICommandHandler&lt;T&gt;</code> implementations that live in the same assembly as the <code>ICommandHandler&lt;T&gt;</code> does.</li>
+<li>First it registers all <code>ICommandHandler&lt;T&gt;</code> implementations that live in the same assembly as the <code>ICommandHandler&lt;T&gt;</code> does.</li>
 <li>Next it registers the <code>TransactionCommandHandlerDecorator&lt;T&gt;</code> to be wrapped around each command handler implementation.</li>
-<li>Next it registers the <code>PostCommitCommandHandlerDecorator&lt;T&gt;</code> to be wrapped around each <code>TransactionCommandHandlerDecorator&lt;T&gt;</code> implementation. It is important that the post commit decorator is wrapped around the transaction decorator, since the system will behave incorrectly when they are decorated the other way around, since that means that the registered delegates would be called before the transaction is committed.</li>
-<li>The <code>PostCommitRegistratorImpl</code> is registered. Since we want to inject the same instance in both the command handler and the post commit decorator, we can’t use the transient lifestyle, since that will new up a new instance each time it is injected. Using a single instance for the whole application however, is only possible when the application is single-threaded (which can be the case if you run the handlers in a Windows Forms application or a Windows Service).</li>
-<li>Since the application does not depend on <code>PostCommitRegistratorImpl</code> but on the <code>IPostCommitRegistrator</code> interface, we need to register this as well.</li>
+<li>Next it registers the <code>PostCommitCommandHandlerDecorator&lt;T&gt;</code> to be wrapped around each <code>TransactionCommandHandlerDecorator&lt;T&gt;</code> implementation. It is important that the post commit decorator is wrapped around the transaction decorator, because the system will behave incorrectly when they are decorated the other way around—the registered delegates would otherwise be called before the transaction is committed.</li>
+<li>The <code>PostCommitRegistratorImpl</code> is registered. Because you want to inject the same instance in both the command handler and the post commit decorator, you can’t use the transient lifestyle—that would new up a new instance each time it is injected. Using a single instance for the whole application, on the other hand, is only possible when the application is single-threaded (which can be the case if you run the handlers in a Windows Forms application or a Windows Service).</li>
+<li>The application does not depend on <code>PostCommitRegistratorImpl</code> but on the <code>IPostCommitRegistrator</code> interface, which is why you need to register this as well.</li>
 </ul>
 <h2 id="conclusion">Conclusion</h2>
 <p>Again, one simple abstraction can solve the problem we have effectively. Nice about this design is that it keeps the code of the commands handlers pretty clean, and although not shown, it is easy to write unit tests for this as well.</p>

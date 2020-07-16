@@ -172,9 +172,7 @@
 <p>Letting <code>ShoppingBasketRepository</code> have a Singleton Lifestyle would cause <code>DbContext</code> to be kept alive for the application’s lifetime. This is dreadful because that would cause it to be used by multiple requests simultaneously&mdash;a horrible prospect. Again: <code>DbContext</code>s are not thread-safe.</p>
 <sidebar>
 	<span class="sidebar-title">The Singleton Lifestyle</span>
-	<span class="sidebar-body">
-In the context of Dependency Injection, a _Lifestyle_ is a formalized way of describing the intended lifetime of a dependency. One of those formalized lifestyles is the _[Singleton Lifestyle](https://mng.bz/qXJw)_. When a component is configured/declared using the Singleton Lifestyle, it means that there will be only one instance of that component, and that instance is perpetually reused. The Singleton Lifestyle should _not_ be confused with the [Singleton design pattern](https://en.wikipedia.org/wiki/Singleton_pattern). They both guarantee the existence of just one instance, but their similarity ends there.
-</span>
+	<span class="sidebar-body">In the context of Dependency Injection, a <em>Lifestyle</em> is a formalized way of describing the intended lifetime of a dependency. One of those formalized lifestyles is the <em><a href="https://mng.bz/qXJw">Singleton Lifestyle</a></em>. When a component is configured/declared using the Singleton Lifestyle, it means that there will be only one instance of that component, and that instance is perpetually reused. The Singleton Lifestyle should <em>not</em> be confused with the <a href="https://en.wikipedia.org/wiki/Singleton_pattern">Singleton design pattern</a>. They both guarantee the existence of just one instance, but their similarity ends there.</span>
 </sidebar>
 <p><code>ShoppingBasketRepository</code> shouldn’t be a singleton, and the same is true of its consumer&mdash;<code>AddShoppingBasketItemHandler</code>&mdash;for exactly the same reason; reusing the service would cause the repository to be reused, which again would cause <code>DbContext</code> to be reused. A pattern seems to emerge…</p>
 <h2 id="the-closures-lifetime-restriction">The closure’s lifetime restriction</h2>
@@ -269,9 +267,7 @@ handler.Handle(queueContext.Message); <span style="color:#75715e"><annotation>Ex
 <p>In this example, you start by creating an Autofac lifetime scope. A lifetime scope provides a cache for <em>scoped</em> instances. A scoped instance is cached and reused within a single lifetime scope. Configuring <code>ClosureUserContext</code> as scoped allows you to request the scope’s single <code>ClosureUserContext</code> instance and initialize it with the user’s identity. Because that user context is registered as scoped, that same instance will be injected into the handler’s graph.</p>
 <sidebar>
 	<span class="sidebar-title">The Scoped Lifestyle</span>
-	<span class="sidebar-body">
-Similar to the Singleton Lifestyle, the Scoped Lifestyle is a formalized way of describing the intended lifetime of a dependency. Scoped dependencies behave much like Singleton dependencies, but within a single, well-defined scope. Scoped dependencies aren’t shared across scopes. Each scope has its own cache of associated dependencies.
-</span>
+	<span class="sidebar-body">Similar to the Singleton Lifestyle, the Scoped Lifestyle is a formalized way of describing the intended lifetime of a dependency. Scoped dependencies behave much like Singleton dependencies, but within a single, well-defined scope. Scoped dependencies aren’t shared across scopes. Each scope has its own cache of associated dependencies.</span>
 </sidebar>
 <p>For completeness, here are the required Autofac registrations to compose the discussed graph:</p>
 

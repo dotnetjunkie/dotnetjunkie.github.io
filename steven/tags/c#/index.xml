@@ -108,7 +108,7 @@ I always loved the first edition as it was a game changer for me. I learned a lo
       <pubDate>Sat, 14 Apr 2012 00:00:00 +0000</pubDate>
       
       <guid>https://blogs.cuttingedge.it/steven/posts/2012/returning-data-from-command-handlers/</guid>
-      <description>This article extends the architectural design of command handlers to allow command handlers to return data. UPDATE: Although the article below might still be very entertaining, my opionion on the subject has changed. The problems described below will go away completely when you stop using use database generated IDs! Instead let the consumer of that command generate an ID (most likely a GUID). In this case, since the client creates the ID, they already have that value, and you don&amp;rsquo;t have to return anything.</description>
+      <description>This article extends the architectural design of command handlers to allow command handlers to return data. UPDATEAlthough the article below might still be very entertaining, my opionion on the subject has changed. The problems described below will go away completely when you stop using use database generated IDs! Instead let the consumer of that command generate an ID (most likely a GUID). In this case, since the client creates the ID, they already have that value, and you don&amp;rsquo;t have to return anything.</description>
     </item>
     
     <item>
@@ -126,7 +126,8 @@ I always loved the first edition as it was a game changer for me. I learned a lo
       <pubDate>Sun, 11 Dec 2011 00:00:00 +0000</pubDate>
       
       <guid>https://blogs.cuttingedge.it/steven/posts/2011/meanwhile-on-the-command-side-of-my-architecture/</guid>
-      <description>This article describes how a single interface can transform the design of your application to be much cleaner, and more flexible than you ever thought possible. Chapter 10 of my book contains a much more elaborate version of this article. Since I began writing applications in .NET I&amp;rsquo;ve been separating operations that mutate state (of the database mostly) from operations that return data. This is basically what the Command-query separation principle is about.</description>
+      <description>This article describes how a single interface can transform the design of your application to be much cleaner, and more flexible than you ever thought possible. TIPChapter 10 of my book contains a much more elaborate version of this article.
+Since I began writing applications in .NET I&amp;rsquo;ve been separating operations that mutate state (of the database mostly) from operations that return data. This is basically what the Command-query separation principle is about.</description>
     </item>
     
     <item>

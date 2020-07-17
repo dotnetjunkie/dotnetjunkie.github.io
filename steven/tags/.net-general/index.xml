@@ -81,7 +81,7 @@ I always loved the first edition as it was a game changer for me. I learned a lo
       <pubDate>Sat, 01 Jun 2013 00:00:00 +0000</pubDate>
       
       <guid>https://blogs.cuttingedge.it/steven/posts/2013/di-anti-pattern-multiple-constructors/</guid>
-      <description>When Dependency Injection is applied correctly and completely it is important that each type only has one constructor—multiple constructors are redundant, make your DI configuration fragile, and lead to maintainability issues. From a DI perspective, your applications have two kinds of types: newables and injectables. Newables are classes that the application news up manually using the new keyword. This is true for types such as primitives, entities, DTOs, view models and messages.</description>
+      <description>When Dependency Injection is applied correctly and completely, it is important that each type only has one constructor—multiple constructors are redundant, make your DI configuration fragile, and lead to maintainability issues. From a DI perspective, your applications have two kinds of types: newables and injectables. Newables are classes that the application news up manually using the new keyword. This is true for types such as primitives, entities, DTOs, view models and messages.</description>
     </item>
     
     <item>
@@ -99,7 +99,7 @@ I always loved the first edition as it was a game changer for me. I learned a lo
       <pubDate>Thu, 30 Aug 2012 00:00:00 +0000</pubDate>
       
       <guid>https://blogs.cuttingedge.it/steven/posts/2012/writing-highly-maintainable-wcf-services/</guid>
-      <description>When it comes to writing maintainable software, there is no alternative to the five core principles of object-oriented design. When software is based on these principles, everything becomes significantly easier. When your software is based on these principles, writing a highly maintainable WCF web service on top of that can be done in just a matter of minutes. The code supporting this article can be found at github.com/dotnetjunkie/solidservices. Most of my clients have maintainability issues with their software.</description>
+      <description>When it comes to writing maintainable software, there is no alternative to the five core principles of object-oriented design. When software is based on these principles, everything becomes significantly easier. When your software is based on these principles, writing a highly maintainable WCF web service on top of that can be done in just a matter of minutes. TIPThe code supporting this article can be found at github.com/dotnetjunkie/solidservices.</description>
     </item>
     
     <item>

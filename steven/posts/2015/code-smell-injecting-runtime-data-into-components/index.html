@@ -83,9 +83,10 @@
 
 		<h3 id="injecting-runtime-data-into-your-application-components-is-a-code-smell-runtime-data-should-flow-through-the-method-calls-of-already-constructed-object-graphs">Injecting runtime data into your application components is a code smell. Runtime data should flow through the method calls of already-constructed object graphs.</h3>
 <p>A recurring theme when it comes to questions about dependency injection is how to wire up and resolve components a.k.a. <a href="http://misko.hevery.com/2008/09/30/to-new-or-not-to-new/">injectables</a> (the classes that contain the application&rsquo;s behavior) that require runtime data during construction. My answer to this is always the same:</p>
-<blockquote>
-<p><strong>Don&rsquo;t inject runtime data into application components during construction&mdash;it causes ambiguity, complicates the Composition Root with an extra responsibility, and makes it extraordinarily hard to verify the correctness of your DI configuration. Instead, let runtime data flow through the method calls of constructed object graphs.</strong></p>
-</blockquote>
+<p><callout class="">
+    <span class="callout-title"></span>
+    <span class="callout-body"><strong>Don&rsquo;t inject runtime data into application components during construction&mdash;it causes ambiguity, complicates the Composition Root with an extra responsibility, and makes it extraordinarily hard to verify the correctness of your DI configuration. Instead, let runtime data flow through the method calls of constructed object graphs.</strong></span>
+</callout></p>
 <p>Here&rsquo;s an example of a <code>MoveCustomerCommand</code> component that gets constructed with runtime data&mdash;the <code>CustomerId</code> and <code>DestinationAddress</code>.</p>
 
 
@@ -259,6 +260,10 @@
 or</li>
 <li>retrieving runtime data from specific abstractions that allow resolving runtime data.</li>
 </ol>
+<p><callout class="UPDATE">
+    <span class="callout-title">UPDATE</span>
+    <span class="callout-body">The discussion on injecting runtime data is part of larger topic about <strong>DI Composition Models</strong>. I wrote a <a href="/steven/p/compositionmodels/">five-part series</a> on this.</span>
+</callout></p>
 <p>Happy injecting.</p>
 <h2 id="comments">Comments</h2>
 <hr>

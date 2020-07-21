@@ -27,7 +27,7 @@
       
       <guid>https://blogs.cuttingedge.it/steven/posts/2015/code-smell-injecting-runtime-data-into-components/</guid>
       <description>Injecting runtime data into your application components is a code smell. Runtime data should flow through the method calls of already-constructed object graphs. A recurring theme when it comes to questions about dependency injection is how to wire up and resolve components a.k.a. injectables (the classes that contain the application&amp;rsquo;s behavior) that require runtime data during construction. My answer to this is always the same:
- Don&amp;rsquo;t inject runtime data into application components during construction&amp;mdash;it causes ambiguity, complicates the Composition Root with an extra responsibility, and makes it extraordinarily hard to verify the correctness of your DI configuration.</description>
+Don&amp;rsquo;t inject runtime data into application components during construction&amp;mdash;it causes ambiguity, complicates the Composition Root with an extra responsibility, and makes it extraordinarily hard to verify the correctness of your DI configuration.</description>
     </item>
     
   </channel>

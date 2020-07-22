@@ -42,6 +42,19 @@
 
 	<div class="catalogue">
 		
+			<a href="https://blogs.cuttingedge.it/steven/posts/2010/breaking-changes-in-smtpclient-in-net40/" class="catalogue-item">
+    <div>
+        <time datetime="2010-05-06 00:00:00 &#43;0000 UTC" class="catalogue-time">May 6, 2010</time>
+        <h1 class="catalogue-title">Breaking changes in SmtpClient in .NET 4.0</h1>
+        <div class="catalogue-line"></div>
+
+        <p>
+            In .NET 4.0 the SmtpClient class now implements IDisposable. This is a breaking change what you should watch out for. For .NET 4.0 the BCL team decided to pool SMTP connections, just as .NET already did with database connections. This of course means that the SmtpClient class should implement IDisposable, just as the SqlConnection does. When STMP connections are pooled, the overhead over establishing a new connection is lowered, which is a good thing.
+        </p>
+    </div>
+</a>
+
+		
 			<a href="https://blogs.cuttingedge.it/steven/posts/2010/protecting-against-regex-dos-attacks/" class="catalogue-item">
     <div>
         <time datetime="2010-05-05 00:00:00 &#43;0000 UTC" class="catalogue-time">May 5, 2010</time>

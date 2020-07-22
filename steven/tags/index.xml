@@ -6,10 +6,28 @@
     <description>Recent content in Tags on .NET Junkie - Weblog of a workaholic</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 07 Aug 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 22 Jul 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://blogs.cuttingedge.it/steven/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Dependency Injection</title>
+      <link>https://blogs.cuttingedge.it/steven/tags/dependency-injection/</link>
+      <pubDate>Wed, 22 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://blogs.cuttingedge.it/steven/tags/dependency-injection/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Simple Injector</title>
+      <link>https://blogs.cuttingedge.it/steven/tags/simple-injector/</link>
+      <pubDate>Wed, 22 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://blogs.cuttingedge.it/steven/tags/simple-injector/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>.NET General</title>
@@ -35,24 +53,6 @@
       <pubDate>Wed, 07 Aug 2019 00:00:00 +0000</pubDate>
       
       <guid>https://blogs.cuttingedge.it/steven/tags/c#/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Dependency Injection</title>
-      <link>https://blogs.cuttingedge.it/steven/tags/dependency-injection/</link>
-      <pubDate>Wed, 07 Aug 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://blogs.cuttingedge.it/steven/tags/dependency-injection/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Simple Injector</title>
-      <link>https://blogs.cuttingedge.it/steven/tags/simple-injector/</link>
-      <pubDate>Sun, 02 Apr 2017 00:00:00 +0000</pubDate>
-      
-      <guid>https://blogs.cuttingedge.it/steven/tags/simple-injector/</guid>
       <description></description>
     </item>
     

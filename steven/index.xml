@@ -6,10 +6,19 @@
     <description>Recent content on .NET Junkie - Weblog of a workaholic</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 07 Aug 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 22 Jul 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://blogs.cuttingedge.it/steven/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Simple Injector v5</title>
+      <link>https://blogs.cuttingedge.it/steven/posts/2020/simple-injector-v5/</link>
+      <pubDate>Wed, 22 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://blogs.cuttingedge.it/steven/posts/2020/simple-injector-v5/</guid>
+      <description>It’s been 10 years since the birth of Simple Injector, and three years since the release of Simple Injector 4.0. The number of features that mean bumping the major version number have been piling up on the backlog, and so we started work on the next major release a few months ago. And it’s finally here! This announcement on my blog is a bit late (41 days to be precise), but for anyone that missed that release, take a look at the Simple Injector blog for more information about this new major release.</description>
+    </item>
     
     <item>
       <title>In Praise of the Singleton Object Graph</title>

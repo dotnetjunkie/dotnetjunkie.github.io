@@ -169,7 +169,10 @@
 }
 </code></pre></div>
 <p>In this example, the construction of the <code>IHandler&lt;OrderCancelled&gt;</code> service can succeed, even in the absence of some required runtime data. For instance, assume that some components require the request’s start time, but this value was never set, as in the previous example. The call to <code>handler.Handle</code> will fail—possibly deep down the call stack, or even just in some specific branches of the code. This is similar to behavior when using the ACM.</p>
-<p>When using the CCM, there are some tricks you can apply to move the verification of the availability of this runtime data to an earlier point in time, ideally when calling <code>Resolve</code>. A discussion about how to achieve this, however, is outside the scope of this article.</p>
+<p><callout class="NOTE">
+    <span class="callout-title">NOTE</span>
+    <span class="callout-body">When using the CCM, there are some tricks you can apply to move the verification of the availability of this runtime data to an earlier point in time, ideally when calling <code>Resolve</code>. A discussion about how to achieve this, however, is outside the scope of this article.</span>
+</callout></p>
 <p>Even though tricks can be applied—thanks to the dynamic nature of DI Containers—you will never be able to completely prevent Temporal Coupling. To make matters worse, when using a DI Container, the resolve will typically be dynamic, meaning that you don’t know which type to resolve at compile time. This means that you will generally have to set <em>all</em> declared runtime data in the scope. As an example, with a DI Container, you wouldn’t explicitly request the <code>OrderCancellationReportGenerator</code>, but instead request the handler(s) for a message type that is unknown at compile time:</p>
 
 
@@ -199,7 +202,11 @@
 <li><em><strong>Torn Lifestyles</strong></em>&mdash;When a component is scoped around a web request (or perhaps even scoped around the application’s lifetime), it is easy to accidentally and unknowingly create a second instance of that component within the same logical scope. In that case, the component’s lifestyle is said to be <a href="https://simpleinjector.org/diatl"><em>torn</em></a>. When this happens with stateful components, it can lead to hard-to-track bugs. When working with <code>DbContext</code>, for example, having an extra instance will likely cause trouble, because that accidental second instance will rarely be committed, causing a supposed atomic operation to be cut in half.</li>
 <li><em><strong>Ambiguous Lifestyles</strong></em>&mdash;An accidental coding error in your <a href="https://mng.bz/K1qZ">Composition Root</a> or a misconfiguration of your DI Container can cause a component to be registered with different, and, therefore, <a href="https://simpleinjector.org/diaal">Ambiguous Lifestyles</a>. The effect is similar to that of a Torn Lifestyle; too many or too few instances of that component are used at a certain point in time. The resulting misbehavior is often hard to spot.</li>
 </ul>
-<p>These are problems you will <em>not</em> encounter when applying one simple rule that the ACM prescribes: <em>All components that are part of the constructed object graphs should be <strong>immutable</strong> and&mdash;apart from configuration values&mdash;<strong>stateless</strong>.</em></p>
+<p>These are problems you will <em>not</em> encounter when applying one simple rule that the ACM prescribes:</p>
+<p><callout class="IMPORTANT">
+    <span class="callout-title">IMPORTANT</span>
+    <span class="callout-body">With the ACM, all components that are part of the constructed object graphs should be <strong>immutable</strong> and&mdash;apart from configuration values&mdash;<strong>stateless</strong>.</span>
+</callout></p>
 <p>When all of a graph’s components are stateless, it doesn’t matter how many instances of the component you create. You can never accidentally keep a dependency captive, as its lifetime becomes irrelevant. Similarly, the component’s lifestyle can never become torn or ambiguous for the same reason.</p>
 <p>Note that with the ACM, there is still some Lifetime Management left. You will still have to manage the lifetime of runtime data objects, such as <code>DbContext</code>. Especially when those objects implement <code>IDisposable</code>, deterministic disposal becomes important. By the nature of the ACM, however, those types of stateful objects will <em>not</em> be part of the composed object graphs of your application.</p>
 <p>But even with <em>some</em> Lifetime Management left, the ACM greatly reduces the likelihood of falling into many Lifetime Management traps. Another area where this model outperforms its competitor is during code reviews.</p>

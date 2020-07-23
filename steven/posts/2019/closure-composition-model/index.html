@@ -113,7 +113,10 @@
     <span style="color:#66d9ef">public</span> IActionResult AddItem(AddShoppingBasketItem viewModel) =&gt; ...
 }
 </code></pre></div>
-<p>The shopping application would likely contain many more classes than just this one controller. In this article, I’ll add a few more classes to the application to demonstrate the Closure Composition Model.</p>
+<p><callout class="NOTE">
+    <span class="callout-title">NOTE</span>
+    <span class="callout-body">The shopping application would likely contain many more classes than just this one controller. In this article, I’ll add a few more classes to the application to demonstrate the Closure Composition Model.</span>
+</callout></p>
 <p>When it comes to supplying application components with a data-centric object, such as a <code>DbContext</code>, a common practice is to inject the object directly into the constructor of the consuming class. The next code example shows the constructor of a <code>ShoppingBasketRepository</code> class that depends on a <code>DbContext</code> derivative&mdash;the <code>ShoppingBasketDbContext</code>:</p>
 
 
@@ -198,7 +201,7 @@ container.Register(
 </span><span style="color:#75715e"></span>    Lifestyle.Scoped);
 </code></pre></div>
 <p><code>ShoppingBasketDbContext</code> is created by the lambda, rather than being supplied from the outside. When the graph requires externally provided runtime data, however, the previous registration will not work.</p>
-<p>Say, for instance, you need to process messages from a queue, but the handling code needs to run in the context of the user on whose behalf the message was published. In that case, the user’s identity is possibly provided to you by message infrastructure. When you build the object graph by hand (a.k.a. <a href="https://blog.ploeh.dk/2014/06/10/pure-di/">Pure DI</a>), instead of using a DI Container, that identity can easily be provided to the graph as follows:</p>
+<p>Say, for instance, you need to process messages from a queue, but the handling code needs to run in the context of the user on whose behalf the message was published. In that case, the user’s identity is possibly provided to you by the queuing infrastructure. When you build the object graph by hand (a.k.a. <a href="https://blog.ploeh.dk/2014/06/10/pure-di/">Pure DI</a>), instead of using a DI Container, that identity can easily be provided to the graph as follows:</p>
 
 
 

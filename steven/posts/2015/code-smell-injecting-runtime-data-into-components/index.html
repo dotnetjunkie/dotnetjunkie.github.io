@@ -82,7 +82,8 @@
 		
 
 		<h3 id="injecting-runtime-data-into-your-application-components-is-a-code-smell-runtime-data-should-flow-through-the-method-calls-of-already-constructed-object-graphs">Injecting runtime data into your application components is a code smell. Runtime data should flow through the method calls of already-constructed object graphs.</h3>
-<p>A recurring theme when it comes to questions about dependency injection is how to wire up and resolve components a.k.a. <a href="http://misko.hevery.com/2008/09/30/to-new-or-not-to-new/">injectables</a> (the classes that contain the application&rsquo;s behavior) that require runtime data during construction. My answer to this is always the same:</p>
+<p>A recurring theme when it comes to questions about dependency injection is how to wire up and resolve components a.k.a. <a href="http://misko.hevery.com/2008/09/30/to-new-or-not-to-new/" rel="noreferrer">injectables</a>
+ (the classes that contain the application&rsquo;s behavior) that require runtime data during construction. My answer to this is always the same:</p>
 <p><callout class="">
     <span class="callout-title"></span>
     <span class="callout-body"><strong>Don&rsquo;t inject runtime data into application components during construction&mdash;it causes ambiguity, complicates the Composition Root with an extra responsibility, and makes it extraordinarily hard to verify the correctness of your DI configuration. Instead, let runtime data flow through the method calls of constructed object graphs.</strong></span>
@@ -120,12 +121,16 @@
 <p>In the code snippet, the construction of the component requires both the <code>ICustomerRepository</code> dependency in its constructor and the runtime data values for the customer ID and address through its public fields. The runtime values are specific to one particular request.</p>
 <p>This implementation is problematic because you need request-specific information to correctly initialize this component. To be able to create a new <code>MoveCustomerCommand</code>, the consuming code must either create the component itself, delegate its creation to a factory, or call back into the container passing the runtime data&mdash;all of which cause problems of their own:</p>
 <ul>
-<li>Creating the component in code is a <a href="https://en.wikipedia.org/wiki/Dependency_inversion_principle">Dependency Inversion Principle</a> violation and makes it impossible to decorate, intercept or replace the component without making sweeping changes throughout the code base.</li>
-<li>A factory will add a <a href="/steven/p/abstract-factories/">pointless extra layer of abstraction</a> to the application, increasing complexity and decreasing maintainability. Complexity is increased because the consumer now has to deal with an extra abstraction (the factory). Maintainability is decreased, because for each component, a factory method must be created and maintained that will handwire the component with its dependencies.</li>
-<li>Calling back into the container directly leads to the <a href="https://mng.bz/WaQw">Service Locator anti-pattern</a>.</li>
+<li>Creating the component in code is a <a href="https://en.wikipedia.org/wiki/Dependency_inversion_principle" rel="noreferrer">Dependency Inversion Principle</a>
+ violation and makes it impossible to decorate, intercept or replace the component without making sweeping changes throughout the code base.</li>
+<li>A factory will add a <a href="/steven/p/abstract-factories/">pointless extra layer of abstraction</a>
+ to the application, increasing complexity and decreasing maintainability. Complexity is increased because the consumer now has to deal with an extra abstraction (the factory). Maintainability is decreased, because for each component, a factory method must be created and maintained that will handwire the component with its dependencies.</li>
+<li>Calling back into the container directly leads to the <a href="https://mng.bz/WaQw" rel="noreferrer">Service Locator anti-pattern</a>
+.</li>
 </ul>
 <p>Both the factory and Service Locator approach cause the creation of this part of the object graph to be delayed until runtime. Although delaying the creation of the object graph until runtime isn&rsquo;t a bad thing per se, it makes it harder to verify your configuration because resolving the root object will only test some of the object graph.</p>
-<p>The solution to these issues is actually quite simple: remove the injection of runtime data out of the construction phase of the component and pass it on using method calls after construction. <a href="/steven/p/commands/">Not surprisingly</a>, the following design solves these problems:</p>
+<p>The solution to these issues is actually quite simple: remove the injection of runtime data out of the construction phase of the component and pass it on using method calls after construction. <a href="/steven/p/commands/">Not surprisingly</a>
+, the following design solves these problems:</p>
 
 
 
@@ -158,7 +163,8 @@
 </span><span style="color:#75715e"></span>    }
 }
 </code></pre></div>
-<p>The command has now become a behaviorless <a href="https://refactoring.com/catalog/introduceParameterObject.html">Parameter Object</a> that can be passed on to the new command handler component. This change solves the problems with the original design:</p>
+<p>The command has now become a behaviorless <a href="https://refactoring.com/catalog/introduceParameterObject.html" rel="noreferrer">Parameter Object</a>
+ that can be passed on to the new command handler component. This change solves the problems with the original design:</p>
 <ul>
 <li>The creation of object graphs can now be verified with a single automated test.</li>
 <li>No callbacks to a Service Locator are needed.</li>
@@ -252,7 +258,8 @@
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> CurrentUserId =&gt; (<span style="color:#66d9ef">int</span>)HttpContext.Current.Session[<span style="color:#e6db74">&#34;userId&#34;</span>];
 }
 </code></pre></div>
-<p>These two implementations are adapters; they adapt your application-specific abstractions to a specific technology, tool, or system component that you wish to hide from your application components. These adapters are part of the <a href="https://freecontent.manning.com/dependency-injection-in-net-2nd-edition-understanding-the-composition-root/">Composition Root</a>.</p>
+<p>These two implementations are adapters; they adapt your application-specific abstractions to a specific technology, tool, or system component that you wish to hide from your application components. These adapters are part of the <a href="https://freecontent.manning.com/dependency-injection-in-net-2nd-edition-understanding-the-composition-root/" rel="noreferrer">Composition Root</a>
+.</p>
 <p>Do note though that primitive values (such as <code>int</code> and <code>string</code>) are not runtime data per definition. Configuration values, such as connection strings, are primitives, but they are usually known at application startup, and don&rsquo;t change during the lifetime of the application. Those &lsquo;static&rsquo; values can safely be injected into the constructor. Still, if you find yourself injecting the same configuration value into many different components you are missing an abstraction, but that&rsquo;s a discussion for another day.</p>
 <p>To summarize, the solution to the problem of injecting runtime data into components is to let runtime data flow through method calls on an initialized object graph by either:</p>
 <ol>
@@ -267,7 +274,8 @@ or</li>
 <p>Happy injecting.</p>
 <h2 id="comments">Comments</h2>
 <hr>
-<h4 id="dennis-van-der-stelthttpdennisbloggingaboutnet---09-november-15"><a href="http://dennis.bloggingabout.net/">Dennis van der Stelt</a> - 09 November 15</h4>
+<h4 id="dennis-van-der-stelthttpdennisbloggingaboutnet---09-november-15"><a href="http://dennis.bloggingabout.net/" rel="noreferrer">Dennis van der Stelt</a>
+ - 09 November 15</h4>
 <p>Great article! Welcome back to blogging! :)</p>
 <hr>
 <h4 id="jan-hartmann---09-november-15">Jan Hartmann - 09 November 15</h4>
@@ -277,14 +285,17 @@ or</li>
 <h4 id="nazaret---17-november-15">Nazaret - 17 November 15</h4>
 <p>Awesome! Welcome back! :)</p>
 <hr>
-<h4 id="yacoub-massadhttpyacoubsoftwareblogspotcom---22-november-15"><a href="http://yacoubsoftware.blogspot.com/">Yacoub Massad</a> - 22 November 15</h4>
+<h4 id="yacoub-massadhttpyacoubsoftwareblogspotcom---22-november-15"><a href="http://yacoubsoftware.blogspot.com/" rel="noreferrer">Yacoub Massad</a>
+ - 22 November 15</h4>
 <p>Great article. But I think there is something that is still missing. Consider the example of a UI application that allows people to type in an FTP server and some other connectivity settings at runtime, and then connects to such server to do some work (like allowing the user to upload or download files). Wouldn&rsquo;t you in this case create an abstract factory that creates some <code>IFtpServer</code> implementation given the connection settings? Consuming classes of <code>IFtpServer</code> wouldn&rsquo;t want to know anything about the connection settings, so you can&rsquo;t put these settings as method parameters. Also you cannot obtain such information from some context interface as you did with the <code>ITimeProvider</code> for example. So it seems that the need for abstract factories still exists for some cases</p>
 <hr>
 <h4 id="steven---14-august-16">Steven - 14 August 16</h4>
 <p>Yacoub,</p>
-<p>In my <a href="/steven/p/abstract-factories/">latest article</a> I go into more details about why I think Abstract Factories are a design smell and should be avoided in most cases.</p>
+<p>In my <a href="/steven/p/abstract-factories/">latest article</a>
+ I go into more details about why I think Abstract Factories are a design smell and should be avoided in most cases.</p>
 <hr>
-<h4 id="luke-brinerhttplukiebblogspotcouk---15-february-18"><a href="http://lukieb.blogspot.co.uk/">Luke Briner</a> - 15 February 18</h4>
+<h4 id="luke-brinerhttplukiebblogspotcouk---15-february-18"><a href="http://lukieb.blogspot.co.uk/" rel="noreferrer">Luke Briner</a>
+ - 15 February 18</h4>
 <p>Thanks so much for this. Helping me to understand some of the more subtle issues with DI and in a very concise way while not skipping the &ldquo;why not to do it this way&rdquo;!</p>
 
 

@@ -49,7 +49,7 @@
         <div class="catalogue-line"></div>
 
         <p>
-            In .NET 4.0 the SmtpClient class now implements IDisposable. This is a breaking change what you should watch out for. For .NET 4.0 the BCL team decided to pool SMTP connections, just as .NET already did with database connections. This of course means that the SmtpClient class should implement IDisposable, just as the SqlConnection does. When STMP connections are pooled, the overhead over establishing a new connection is lowered, which is a good thing.
+            In .NET 4.0 the SmtpClient class now implements IDisposable. This is a breaking change what you should watch out for. For .NET 4.0 the BCL team decided to pool SMTP connections, just as .NET already did with database connections. This of course means that the SmtpClientclass should implement IDisposable, just as the SqlConnection does. When STMP connections are pooled, the overhead over establishing a new connection is lowered, which is a good thing.
         </p>
     </div>
 </a>
@@ -63,7 +63,7 @@
 
         <p>
             Bryan Sullivan describes in the May issue of his MSDN article a denial of service attack that abuses regular expressions. As Bryan explains, a poorly written regex can bring your server to its knees. Bryan demonstrates that even the simplest regular expressions can bring your server to its knees. Here are some examples of regular expressions that can easily cause this to happen:
-^(\d+)+$ ^(\d+)*$ ^(\d*)*$ ^(\d+|\s+)*$ ^(\d|\d\d)+$ ^(\d|\d?)+$ Read more about the causes and the cures here.
+^(\d+)+$ ^(\d+)*$ ^(\d*)*$ ^(\d+|\s+)*$ ^(\d|\d\d)+$ ^(\d|\d?)+$ Read more about the causes and the cures here.
         </p>
     </div>
 </a>
@@ -90,7 +90,7 @@
         <div class="catalogue-line"></div>
 
         <p>
-            The Microsoft ADO.NET team blog made an important announcement yesterday about the future of LINQ to SQL. The ADO.NET team announced that Microsoft will continue to make some investments in LINQ to SQL, but they also made it pretty clear that LINQ to Entities is the recommended data access solution in the future frameworks. Microsoft will invest heavily in the Entity Framework.
+            The Microsoft ADO.NET team blog made an important announcement yesterday about the future of LINQ to SQL. The ADO.NET team announcedthat Microsoft will continue to make some investments in LINQ to SQL, but they also made it pretty clear that LINQ to Entities is the recommended data access solution in the future frameworks. Microsoft will invest heavily in the Entity Framework.
 I always wondered why Microsoft focused on two different O/RM technologies for the .
         </p>
     </div>
@@ -153,7 +153,7 @@ Comments
         
 		<footer>
 			<span>
-			&copy; <time datetime="2020">2020</time>
+			&copy; <time datetime="2021">2021</time>
 			Steven van Deursen.
 			<br />
 			<span class="noprint">Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme, encrypted by <a href='https://letsencrypt.org/'>Let's Encrypt</a>, and hosted by <a href='https://pages.github.com/'>Github Pages</a>.</span>

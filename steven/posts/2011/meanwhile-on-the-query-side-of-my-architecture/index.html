@@ -57,7 +57,9 @@
 		
 
 		<h3 id="command-query-separation-is-a-common-concept-in-the-software-industry-many-architectures-separate-commands-from-the-rest-of-the-system-and-send-messages-that-are-processed-by-handlers-this-same-concept-of-messages-and-handlers-can-just-as-easily-be-applied-to-the-query-side-of-an-architecture-there-are-not-many-systems-using-this-technique-and-this-article-is-an-attempt-to-change-that-two-simple-interfaces-will-change-the-look-of-your-architecture-forever">Command-query separation is a common concept in the software industry. Many architectures separate commands from the rest of the system and send messages that are processed by handlers. This same concept of messages and handlers can just as easily be applied to the query side of an architecture. There are not many systems using this technique and this article is an attempt to change that. Two simple interfaces will change the look of your architecture&hellip; forever.</h3>
-<p>In <a href="/steven/p/commands/">my previous post</a> I described how I design the command side of my systems. The greatest thing about this design is that it provides a lot of flexibility and lowers the overall complexity of the system through the addition of one simple interface to the system. The design is founded on the <a href="https://en.wikipedia.org/wiki/SOLID">SOLID principles</a> and is brought to life with Dependency Injection (although DI is optional). Please read that post if you haven’t already, as this post will regularly refer to its content.</p>
+<p>In <a href="/steven/p/commands/">my previous post</a>
+ I described how I design the command side of my systems. The greatest thing about this design is that it provides a lot of flexibility and lowers the overall complexity of the system through the addition of one simple interface to the system. The design is founded on the <a href="https://en.wikipedia.org/wiki/SOLID" rel="noreferrer">SOLID principles</a>
+ and is brought to life with Dependency Injection (although DI is optional). Please read that post if you haven’t already, as this post will regularly refer to its content.</p>
 <p>It’s funny that I encountered the command/handler design so many years ago but failed to understand why anyone would use two classes for one operation (one for the data and one for the behavior). It didn’t seem very object oriented to me and it was only after I experienced problems with the old design (message and behavior in the same class) that the potential of the command/handler design became clear to me.</p>
 <p>With my business layer modeled uniformly and giving me great flexibility it then became clear that the same wasn&rsquo;t true for the part of the business layer that was responsible for querying. It was this dissatisfaction that triggered me to think about the design of this part of my application architecture.</p>
 <p>Originally I would model queries as methods with clear names and group them together in a class. This led to interfaces like the following:</p>
@@ -70,7 +72,9 @@
     <span style="color:#75715e">// More methods here
 </span><span style="color:#75715e"></span>}
 </code></pre></div>
-<p>There is a variation of this pattern that a lot of developers use today in their applications. They mix this query class with the <a href="https://martinfowler.com/eaaCatalog/repository.html">repository pattern</a>. The repository pattern is used for <a href="https://en.wikipedia.org/wiki/Create,_read,_update_and_delete">CRUD</a> operations. The following code may look familiar:</p>
+<p>There is a variation of this pattern that a lot of developers use today in their applications. They mix this query class with the <a href="https://martinfowler.com/eaaCatalog/repository.html" rel="noreferrer">repository pattern</a>
+. The repository pattern is used for <a href="https://en.wikipedia.org/wiki/Create,_read,_update_and_delete" rel="noreferrer">CRUD</a>
+ operations. The following code may look familiar:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#75715e">// Generic repository class (okay)
 </span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> IRepository&lt;T&gt;
 {
@@ -90,7 +94,8 @@
     <span style="color:#75715e">// More methods here
 </span><span style="color:#75715e"></span>}
 </code></pre></div>
-<p>Alongside the <code>IUserQueries</code> interface, my application contained interfaces such as <code>IPatientInfoQueries</code>, <code>ISurgeryQueries</code>, and countless others, each with its own set of methods and its own set of parameters and return types. Every interface was different, which made adding <a href="https://en.wikipedia.org/wiki/Cross-cutting_concern">cross-cutting concerns</a>, such as logging, caching, profiling, security, etc, very difficult. I was missing the uniformity in the design that I had with my command handlers. The query classes were just a bunch of random methods, often grouped around one concept or one entity. No matter how hard I tried, it would end up looking messy and each time a query method was added both the interface and the implementation would need to be changed.</p>
+<p>Alongside the <code>IUserQueries</code> interface, my application contained interfaces such as <code>IPatientInfoQueries</code>, <code>ISurgeryQueries</code>, and countless others, each with its own set of methods and its own set of parameters and return types. Every interface was different, which made adding <a href="https://en.wikipedia.org/wiki/Cross-cutting_concern" rel="noreferrer">cross-cutting concerns</a>
+, such as logging, caching, profiling, security, etc, very difficult. I was missing the uniformity in the design that I had with my command handlers. The query classes were just a bunch of random methods, often grouped around one concept or one entity. No matter how hard I tried, it would end up looking messy and each time a query method was added both the interface and the implementation would need to be changed.</p>
 <p>In my automated-test suite things were even worse! A class under test that depended on a query interface was often only expected to call one or two of its methods, while other classes were expected to call other methods. This meant I had to do hundreds of asserts in my test suite to ensure a class didn’t call unexpected methods. This resulted in the creation of abstract base classes in my test project that implemented one of these query interfaces. Each abstract class looked something like this:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FakeFailingUserQueries</span> : IUserQueries
 {
@@ -131,12 +136,16 @@
 }
 </code></pre></div>
 <p>All this meant I could leave all the other methods fail (as they were not expected to be called) which saved me from having to write too much code and reduced the chance of errors in my tests. But it still led to an explosion of test classes in my test projects.</p>
-<p>Of course all these problems can be solved with the ‘proper’ tooling. For instance, cross-cutting concerns can be added by using compile-time code weaving (using <a href="https://www.postsharp.net/">PostSharp</a> for instance), or by configuring your DI Container using convention-based registrations, mixed with interception (interception uses dynamic proxy generation and lightweight code generation). The testing problems can be resolved by using Mocking frameworks (which also generate proxy classes that act like the original class).</p>
+<p>Of course all these problems can be solved with the ‘proper’ tooling. For instance, cross-cutting concerns can be added by using compile-time code weaving (using <a href="https://www.postsharp.net/" rel="noreferrer">PostSharp</a>
+ for instance), or by configuring your DI Container using convention-based registrations, mixed with interception (interception uses dynamic proxy generation and lightweight code generation). The testing problems can be resolved by using Mocking frameworks (which also generate proxy classes that act like the original class).</p>
 <p>These solutions work, but they usually only make things more complicated and in reality they are patches to hide problems with the initial design. When we validate the design against the five SOLID principles, you can see where the problem lies. The design violates three of the five SOLID principles:</p>
 <ul>
-<li>The <a href="https://en.wikipedia.org/wiki/Single_responsibility_principle">Single Responsibility Principle</a> is violated, because the methods in each class are not <em>highly cohesive</em>. The only thing that relates those methods is the fact that they belong to the same concept or entity.</li>
-<li>The design violates the <a href="https://en.wikipedia.org/wiki/Open/closed_principle">Open/Closed Principle</a>, because almost every time a query is added to the system, an existing interface and its implementations need to be changed. Every interface has at least two implementations: one real implementation and one test implementation.</li>
-<li>The <a href="https://en.wikipedia.org/wiki/Interface_segregation_principle">Interface Segregation Principle</a> is violated, because the interfaces are wide (have many methods) and consumers of those interfaces are forced to depend on methods that they don’t use.</li>
+<li>The <a href="https://en.wikipedia.org/wiki/Single_responsibility_principle" rel="noreferrer">Single Responsibility Principle</a>
+ is violated, because the methods in each class are not <em>highly cohesive</em>. The only thing that relates those methods is the fact that they belong to the same concept or entity.</li>
+<li>The design violates the <a href="https://en.wikipedia.org/wiki/Open/closed_principle" rel="noreferrer">Open/Closed Principle</a>
+, because almost every time a query is added to the system, an existing interface and its implementations need to be changed. Every interface has at least two implementations: one real implementation and one test implementation.</li>
+<li>The <a href="https://en.wikipedia.org/wiki/Interface_segregation_principle" rel="noreferrer">Interface Segregation Principle</a>
+ is violated, because the interfaces are wide (have many methods) and consumers of those interfaces are forced to depend on methods that they don’t use.</li>
 </ul>
 <p>So let&rsquo;s not treat the symptoms; let’s address the cause.</p>
 <h2 id="a-better-design">A better design</h2>
@@ -162,7 +171,8 @@
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">bool</span> IncludeInactiveUsers { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
 }
 </code></pre></div>
-<p>This class defines a query operation with two parameters that returns an array of User objects. Just like a command, this query message class is a <a href="https://refactoring.com/catalog/introduceParameterObject.html">Parameter Object</a>.</p>
+<p>This class defines a query operation with two parameters that returns an array of User objects. Just like a command, this query message class is a <a href="https://refactoring.com/catalog/introduceParameterObject.html" rel="noreferrer">Parameter Object</a>
+.</p>
 <p><img src="/steven/images/smells-refactoring-cards-sample.jpg" alt="Parameter Object Refactoring Cue Card"></p>
 <p>The class that handles this message can be defined as follows:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FindUsersBySearchTextQueryHandler</span>
@@ -216,7 +226,9 @@
     <span class="callout-body">This is where the <code>IQuery&lt;TResult&gt;</code> interface comes into play. It prevents you from having to cast the return type (to <code>User[]</code> in this example); it therefore gives you compile-time support when working with the query handler; it provides compile-time support when specifying or injecting <code>IQueryHandler</code>s into our code. If you were to change the <code>FindUsersBySearchTextQuery</code> to return <code>UserInfo[]</code> instead of <code>User[]</code> (by updating it to implement <code>IQuery&lt;UserInfo[]&gt;</code>), the <code>UserController</code> would fail to compile because the generic type constraint on <code>IQueryHandler&lt;TQuery, TResult&gt;</code> won&rsquo;t be able to map <code>FindUsersBySearchTextQuery</code> to User[].</span>
 </callout></p>
 <p>Injecting the <code>IQueryHandler</code> interface into a consumer, however, has some less obvious problems that still need to be addressed.</p>
-<p>The number of dependencies of a consumer might get too big and can lead to <a href="https://blog.ploeh.dk/2010/01/20/RebuttalConstructorover-injectionanti-pattern/">constructor over-injection</a>—when a constructor takes too many arguments (a common rule of thumb is that a constructor should take no more than 4 or 5 arguments). Constructor over-injection is a code smell and is often a sign that the <a href="https://en.wikipedia.org/wiki/Single_responsibility_principle">Single Responsibility Principle</a> (SRP) has been violated. Although it is good to adhere to SRP, it is also highly likely that consumers need to execute multiple different queries, without really violating SRP (in contrast to injecting many <code>ICommandHandler&lt;TCommand&gt;</code> implementations which would certainly be a violation of SRP). In my experience the number of queries a class executes can change frequently, which would require constant changes into the number of constructor arguments.</p>
+<p>The number of dependencies of a consumer might get too big and can lead to <a href="https://blog.ploeh.dk/2010/01/20/RebuttalConstructorover-injectionanti-pattern/" rel="noreferrer">constructor over-injection</a>
+—when a constructor takes too many arguments (a common rule of thumb is that a constructor should take no more than 4 or 5 arguments). Constructor over-injection is a code smell and is often a sign that the <a href="https://en.wikipedia.org/wiki/Single_responsibility_principle" rel="noreferrer">Single Responsibility Principle</a>
+ (SRP) has been violated. Although it is good to adhere to SRP, it is also highly likely that consumers need to execute multiple different queries, without really violating SRP (in contrast to injecting many <code>ICommandHandler&lt;TCommand&gt;</code> implementations which would certainly be a violation of SRP). In my experience the number of queries a class executes can change frequently, which would require constant changes into the number of constructor arguments.</p>
 <p>A consequence of this approach is that the generic structure of the <code>IQueryHandler&lt;TQuery, TResult&gt;</code> leads to lots of infrastructural code. For example:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Consumer</span>
 {
@@ -236,7 +248,9 @@
 }
 </code></pre></div>
 <p>Wow!! That’s a lot of code for a class that only has three different queries that it needs to execute. This is in part due to the verbosity of the C# language. Besides switching to another language, with C# there&rsquo;s nothing much we can do about that.</p>
-<p>So how do we fix the problem of having to inject too many <code>IQueryHandler</code>s? As always, with <a href="https://en.wikipedia.org/wiki/Fundamental_theorem_of_software_engineering">an extra layer of indirection</a>. We create a <a href="https://en.wikipedia.org/wiki/Mediator_pattern">Mediator</a> that sits between the consumers and the query handlers:</p>
+<p>So how do we fix the problem of having to inject too many <code>IQueryHandler</code>s? As always, with <a href="https://en.wikipedia.org/wiki/Fundamental_theorem_of_software_engineering" rel="noreferrer">an extra layer of indirection</a>
+. We create a <a href="https://en.wikipedia.org/wiki/Mediator_pattern" rel="noreferrer">Mediator</a>
+ that sits between the consumers and the query handlers:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> IQueryProcessor
 {
     TResult Process&lt;TResult&gt;(IQuery&lt;TResult&gt; query);
@@ -267,7 +281,8 @@
     }
 }
 </code></pre></div>
-<p>The <code>UserController</code> now depends on a <code>IQueryProcessor</code> that can handle any query. The <code>UserController</code>’s <code>SearchUsers</code> method calls the <code>IQueryProcessor.Process</code> method passing in an initialized query message. Because the <code>FindUsersBySearchTextQuery</code> implements the <code>IQuery&lt;User[]&gt;</code> interface, you can pass it to the generic <code>IQueryProcessor.Process&lt;TResult&gt;(IQuery&lt;TResult&gt; query)</code> method. Thanks to <a href="https://msdn.microsoft.com/en-us/library/twcad0zb%28v=vs.80%29.aspx">C# type inference</a>, the compiler is able to determine the generic type and this saves you having to explicitly state the type. The return type of the <code>Process</code> method is also known. So if you were to change the <code>FindUsersBySearchTextQuery</code> to implement a different interface (say <code>IQuery&lt;List&lt;User&gt;&gt;</code>) the <code>UserController</code> will no longer compile instead of miserably failing at runtime.</p>
+<p>The <code>UserController</code> now depends on a <code>IQueryProcessor</code> that can handle any query. The <code>UserController</code>’s <code>SearchUsers</code> method calls the <code>IQueryProcessor.Process</code> method passing in an initialized query message. Because the <code>FindUsersBySearchTextQuery</code> implements the <code>IQuery&lt;User[]&gt;</code> interface, you can pass it to the generic <code>IQueryProcessor.Process&lt;TResult&gt;(IQuery&lt;TResult&gt; query)</code> method. Thanks to <a href="https://msdn.microsoft.com/en-us/library/twcad0zb%28v=vs.80%29.aspx" rel="noreferrer">C# type inference</a>
+, the compiler is able to determine the generic type and this saves you having to explicitly state the type. The return type of the <code>Process</code> method is also known. So if you were to change the <code>FindUsersBySearchTextQuery</code> to implement a different interface (say <code>IQuery&lt;List&lt;User&gt;&gt;</code>) the <code>UserController</code> will no longer compile instead of miserably failing at runtime.</p>
 <p>It is now the responsibility of the implementation of the <code>IQueryProcessor</code> to find the right <code>IQueryHandler</code>. This requires some dynamic typing, and optionally the use of a Dependency Injection library, and can all be done with just a few lines of code:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">sealed</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">QueryProcessor</span> : IQueryProcessor
 {
@@ -290,7 +305,8 @@
     }
 }
 </code></pre></div>
-<p>The <code>QueryProcessor</code> class constructs a specific <code>IQueryHandler&lt;TQuery, TResult&gt;</code> type based on the type of the supplied query message. This type is used to ask the supplied container class to get an instance of that handler. Unfortunately you need to call the <code>Handle</code> method using reflection (I&rsquo;m using the C# <code>dymamic</code> keyword in this case), because at this point it is impossible to cast the handler instance, as the generic <code>TQuery</code> argument is not available at compile time. However, unless the <code>Handle</code> method is renamed or gets other arguments, this call will never fail and if you want to, it is very easy to write a unit test for this class. Using reflection will give a slight drop, but is nothing to really worry about (especially when you&rsquo;re using <a href="https://simpleinjector.org">Simple Injector</a> as your DI library.</p>
+<p>The <code>QueryProcessor</code> class constructs a specific <code>IQueryHandler&lt;TQuery, TResult&gt;</code> type based on the type of the supplied query message. This type is used to ask the supplied container class to get an instance of that handler. Unfortunately you need to call the <code>Handle</code> method using reflection (I&rsquo;m using the C# <code>dymamic</code> keyword in this case), because at this point it is impossible to cast the handler instance, as the generic <code>TQuery</code> argument is not available at compile time. However, unless the <code>Handle</code> method is renamed or gets other arguments, this call will never fail and if you want to, it is very easy to write a unit test for this class. Using reflection will give a slight drop, but is nothing to really worry about (especially when you&rsquo;re using <a href="https://simpleinjector.org" rel="noreferrer">Simple Injector</a>
+ as your DI library.</p>
 <sidebar>
 	<span class="sidebar-title">Alternative QueryProcessor implementations</span>
 	<span class="sidebar-body"><p>One of the major downsides of using <code>dynamic</code> in C# is that it can&rsquo;t invoke methods on an internal type, even when the method in question is part of a publicly defined interface. This would result in an exception like the following:</p>
@@ -328,8 +344,10 @@ catch (TargetInvocationException ex)
         <span style="color:#66d9ef">where</span> TQuery : IQuery&lt;TResult&gt;;
 }
 </code></pre></div>
-<p>This version of the interface solves the problem of having to do dynamic typing in the <code>QueryProcessor</code> implementation completely, but sadly the C# compiler isn’t ‘smart’ enough to find out which types are needed (<a href="https://docs.microsoft.com/en-us/archive/blogs/ericlippert/constraints-are-not-part-of-the-signature">damn you Anders</a>!), which forces you to completely write out the call to <code>Process&lt;TQuery, TResult&gt;</code>, including both generic arguments. This gets really ugly in the code and is, therefore, not advisable. I was a bit amazed by this, because I was under the assumption that the C# compiler could infer the types. (However, the more I think about it, the more it makes sense that the C# compiler doesn&rsquo;t try to do so.)</p>
-<p>There’s one very important point to note when using the <code>IQueryProcessor</code> abstraction. By injecting an <code>IQueryProcessor</code>, it is no longer clear which queries a consumer is using. This makes unit testing more fragile, because the constructor no longer tells you what services the class depends on. You also make it harder for our DI library to verify the object graph it is creating, because the creation of an <code>IQueryHandler</code> implementation is postponed by the <code>IQueryProcessor</code>. Being able to verify the container&rsquo;s configuration <a href="https://simpleinjector.org/howto+verify-the-container-s-configuration">is very important</a>. Using the <code>IQueryProcessor</code> means you have to write a test that confirms there is a corresponding query handler for every query in the system, because the DI library can not check this for you. I personally can live with that in the applications I work on, but I wouldn’t use such an abstraction too often. I certainly wouldn’t advocate an <code>ICommandProcessor</code> for executing commands—consumers are less likely to take a dependency on many command handlers and if they do it would probably be a violation of SRP.</p>
+<p>This version of the interface solves the problem of having to do dynamic typing in the <code>QueryProcessor</code> implementation completely, but sadly the C# compiler isn’t ‘smart’ enough to find out which types are needed (<a href="https://docs.microsoft.com/en-us/archive/blogs/ericlippert/constraints-are-not-part-of-the-signature" rel="noreferrer">damn you Anders</a>
+!), which forces you to completely write out the call to <code>Process&lt;TQuery, TResult&gt;</code>, including both generic arguments. This gets really ugly in the code and is, therefore, not advisable. I was a bit amazed by this, because I was under the assumption that the C# compiler could infer the types. (However, the more I think about it, the more it makes sense that the C# compiler doesn&rsquo;t try to do so.)</p>
+<p>There’s one very important point to note when using the <code>IQueryProcessor</code> abstraction. By injecting an <code>IQueryProcessor</code>, it is no longer clear which queries a consumer is using. This makes unit testing more fragile, because the constructor no longer tells you what services the class depends on. You also make it harder for our DI library to verify the object graph it is creating, because the creation of an <code>IQueryHandler</code> implementation is postponed by the <code>IQueryProcessor</code>. Being able to verify the container&rsquo;s configuration <a href="https://simpleinjector.org/howto&#43;verify-the-container-s-configuration" rel="noreferrer">is very important</a>
+. Using the <code>IQueryProcessor</code> means you have to write a test that confirms there is a corresponding query handler for every query in the system, because the DI library can not check this for you. I personally can live with that in the applications I work on, but I wouldn’t use such an abstraction too often. I certainly wouldn’t advocate an <code>ICommandProcessor</code> for executing commands—consumers are less likely to take a dependency on many command handlers and if they do it would probably be a violation of SRP.</p>
 <p><callout class="TIP">
     <span class="callout-title">TIP</span>
     <span class="callout-body">When you start using this design, start out without the <code>IQueryProcessor</code> abstraction because of the reasons I described. It can always be added later on without any problem.</span>
@@ -344,7 +362,8 @@ catch (TargetInvocationException ex)
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">container.Register(<span style="color:#66d9ef">typeof</span>(IQueryHandler&lt;,&gt;), <span style="color:#66d9ef">typeof</span>(IQueryHandler&lt;,&gt;).Assembly);
 </code></pre></div>
 <p>This code saves you from having to change the DI configuration any time you add a new query handler to the system. They will all be picked up automatically.</p>
-<p>With this design in place you can add cross-cutting concerns such as logging, audit trailing, etc. Or let’s say you want to mark properties of the query objects with <a href="https://docs.microsoft.com/en-us/aspnet/mvc/overview/older-versions-1/models-data/validation-with-the-data-annotation-validators-cs">Data Annotations</a> attributes, to enable validation:</p>
+<p>With this design in place you can add cross-cutting concerns such as logging, audit trailing, etc. Or let’s say you want to mark properties of the query objects with <a href="https://docs.microsoft.com/en-us/aspnet/mvc/overview/older-versions-1/models-data/validation-with-the-data-annotation-validators-cs" rel="noreferrer">Data Annotations</a>
+ attributes, to enable validation:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FindUsersBySearchTextQuery</span> : IQuery&lt;User[]&gt;
 {
     <span style="color:#75715e">// Required and StringLength are attributes from the
@@ -381,7 +400,8 @@ catch (TargetInvocationException ex)
     }
 }
 </code></pre></div>
-<p>All without changing any of the existing code in your system beyond adding the following new line of code in the <a href="https://freecontent.manning.com/dependency-injection-in-net-2nd-edition-understanding-the-composition-root/">Composition Root</a>:</p>
+<p>All without changing any of the existing code in your system beyond adding the following new line of code in the <a href="https://freecontent.manning.com/dependency-injection-in-net-2nd-edition-understanding-the-composition-root/" rel="noreferrer">Composition Root</a>
+:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">container.RegisterDecorator(
     <span style="color:#66d9ef">typeof</span>(IQueryHandler&lt;,&gt;),
     <span style="color:#66d9ef">typeof</span>(ValidationQueryHandlerDecorator&lt;,&gt;));
@@ -426,7 +446,8 @@ catch (TargetInvocationException ex)
 }
 </code></pre></div>
 <p>The previous sub queries are in this version replaced with the <code>IUserContext</code> and <code>ITimeProvider</code> services. Because of this, the method is now more concise and compact.</p>
-<p>So where do you draw the line between using an <code>IQuery&lt;TResult&gt;</code> and specifying an explicit separate service interface? I can’t really define any specific rules on that; a little bit of intuition and experience will have to guide you. But to give a little bit of guidance, when a query returns a (cached) value without really hitting an external resource, such as the file system, web service, or database, and it doesn’t contain any parameters, and you’re pretty sure you never want to wrap it with a decorator (no performance measuring, no audit trailing, no authorization) it’s pretty safe to define it as a specific service interface. Another way to view this is to use this design to define business questions: things the business wants to know. In other words, use the <code>IQueryHandler&lt;TQuery, TResult&gt;</code> and <code>ICommandHandler&lt;TCommand&gt;</code> abstractions as the communication layer between the business layer and the layers above. This comes down to the idea of <a href="http://scrapbook.qujck.com/holistic-abstractions-take-2/">holistic abstractions</a>.</p>
+<p>So where do you draw the line between using an <code>IQuery&lt;TResult&gt;</code> and specifying an explicit separate service interface? I can’t really define any specific rules on that; a little bit of intuition and experience will have to guide you. But to give a little bit of guidance, when a query returns a (cached) value without really hitting an external resource, such as the file system, web service, or database, and it doesn’t contain any parameters, and you’re pretty sure you never want to wrap it with a decorator (no performance measuring, no audit trailing, no authorization) it’s pretty safe to define it as a specific service interface. Another way to view this is to use this design to define business questions: things the business wants to know. In other words, use the <code>IQueryHandler&lt;TQuery, TResult&gt;</code> and <code>ICommandHandler&lt;TCommand&gt;</code> abstractions as the communication layer between the business layer and the layers above. This comes down to the idea of <a href="http://scrapbook.qujck.com/holistic-abstractions-take-2/" rel="noreferrer">holistic abstractions</a>
+.</p>
 <p>That’s how I roll on the query side of my architecture.</p>
 <h2 id="comments">Comments</h2>
 <hr>
@@ -444,7 +465,8 @@ catch (TargetInvocationException ex)
 <p>Yes I understand now. Thanks to comment. But another question, if we need the command returns a result, what can we do? For example, login-command should return a boolean(e.g. login: yes / no). How can we achieve this?</p>
 <hr>
 <h4 id="steven---15-september-12-1">Steven - 15 September 12</h4>
-<p>If you need to return data from commands, take a look at <a href="/blogs/p/data-commands">this article</a>. However, in the case of logging in a user, I don&rsquo;t think that&rsquo;s really suited for a command, because you are really asking a question here (while doing a side effect). Instead, I would use an <code>IAuthorizationService</code> or something like that.</p>
+<p>If you need to return data from commands, take a look at <a href="/blogs/p/data-commands">this article</a>
+. However, in the case of logging in a user, I don&rsquo;t think that&rsquo;s really suited for a command, because you are really asking a question here (while doing a side effect). Instead, I would use an <code>IAuthorizationService</code> or something like that.</p>
 <hr>
 <h4 id="daniel-hilgarth---11-june-13">Daniel Hilgarth - 11 June 13</h4>
 <p>Steven, thanks for this series. I have a question about testing.
@@ -453,7 +475,8 @@ But how do you test the query / command handler itself? I only see a way via int
 <hr>
 <h4 id="steven---11-june-13">Steven - 11 June 13</h4>
 <p>Hi Daniel, this series focuses on using the right abstractions and not so much on a particular handler implementation, although a simple example is given. For what it&rsquo;s worth, the article could have used a handler implementation with an embedded SQL statement.</p>
-<p>The given handler example uses a unit of work that exposes an <code>IQueryable&lt;T&gt;</code>. <code>IQueryable&lt;T&gt;</code> is a leaky abstraction and this makes unit testing hard. I&rsquo;ve written <a href="https://cuttingedge.it/blogs/steven/pivot/entry.php?id=84">in the past</a> about a solution but the fact remains that <code>IQueryable&lt;T&gt;</code> is a leaky abstraction and is hard to test.</p>
+<p>The given handler example uses a unit of work that exposes an <code>IQueryable&lt;T&gt;</code>. <code>IQueryable&lt;T&gt;</code> is a leaky abstraction and this makes unit testing hard. I&rsquo;ve written <a href="https://cuttingedge.it/blogs/steven/pivot/entry.php?id=84" rel="noreferrer">in the past</a>
+ about a solution but the fact remains that <code>IQueryable&lt;T&gt;</code> is a leaky abstraction and is hard to test.</p>
 <p>But using an <code>IQueryHandler&lt;TQuery, TResult&gt;</code> or <code>ICommandHandler&lt;TCommand&gt;</code> abstraction in itself does not limit the testability of the handler implementation.</p>
 <hr>
 <h4 id="sam---13-november-13">Sam - 13 November 13</h4>
@@ -473,10 +496,13 @@ But how do you test the query / command handler itself? I only see a way via int
 <p>That&rsquo;s another very positive aspect of this pattern:
 You are finally able to <em>truly</em> abstract away the data store. Why? Because you declare what data you need and why you need it. With declaring the <em>why</em>, the query implementation knows exactly what data you need, so it can get all the data from the database needed for your exact scenario. This totally gets rid of all the problems lazy loading has, especially when trying to abstract the data store with an implementation of the repository pattern.</p>
 <hr>
-<h4 id="trailmaxhttpstechtrailmaxinfo---03-december-13"><a href="https://tech.trailmax.info/">trailmax</a> - 03 December 13</h4>
+<h4 id="trailmaxhttpstechtrailmaxinfo---03-december-13"><a href="https://tech.trailmax.info/" rel="noreferrer">trailmax</a>
+ - 03 December 13</h4>
 <p>I know it is 2 years since you&rsquo;ve written it, but I only found it just now -)</p>
-<p>We have started using mediator pattern recently and it saved us a lot of dependencies from being injected (see <a href="https://tech.trailmax.info/2013/08/constructors-should-be-simple/">this bit</a>)</p>
-<p>You did mention a test to check if all queries have handlers. <a href="https://tech.trailmax.info/2013/12/test-all-you-query-to-have-queryhandler/">Here</a> is my version of tests to check for that issue.</p>
+<p>We have started using mediator pattern recently and it saved us a lot of dependencies from being injected (see <a href="https://tech.trailmax.info/2013/08/constructors-should-be-simple/" rel="noreferrer">this bit</a>
+)</p>
+<p>You did mention a test to check if all queries have handlers. <a href="https://tech.trailmax.info/2013/12/test-all-you-query-to-have-queryhandler/" rel="noreferrer">Here</a>
+ is my version of tests to check for that issue.</p>
 <hr>
 <h4 id="phil---3-december-13">Phil - 3 December 13</h4>
 <p>Hi Steven, I&rsquo;m in the same case as trailmax, I just found this article (Great job btw).</p>
@@ -574,23 +600,27 @@ public sealed class GetAccountDetailsQueryHandler
 <p>I agree with you that this kind of engineering may induce more and higher abstractions thus possible over-engineering. I also suffer from this syndrome, but it is a discipline you have to master anyway as a developer. There is no excuse for over engineering an application as well as under engineering. It’s a balance that must be found.</p>
 <hr>
 <h4 id="steven---14-december-14">Steven - 14 December 14</h4>
-<p>For more information about applying paging and ordering to queries, please take a look at <a href="https://github.com/dotnetjunkie/solidservices/issues/3">this discussion</a>.</p>
+<p>For more information about applying paging and ordering to queries, please take a look at <a href="https://github.com/dotnetjunkie/solidservices/issues/3" rel="noreferrer">this discussion</a>
+.</p>
 <hr>
 <h4 id="masoud---09-february-15">Masoud - 09 February 15</h4>
 <p>I&rsquo;m working on a scheduling project so I defined a <code>ScheduleAmOrderCommand</code>, <code>ScheduleAnOrderCommandHandler</code> that schedule an <code>Order</code>, sometimes user wants to preview Order scheduling details in a gantt chart form (just after an order scheduled or for a before scheduled <code>Order</code>) so I don&rsquo;t know for the Preview I should define a <code>CommandHandler</code> or a <code>QueryHandler</code>?</p>
 <hr>
-<h4 id="jgauffinhttpbloggauffinorg---09-february-15"><a href="http://blog.gauffin.org/">jgauffin</a> - 09 February 15</h4>
+<h4 id="jgauffinhttpbloggauffinorg---09-february-15"><a href="http://blog.gauffin.org/" rel="noreferrer">jgauffin</a>
+ - 09 February 15</h4>
 <p>@Masoud: Queries should be idempotent. That is, if you run the same query twice you should get the same result (unless a command have modified the state in between).</p>
 <p>So you could consider queries to be read only, they only fetch the current state, while commands modify it.</p>
 <p>Hence if the preview is just to check the state of the scheduling, define a query.</p>
 <hr>
-<h4 id="brent-ariashttpwwwariasampnet---11-october-15"><a href="http://www.ariasamp.net/">Brent Arias</a> - 11 October 15</h4>
+<h4 id="brent-ariashttpwwwariasampnet---11-october-15"><a href="http://www.ariasamp.net/" rel="noreferrer">Brent Arias</a>
+ - 11 October 15</h4>
 <p>Excellent material and presentation. One suggestion: the handler interface does not offer an asynchronous &ldquo;HandleAsync&rdquo; entry point. I think it would be better to convert the code so that it has <em>only</em> an asynchronous entry point. This would be analogous to the WebAPI <code>HttpClient</code> having only asynchronous entry points. The subsequent impact to the <code>QueryHandler</code> design would be minimal.</p>
 <p>However, the impact to the <code>CommandHandler</code> is more interesting. A <code>CommandHandler</code> serving as a &ldquo;use case&rdquo; is perhaps best left with a synchronous entry point. However, a <code>CommandHandler</code> serving as a &ldquo;repository&rdquo; does indeed benefit from having an asynchronous entry point. I know that the &ldquo;use case&rdquo; idea is central to your POV, but I would rather use both the command / query handlers as a replacement for repositories. My reasoning is that my &ldquo;use case&rdquo; scenarios are more likely to be implemented as sagas rather than commands. Thoughts?</p>
 <hr>
 <h4 id="steven---11-october-15">Steven - 11 October 15</h4>
 <p>Hi Brent,</p>
-<p>Whether or not the use of async is useful and actually beneficial depends on a lot of factors, but in general I&rsquo;m against just making everything asynchronous by default, as I explained <a href="https://codereview.stackexchange.com/questions/84379/viewmodel-creator-design/84402#84402">here</a>.</p>
+<p>Whether or not the use of async is useful and actually beneficial depends on a lot of factors, but in general I&rsquo;m against just making everything asynchronous by default, as I explained <a href="https://codereview.stackexchange.com/questions/84379/viewmodel-creator-design/84402#84402" rel="noreferrer">here</a>
+.</p>
 <p>Furthermore, although asynchronous programming is difficult, making the <code>IQueryHandler</code> and <code>ICommandHandler</code> abstractions async is a no-brainer and that by itself is reason enough to not discuss it here in this blog post.</p>
 <hr>
 <h4 id="sam---23-october-15">Sam - 23 October 15</h4>
@@ -616,14 +646,16 @@ public sealed class GetAccountDetailsQueryHandler
 <p>Note that these solutions can be mixed and matched. In a former system I worked on we used all four approaches. Each sub system got its own project. Within such project the root contained both a /Queries and /Commands folder. Within the /Queries folder, we grouped code around the main entity. Within in the entity folder we placed each query, handler, and result classes inside a folder named after the query (so the <code>SearchAssetsQuery</code> class and handler where placed in the /SearchAssets folder). Although commands where placed inside a folder named after command (so the <code>CancelQuoteCommand</code> was placed in the /CancelQuote folder) we didn&rsquo;t group them in entity folders. This was because we had considerably less commands than queries.</p>
 <p>I’m absolutely not saying that this is <em>the</em> way to structure your project. It is, however, a structure that worked well for us in our particular system. There are many ways to skin a cat, but the worst thing you can do is ditch this SOLID design, simply because you think it doesn&rsquo;t ‘feel object oriented’, because you get many small classes. Always remember what this model brings to the table compared to other types of design, and always find clean ways to structure your project, without losing the abilities that a design like this gives you.</p>
 <hr>
-<h4 id="brent-ariashttpwwwariasampnet---27-october-15"><a href="http://www.ariasamp.net/">Brent Arias</a> - 27 October 15</h4>
+<h4 id="brent-ariashttpwwwariasampnet---27-october-15"><a href="http://www.ariasamp.net/" rel="noreferrer">Brent Arias</a>
+ - 27 October 15</h4>
 <p>Hi Steven,</p>
 <p>Do you have a philosophy regarding query handlers and REST? For example, when dealing with a web service you are authoring, perhaps you might prefer HTTP RPC instead of REST because it simplifies how query objects are serialized and deserialized (e.g. use JSON and treat <em>every</em> interaction as a <code>POST</code>). In contrast, if you embrace REST then you must employ a <code>GET</code> and then custom serialize/deserialize the query object through a URI.</p>
 <p>If your answer is that you would still prefer to implement a web service RESTfully (with an appropriate query handler implementation on the client-side), would that include having the query responses contain hypermedia links to support HATEOAS? If yes, then I imagine other query or command objects might potentially take hypermedia links as part of their constructor. Thoughts?</p>
 <hr>
 <h4 id="steven---27-october-15">Steven - 27 October 15</h4>
 <p>Hi Brent,</p>
-<p>Take a look at the comments on <a href="/steven/p/maintainable-wcf">this post</a>. I think you&rsquo;ll find what you&rsquo;re looking for there.</p>
+<p>Take a look at the comments on <a href="/steven/p/maintainable-wcf">this post</a>
+. I think you&rsquo;ll find what you&rsquo;re looking for there.</p>
 <hr>
 <h4 id="erik---14-january-16">Erik - 14 January 16</h4>
 <p>Is it acceptable for decorators of queries to have side effects (ie, the query is idempotent, but the decorator is not?). I&rsquo;m primarily thinking about things like logging and caching here, which seem to be non-idempotent.</p>
@@ -632,22 +664,27 @@ public sealed class GetAccountDetailsQueryHandler
 <p>Erik,</p>
 <p>It is completely acceptible for the decorator to write stuff. The decorator will not cause a functional side effect, as in causing the query to return a different result the next time. In this sense, the system is still idempotent. It&rsquo;s pretty impossible to implement logging and audit trailing without storing information somewhere.</p>
 <hr>
-<h4 id="joseph-woodwardhttpjosephwoodwardcouk---01-march-16"><a href="http://josephwoodward.co.uk/">Joseph Woodward</a> - 01 March 16</h4>
-<p>I&rsquo;ve experienced great results with this approach too. It definitely encourages a low cohesion architecture and service layer. There&rsquo;s a fantastic library called <a href="https://github.com/jbogard/MediatR">Mediatr</a> for anyone interested in giving this approach a try.</p>
+<h4 id="joseph-woodwardhttpjosephwoodwardcouk---01-march-16"><a href="http://josephwoodward.co.uk/" rel="noreferrer">Joseph Woodward</a>
+ - 01 March 16</h4>
+<p>I&rsquo;ve experienced great results with this approach too. It definitely encourages a low cohesion architecture and service layer. There&rsquo;s a fantastic library called <a href="https://github.com/jbogard/MediatR" rel="noreferrer">Mediatr</a>
+ for anyone interested in giving this approach a try.</p>
 <hr>
 <h4 id="steven---15-april-16-1">Steven - 15 April 16</h4>
 <p>Joseph,</p>
 <p>I personally don&rsquo;t advise depending on an external library for things that are essential parts of your architecture. Instead I advise to always define those few simple abstractions in your own application.</p>
 <hr>
-<h4 id="alexander-batishchevhttpsblogabatishchevru-12-march-16"><a href="https://blog.abatishchev.ru/">Alexander Batishchev</a> 12 March 16</h4>
-<p>Hi Steven, what do you think about <a href="https://www.future-processing.pl/blog/cqrs-simple-architecture/">this approach</a>? It doesn&rsquo;t require using dynamic.</p>
+<h4 id="alexander-batishchevhttpsblogabatishchevru-12-march-16"><a href="https://blog.abatishchev.ru/" rel="noreferrer">Alexander Batishchev</a>
+ 12 March 16</h4>
+<p>Hi Steven, what do you think about <a href="https://www.future-processing.pl/blog/cqrs-simple-architecture/" rel="noreferrer">this approach</a>
+? It doesn&rsquo;t require using dynamic.</p>
 <hr>
 <h4 id="steven---15-april-16-2">Steven - 15 April 16</h4>
 <p>Hi Alexander,</p>
 <p>As you noticed, the design given on that blog allows a <code>QueryProcessor</code> that doesn&rsquo;t require dynamic. But I already described in my article that having a <code>IQueryProcessor</code> with an <code>Execute&lt;TQuery, TResult&gt;</code> method doesn&rsquo;t really work, because this makes executing queries awkward, as you&rsquo;ll need to specify both the query and result generic parameter when calling <code>Execute</code>. If you re-read the article, you will see this point made.</p>
 <p>While the blog post you referenced gives an example of executing a command, it lacks an example of executing a query using its processor. I wonder if this omission is intentional, because if the writer would have added such example, it would have become clear immediately.</p>
 <hr>
-<h4 id="brenthttpariasampnet---08-june-16"><a href="http://ariasamp.net/">Brent</a> - 08 June 16</h4>
+<h4 id="brenthttpariasampnet---08-june-16"><a href="http://ariasamp.net/" rel="noreferrer">Brent</a>
+ - 08 June 16</h4>
 <p>Using this approach, it seems to me that the cross-cutting concern of caching would require each query handler class to have a corresponding, unique caching decorator class. I love this overall approach enough that I am willing to write one caching decorator per query handler, but &hellip; have you devised a strategy or technique that would allow one caching-decorator to handle all (or most) query handlers simultaneously?</p>
 <hr>
 <h4 id="steven---08-june-16">Steven - 08 June 16</h4>
@@ -670,7 +707,8 @@ public sealed class GetAccountDetailsQueryHandler
 <hr>
 <h4 id="steven---14-january-17">Steven - 14 January 17</h4>
 <p>Hi Debbie,</p>
-<p>You can find a more detailed reasoning about this in <a href="https://github.com/jbogard/MediatR/pull/101#issuecomment-246206384">this MediatR discussion</a> that I participated in.</p>
+<p>You can find a more detailed reasoning about this in <a href="https://github.com/jbogard/MediatR/pull/101#issuecomment-246206384" rel="noreferrer">this MediatR discussion</a>
+ that I participated in.</p>
 <hr>
 <h4 id="fabian---03-august-17">Fabian - 03 August 17</h4>
 <p>Hi Steven</p>
@@ -680,7 +718,8 @@ public sealed class GetAccountDetailsQueryHandler
 <hr>
 <h4 id="steven---03-august-17">Steven - 03 August 17</h4>
 <p>Hi Fabian,</p>
-<p>It&rsquo;s hard to answer this question, because it depends on the context whether or not conditionally applying a decorator based on some return type is the right approach or not, but it is certainly not a bad thing per se. On top of that, I can only comment on how to achieve such thing when using Simple Injector. If you like to know how to do this with Simple Injector, please post a question with more details about your case <a href="https://simpleinjector.org/forum">here</a>. If you like to know how to do this with a different library, please post the question at the appropriate forum for that library.</p>
+<p>It&rsquo;s hard to answer this question, because it depends on the context whether or not conditionally applying a decorator based on some return type is the right approach or not, but it is certainly not a bad thing per se. On top of that, I can only comment on how to achieve such thing when using Simple Injector. If you like to know how to do this with Simple Injector, please post a question with more details about your case <a href="https://simpleinjector.org/forum" rel="noreferrer">here</a>
+. If you like to know how to do this with a different library, please post the question at the appropriate forum for that library.</p>
 <hr>
 <h4 id="rho---13-september-17">Rho - 13 September 17</h4>
 <p>Hi Steven,
@@ -709,9 +748,11 @@ Rho</p>
 <hr>
 <h4 id="steven---26-september-17">Steven - 26 September 17</h4>
 <p>Hi Wheels,</p>
-<p>When applying these kinds of patterns, you can keep using your favorite ORM tool if you wish. You don&rsquo;t need to use a <code>TransactionScope</code> (as shown in <a href="/steven/p/commands">this article</a> if all you need is one single <code>SaveChanges</code> call to your unit of work. In that case you can have a simple decorator that call SaveChanges for you.</p>
+<p>When applying these kinds of patterns, you can keep using your favorite ORM tool if you wish. You don&rsquo;t need to use a <code>TransactionScope</code> (as shown in <a href="/steven/p/commands">this article</a>
+ if all you need is one single <code>SaveChanges</code> call to your unit of work. In that case you can have a simple decorator that call SaveChanges for you.</p>
 <hr>
-<h4 id="alexander-batishchevhttpsblogabatishchevru---26-september-17"><a href="https://blog.abatishchev.ru/">Alexander Batishchev</a> - 26 September 17</h4>
+<h4 id="alexander-batishchevhttpsblogabatishchevru---26-september-17"><a href="https://blog.abatishchev.ru/" rel="noreferrer">Alexander Batishchev</a>
+ - 26 September 17</h4>
 <p>In my app I had a handler decorator which was indeed creating and committing <code>TransactionScope</code> and a collection of handlers which were performing the actual work.</p>
 <hr>
 <h4 id="wheels---27-september-17">Wheels - 27 September 17</h4>
@@ -719,7 +760,8 @@ Rho</p>
 <p>ty you :)</p>
 <hr>
 <h4 id="steven---27-september-17">Steven - 27 September 17</h4>
-<p>Wheels, you can take a look at <a href="https://github.com/dotnetjunkie/solidservices">this repository</a>.</p>
+<p>Wheels, you can take a look at <a href="https://github.com/dotnetjunkie/solidservices" rel="noreferrer">this repository</a>
+.</p>
 <hr>
 <h4 id="rodrick---18-october-17">Rodrick - 18 October 17</h4>
 <p>Hey Steven! great article.</p>
@@ -770,7 +812,8 @@ Rho</p>
 <li>since the command handler knows what to do with the command, my current business layer seems redundant? would you just call the commands from the webapi?</li>
 </ol>
 </blockquote>
-<p>Command and query messages <em>are</em> your domain. Those messages are <em>not</em> part of your business layer, they are part of the application&rsquo;s <em>contract</em> and can easily be shared with the client. This allows you expose them from your Web API. If you do this, the only thing a Web API has to do is pass that deserialized message on to the business layer. Command handlers will be part of your business layer. You could even take it one step further and remove all your controllers from your Web API. Just take a look at <a href="https://github.com/dotnetjunkie/solidservices/">this sample project</a>.</p>
+<p>Command and query messages <em>are</em> your domain. Those messages are <em>not</em> part of your business layer, they are part of the application&rsquo;s <em>contract</em> and can easily be shared with the client. This allows you expose them from your Web API. If you do this, the only thing a Web API has to do is pass that deserialized message on to the business layer. Command handlers will be part of your business layer. You could even take it one step further and remove all your controllers from your Web API. Just take a look at <a href="https://github.com/dotnetjunkie/solidservices/" rel="noreferrer">this sample project</a>
+.</p>
 <p>Whether or not command handlers will be the only components in your business layer depends on your application. For smaller applications, most meat will probably be in the command handlers, while in bigger applications, those handlers will probably depend on other services that do part of the work of the handler. This can go multiple layers deep.</p>
 <blockquote>
 <p>What do you think about this approach?</p>
@@ -905,7 +948,8 @@ I&rsquo;ll add some more fields for range filters and comparison operators where
 <hr>
 <h4 id="steven---31-october-17-1">Steven - 31 October 17</h4>
 <p>Hi Rodrick,</p>
-<p>I would like to prevent going into too detailed and specific questions here on my blog to prevent the comment section from exploding. I do love discussing these issues, so if you wish, you can post a more detailed question <a href="https://github.com/dotnetjunkie/solidservices/issues">here</a>. I&rsquo;ll do my best to give you my take on this.</p>
+<p>I would like to prevent going into too detailed and specific questions here on my blog to prevent the comment section from exploding. I do love discussing these issues, so if you wish, you can post a more detailed question <a href="https://github.com/dotnetjunkie/solidservices/issues" rel="noreferrer">here</a>
+. I&rsquo;ll do my best to give you my take on this.</p>
 
 
 		<hr />

@@ -17,7 +17,7 @@
       <pubDate>Wed, 22 Jul 2020 00:00:00 +0000</pubDate>
       
       <guid>https://blogs.cuttingedge.it/steven/posts/2020/simple-injector-v5/</guid>
-      <description>It’s been 10 years since the birth of Simple Injector, and three years since the release of Simple Injector 4.0. The number of features that mean bumping the major version number have been piling up on the backlog, and so we started work on the next major release a few months ago. And it’s finally here! This announcement on my blog is a bit late (41 days to be precise), but for anyone that missed that release, take a look at the Simple Injector blog for more information about this new major release.</description>
+      <description>It’s been 10 years since the birth of Simple Injector, and three years since the release of Simple Injector 4.0. The number of features that mean bumping the major version number have been piling up on the backlog, and so we started work on the next major release a few months ago. And it’s finally here! This announcement on my blog is a bit late (41 days to be precise), but for anyone that missed that release, take a look at the Simple Injector blogfor more information about this new major release.</description>
     </item>
     
     <item>
@@ -71,7 +71,7 @@
       <pubDate>Fri, 08 Mar 2019 00:00:00 +0000</pubDate>
       
       <guid>https://blogs.cuttingedge.it/steven/posts/2019/dependency-injection-principles-practices-and-patterns/</guid>
-      <description>The book Dependency Injection Principles, Practices, and Patterns has gone to print. For the last two years I&amp;rsquo;ve been coauthoring the book Dependency Injection Principles, Practices, and Patterns. This is a revised and expanded edition of Manning&amp;lsquo;s bestselling classic Dependency Injection in .NET by Mark Seemann.
+      <description>The book Dependency Injection Principles, Practices, and Patterns has gone to print. For the last two years I&amp;rsquo;ve been coauthoring the book Dependency Injection Principles, Practices, and Patterns. This is a revised and expanded edition of Manning&amp;lsquo;s bestselling classic Dependency Injection in .NETby Mark Seemann.
 I always loved the first edition as it was a game changer for me. I learned a lot about DI, DI Containers, and software design.</description>
     </item>
     
@@ -81,7 +81,7 @@ I always loved the first edition as it was a game changer for me. I learned a lo
       <pubDate>Sun, 02 Apr 2017 00:00:00 +0000</pubDate>
       
       <guid>https://blogs.cuttingedge.it/steven/posts/2017/simple-injector-v4/</guid>
-      <description>For the last months we’ve been working on the next major release of Simple Injector, and it is finally here. We have removed legacy methods, simplified working with the library, and fixed many bugs and quirks. Take a look at the Simple Injector blog for more information about this new major release.
+      <description>For the last months we’ve been working on the next major release of Simple Injector, and it is finally here. We have removed legacy methods, simplified working with the library, and fixed many bugs and quirks. Take a look at the Simple Injector blogfor more information about this new major release.
 Comments </description>
     </item>
     
@@ -92,7 +92,7 @@ Comments </description>
       
       <guid>https://blogs.cuttingedge.it/steven/posts/2016/abstract-factories-are-a-code-smell/</guid>
       <description>When it comes to writing LOB applications, abstract factories are a code smell as they increase the complexity of the consumer instead of reducing it. This article describes why and offers alternatives. TIPA more-elaborate, 14-page discussion of this topic can be found in section 6.2 of my book.
-The Abstract Factory design pattern decouples the creation of a family of objects from usage. Compared to injecting a service into a constructor, a factory allows objects to be created lazily, instead of up front during object-graph composition.</description>
+The Abstract Factory design patterndecouples the creation of a family of objects from usage. Compared to injecting a service into a constructor, a factory allows objects to be created lazily, instead of up front during object-graph composition.</description>
     </item>
     
     <item>
@@ -101,7 +101,7 @@ The Abstract Factory design pattern decouples the creation of a family of object
       <pubDate>Sat, 07 Nov 2015 00:00:00 +0000</pubDate>
       
       <guid>https://blogs.cuttingedge.it/steven/posts/2015/code-smell-injecting-runtime-data-into-components/</guid>
-      <description>Injecting runtime data into your application components is a code smell. Runtime data should flow through the method calls of already-constructed object graphs. A recurring theme when it comes to questions about dependency injection is how to wire up and resolve components a.k.a. injectables (the classes that contain the application&amp;rsquo;s behavior) that require runtime data during construction. My answer to this is always the same:
+      <description>Injecting runtime data into your application components is a code smell. Runtime data should flow through the method calls of already-constructed object graphs. A recurring theme when it comes to questions about dependency injection is how to wire up and resolve components a.k.a. injectables(the classes that contain the application&amp;rsquo;s behavior) that require runtime data during construction. My answer to this is always the same:
 Don&amp;rsquo;t inject runtime data into application components during construction&amp;mdash;it causes ambiguity, complicates the Composition Root with an extra responsibility, and makes it extraordinarily hard to verify the correctness of your DI configuration.</description>
     </item>
     
@@ -120,7 +120,7 @@ The Abstract Factory design pattern decouples the creation of a family of object
       <pubDate>Sat, 01 Jun 2013 00:00:00 +0000</pubDate>
       
       <guid>https://blogs.cuttingedge.it/steven/posts/2013/di-anti-pattern-multiple-constructors/</guid>
-      <description>When Dependency Injection is applied correctly and completely, it is important that each type only has one constructor—multiple constructors are redundant, make your DI configuration fragile, and lead to maintainability issues. From a DI perspective, your applications have two kinds of types: newables and injectables. Newables are classes that the application news up manually using the new keyword. This is true for types such as primitives, entities, DTOs, view models and messages.</description>
+      <description>When Dependency Injection is applied correctly and completely, it is important that each type only has one constructor—multiple constructors are redundant, make your DI configuration fragile, and lead to maintainability issues. From a DI perspective, your applications have two kinds of types: newables and injectables. Newables are classes that the application news up manually using the new keyword. This is true for types such as primitives, entities, DTOs, view models and messages.</description>
     </item>
     
     <item>
@@ -129,7 +129,7 @@ The Abstract Factory design pattern decouples the creation of a family of object
       <pubDate>Mon, 04 Mar 2013 00:00:00 +0000</pubDate>
       
       <guid>https://blogs.cuttingedge.it/steven/posts/2013/simple-injector-2-the-future-is-here/</guid>
-      <description>Announcing the new major release of Simple Injector. The Simple Injector is an easy-to-use Inversion of Control library for .NET and Silverlight. Last week Simple Injector 2 was released. This release was a major undertaking. I&amp;rsquo;ve been working on this release full time for the last few months and I got a lot of help from enthusiastic Simple Injector users and even got a new developer on the team. I think the results are awesome.</description>
+      <description>Announcing the new major release of Simple Injector. The Simple Injector is an easy-to-use Inversion of Control library for .NET and Silverlight. Last week Simple Injector 2was released. This release was a major undertaking. I&amp;rsquo;ve been working on this release full time for the last few months and I got a lot of help from enthusiastic Simple Injector users and even got a new developer on the team. I think the results are awesome.</description>
     </item>
     
     <item>
@@ -166,7 +166,7 @@ The Abstract Factory design pattern decouples the creation of a family of object
       
       <guid>https://blogs.cuttingedge.it/steven/posts/2011/meanwhile-on-the-command-side-of-my-architecture/</guid>
       <description>This article describes how a single interface can transform the design of your application to be much cleaner, and more flexible than you ever thought possible. TIPChapter 10 of my book contains a much more elaborate version of this article.
-Since I began writing applications in .NET I&amp;rsquo;ve been separating operations that mutate state (of the database mostly) from operations that return data. This is basically what the Command-query separation principle is about.</description>
+Since I began writing applications in .NET I&amp;rsquo;ve been separating operations that mutate state (of the database mostly) from operations that return data. This is basically what the Command-query separation principleis about.</description>
     </item>
     
     <item>
@@ -175,7 +175,7 @@ Since I began writing applications in .NET I&amp;rsquo;ve been separating operat
       <pubDate>Sat, 01 Oct 2011 00:00:00 +0000</pubDate>
       
       <guid>https://blogs.cuttingedge.it/steven/posts/2011/adding-covariance-and-contravariance-to-simple-injector/</guid>
-      <description>A few weeks back I read this question on Stack Overflow. The question was about applying covariance / contravariance (or variance for short) to the Autofac dependency injection container. The question triggered me to think about variance support in Simple Injector. I was wondering whether special changes were needed to the core framework to allow this. However, it didn&amp;rsquo;t take me long to realize that enabling variance is actually pretty easy for anyone using the Simple Injector.</description>
+      <description>A few weeks back I read this questionon Stack Overflow. The question was about applying covariance / contravariance(or variance for short) to the Autofac dependency injection container. The question triggered me to think about variance support in Simple Injector. I was wondering whether special changes were needed to the core framework to allow this. However, it didn&amp;rsquo;t take me long to realize that enabling variance is actually pretty easy for anyone using the Simple Injector.</description>
     </item>
     
     <item>
@@ -193,7 +193,7 @@ Since I began writing applications in .NET I&amp;rsquo;ve been separating operat
       <pubDate>Sat, 01 Nov 2008 00:00:00 +0000</pubDate>
       
       <guid>https://blogs.cuttingedge.it/steven/posts/2008/the-death-of-linq-to-sql/</guid>
-      <description>The Microsoft ADO.NET team blog made an important announcement yesterday about the future of LINQ to SQL. The ADO.NET team announced that Microsoft will continue to make some investments in LINQ to SQL, but they also made it pretty clear that LINQ to Entities is the recommended data access solution in the future frameworks. Microsoft will invest heavily in the Entity Framework.
+      <description>The Microsoft ADO.NET team blog made an important announcement yesterday about the future of LINQ to SQL. The ADO.NET team announcedthat Microsoft will continue to make some investments in LINQ to SQL, but they also made it pretty clear that LINQ to Entities is the recommended data access solution in the future frameworks. Microsoft will invest heavily in the Entity Framework.
 I always wondered why Microsoft focused on two different O/RM technologies for the .</description>
     </item>
     

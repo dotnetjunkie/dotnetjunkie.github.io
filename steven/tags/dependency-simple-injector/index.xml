@@ -17,7 +17,7 @@
       <pubDate>Thu, 19 Jul 2012 00:00:00 +0000</pubDate>
       
       <guid>https://blogs.cuttingedge.it/steven/posts/2012/primitive-dependencies-with-simple-injector/</guid>
-      <description>This article describes how to extend the Simple Injector with convension based configuration for primitive constructor arguments. UPDATE April 2017: For a Simple Injector v4 compatible version of these code samples, please see here. When working with dependency injection, services (classes that contain behavior) depend on other services. The general idea is to inject those services into the constructor of the consuming service. Primitive types are no services, since they contain no behavior, and I normally advice not to mix primitive types and services in a single constructor.</description>
+      <description>This article describes how to extend the Simple Injector with convension based configuration for primitive constructor arguments. UPDATE April 2017: For a Simple Injector v4 compatible version of these code samples, please see here. When working with dependency injection, services (classes that contain behavior) depend on other services. The general idea is to inject those services into the constructor of the consuming service. Primitive types are no services, since they contain no behavior, and I normally advice not to mix primitive types and services in a single constructor.</description>
     </item>
     
   </channel>

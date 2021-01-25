@@ -356,11 +356,15 @@ handler.Handle(queueContext.Message); <span style="color:#75715e"><annotation>Ex
 		<hr />
 	
 	
-	<p id="dynamic_comments" onscroll="loadComments()">
+	<p id="dynamic_comments" onscroll="loadCommentsWhenVisible()">
 		<noscript class="noprint">
+			<br />
 			The comments are not loaded because you disabled JavaScript. That's okay—I disable JavaScript myself all the time.
 			The comments for this blog post are loaded dynamically from GitHub. To read these comments,
 			just click <a href="https://github.com/dotnetjunkie/blog/issues/4">here</a>.
+			<br />
+			<br />
+			<hr />
 		</noscript>
 	</p>
 
@@ -381,7 +385,7 @@ handler.Handle(queueContext.Message); <span style="color:#75715e"><annotation>Ex
 		
 			if (isElementInViewport(commentsElement) || isPrintMode) {
 				commentsLoaded = true;
-				commentsElement.innerHTML = 'Loading comments...';
+				commentsElement.innerHTML = '<br />Loading comments...<br /><br /><hr />';
 		
 				fetch(apiUrl, { headers: { 'Accept': 'application/vnd.github.v3.html+json' } })
 				  .then(response => { return response.json() })
@@ -396,8 +400,8 @@ handler.Handle(queueContext.Message); <span style="color:#75715e"><annotation>Ex
 				  })
 				  .catch (err => {
 					commentsElement.innerHTML =
-						'<i>I\'m sorry. Something went wrong during the loading of the comments. ' +
-						'You can view this post\'s comments by visiting <a href="https:\/\/github.com\/dotnetjunkie\/blog\/issues\/4">this GitHub issue</a>.</i>';
+						'<br /><i>I\'m sorry. Something went wrong during the loading of the comments. ' +
+						'You can view this post\'s comments by visiting <a href="https:\/\/github.com\/dotnetjunkie\/blog\/issues\/4">this GitHub issue</a>.</i><br /><br /><hr />';
 				  });				
 			}
 		}

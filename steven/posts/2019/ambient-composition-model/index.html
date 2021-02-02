@@ -86,19 +86,13 @@
 		<h3 id="to-be-able-to-achieve-anything-useful-your-application-code-makes-use-of-runtime-data-that-comes-in-many-shapes-and-forms-providing-access-to-that-data-can-be-accomplished-in-many-ways-the-way-you-provide-object-graphs-with-runtime-data-can-affect-the-way-you-compose-them-using-dependency-injection-there-are-two-competing-models-to-choose-from-this-article-describes-the-less-common-model-the-ambient-composition-model-this-article-is-the-third-of-a-five-part-series-on-dependency-injection-composition-models">To be able to achieve anything useful, your application code makes use of runtime data that comes in many shapes and forms. Providing access to that data can be accomplished in many ways. The way you provide object graphs with runtime data can affect the way you compose them using Dependency Injection. There are two competing models to choose from. This article describes the less common model: the Ambient Composition Model. This article is the third of a five-part series on Dependency Injection composition models.</h3>
 <p>Posts in this series:</p>
 <ul>
-<li><a href="/steven/p/compositionmodels">DI Composition Models: A Primer</a>
-</li>
-<li><a href="/steven/p/ccm">The Closure Composition Model</a>
-</li>
-<li><a href="/steven/p/acm">The Ambient Composition Model</a>
- (this article)</li>
-<li><a href="/steven/p/cmcompare">DI Composition Models: A Comparison</a>
-</li>
-<li><a href="/steven/p/singleton">In Praise of the Singleton Object Graph</a>
-</li>
+<li><a href="/steven/p/compositionmodels">DI Composition Models: A Primer</a></li>
+<li><a href="/steven/p/ccm">The Closure Composition Model</a></li>
+<li><a href="/steven/p/acm">The Ambient Composition Model</a> (this article)</li>
+<li><a href="/steven/p/cmcompare">DI Composition Models: A Comparison</a></li>
+<li><a href="/steven/p/singleton">In Praise of the Singleton Object Graph</a></li>
 </ul>
-<p>The goal of this article is to objectively describe the Ambient Composition Model by providing examples to highlight the difference between it and the <a href="/steven/p/ccm/">Closure Composition Model</a>
- (CCM). In the fourth part, I’ll discuss the respective advantages and disadvantages of both models.</p>
+<p>The goal of this article is to objectively describe the Ambient Composition Model by providing examples to highlight the difference between it and the <a href="/steven/p/ccm/">Closure Composition Model</a> (CCM). In the fourth part, I’ll discuss the respective advantages and disadvantages of both models.</p>
 <p>Let’s continue the example of the hypothetical web shop with its <code>ShoppingBasketController</code> and <code>ShoppingBasketRepository</code>, which I introduced in the previous articles. The following example shows the construction of the <code>ShoppingBasketController</code>’s object graph once more:</p>
 
 
@@ -142,8 +136,7 @@
     <span style="color:#66d9ef">this</span>.repository.Save(basket);
 }
 </code></pre></div>
-<p>Inside your <a href="https://mng.bz/K1qZ" rel="noreferrer">Composition Root</a>
- you can define this ASP.NET-specific <code>IUserContext</code> adapter as follows:</p>
+<p>Inside your <a href="https://mng.bz/K1qZ" rel="noreferrer">Composition Root</a> you can define this ASP.NET-specific <code>IUserContext</code> adapter as follows:</p>
 
 
 
@@ -195,14 +188,11 @@
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> UseName =&gt; <span style="color:#66d9ef">this</span>.accessor.HttpContext.User.Identity.Name;
 }
 </code></pre></div>
-<p>In this case, the <code>IUserContext</code> implementation depends on ASP.NET Core’s <a href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.http.ihttpcontextaccessor" rel="noreferrer">IHttpContextAccessor</a>
- abstraction to provide access to the web request’s current <code>HttpContext</code>. ASP.NET Core uses a single instance for <code>IHttpContextAccessor</code>, which internally stores <code>HttpContext</code> as ambient data using an <code>AsyncLocal&lt;T&gt;</code> <a href="https://github.com/aspnet/HttpAbstractions/blob/master/src/Microsoft.AspNetCore.Http/HttpContextAccessor.cs#L10" rel="noreferrer">field</a>
-. The effect of <code>IHttpContextAccessor</code> is identical to ASP.NET classic’s <code>HttpContext.Current</code>.</p>
+<p>In this case, the <code>IUserContext</code> implementation depends on ASP.NET Core’s <a href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.http.ihttpcontextaccessor" rel="noreferrer">IHttpContextAccessor</a> abstraction to provide access to the web request’s current <code>HttpContext</code>. ASP.NET Core uses a single instance for <code>IHttpContextAccessor</code>, which internally stores <code>HttpContext</code> as ambient data using an <code>AsyncLocal&lt;T&gt;</code> <a href="https://github.com/aspnet/HttpAbstractions/blob/master/src/Microsoft.AspNetCore.Http/HttpContextAccessor.cs#L10" rel="noreferrer">field</a>. The effect of <code>IHttpContextAccessor</code> is identical to ASP.NET classic’s <code>HttpContext.Current</code>.</p>
 <p>In both examples, runtime data is store outside the graph. This absence of a captured variable allows classes to be reused and even registered with the Singleton Lifestyle. This might even allow the adapter’s consumers (for example, <code>AddShoppingBasketItemHandler</code>) to become singletons as well.</p>
 <p>You must be careful, though, not to let your application components directly depend on ambient data.</p>
 <h2 id="encapsulation-of-ambient-data">Encapsulation of ambient data</h2>
-<p>Some developers might frown on the idea of using ambient data, but as long as its usage is encapsulated <em>inside</em> the Composition Root, it is perfectly fine. A Composition Root is <a href="https://blog.ploeh.dk/2015/01/06/composition-root-reuse/" rel="noreferrer">not reused</a>
-, but instead specific to one particular application, and the Composition Root knows best how data can be shared across its components.</p>
+<p>Some developers might frown on the idea of using ambient data, but as long as its usage is encapsulated <em>inside</em> the Composition Root, it is perfectly fine. A Composition Root is <a href="https://blog.ploeh.dk/2015/01/06/composition-root-reuse/" rel="noreferrer">not reused</a>, but instead specific to one particular application, and the Composition Root knows best how data can be shared across its components.</p>
 <p>You should, however, prevent the use of ambient state <em>outside</em> the Composition Root, which is one reason why you would want to hide calls to .NET’s <code>DateTime.Now</code> property behind an <code>ITimeProvider</code> abstraction of some sort, as shown in the next example:</p>
 
 
@@ -340,8 +330,7 @@ handler.Handle(queueContext.Message); <span style="color:#75715e"><annotation>Ex
 </span><span style="color:#75715e"></span>handler.Handle(queueContext.Message);
 </code></pre></div>
 <p>In this example, it might seem weird to have <code>AmbientUserContextAdapter</code> injected into the graph, while its ambient data is set directly after. But don’t forget that usually the construction of the graph is not done as close to initialization as shown here. The construction of such a graph is likely moved to another method, or done by the DI Container.</p>
-<p>This completes the description of the ACM. In <a href="/steven/p/cmcompare/">the next article</a>
-, I will compare the ACM with the CCM and show why one might be preferred.</p>
+<p>This completes the description of the ACM. In <a href="/steven/p/cmcompare/">the next article</a>, I will compare the ACM with the CCM and show why one might be preferred.</p>
 <h2 id="summary">Summary</h2>
 <ul>
 <li>The Ambient Composition Model (ACM) composes object graphs that do not store runtime data inside captured variables. Instead, runtime data is kept outside the graph and stored as ambient data. This ambient data is managed by the Composition Root and is provided to application components on request, long after those components have been constructed.</li>

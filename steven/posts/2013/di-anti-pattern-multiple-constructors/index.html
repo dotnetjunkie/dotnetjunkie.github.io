@@ -82,12 +82,8 @@
 		
 
 		<h3 id="when-dependency-injection-is-applied-correctly-and-completely-it-is-important-that-each-type-only-has-one-constructormultiple-constructors-are-redundant-make-your-di-configuration-fragile-and-lead-to-maintainability-issues">When Dependency Injection is applied correctly and completely, it is important that each type only has one constructor—multiple constructors are redundant, make your DI configuration fragile, and lead to maintainability issues.</h3>
-<p>From a DI perspective, your applications have two kinds of types: <a href="http://misko.hevery.com/2008/09/30/to-new-or-not-to-new/" rel="noreferrer">newables and injectables</a>
-. Newables are classes that the application news up manually using the <code>new</code> keyword. This is true for types such as primitives, entities, <a href="http://en.wikipedia.org/wiki/Data_transfer_object" rel="noreferrer">DTOs</a>
-, view models and messages. Newables contain little to no logic and application code can safely depend on their implementation; there is no need to hide them behind an abstraction.</p>
-<p>Injectables are the types that contain the logic of our application. Injectables are usually placed behind abstractions and their consumers will depend on these <a href="https://en.wikipedia.org/wiki/Dependency_inversion_principle" rel="noreferrer">abstractions and not the implementations</a>
-. This allows these types to be replaced, decorated, intercepted and mocked. When using dependency injection, injectables are configured in the start-up path of our application; the <a href="https://freecontent.manning.com/dependency-injection-in-net-2nd-edition-understanding-the-composition-root/" rel="noreferrer">Composition Root</a>
-. Optionally, a DI library resolves, injects and manages the injectables for you.</p>
+<p>From a DI perspective, your applications have two kinds of types: <a href="http://misko.hevery.com/2008/09/30/to-new-or-not-to-new/" rel="noreferrer">newables and injectables</a>. Newables are classes that the application news up manually using the <code>new</code> keyword. This is true for types such as primitives, entities, <a href="http://en.wikipedia.org/wiki/Data_transfer_object" rel="noreferrer">DTOs</a>, view models and messages. Newables contain little to no logic and application code can safely depend on their implementation; there is no need to hide them behind an abstraction.</p>
+<p>Injectables are the types that contain the logic of our application. Injectables are usually placed behind abstractions and their consumers will depend on these <a href="https://en.wikipedia.org/wiki/Dependency_inversion_principle" rel="noreferrer">abstractions and not the implementations</a>. This allows these types to be replaced, decorated, intercepted and mocked. When using dependency injection, injectables are configured in the start-up path of our application; the <a href="https://freecontent.manning.com/dependency-injection-in-net-2nd-edition-understanding-the-composition-root/" rel="noreferrer">Composition Root</a>. Optionally, a DI library resolves, injects and manages the injectables for you.</p>
 <p><callout class="IMPORTANT">
     <span class="callout-title">IMPORTANT</span>
     <span class="callout-body">Let me be clear: I don’t care how many constructors your newables have. Any number that works for you is fine with me (or at least as far as this post is concerned). What I care about is how many constructors your injectables have:</span>
@@ -96,8 +92,7 @@
     <span class="callout-title"></span>
     <span class="callout-body"><strong>An injectable should have a single constructor.</strong></span>
 </callout></p>
-<p>All the <a href="https://livebook.manning.com/book/dependency-injection-principles-practices-patterns/chapter-1/section-1-3-2" rel="noreferrer">volatile</a>
- dependencies that an injectable has (i.e. cannot live without) should be specified as constructor argument. This makes it easy to spot a type’s dependencies. This holds for both the person reading the code and the DI library.</p>
+<p>All the <a href="https://livebook.manning.com/book/dependency-injection-principles-practices-patterns/chapter-1/section-1-3-2" rel="noreferrer">volatile</a> dependencies that an injectable has (i.e. cannot live without) should be specified as constructor argument. This makes it easy to spot a type’s dependencies. This holds for both the person reading the code and the DI library.</p>
 <p><callout class="">
     <span class="callout-title"></span>
     <span class="callout-body"><strong>The constructor is the definition of what dependencies a type requires.</strong></span>
@@ -110,11 +105,9 @@
 <li><em>Group 2</em>: The container selects the constructor with the most parameters. If this constructor contains dependencies that cannot be resolved an exception is thrown.</li>
 <li><em>Group 3</em>: The container selects the constructor with the most parameters from the list of constructors where all of the parameters can be resolved by the container. When resolving a service, the container checks the configuration to see which dependencies can be resolved and selects the most appropriate constructor.</li>
 </ul>
-<p>There is another difference between the various DI libraries concerning constructor selection that can lead to even more confusion. DI libraries behave differently when encountering multiple selectable constructors with the same number of parameters. Some containers will throw an exception while others will pick the ‘first’ constructor. What ‘first’ means is often undefined and therefore unreliable. A <a href="https://blogs.msdn.microsoft.com/ericlippert/2012/05/31/past-performance-is-no-guarantee-of-future-results/" rel="noreferrer">recompile</a>
- or even an application restart could result in the selection of a different constructor, as the MSDN documentation states:</p>
+<p>There is another difference between the various DI libraries concerning constructor selection that can lead to even more confusion. DI libraries behave differently when encountering multiple selectable constructors with the same number of parameters. Some containers will throw an exception while others will pick the ‘first’ constructor. What ‘first’ means is often undefined and therefore unreliable. A <a href="https://blogs.msdn.microsoft.com/ericlippert/2012/05/31/past-performance-is-no-guarantee-of-future-results/" rel="noreferrer">recompile</a> or even an application restart could result in the selection of a different constructor, as the MSDN documentation states:</p>
 <blockquote>
-<p>The GetConstructors method does not return constructors in a particular order, such as declaration order. Your code must not depend on the order in which constructors are returned, because that order varies. (<a href="https://docs.microsoft.com/en-us/dotnet/api/system.type.getconstructors?view=netframework-4.7.2" rel="noreferrer">source</a>
-)</p>
+<p>The GetConstructors method does not return constructors in a particular order, such as declaration order. Your code must not depend on the order in which constructors are returned, because that order varies. (<a href="https://docs.microsoft.com/en-us/dotnet/api/system.type.getconstructors?view=netframework-4.7.2" rel="noreferrer">source</a>)</p>
 </blockquote>
 <p>Letting the library pick the most suitable constructor for you based on the availability of its dependencies might sound appealing at first, but it means that a single change in your DI configuration can result in a different code path being executed at runtime. Or worse this could happen simply because the application is restarted. This flexibility makes it harder to be sure about the correctness of your application and can lead to mysterious and hard to find errors.</p>
 <p>These reasons should be convincing enough but I repeatedly hear the same arguments for multiple constructors.</p>
@@ -147,9 +140,7 @@
 }
 </code></pre></div>
 <p>The argument is that this makes it easier to use the type (since it has a default constructor). This argument makes sense when it comes to introducing dependency injection in a legacy code base. It allows classes to be unit tested easily while allowing the legacy system to be refactored incrementally.</p>
-<p>The downside of this approach is that the type’s dependencies are hard-wired; the <a href="https://en.wikipedia.org/wiki/Dependency_inversion_principle" rel="noreferrer">Dependency Inversion Principle</a>
- is violated. This approach makes the application inflexible since replacing, wrapping or intercepting any of the given dependencies can lead to sweeping changes throughout the application. This anti-pattern is known with the unfortunate name of <a href="https://stackoverflow.com/questions/7099406/what-is-the-real-difference-between-bastard-injection-and-poor-mans-injectio" rel="noreferrer">Bastard injection</a>
-. It is a specific form of the Control Freak anti-pattern. Bastard Injection may initially seem a valuable approach to adding DI into legacy applications, but when applying the Dependency Injection pattern from the beginning such default constructor is redundant.</p>
+<p>The downside of this approach is that the type’s dependencies are hard-wired; the <a href="https://en.wikipedia.org/wiki/Dependency_inversion_principle" rel="noreferrer">Dependency Inversion Principle</a> is violated. This approach makes the application inflexible since replacing, wrapping or intercepting any of the given dependencies can lead to sweeping changes throughout the application. This anti-pattern is known with the unfortunate name of <a href="https://stackoverflow.com/questions/7099406/what-is-the-real-difference-between-bastard-injection-and-poor-mans-injectio" rel="noreferrer">Bastard injection</a>. It is a specific form of the Control Freak anti-pattern. Bastard Injection may initially seem a valuable approach to adding DI into legacy applications, but when applying the Dependency Injection pattern from the beginning such default constructor is redundant.</p>
 <h2 id="optional-dependencies">Optional dependencies</h2>
 <p>Another reason developers have for defining multiple constructors is to have optional dependencies. Take a look at the following code snippet:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MoveCustomerHandler</span> : ICommandHandler&lt;MoveCustomerCommand&gt;
@@ -186,8 +177,7 @@
     <span class="callout-body"><strong>Dependencies should hardly ever be optional.</strong></span>
 </callout></p>
 <p>If a dependency is optional, you should ask yourself whether the class should even depend on that abstraction.</p>
-<p>An optional dependency implies that the reference to the dependency will be null when it’s not supplied. Null references complicate code because they require specific logic for the null-case. Instead of passing in a null reference, the caller could insert an implementation with no behavior, i.e. an implementation of the <a href="https://en.wikipedia.org/wiki/Null_Object_pattern" rel="noreferrer">Null Object Pattern</a>
-. This ensures that dependencies are always available, the type can require those dependencies and the dreaded null checks are gone. This means we have less code to maintain and test. In the case that our application does not need to log information we simply register a <code>NullLogger</code>:</p>
+<p>An optional dependency implies that the reference to the dependency will be null when it’s not supplied. Null references complicate code because they require specific logic for the null-case. Instead of passing in a null reference, the caller could insert an implementation with no behavior, i.e. an implementation of the <a href="https://en.wikipedia.org/wiki/Null_Object_pattern" rel="noreferrer">Null Object Pattern</a>. This ensures that dependencies are always available, the type can require those dependencies and the dreaded null checks are gone. This means we have less code to maintain and test. In the case that our application does not need to log information we simply register a <code>NullLogger</code>:</p>
 
 
 
@@ -207,21 +197,15 @@
     <span class="callout-title">IMPORTANT</span>
     <span class="callout-body">Any behavior that isn’t worth testing, isn’t worth writing!</span>
 </callout></p>
-<p>The developers that use this argument are in reality keen to know the behavior works as expected and their argument is just used as an excuse to avoid writing the additional tests for each class that writes to the log. The argument is, in fact, a sign of a larger problem with the design of an application—it is an indication that the application’s code is hard to test which is often caused by violating the <a href="https://en.wikipedia.org/wiki/SOLID_%28object-oriented_design%29" rel="noreferrer">SOLID principles</a>
-. Sticking with our logging example, why do all these classes log anything? Logging is a <a href="https://en.wikipedia.org/wiki/Cross-cutting_concern" rel="noreferrer">Cross-Cutting Concern</a>
- and it is better to not clutter business logic with Cross-Cutting Concerns. Cross-Cutting Concerns can be applied using <a href="http://en.wikipedia.org/wiki/Aspect-oriented_programming" rel="noreferrer">Aspect-Oriented Programming</a>
- (AOP) techniques such as using <a href="https://en.wikipedia.org/wiki/Decorator_pattern" rel="noreferrer">decorators</a>
- or interception.</p>
+<p>The developers that use this argument are in reality keen to know the behavior works as expected and their argument is just used as an excuse to avoid writing the additional tests for each class that writes to the log. The argument is, in fact, a sign of a larger problem with the design of an application—it is an indication that the application’s code is hard to test which is often caused by violating the <a href="https://en.wikipedia.org/wiki/SOLID_%28object-oriented_design%29" rel="noreferrer">SOLID principles</a>. Sticking with our logging example, why do all these classes log anything? Logging is a <a href="https://en.wikipedia.org/wiki/Cross-cutting_concern" rel="noreferrer">Cross-Cutting Concern</a> and it is better to not clutter business logic with Cross-Cutting Concerns. Cross-Cutting Concerns can be applied using <a href="http://en.wikipedia.org/wiki/Aspect-oriented_programming" rel="noreferrer">Aspect-Oriented Programming</a> (AOP) techniques such as using <a href="https://en.wikipedia.org/wiki/Decorator_pattern" rel="noreferrer">decorators</a> or interception.</p>
 <p><callout class="TIP">
     <span class="callout-title">TIP</span>
     <span class="callout-body">This has been the main theme of my blog for the last couple of years and if you have no idea what I’m talking about please take a look at <a href="/steven/p/commands/">this post</a>.</span>
 </callout></p>
 <p>I use these patterns to apply AOP and I find very few reasons to implement class-specific logging. My applications define a generic decorator for logging that can serialize any executed message. When an operation fails I have all necessary information available to analyze and replay operations later.</p>
-<p>Developers tend to log too much and this is often because they are scared of losing error information. This fear is mostly unfounded. Ask yourself: “<a href="https://stackoverflow.com/a/9915056/264697" rel="noreferrer">Do I log too much?</a>
-”</p>
+<p>Developers tend to log too much and this is often because they are scared of losing error information. This fear is mostly unfounded. Ask yourself: “<a href="https://stackoverflow.com/a/9915056/264697" rel="noreferrer">Do I log too much?</a>”</p>
 <h2 id="framework-types">Framework types</h2>
-<p>Third-party types such as types defined by the .NET framework or NuGet packages, can be injectables that are resolved and managed by the container. Take a <code>SqlConnection</code> or Entity Framework’s <code>DbContext</code> for instance. But it is incorrect to assume that the container should auto-wire these types. Auto-wiring of third-party types can lead to maintainability and trust issues. Although third-party types are not expected to introduce breaking changes, their designers are free to add new constructors (since the <a href="https://www.amazon.com/Framework-Design-Guidelines-Conventions-Libraries/dp/0321545613" rel="noreferrer">.NET Framework Design Guidelines</a>
- do not consider adding constructors a breaking change). Your application could suddenly fail when a constructor is added to a third-party type that is auto-wired by your DI container.</p>
+<p>Third-party types such as types defined by the .NET framework or NuGet packages, can be injectables that are resolved and managed by the container. Take a <code>SqlConnection</code> or Entity Framework’s <code>DbContext</code> for instance. But it is incorrect to assume that the container should auto-wire these types. Auto-wiring of third-party types can lead to maintainability and trust issues. Although third-party types are not expected to introduce breaking changes, their designers are free to add new constructors (since the <a href="https://www.amazon.com/Framework-Design-Guidelines-Conventions-Libraries/dp/0321545613" rel="noreferrer">.NET Framework Design Guidelines</a> do not consider adding constructors a breaking change). Your application could suddenly fail when a constructor is added to a third-party type that is auto-wired by your DI container.</p>
 <p><callout class="IMPORTANT">
     <span class="callout-title">IMPORTANT</span>
     <span class="callout-body">Prevent using your container’s auto-wiring facility when registering third-party types.</span>
@@ -242,11 +226,9 @@
     <span class="callout-title">WARNING</span>
     <span class="callout-body">Don’t abandon auto-wiring for the injectables that your applications define. Their contract and dependencies tend to change regularly during development. Auto-wiring your injectables with a DI container saves you the labor of updating the Composition Root for each change you make to a constructor in your system.</span>
 </callout></p>
-<p>The injectables you create are <a href="https://livebook.manning.com/book/dependency-injection-principles-practices-patterns/chapter-1/section-1-3-2" rel="noreferrer">Volatile Dependencies</a>
-, because they are subject to change. Third-party injectables on the other hand are more often <em>Stable Dependencies</em>, because they exist in a production form and we expect new versions will not introduce any breaking changes (but we can expect new constructors to be added).</p>
+<p>The injectables you create are <a href="https://livebook.manning.com/book/dependency-injection-principles-practices-patterns/chapter-1/section-1-3-2" rel="noreferrer">Volatile Dependencies</a>, because they are subject to change. Third-party injectables on the other hand are more often <em>Stable Dependencies</em>, because they exist in a production form and we expect new versions will not introduce any breaking changes (but we can expect new constructors to be added).</p>
 <h2 id="code-generators">Code generators</h2>
-<p>Code generators can sometimes force types to have multiple constructors. Early versions of the <a href="https://github.com/T4MVC/T4MVC" rel="noreferrer">T4MVC</a>
- for instance, had the annoying side effect of adding an extra public constructor to MVC controller types. This ambiguity would sometimes cause problems for the DI container when selecting the expected constructor. Newer versions of T4MVC resolved this issue by making the generated constructor protected.</p>
+<p>Code generators can sometimes force types to have multiple constructors. Early versions of the <a href="https://github.com/T4MVC/T4MVC" rel="noreferrer">T4MVC</a> for instance, had the annoying side effect of adding an extra public constructor to MVC controller types. This ambiguity would sometimes cause problems for the DI container when selecting the expected constructor. Newer versions of T4MVC resolved this issue by making the generated constructor protected.</p>
 <p>You may not always control the code generation process or be able to change the code generator. Modifying the T4MVC template, for example, was annoying because this prevented us from updating the template from NuGet (because NuGet skips altered files). In this scenario it is better to override your container’s default constructor resolution behavior (if needed). Such a change should not affect all types that your container auto-wires.</p>
 <p><callout class="IMPORTANT">
     <span class="callout-title">IMPORTANT</span>
@@ -278,8 +260,7 @@ Regards,</p>
 <p>Hi Steven, what about having an abstract factory as constructor parameter? This makes it much easier for unit testing (with mocking).</p>
 <hr>
 <h4 id="steven---02-september-13">Steven - 02 September 13</h4>
-<p>Marc, using an abstract factory is fine, as long as you really use an abstract factory, not an Abstract <a href="https://blog.ploeh.dk/2010/02/03/ServiceLocatorisanAnti-Pattern/" rel="noreferrer">Service Locator</a>
-.</p>
+<p>Marc, using an abstract factory is fine, as long as you really use an abstract factory, not an Abstract <a href="https://blog.ploeh.dk/2010/02/03/ServiceLocatorisanAnti-Pattern/" rel="noreferrer">Service Locator</a>.</p>
 
 
 		<hr />

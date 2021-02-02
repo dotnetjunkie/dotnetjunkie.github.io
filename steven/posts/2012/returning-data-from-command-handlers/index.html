@@ -58,12 +58,10 @@
     <span class="callout-title">UPDATE</span>
     <span class="callout-body">Although the article below might still be very entertaining, my opionion on the subject has changed. The problems described below will go away completely when you stop using use database generated IDs! Instead let the consumer of that command generate an ID (most likely a GUID). In this case, since the client creates the ID, they already have that value, and you don&rsquo;t have to return anything. This has other advantages—it allows commands to be executed asynchronously (or queued), for instance, without the need for the client to wait.</span>
 </callout></p>
-<p>A few months back I described the <a href="/steven/p/commands/">command/handler architecture</a>
- that I (and many others) use to effectively model business operations in a system. Once in a while a question pops up in my mail or at Stack Overflow about returning data from a command.</p>
+<p>A few months back I described the <a href="/steven/p/commands/">command/handler architecture</a> that I (and many others) use to effectively model business operations in a system. Once in a while a question pops up in my mail or at Stack Overflow about returning data from a command.</p>
 <p>It seems strange at first to return data from commands, since the whole idea of the Command-query separation is that a function should either return a value or mutate state, but not both. So without any more context, I would respond to such question with:</p>
 <blockquote>
-<p>separate the returning of the data from the operation that mutates the state. Execute that command and <a href="/steven/p/queries/">execute a query</a>
- after the command has finished.</p>
+<p>separate the returning of the data from the operation that mutates the state. Execute that command and <a href="/steven/p/queries/">execute a query</a> after the command has finished.</p>
 </blockquote>
 <p>When you take a closer look at the question, however, you will often see that the data being returned is an identifier of some sort, which is the result of the creation of some entity in the system. Take a look at the following command:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CreateCustomerCommand</span>
@@ -81,8 +79,7 @@
     <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>.RedirectToAction(<span style="color:#e6db74">&#34;Index&#34;</span>, <span style="color:#66d9ef">new</span> { id = customerId });
 }
 </code></pre></div>
-<p>Still, do we really want to return values from commands? A few things to note here. First of all, returning values from commands does mean that a command can never be executed asynchronously, something that architectures such as <a href="https://martinfowler.com/bliki/CQRS.html" rel="noreferrer">CQRS</a>
- promote. Besides this, the <code>CreateCustomerCommand</code> seems very CRUDy, and probably doesn’t really fit an architecture like CQRS. In a CQRS like architecture, you are likely to report to your user the message “your request is being processed” or might want to poll until the operation has executed asynchronously.</p>
+<p>Still, do we really want to return values from commands? A few things to note here. First of all, returning values from commands does mean that a command can never be executed asynchronously, something that architectures such as <a href="https://martinfowler.com/bliki/CQRS.html" rel="noreferrer">CQRS</a> promote. Besides this, the <code>CreateCustomerCommand</code> seems very CRUDy, and probably doesn’t really fit an architecture like CQRS. In a CQRS like architecture, you are likely to report to your user the message “your request is being processed” or might want to poll until the operation has executed asynchronously.</p>
 <p>For the systems I’m working on, for my customers, my fellow developers, and even myself, CQRS is a bridge too far. The idea of having all commands (possibly) execute asynchronously—and CQRS itself—is a real mind shift that I’m currently not willing to make (yet), and I can’t expect other developers to do to. With my current state of mind, it is simply too useful to have commands handlers return data to the caller. So how do we do that?</p>
 <p>The answer is actually very simple: Define an ‘output’ property on a command:</p>
 
@@ -151,8 +148,7 @@
     <span class="callout-title">NOTE</span>
     <span class="callout-body">Committing the unit of work on the end of the web request is typically a bad idea, as there is no way to tell whether the unit of work should actually be committed at that point. The operation could have failed with an exception.</span>
 </callout></p>
-<p>You have to realize that, although simplifying your application code, the complexity is moved into the <a href="https://freecontent.manning.com/dependency-injection-in-net-2nd-edition-understanding-the-composition-root/" rel="noreferrer">Composition Root</a>
-. The size and complexity of your application must promote this. Although I must admit that once familiar with these types of constructions and configurations of your Composition Root, you will find it easy to apply in small systems as well.</p>
+<p>You have to realize that, although simplifying your application code, the complexity is moved into the <a href="https://freecontent.manning.com/dependency-injection-in-net-2nd-edition-understanding-the-composition-root/" rel="noreferrer">Composition Root</a>. The size and complexity of your application must promote this. Although I must admit that once familiar with these types of constructions and configurations of your Composition Root, you will find it easy to apply in small systems as well.</p>
 <sidebar>
 	<span class="sidebar-title">Database-generated keys</span>
 	<span class="sidebar-body"><p>CQRS models the business around aggregate roots (a <a href="https://en.wikipedia.org/wiki/Domain-driven_design">DDD</a> concept), and each aggregate root gets a unique key, usually generated as a Guid, which can be generated in .NET. This means that when using CQRS, you will never run into the problem of database generated keys, which is great of course.</p>
@@ -263,8 +259,7 @@
 }
 </code></pre></div>
 <p>This decorator depends on the <code>PostCommitRegistratorImpl</code> directly and during the <code>Handle</code> method—after the transaction completes successfully—the <code>ExecuteActions</code> method of the <code>PostCommitRegistratorImpl</code> is called. Note that this decorator depends on the <code>PostCommitRegistratorImpl</code> implementation and not on the <code>IPostCommitRegistrator</code> interface. The interface does not implement the <code>ExecuteActions</code> method, and you don’t want it to, since you don’t want any command handler to call that method directly. You do, however, want this class to be able to execute the registered delegates, so you need it to access the implementation. Because both classes are part of the Composition Root, this is fine. The application code itself has no notion of the <code>PostCommitRegistratorImpl</code> nor the <code>PostCommitCommandHandlerDecorator&lt;T&gt;</code>.</p>
-<p>The last task is to wire up all the dependencies correctly. This isn’t really difficult, but does need a certain state of mind, since you need to carefully consider the lifestyle of <code>PostCommitRegistratorImpl</code>. Up until this point this article was container agnostic. Here is an example of how to configure this using <a href="https://simpleinjector.org/" rel="noreferrer">Simple Injector</a>
-:</p>
+<p>The last task is to wire up all the dependencies correctly. This isn’t really difficult, but does need a certain state of mind, since you need to carefully consider the lifestyle of <code>PostCommitRegistratorImpl</code>. Up until this point this article was container agnostic. Here is an example of how to configure this using <a href="https://simpleinjector.org/" rel="noreferrer">Simple Injector</a>:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">container.Register(
     <span style="color:#66d9ef">typeof</span>(ICommandHandler&lt;&gt;), 
     <span style="color:#66d9ef">typeof</span>(ICommandHandler&lt;&gt;).Assembly);
@@ -336,16 +331,14 @@ It is not a good thing not to separate the &ldquo;input&rdquo; and &ldquo;output
 <h4 id="dimitri---30-may-13">Dimitri - 30 May 13</h4>
 <p>How about using &lsquo;out&rsquo; keyword for getting back an <code>Id</code> in synch scenarios?</p>
 <pre><code>this.handler.Handle(command, out customerId);
-</code></pre><p>I came across <a href="http://epic.tesio.it/doc/manual/command_query_separation.html" rel="noreferrer">an article</a>
- where they claim it to be a good practice.</p>
+</code></pre><p>I came across <a href="http://epic.tesio.it/doc/manual/command_query_separation.html" rel="noreferrer">an article</a> where they claim it to be a good practice.</p>
 <p>Also domain logic validation which happens in the command handler which is a part of an application service might throw a custom exception with BrokenRules collection which could be caught by the client (MVC controller -&gt; catch BrokenRulesException and append error list to ModelState)</p>
 <p>Is it is safe path?</p>
 <hr>
 <h4 id="steven---30-may-13">Steven - 30 May 13</h4>
 <p>Using an out parameter is just obfuscation and has no advantages over having a <code>Handle</code> method with a return value, i.e.:</p>
 <pre><code>int customerId = this.handler.Handle(command);
-</code></pre><p>But consequence of a design with an <code>out</code> or return value is that the design of your command handlers will equal that of the <a href="/steven/p/queries/">query handlers</a>
-.</p>
+</code></pre><p>But consequence of a design with an <code>out</code> or return value is that the design of your command handlers will equal that of the <a href="/steven/p/queries/">query handlers</a>.</p>
 <p>Such design for queries makes a lot of sense, because all queries return a value. For commands, however, such design is rather awkward, because, in general, commands should return <code>void</code> anyway. So why should we complicate this part in the design? Besides that, how do we handle the common void case? We can&rsquo;t define a command as <code>ICommand</code>, since C# (and the CLR) do not allow this. We could define our own <code>Void</code> type (something like <code>DbNull</code>) and have an <code>ICommand</code>, but that would still be awkward, and command handler in that case still have to do <code>return MyVoid.Instance;</code>.</p>
 <p>To conclude: don’t do this. Stick to using return properties, or here is a better idea: Don&rsquo;t use database generated IDs! That completely solves the problem. Instead let the client generate an ID (most likely a <code>Guid</code>). In this case, because the client creates the ID, they already have that value, and you don&rsquo;t have to return anything. This btw has other advantages, for instance, it allows commands to be executed asynchronously (or queued), without the need for the client to wait.</p>
 <p>When using GUIDs, you can either use sequential GUIDs (but in that case the client must know how to generate them) or you will have to defragment your database indexes once in a while (something you should probably be doing anyway).</p>
@@ -395,8 +388,7 @@ It is not a good thing not to separate the &ldquo;input&rdquo; and &ldquo;output
 <blockquote>
 <p>Given that commands are one way, can thery throw exceptions?</p>
 </blockquote>
-<p>Of course!!!! Any operation that does not deliver or do what it promisses to do should throw an exception. If that command can&rsquo;t update the customer, it should throw an exception. However, if you find yourself implementing many action methods with simple try-catch blocks where you return a custom error message, it becomes time to rethink your design. You might be able to implement a decorator or other mechanism that allows translating certain common exception messages to HTTP response codes. For instance, take a look at <a href="https://github.com/dotnetjunkie/solidservices/blob/master/src/WebApiService/Code/WebApiExceptionTranslator.cs" rel="noreferrer">this example</a>
- in the &ldquo;Highly Maintainable Web Services&rdquo; reference architecture project.</p>
+<p>Of course!!!! Any operation that does not deliver or do what it promisses to do should throw an exception. If that command can&rsquo;t update the customer, it should throw an exception. However, if you find yourself implementing many action methods with simple try-catch blocks where you return a custom error message, it becomes time to rethink your design. You might be able to implement a decorator or other mechanism that allows translating certain common exception messages to HTTP response codes. For instance, take a look at <a href="https://github.com/dotnetjunkie/solidservices/blob/master/src/WebApiService/Code/WebApiExceptionTranslator.cs" rel="noreferrer">this example</a> in the &ldquo;Highly Maintainable Web Services&rdquo; reference architecture project.</p>
 <p>For this to work, prevent creating a specific exception per command. In other words, prevent creating <code>CustomerNotFoundException</code>, <code>OrderNotFoundException</code>, <code>OrderLineNotFoundException</code>, <code>CustomerAddressNotFoundException</code> etc. Rather, throw one single <code>KeyNotFoundException</code> for instance and translate this to a <code>HttpStatusCode.NotFound</code> code.</p>
 <hr>
 <h4 id="meco---27-july-13">Meco - 27 July 13</h4>
@@ -407,8 +399,7 @@ It is not a good thing not to separate the &ldquo;input&rdquo; and &ldquo;output
 <hr>
 <h4 id="steven---28-july-13">Steven - 28 July 13</h4>
 <p>Meco, there are many possible solutions when implementing validation. You can let the AddNewProductCommandHandler do its own validation, but I personally like to implement validations using an <code>IValidator&lt;T&gt;</code> interface and have an <code>IValidator&lt;AddNewProductCommand&gt;</code> implementation that validates the command by using its values and querying the database.</p>
-<p>Although the <code>AddNewProductCommandHandler</code> could than depend on the <code>IValidator&lt;AddNewProductCommand&gt;</code> abstraction, a much nicer approach is to implement an <code>ValidationCommandHandlerDecorator&lt;TCommand&gt;</code> that wraps any command handler and depends on <code>IValidator&lt;TCommand&gt;</code>. An example of such decorator (The <code>ValidationQueryHandlerDecorator</code>) is given in <a href="/steven/p/queries/">this article</a>
-.</p>
+<p>Although the <code>AddNewProductCommandHandler</code> could than depend on the <code>IValidator&lt;AddNewProductCommand&gt;</code> abstraction, a much nicer approach is to implement an <code>ValidationCommandHandlerDecorator&lt;TCommand&gt;</code> that wraps any command handler and depends on <code>IValidator&lt;TCommand&gt;</code>. An example of such decorator (The <code>ValidationQueryHandlerDecorator</code>) is given in <a href="/steven/p/queries/">this article</a>.</p>
 <hr>
 <h4 id="josh---17-october-13">Josh - 17 October 13</h4>
 <p>Very good read, I&rsquo;m starting a new project and looking for a different way to go about things. I really like the Command / Handler pattern, but when it comes to returning Id&rsquo;s / Objects - I have a question. When using entity framework, in your controller say you map from your ViewModel to your Domain entity (I&rsquo;m planning on using Onion architecture), why not pass in the mapped core domain entity to the command handler? Example:</p>
@@ -450,8 +441,7 @@ It is not a good thing not to separate the &ldquo;input&rdquo; and &ldquo;output
 <p>If I make a generic repository what methods would you have on there?</p>
 <hr>
 <h4 id="steven---19-july-14">Steven - 19 July 14</h4>
-<p>Andreas, they aren&rsquo;t mutually exclusive. On the last project I participated in we used a generic <code>GetByIdQuery&lt;T&gt;</code> query class. This was very convenient for us, because communication between PL and BL was done through WCF (we had multiple Win Forms client apps). By using <code>GetByIdQuery&lt;T&gt;</code> we were able to keep the WCF layer as thin as possible (as described <a href="/steven/p/maintainable-wcf">here</a>
-) and free from any maintenance. However, letting our Form classes depend on things like <code>IQueryHandler&lt;GetByIdQuery&lt;Customer&gt;, Customer&gt;</code> however wasn&rsquo;t very nice in our opinion (too much generic typing), so on the client we defined an <code>IRepository&lt;T&gt;</code> abstraction where the only existing open generic implementation internally just executed the <code>IQueryHandler&lt;GetByIdQuery&lt;T&gt;, T&gt;</code> query.</p>
+<p>Andreas, they aren&rsquo;t mutually exclusive. On the last project I participated in we used a generic <code>GetByIdQuery&lt;T&gt;</code> query class. This was very convenient for us, because communication between PL and BL was done through WCF (we had multiple Win Forms client apps). By using <code>GetByIdQuery&lt;T&gt;</code> we were able to keep the WCF layer as thin as possible (as described <a href="/steven/p/maintainable-wcf">here</a>) and free from any maintenance. However, letting our Form classes depend on things like <code>IQueryHandler&lt;GetByIdQuery&lt;Customer&gt;, Customer&gt;</code> however wasn&rsquo;t very nice in our opinion (too much generic typing), so on the client we defined an <code>IRepository&lt;T&gt;</code> abstraction where the only existing open generic implementation internally just executed the <code>IQueryHandler&lt;GetByIdQuery&lt;T&gt;, T&gt;</code> query.</p>
 <hr>
 <h4 id="alex-fox-gill---17-december-14">Alex Fox Gill - 17 December 14</h4>
 <p>I know this is a fairly old post but I have had some success in returning results from a command handler. Your ID creation example is a good one but there are other times when you might want to know what the results of a command were - for example, validation failures that stopped the command being executed.</p>
@@ -500,8 +490,7 @@ var id = results.OfType().Select(e =&gt; e.Entity.Id).First();
 <hr>
 <h4 id="steven---21-december-14">Steven - 21 December 14</h4>
 <p>Hi Eugene,</p>
-<p>According to the <a href="https://en.wikipedia.org/wiki/Command%E2%80%93query_separation" rel="noreferrer">Command-Query Separation</a>
- (CQP) principle, an operation should either change the state of the system -or- return something, never both. It is a way of simplifying the system. When your command starts to return data, it begins to behave like a query, which makes a system more complex.</p>
+<p>According to the <a href="https://en.wikipedia.org/wiki/Command%E2%80%93query_separation" rel="noreferrer">Command-Query Separation</a> (CQP) principle, an operation should either change the state of the system -or- return something, never both. It is a way of simplifying the system. When your command starts to return data, it begins to behave like a query, which makes a system more complex.</p>
 <p>You might make an exception to this rule when it comes to database generated IDs (as I did in the past), but that still complicates your design, and prevents you from being able to apply other features in the future, such as placing commands in a queue for improved robustness. When you queue them, the return value is not immediately available to the sender, which basically means there is no return value.</p>
 <p>That&rsquo;s one reason I rather not have any return values on my commands. I rather let the sender of the command generate the ID upfront. This way, it is not dependent on any return value from the command.</p>
 

@@ -111,7 +111,7 @@
         <div class="catalogue-line"></div>
 
         <p>
-            The book Dependency Injection Principles, Practices, and Patterns has gone to print. For the last two years I&rsquo;ve been coauthoring the book Dependency Injection Principles, Practices, and Patterns. This is a revised and expanded edition of Manning&lsquo;s bestselling classic Dependency Injection in .NETby Mark Seemann.
+            The book Dependency Injection Principles, Practices, and Patterns has gone to print. For the last two years I&rsquo;ve been coauthoring the book Dependency Injection Principles, Practices, and Patterns. This is a revised and expanded edition of Manning&lsquo;s bestselling classic Dependency Injection in .NET by Mark Seemann.
 I always loved the first edition as it was a game changer for me. I learned a lot about DI, DI Containers, and software design.
         </p>
     </div>
@@ -138,7 +138,7 @@ I always loved the first edition as it was a game changer for me. I learned a lo
         <div class="catalogue-line"></div>
 
         <p>
-            When Dependency Injection is applied correctly and completely, it is important that each type only has one constructor—multiple constructors are redundant, make your DI configuration fragile, and lead to maintainability issues. From a DI perspective, your applications have two kinds of types: newables and injectables. Newables are classes that the application news up manually using the new keyword. This is true for types such as primitives, entities, DTOs, view models and messages.
+            When Dependency Injection is applied correctly and completely, it is important that each type only has one constructor—multiple constructors are redundant, make your DI configuration fragile, and lead to maintainability issues. From a DI perspective, your applications have two kinds of types: newables and injectables. Newables are classes that the application news up manually using the new keyword. This is true for types such as primitives, entities, DTOs, view models and messages.
         </p>
     </div>
 </a>
@@ -151,7 +151,7 @@ I always loved the first edition as it was a game changer for me. I learned a lo
         <div class="catalogue-line"></div>
 
         <p>
-            Announcing the new major release of Simple Injector. The Simple Injector is an easy-to-use Inversion of Control library for .NET and Silverlight. Last week Simple Injector 2was released. This release was a major undertaking. I&rsquo;ve been working on this release full time for the last few months and I got a lot of help from enthusiastic Simple Injector users and even got a new developer on the team. I think the results are awesome.
+            Announcing the new major release of Simple Injector. The Simple Injector is an easy-to-use Inversion of Control library for .NET and Silverlight. Last week Simple Injector 2 was released. This release was a major undertaking. I&rsquo;ve been working on this release full time for the last few months and I got a lot of help from enthusiastic Simple Injector users and even got a new developer on the team. I think the results are awesome.
         </p>
     </div>
 </a>
@@ -177,7 +177,7 @@ I always loved the first edition as it was a game changer for me. I learned a lo
         <div class="catalogue-line"></div>
 
         <p>
-            This article describes how to extend the Simple Injector with convension based configuration for primitive constructor arguments. UPDATE April 2017: For a Simple Injector v4 compatible version of these code samples, please see here. When working with dependency injection, services (classes that contain behavior) depend on other services. The general idea is to inject those services into the constructor of the consuming service. Primitive types are no services, since they contain no behavior, and I normally advice not to mix primitive types and services in a single constructor.
+            This article describes how to extend the Simple Injector with convension based configuration for primitive constructor arguments. UPDATE April 2017: For a Simple Injector v4 compatible version of these code samples, please see here. When working with dependency injection, services (classes that contain behavior) depend on other services. The general idea is to inject those services into the constructor of the consuming service. Primitive types are no services, since they contain no behavior, and I normally advice not to mix primitive types and services in a single constructor.
         </p>
     </div>
 </a>
@@ -217,7 +217,7 @@ I always loved the first edition as it was a game changer for me. I learned a lo
 
         <p>
             This article describes how a single interface can transform the design of your application to be much cleaner, and more flexible than you ever thought possible. TIPChapter 10 of my book contains a much more elaborate version of this article.
-Since I began writing applications in .NET I&rsquo;ve been separating operations that mutate state (of the database mostly) from operations that return data. This is basically what the Command-query separation principleis about.
+Since I began writing applications in .NET I&rsquo;ve been separating operations that mutate state (of the database mostly) from operations that return data. This is basically what the Command-query separation principle is about.
         </p>
     </div>
 </a>
@@ -230,7 +230,7 @@ Since I began writing applications in .NET I&rsquo;ve been separating operations
         <div class="catalogue-line"></div>
 
         <p>
-            A few weeks back I read this questionon Stack Overflow. The question was about applying covariance / contravariance(or variance for short) to the Autofac dependency injection container. The question triggered me to think about variance support in Simple Injector. I was wondering whether special changes were needed to the core framework to allow this. However, it didn&rsquo;t take me long to realize that enabling variance is actually pretty easy for anyone using the Simple Injector.
+            A few weeks back I read this question on Stack Overflow. The question was about applying covariance / contravariance (or variance for short) to the Autofac dependency injection container. The question triggered me to think about variance support in Simple Injector. I was wondering whether special changes were needed to the core framework to allow this. However, it didn&rsquo;t take me long to realize that enabling variance is actually pretty easy for anyone using the Simple Injector.
         </p>
     </div>
 </a>
@@ -256,7 +256,7 @@ Since I began writing applications in .NET I&rsquo;ve been separating operations
         <div class="catalogue-line"></div>
 
         <p>
-            In .NET 4.0 the SmtpClient class now implements IDisposable. This is a breaking change what you should watch out for. For .NET 4.0 the BCL team decided to pool SMTP connections, just as .NET already did with database connections. This of course means that the SmtpClientclass should implement IDisposable, just as the SqlConnection does. When STMP connections are pooled, the overhead over establishing a new connection is lowered, which is a good thing.
+            In .NET 4.0 the SmtpClient class now implements IDisposable. This is a breaking change what you should watch out for. For .NET 4.0 the BCL team decided to pool SMTP connections, just as .NET already did with database connections. This of course means that the SmtpClient class should implement IDisposable, just as the SqlConnection does. When STMP connections are pooled, the overhead over establishing a new connection is lowered, which is a good thing.
         </p>
     </div>
 </a>
@@ -270,7 +270,7 @@ Since I began writing applications in .NET I&rsquo;ve been separating operations
 
         <p>
             Bryan Sullivan describes in the May issue of his MSDN article a denial of service attack that abuses regular expressions. As Bryan explains, a poorly written regex can bring your server to its knees. Bryan demonstrates that even the simplest regular expressions can bring your server to its knees. Here are some examples of regular expressions that can easily cause this to happen:
-^(\d+)+$ ^(\d+)*$ ^(\d*)*$ ^(\d+|\s+)*$ ^(\d|\d\d)+$ ^(\d|\d?)+$ Read more about the causes and the cures here.
+^(\d+)+$ ^(\d+)*$ ^(\d*)*$ ^(\d+|\s+)*$ ^(\d|\d\d)+$ ^(\d|\d?)+$ Read more about the causes and the cures here.
         </p>
     </div>
 </a>
@@ -297,7 +297,7 @@ Since I began writing applications in .NET I&rsquo;ve been separating operations
         <div class="catalogue-line"></div>
 
         <p>
-            The Microsoft ADO.NET team blog made an important announcement yesterday about the future of LINQ to SQL. The ADO.NET team announcedthat Microsoft will continue to make some investments in LINQ to SQL, but they also made it pretty clear that LINQ to Entities is the recommended data access solution in the future frameworks. Microsoft will invest heavily in the Entity Framework.
+            The Microsoft ADO.NET team blog made an important announcement yesterday about the future of LINQ to SQL. The ADO.NET team announced that Microsoft will continue to make some investments in LINQ to SQL, but they also made it pretty clear that LINQ to Entities is the recommended data access solution in the future frameworks. Microsoft will invest heavily in the Entity Framework.
 I always wondered why Microsoft focused on two different O/RM technologies for the .
         </p>
     </div>

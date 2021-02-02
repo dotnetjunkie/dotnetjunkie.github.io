@@ -86,23 +86,16 @@
 		<h3 id="to-be-able-to-achieve-anything-useful-your-application-code-makes-use-of-runtime-data-that-comes-in-many-shapes-and-forms-providing-access-to-that-data-can-be-accomplished-in-many-ways-the-way-you-provide-object-graphs-with-runtime-data-can-affect-the-way-you-compose-them-using-dependency-injection-there-are-two-competing-models-to-choose-from-this-article-compares-those-two-models-it-is-the-fourth-of-a-five-part-series-on-dependency-injection-composition-models">To be able to achieve anything useful, your application code makes use of runtime data that comes in many shapes and forms. Providing access to that data can be accomplished in many ways. The way you provide object graphs with runtime data can affect the way you compose them using Dependency Injection. There are two competing models to choose from. This article compares those two models. It is the fourth of a five-part series on Dependency Injection composition models.</h3>
 <p>Posts in this series:</p>
 <ul>
-<li><a href="/steven/p/compositionmodels">DI Composition Models: A Primer</a>
-</li>
-<li><a href="/steven/p/ccm">The Closure Composition Model</a>
-</li>
-<li><a href="/steven/p/acm">The Ambient Composition Model</a>
-</li>
-<li><a href="/steven/p/cmcompare">DI Composition Models: A Comparison</a>
- (this article)</li>
-<li><a href="/steven/p/singleton">In Praise of the Singleton Object Graph</a>
-</li>
+<li><a href="/steven/p/compositionmodels">DI Composition Models: A Primer</a></li>
+<li><a href="/steven/p/ccm">The Closure Composition Model</a></li>
+<li><a href="/steven/p/acm">The Ambient Composition Model</a></li>
+<li><a href="/steven/p/cmcompare">DI Composition Models: A Comparison</a> (this article)</li>
+<li><a href="/steven/p/singleton">In Praise of the Singleton Object Graph</a></li>
 </ul>
 <p>In the previous articles, I introduced the two available composition models that you can use to supply DI-composed object graphs with runtime data:</p>
 <ul>
-<li>The <a href="/steven/p/ccm">Closure Composition Model</a>
- (CCM) allows you to compose object graphs that capture runtime data in variables of the graph’s components.</li>
-<li>The <a href="/steven/p/acm">Ambient Composition Model</a>
- (ACM) allows you to compose object graphs that are stateless and immutable. You keep runtime data outside the graph and store it as ambient data—ready to be pulled in on demand.</li>
+<li>The <a href="/steven/p/ccm">Closure Composition Model</a> (CCM) allows you to compose object graphs that capture runtime data in variables of the graph’s components.</li>
+<li>The <a href="/steven/p/acm">Ambient Composition Model</a> (ACM) allows you to compose object graphs that are stateless and immutable. You keep runtime data outside the graph and store it as ambient data—ready to be pulled in on demand.</li>
 </ul>
 <p>If you take a step back and look at the object graphs your current application is composed of, you&rsquo;ll likely find that you are using both models. Most of the object graphs in your system have stored contextual or internal runtime data inside captured variables somewhere. Unit-of-Work-like state bags such as Entity Framework’s <code>DbContext</code> are typically stored inside private fields of a class. These graphs apply the CCM. On the other hand, other parts of a graph might be completely stateless and immutable, where data is retrieved from <code>HttpContext.Current</code> or other ambient constructs, thus applying the ACM.</p>
 <figure>
@@ -115,22 +108,18 @@
 <p>The ACM is perhaps less known, but not less interesting, and there are some downsides to consider for both models. So it’s not always obvious which one to use. In the remainder of this article, I will compare both composition models. I’ll start by elaborating the possible technical limitations imposed by the environment in which you build and run your application.</p>
 <h2 id="technical-limitations-imposed-by-the-environment">Technical limitations imposed by the environment</h2>
 <p>I should start with the elephant in the room: there is little reason to try to compare the two composition models when one is technically infeasible in the environment you’re working in. I’ll give an example for each model.</p>
-<p>With the introduction of the new asynchronous programming model in .NET 4.0, you can now write code that doesn’t block threads but instead uses the more-efficient I/O completion ports. With this model it is no longer possible to link ambient data to a specific thread—a single request flows (sequentially) from thread to thread. Instead, different constructs should be used, such as <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.asynclocal-1" rel="noreferrer"><code>AsyncLocal&lt;T&gt;</code></a>
- and <a href="https://docs.microsoft.com/en-us/dotnet/api/system.runtime.remoting.messaging.callcontext" rel="noreferrer"><code>CallContext</code></a>
-. They represent “ambient data that is local to a given asynchronous control flow, such as an asynchronous method.” <code>AsyncLocal&lt;T&gt;</code>, however, was added to .NET 4.6, while <code>CallContext</code> is only available in the full .NET version, and its semantics changed in .NET 4.5 to make it usable in combination with async/await.</p>
+<p>With the introduction of the new asynchronous programming model in .NET 4.0, you can now write code that doesn’t block threads but instead uses the more-efficient I/O completion ports. With this model it is no longer possible to link ambient data to a specific thread—a single request flows (sequentially) from thread to thread. Instead, different constructs should be used, such as <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.asynclocal-1" rel="noreferrer"><code>AsyncLocal&lt;T&gt;</code></a> and <a href="https://docs.microsoft.com/en-us/dotnet/api/system.runtime.remoting.messaging.callcontext" rel="noreferrer"><code>CallContext</code></a>. They represent “ambient data that is local to a given asynchronous control flow, such as an asynchronous method.” <code>AsyncLocal&lt;T&gt;</code>, however, was added to .NET 4.6, while <code>CallContext</code> is only available in the full .NET version, and its semantics changed in .NET 4.5 to make it usable in combination with async/await.</p>
 <p>In the good old days, when working with the asynchronous programming model in old environments such as .NET 4.0 and Silverlight, there were issues regarding the use of ambient data.</p>
 <p>Such limitations could as well hold outside the .NET ecosystem. I could imagine that environments such as C++ or PHP would have the same limitations concerning ambient data, although, admittedly, I have little experience with those environments.</p>
 <p>With the CCM, on the other hand, the statefulness of the objects forces you to create new object graphs on every request. When working in environments with very tight memory constraints, you should consider moving to the ACM: it allows the reuse of complete object graphs, as they are stateless anyway.</p>
 <p>This means that neither model is inherently better than the other. The constraints of the target environment can play a determining role in which model is most suited. There are areas, however, where the CCM outperforms its sibling. This is when we look through the lens of Temporal Coupling.</p>
 <h2 id="temporal-coupling">Temporal Coupling</h2>
-<p>One prominent advantage of the CCM is that it can guarantee the availability of runtime data by supplying that data through its constructor. Any initialization of a component that is done outside the constructor leads to the <a href="https://blog.ploeh.dk/2011/05/24/DesignSmellTemporalCoupling/" rel="noreferrer">Temporal Coupling</a>
- design smell.</p>
+<p>One prominent advantage of the CCM is that it can guarantee the availability of runtime data by supplying that data through its constructor. Any initialization of a component that is done outside the constructor leads to the <a href="https://blog.ploeh.dk/2011/05/24/DesignSmellTemporalCoupling/" rel="noreferrer">Temporal Coupling</a> design smell.</p>
 <p><callout class="DEFINITION">
     <span class="callout-title">DEFINITION</span>
     <span class="callout-body"><em>Temporal Coupling</em> occurs when there’s an implicit relationship between two or more members of a class, requiring clients to invoke one member before the other. This tightly couples the members in the temporal dimension.</span>
 </callout></p>
-<p>This can be seen if we compare both variations of the <code>OrderCancellationReportGenerator</code> object graph from <a href="/steven/p/acm/">the previous article</a>
- once more:</p>
+<p>This can be seen if we compare both variations of the <code>OrderCancellationReportGenerator</code> object graph from <a href="/steven/p/acm/">the previous article</a> once more:</p>
 
 
 
@@ -159,9 +148,7 @@
 </span><span style="color:#75715e"></span>    <b>queueContext.UserName</b>;
 </code></pre></div>
 <p>While the username is injected into the constructor in the first (closure) object graph, the second (ambient) object graph provides the value after the graph has been constructed. This means that a compile error happens if you forget to supply the username to the first graph, while the second case would result in a runtime exception instead; in other words, the ACM leads to Temporal Coupling.</p>
-<p>An important observation is, however, that you as well lose the CCM’s compile-time guarantee when moving from <a href="https://blog.ploeh.dk/2014/06/10/pure-di/" rel="noreferrer">Pure DI</a>
- to using a DI Container. This is something that I demonstrated in the <a href="/steven/p/ccm/">CCM article</a>
-, where I showed the request and initialization of the mutable <code>ClosureUserContext</code> class using Autofac. Here’s that example again:</p>
+<p>An important observation is, however, that you as well lose the CCM’s compile-time guarantee when moving from <a href="https://blog.ploeh.dk/2014/06/10/pure-di/" rel="noreferrer">Pure DI</a> to using a DI Container. This is something that I demonstrated in the <a href="/steven/p/ccm/">CCM article</a>, where I showed the request and initialization of the mutable <code>ClosureUserContext</code> class using Autofac. Here’s that example again:</p>
 
 
 
@@ -211,13 +198,9 @@
 <p>The ACM adds a very interesting constraint to your code: classes that are part of the constructed object graph should be immutable and are not allowed to capture runtime data. Although the addition of this constraint might seem limiting at first, it does provide you with a simplified mental model.</p>
 <p>With the CCM, writing and wiring your application components is a delicate matter, as it is prone to all sorts of easy-to-miss errors. Here are some of the problems you&rsquo;ll likely come across when using the CCM:</p>
 <ul>
-<li><em><strong>Captive Dependencies</strong></em>&mdash;As discussed in the previous articles, when using the CCM, some of your components need to be stateless because they are injected into singleton consumers, while other classes need to be wired as transient or scoped to prevent their dependencies from becoming <a href="https://blog.ploeh.dk/2014/06/02/captive-dependency/" rel="noreferrer">Captive Dependencies</a>
-. When object graphs become deep and complex, this can get tricky and confusing. It can get pretty hard to spot these problems with the naked eye—even for a trained DI practitioner like myself.</li>
-<li><em><strong>Torn Lifestyles</strong></em>&mdash;When a component is scoped around a web request (or perhaps even scoped around the application’s lifetime), it is easy to accidentally and unknowingly create a second instance of that component within the same logical scope. In that case, the component’s lifestyle is said to be <a href="https://simpleinjector.org/diatl" rel="noreferrer"><em>torn</em></a>
-. When this happens with stateful components, it can lead to hard-to-track bugs. When working with <code>DbContext</code>, for example, having an extra instance will likely cause trouble, because that accidental second instance will rarely be committed, causing a supposed atomic operation to be cut in half.</li>
-<li><em><strong>Ambiguous Lifestyles</strong></em>&mdash;An accidental coding error in your <a href="https://mng.bz/K1qZ" rel="noreferrer">Composition Root</a>
- or a misconfiguration of your DI Container can cause a component to be registered with different, and, therefore, <a href="https://simpleinjector.org/diaal" rel="noreferrer">Ambiguous Lifestyles</a>
-. The effect is similar to that of a Torn Lifestyle; too many or too few instances of that component are used at a certain point in time. The resulting misbehavior is often hard to spot.</li>
+<li><em><strong>Captive Dependencies</strong></em>&mdash;As discussed in the previous articles, when using the CCM, some of your components need to be stateless because they are injected into singleton consumers, while other classes need to be wired as transient or scoped to prevent their dependencies from becoming <a href="https://blog.ploeh.dk/2014/06/02/captive-dependency/" rel="noreferrer">Captive Dependencies</a>. When object graphs become deep and complex, this can get tricky and confusing. It can get pretty hard to spot these problems with the naked eye—even for a trained DI practitioner like myself.</li>
+<li><em><strong>Torn Lifestyles</strong></em>&mdash;When a component is scoped around a web request (or perhaps even scoped around the application’s lifetime), it is easy to accidentally and unknowingly create a second instance of that component within the same logical scope. In that case, the component’s lifestyle is said to be <a href="https://simpleinjector.org/diatl" rel="noreferrer"><em>torn</em></a>. When this happens with stateful components, it can lead to hard-to-track bugs. When working with <code>DbContext</code>, for example, having an extra instance will likely cause trouble, because that accidental second instance will rarely be committed, causing a supposed atomic operation to be cut in half.</li>
+<li><em><strong>Ambiguous Lifestyles</strong></em>&mdash;An accidental coding error in your <a href="https://mng.bz/K1qZ" rel="noreferrer">Composition Root</a> or a misconfiguration of your DI Container can cause a component to be registered with different, and, therefore, <a href="https://simpleinjector.org/diaal" rel="noreferrer">Ambiguous Lifestyles</a>. The effect is similar to that of a Torn Lifestyle; too many or too few instances of that component are used at a certain point in time. The resulting misbehavior is often hard to spot.</li>
 </ul>
 <p>These are problems you will <em>not</em> encounter when applying one simple rule that the ACM prescribes:</p>
 <p><callout class="IMPORTANT">
@@ -235,23 +218,17 @@
 <p>The next section discusses managing and fixing performance problems. Here you’ll see that the ACM again outplays the CCM.</p>
 <h2 id="performance">Performance</h2>
 <p>A DI Container is a complex tool. There is a lot going on in the background, which can sometimes cause a container to behave in unexpected ways or—at least, for the programmer using it—cause hard-to-track performance problems. And even if it’s not the container’s fault, but our own, tracking down these problems to specific components can be time consuming.</p>
-<p>Just as when working in environments with tight memory constraints, caching a stateless object for the duration of the application’s lifetime easily solves any unfortunate performance characteristics that your DI Container might bestow on you. This means that even with <a href="http://www.palmmedia.de/blog/2011/8/30/ioc-container-benchmark-performance-comparison" rel="noreferrer">the slowest</a>
- of the slowest DI Containers, resolving object graphs is a one-time cost.</p>
-<p>On the other hand, you should take into consideration the possible additional costs that accessing and storing ambient data might bring. With the current versions of .NET and .NET Core, for instance, there is (at the time of writing) a <a href="https://github.com/aspnet/HttpAbstractions/issues/728#issuecomment-254035916" rel="noreferrer">performance penalty</a>
- for using ambient data in combination with async/await. Although hopefully something that Microsoft will fix, this penalty to me seems small enough for application developers not to worry about, especially considering the performance improvement that reusing object graphs can provide.</p>
+<p>Just as when working in environments with tight memory constraints, caching a stateless object for the duration of the application’s lifetime easily solves any unfortunate performance characteristics that your DI Container might bestow on you. This means that even with <a href="http://www.palmmedia.de/blog/2011/8/30/ioc-container-benchmark-performance-comparison" rel="noreferrer">the slowest</a> of the slowest DI Containers, resolving object graphs is a one-time cost.</p>
+<p>On the other hand, you should take into consideration the possible additional costs that accessing and storing ambient data might bring. With the current versions of .NET and .NET Core, for instance, there is (at the time of writing) a <a href="https://github.com/aspnet/HttpAbstractions/issues/728#issuecomment-254035916" rel="noreferrer">performance penalty</a> for using ambient data in combination with async/await. Although hopefully something that Microsoft will fix, this penalty to me seems small enough for application developers not to worry about, especially considering the performance improvement that reusing object graphs can provide.</p>
 <p>Unfortunately, not all is peaches and cream when it comes to the ACM. This is something I’ll discuss next.</p>
 <h2 id="swimming-against-the-stream">Swimming against the stream</h2>
-<p>The CCM is the prevalent composition model. With a few exceptions, <a href="https://mng.bz/BYNl" rel="noreferrer">my book</a>
- uses this model ubiquitously, though implicitly. Despite the complexity that this model brings, it is the model that your team will likely be most familiar with. Changing from CCM to ACM can, therefore, feel like swimming against the stream.
+<p>The CCM is the prevalent composition model. With a few exceptions, <a href="https://mng.bz/BYNl" rel="noreferrer">my book</a> uses this model ubiquitously, though implicitly. Despite the complexity that this model brings, it is the model that your team will likely be most familiar with. Changing from CCM to ACM can, therefore, feel like swimming against the stream.
 One area where you will feel a strong CCM current is when building ASP.NET Core applications. The ASP.NET Core framework uses the CCM almost ubiquitously. Many of its stateful components are automatically registered into its DI container, using the Scoped Lifestyle.</p>
 <p>Applying the ACM to your ASP.NET Core application will likely complicate object composition. You can’t inject just any framework component directly into your application components; it might very well contain stateful dependencies somewhere in its object graph.</p>
-<p>This means that using ASP.NET Core in combination with the ACM pushes you toward hiding framework components behind application-specific abstractions. Custom abstractions allow you to resolve the framework-provided components lazily when an abstraction’s member is invoked (by making use of the <a href="https://en.wikipedia.org/wiki/Proxy_pattern" rel="noreferrer">Proxy pattern</a>
-), as opposed to resolving the component with the rest of the graph. In other words, this combination forces you to adhere more strictly to the <a href="https://en.wikipedia.org/wiki/Dependency_inversion_principle" rel="noreferrer">Dependency Inversion Principle</a>
-, as it stipulates that “clients [should] own the abstract interfaces” (Robert C. Martin, <em>Agile Principles, Patterns, and Practices in C#</em>, Pearson, 2007). As adherence to the SOLID principles isn’t a bad thing to begin with, this object composition &ldquo;complication&rdquo; could actually be used to your advantage.</p>
+<p>This means that using ASP.NET Core in combination with the ACM pushes you toward hiding framework components behind application-specific abstractions. Custom abstractions allow you to resolve the framework-provided components lazily when an abstraction’s member is invoked (by making use of the <a href="https://en.wikipedia.org/wiki/Proxy_pattern" rel="noreferrer">Proxy pattern</a>), as opposed to resolving the component with the rest of the graph. In other words, this combination forces you to adhere more strictly to the <a href="https://en.wikipedia.org/wiki/Dependency_inversion_principle" rel="noreferrer">Dependency Inversion Principle</a>, as it stipulates that “clients [should] own the abstract interfaces” (Robert C. Martin, <em>Agile Principles, Patterns, and Practices in C#</em>, Pearson, 2007). As adherence to the SOLID principles isn’t a bad thing to begin with, this object composition &ldquo;complication&rdquo; could actually be used to your advantage.</p>
 <h2 id="conclusion">Conclusion</h2>
 <p>The conclusion we can draw from the previous analysis is that neither model outperforms the other in every single aspect. This means that you need to decide for yourself what the proper model is for you, based on the constraints of your environment, your application architecture, and knowledge of the developers working with it.</p>
-<p>In <a href="/steven/p/singleton">the next article</a>
-, however, I will describe my preference and suggest that you to consider it as well.</p>
+<p>In <a href="/steven/p/singleton">the next article</a>, however, I will describe my preference and suggest that you to consider it as well.</p>
 <h2 id="summary">Summary</h2>
 <ul>
 <li>Most applications use both composition models.</li>

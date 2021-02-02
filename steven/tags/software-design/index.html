@@ -47,7 +47,7 @@
 
         <p>
             When it comes to writing LOB applications, abstract factories are a code smell as they increase the complexity of the consumer instead of reducing it. This article describes why and offers alternatives. TIPA more-elaborate, 14-page discussion of this topic can be found in section 6.2 of my book.
-The Abstract Factory design patterndecouples the creation of a family of objects from usage. Compared to injecting a service into a constructor, a factory allows objects to be created lazily, instead of up front during object-graph composition.
+The Abstract Factory design pattern decouples the creation of a family of objects from usage. Compared to injecting a service into a constructor, a factory allows objects to be created lazily, instead of up front during object-graph composition.
         </p>
     </div>
 </a>
@@ -60,7 +60,7 @@ The Abstract Factory design patterndecouples the creation of a family of object
         <div class="catalogue-line"></div>
 
         <p>
-            Injecting runtime data into your application components is a code smell. Runtime data should flow through the method calls of already-constructed object graphs. A recurring theme when it comes to questions about dependency injection is how to wire up and resolve components a.k.a. injectables(the classes that contain the application&rsquo;s behavior) that require runtime data during construction. My answer to this is always the same:
+            Injecting runtime data into your application components is a code smell. Runtime data should flow through the method calls of already-constructed object graphs. A recurring theme when it comes to questions about dependency injection is how to wire up and resolve components a.k.a. injectables (the classes that contain the application&rsquo;s behavior) that require runtime data during construction. My answer to this is always the same:
 Don&rsquo;t inject runtime data into application components during construction&mdash;it causes ambiguity, complicates the Composition Root with an extra responsibility, and makes it extraordinarily hard to verify the correctness of your DI configuration.
         </p>
     </div>

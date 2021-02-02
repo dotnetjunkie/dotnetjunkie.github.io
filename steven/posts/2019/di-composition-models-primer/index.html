@@ -86,16 +86,11 @@
 		<h3 id="to-be-able-to-achieve-anything-useful-your-application-code-makes-use-of-runtime-data-that-comes-in-many-shapes-and-forms-providing-access-to-that-data-can-be-accomplished-in-many-ways-the-way-you-provide-object-graphs-with-runtime-data-can-affect-the-way-you-compose-them-using-dependency-injection-there-are-two-competing-models-to-choose-from-this-article-introduces-these-two-models-the-closure-composition-model-and-the-ambient-composition-model-it-is-the-first-of-a-five-part-series-on-dependency-injection-composition-models">To be able to achieve anything useful, your application code makes use of runtime data that comes in many shapes and forms. Providing access to that data can be accomplished in many ways. The way you provide object graphs with runtime data can affect the way you compose them using Dependency Injection. There are two competing models to choose from. This article introduces these two models: the Closure Composition Model and the Ambient Composition Model. It is the first of a five-part series on Dependency Injection composition models.</h3>
 <p>Posts in this series:</p>
 <ul>
-<li><a href="/steven/p/compositionmodels">DI Composition Models: A Primer</a>
- (this article)</li>
-<li><a href="/steven/p/ccm">The Closure Composition Model</a>
-</li>
-<li><a href="/steven/p/acm">The Ambient Composition Model</a>
-</li>
-<li><a href="/steven/p/cmcompare">DI Composition Models: A Comparison</a>
-</li>
-<li><a href="/steven/p/singleton">In Praise of the Singleton Object Graph</a>
-</li>
+<li><a href="/steven/p/compositionmodels">DI Composition Models: A Primer</a> (this article)</li>
+<li><a href="/steven/p/ccm">The Closure Composition Model</a></li>
+<li><a href="/steven/p/acm">The Ambient Composition Model</a></li>
+<li><a href="/steven/p/cmcompare">DI Composition Models: A Comparison</a></li>
+<li><a href="/steven/p/singleton">In Praise of the Singleton Object Graph</a></li>
 </ul>
 <p>Most of your application code uses runtime data in one form or another. Runtime data flows through the system in many forms. Your application will get its data from and send its data to browsers, databases, queues, services, the filesystem, and many other sources.</p>
 <figure>
@@ -153,8 +148,7 @@
 <p>Another example of implementation-detail runtime data is a Unit of Work, such as Entity Framework’s <code>DbContext</code>. From the perspective of the application’s public API, it is an implementation detail. <code>AddShoppingBasketItem</code>, for example, should <em>not</em> have to change if you decide to change the application’s persistence layer.</p>
 <p><code>DbContext</code> is a glorified state bag with cached and mutated entities, ready to be persisted at some point. Each request gets its own local set of entities, cached for the duration of the web request, and reusing it across requests is a bad idea. You wouldn’t let the browser provide the controller with a <code>DbContext</code>—that would be a scary thought. But equally so, you wouldn’t pass on a <code>DbContext</code> through the public API of the individual layers.</p>
 <h2 id="the-significance-of-contextual-data-in-the-context-of-object-composition">The significance of contextual data in the context of Object Composition</h2>
-<p>When it comes to composing object graphs using DI, the difference between <code>AddShoppingBasketItem</code> and <code>DbContext</code> becomes significant. While both constitute runtime data, you design your classes differently around them. As explained, the application’s abstractions and external-facing APIs expose runtime data objects such as <code>AddShoppingBasketItem</code>. Runtime data objects such as <code>DbContext</code>, however, are instead hidden behind these same abstractions, making them mere implementation details of their direct consumers. This means that whereas <code>AddShoppingBasketItem</code> is passed to the public methods of an already composed object graph, <code>DbContext</code> is supplied using a different mechanism—one option being <a href="https://mng.bz/oN9j" rel="noreferrer">Constructor Injection</a>
-.</p>
+<p>When it comes to composing object graphs using DI, the difference between <code>AddShoppingBasketItem</code> and <code>DbContext</code> becomes significant. While both constitute runtime data, you design your classes differently around them. As explained, the application’s abstractions and external-facing APIs expose runtime data objects such as <code>AddShoppingBasketItem</code>. Runtime data objects such as <code>DbContext</code>, however, are instead hidden behind these same abstractions, making them mere implementation details of their direct consumers. This means that whereas <code>AddShoppingBasketItem</code> is passed to the public methods of an already composed object graph, <code>DbContext</code> is supplied using a different mechanism—one option being <a href="https://mng.bz/oN9j" rel="noreferrer">Constructor Injection</a>.</p>
 <p>The following simplified object graph shows this. The application’s <code>ShoppingBasketDbContext</code> is created and supplied to the controller’s constructor:</p>
 
 
@@ -172,15 +166,12 @@
     <span class="callout-title">DEFINITION</span>
     <span class="callout-body">The <strong>Closure Composition Model</strong> composes object graphs that capture runtime data in variables of the graph’s components.</span>
 </callout></p>
-<p>An alternative to letting your application components consume these contextual runtime data objects is the <em>Ambient Composition Model</em>. With that model, contextual runtime data is no longer captured in variables inside the object graph, but instead is managed by the startup path of the application—in DI terminology the <a href="https://mng.bz/K1qZ" rel="noreferrer">Composition Root</a>
-. Application components requiring such data request it through method calls on provided abstractions.</p>
+<p>An alternative to letting your application components consume these contextual runtime data objects is the <em>Ambient Composition Model</em>. With that model, contextual runtime data is no longer captured in variables inside the object graph, but instead is managed by the startup path of the application—in DI terminology the <a href="https://mng.bz/K1qZ" rel="noreferrer">Composition Root</a>. Application components requiring such data request it through method calls on provided abstractions.</p>
 <p><callout class="DEFINITION">
     <span class="callout-title">DEFINITION</span>
     <span class="callout-body">The <strong>Ambient Composition Model</strong> composes object graphs that do not store runtime data inside captured variables. Instead, runtime data is kept outside the graph and stored as ambient data. This ambient data is managed by the Composition Root and is provided to application components on request, long after those components have been constructed.</span>
 </callout></p>
-<p>This completes this primer on Object Composition models. At this point, much remains to be explained, such has how application components are designed in each model, what exactly <em>ambient data</em> is, and what the pros and cons are of both models. I will go into this in more detail in the following articles, starting with a description of the <a href="/steven/p/ccm/">Closure Composition Model</a>
-, and continuing with a description of the <a href="/steven/p/acm/">Ambient Composition Model</a>
-.</p>
+<p>This completes this primer on Object Composition models. At this point, much remains to be explained, such has how application components are designed in each model, what exactly <em>ambient data</em> is, and what the pros and cons are of both models. I will go into this in more detail in the following articles, starting with a description of the <a href="/steven/p/ccm/">Closure Composition Model</a>, and continuing with a description of the <a href="/steven/p/acm/">Ambient Composition Model</a>.</p>
 <p>Stay tuned.</p>
 <h2 id="summary">Summary</h2>
 <ul>

@@ -63,7 +63,7 @@
 </callout></p>
 <p>Since I began writing applications in .NET I&rsquo;ve been separating operations that mutate state (of the database mostly) from operations that return data. This is basically what the <a href="https://en.wikipedia.org/wiki/Command-query_separation" rel="noreferrer">Command-query separation principle</a> is about. Over time the designs I have used have evolved. Initially triggered by a former colleague of mine I started to use the <a href="https://en.wikipedia.org/wiki/Command_pattern" rel="noreferrer">Command Pattern</a> about four years ago. Back then we called them <em>business commands</em> and a single command would represent an atomic business operation, or <a href="https://en.wikipedia.org/wiki/Use_case" rel="noreferrer">use case</a>.</p>
 <p>Over the years, the projects I have participated on have increased in complexity and I have adopted newer techniques such as <a href="https://en.wikipedia.org/wiki/Test-driven_development" rel="noreferrer">Test-Driven Development</a> and <a href="https://en.wikipedia.org/wiki/Dependency_injection" rel="noreferrer">Dependency Injection</a> (DI). The flaws in this approach to the Command Pattern have become obvious to me. DI has a tendency of exposing violations of the <a href="https://en.wikipedia.org/wiki/SOLID" rel="noreferrer">SOLID principles</a> and this implementation hindered the maintainability of these applications.</p>
-<p>In the early days my implementation of the Command Pattern design consisted of classes that contained both properties to hold the data and an <code>Execute()</code> method that would start the operation. The design had an abstract <code>Command</code> base class that contained all of logic for handling transactions, re-executing commands after a deadlock occurred, measuring performance, security checks, etc. This base class was a big <a href="https://en.wikipedia.org/wiki/Code_smell" rel="noreferrer">code smell</a> and was a form of <a href="https://en.wikipedia.org/wiki/God_object" rel="noreferrer">God Object</a> with many responsibilities. Furthermore, having data and behavior interleaved made it very difficult to mock/abstract that logic during unit testing. For example a consumer of a command would typically new up a command instance and call <code>Execute()</code> directly on it, as shown in the following example:</p>
+<p>In the early days my implementation of the Command Pattern design consisted of classes that contained both properties to hold the data and a parameterless <code>Execute()</code> method that would start the operation. The design had an abstract <code>Command</code> base class that contained all of logic for handling transactions, re-executing commands after a deadlock occurred, measuring performance, security checks, etc. This base class was a big <a href="https://en.wikipedia.org/wiki/Code_smell" rel="noreferrer">code smell</a> and was a form of <a href="https://en.wikipedia.org/wiki/God_object" rel="noreferrer">God Object</a> with many responsibilities. Furthermore, having data and behavior interleaved made it very difficult to mock/abstract that logic during unit testing. For example a consumer of a command would typically new up a command instance and call <code>Execute()</code> directly on it, as shown in the following example:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">var</span> command = <span style="color:#66d9ef">new</span> MoveCustomerCommand
 {
     CustomerId = customerId,
@@ -120,7 +120,8 @@ command.Execute();
     }
 }
 </code></pre></div>
-<p>There is still a problem with this design. Although every handler class has a single (public) method (and therefore adheres the <a href="https://en.wikipedia.org/wiki/Interface_segregation_principle" rel="noreferrer">Interface Segregation Principle</a>), all handlers define their own interface (there is no common interface). This makes it hard to extend the command handlers with new features and <a href="https://en.wikipedia.org/wiki/Cross-cutting_concern" rel="noreferrer">Cross-Cutting Concerns</a>. For example, I would like to measure the time it takes to execute every command and log this information to the database. How can we do this? In the past I would either change each and every command handler, or move the logic into a base class. Moving this feature into the base class is not ideal as the base class will soon contain lots of these common features, and would soon grow out of control (which I have seen happening). Besides, this would make it hard to test derived types and enable/disable such behavior for certain types (or instances) of command handlers because it would involve adding conditional logic into the base class, making it even more complicated!</p>
+<p>There is still a problem with this design. Although every handler class has a single (public) method (and therefore adheres the <a href="https://en.wikipedia.org/wiki/Interface_segregation_principle" rel="noreferrer">Interface Segregation Principle</a>), all handlers define their own interface (there is no common interface). This makes it hard to extend the command handlers with new features and <a href="https://en.wikipedia.org/wiki/Cross-cutting_concern" rel="noreferrer">Cross-Cutting Concerns</a>. For example, I would like to measure the time it takes to execute every command and log this information to the database. How can we do this?</p>
+<p>In the past I would either change each and every command handler, or move the logic into a base class. Moving this feature into the base class is not ideal as the base class will soon contain lots of these common features, and would soon grow out of control (which I have seen happening). Besides, this would make it hard to test derived types and enable/disable such behavior for certain types (or instances) of command handlers because it would involve adding conditional logic into the base class, making it even more complicated!</p>
 <p>All these problems can be solved elegantly by having all command handlers implement a single generic interface:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> ICommandHandler&lt;TCommand&gt;
 {
@@ -180,7 +181,7 @@ command.Execute();
     }
 }
 </code></pre></div>
-<p>What does adding an interface give us? Well frankly, a lot! As nothing depends directly on any implementation but instead depends on an interface, you can now replace the original command handler with any class that implements the new interface. Ignoring, for now the usual argument of testability, look at this generic class:</p>
+<p>What does adding an interface give us? Well frankly, a lot! As nothing depends directly on any implementation but instead depends on an interface, you can now replace the original command handler with any class that implements the new interface. Ignoring—for now—the usual argument of testability, look at this generic class:</p>
 
 
 
@@ -200,7 +201,7 @@ command.Execute();
  
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Handle(TCommand command)
     {
-        <span style="color:#66d9ef">using</span> (<span style="color:#66d9ef">var</span> scope = <span style="color:#66d9ef">new</span> TransactionScope())<span style="color:#75715e"><annotation>Starts a transaction.</annotation>
+        <span style="color:#66d9ef">using</span> (<span style="color:#66d9ef">var</span> scope = <span style="color:#66d9ef">new</span> TransactionScope())<span style="color:#75715e"><annotation>Starts a database transaction.</annotation>
 </span><span style="color:#75715e"></span>        {
             <span style="color:#66d9ef">this</span>.decorated.Handle(command);<span style="color:#75715e"><annotation>Forwards the call to the real handler.</annotation>
 </span><span style="color:#75715e"></span> 
@@ -209,7 +210,7 @@ command.Execute();
     }
 }
 </code></pre></div>
-<p>This class wraps an <code>ICommandHandler&lt;TCommand&gt;</code> instance (by accepting an instance of the same interface in its constructor), but at the same time it also implements the same <code>ICommandHandler&lt;TCommand&gt;</code> interface. It is an implementation of the <a href="https://en.wikipedia.org/wiki/Decorator_pattern" rel="noreferrer">Decorator pattern</a>. This very simple class allows us to add transaction support to all of the command handlers.</p>
+<p>This class wraps an <code>ICommandHandler&lt;TCommand&gt;</code> instance (by accepting an instance of the same interface in its constructor), but at the same time it also implements the same <code>ICommandHandler&lt;TCommand&gt;</code> interface. It is an implementation of the <a href="https://en.wikipedia.org/wiki/Decorator_pattern" rel="noreferrer">Decorator pattern</a>. This very simple class allows you to add transaction support to all of the command handlers.</p>
 <p>Instead of injecting a <code>MoveCustomerCommandHandler</code> directly into the <code>CustomerController</code>, you can now inject the following:</p>
 
 
@@ -313,7 +314,9 @@ command.Execute();
 <li><a href="https://simpleinjector.org/aop&#43;decoration" rel="noreferrer">validating</a> commands before they get executed,</li>
 <li>profiling the duration of executing commands,</li>
 <li>building an audit trail of commands,</li>
-<li>logging execution failures</li>
+<li>logging execution failures,</li>
+<li>deduplicating commands accidentally sent twice,</li>
+<li>executing commands in their own isolated bubble of state (or scope),</li>
 <li>executing commands <a href="https://simpleinjector.org/aop#decorators-with-func-t-decoratee-factories" rel="noreferrer">in the background</a>, or</li>
 <li>queuing commands to be processed in a different process.</li>
 </ul>

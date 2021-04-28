@@ -59,7 +59,7 @@
 		<h3 id="this-article-describes-how-a-single-interface-can-transform-the-design-of-your-application-to-be-much-cleaner-and-more-flexible-than-you-ever-thought-possible">This article describes how a single interface can transform the design of your application to be much cleaner, and more flexible than you ever thought possible.</h3>
 <p><callout class="TIP">
     <span class="callout-title">TIP</span>
-    <span class="callout-body">Chapter 10 of <a href="https://mng.bz/BYNl">my book</a> contains a much more elaborate version of this article.</span>
+    <span class="callout-body">Chapter 10 of <a href="https://cuttingedge.it/book/">my book</a> contains a much more elaborate version of this article.</span>
 </callout></p>
 <p>Since I began writing applications in .NET I&rsquo;ve been separating operations that mutate state (of the database mostly) from operations that return data. This is basically what the <a href="https://en.wikipedia.org/wiki/Command-query_separation" rel="noreferrer">Command-query separation principle</a> is about. Over time the designs I have used have evolved. Initially triggered by a former colleague of mine I started to use the <a href="https://en.wikipedia.org/wiki/Command_pattern" rel="noreferrer">Command Pattern</a> about four years ago. Back then we called them <em>business commands</em> and a single command would represent an atomic business operation, or <a href="https://en.wikipedia.org/wiki/Use_case" rel="noreferrer">use case</a>.</p>
 <p>Over the years, the projects I have participated on have increased in complexity and I have adopted newer techniques such as <a href="https://en.wikipedia.org/wiki/Test-driven_development" rel="noreferrer">Test-Driven Development</a> and <a href="https://en.wikipedia.org/wiki/Dependency_injection" rel="noreferrer">Dependency Injection</a> (DI). The flaws in this approach to the Command Pattern have become obvious to me. DI has a tendency of exposing violations of the <a href="https://en.wikipedia.org/wiki/SOLID" rel="noreferrer">SOLID principles</a> and this implementation hindered the maintainability of these applications.</p>
@@ -370,7 +370,7 @@ container.RegisterDecorator( <span style="color:#75715e"><annotation>Wrap with a
 <li>If you found this article interesting, you should also read my follow up: <a href="/steven/p/queries/">Meanwhile&hellip; on the query side of my architecture</a>.</li>
 <li>In <a href="/steven/p/maintainable-wcf/">Writing Highly Maintainable WCF Services</a> I talk about sending commands over the wire</li>
 <li>If you want to learn how to migrate your existing application to use this model, please read <a href="https://github.com/simpleinjector/SimpleInjector/issues/520#issuecomment-368907098" rel="noreferrer">this thread</a>.</li>
-<li>Chapter 10 of <a href="https://mng.bz/BYNl" rel="noreferrer">my book</a> contains a much more elaborate version of this article.</li>
+<li>Chapter 10 of <a href="https://cuttingedge.it/book/" rel="noreferrer">my book</a> contains a much more elaborate version of this article.</li>
 <li>The comments below this article contain a myriad of interesting discussions—you should certainly check them out.</li>
 </ul>
 <h2 id="comments">Comments</h2>
@@ -808,8 +808,11 @@ public Token LogOn(string name, string pwd) {
 <h2 id="buy-my-book">Buy my book</h2>
 
 <p style="margin-right:7%">
-<a href="https://mng.bz/BYNl" class="noprintlink"><img src="/steven/images/book%20cover%20smaller.png" style="float:left;margin-right:10px;margin-bottom:5px;border:0px solid" title="Dependency Injection Principles, Practices, and Patterns" alt="Dependency Injection Principles, Practices, and Patterns Cover Small" /></a>
-I coauthored the book <a href="https://mng.bz/BYNl">Dependency Injection Principles, Practices, and Patterns</a>. If you're interested to learn more about DI and software design in general, consider reading my book.
+<a href="https://cuttingedge.it/book/" class="noprintlink"><img src="/steven/images/book%20cover%20smaller.png" style="float:left;margin-right:10px;margin-bottom:5px;border:0px solid" title="Dependency Injection Principles, Practices, and Patterns" alt="Dependency Injection Principles, Practices, and Patterns Cover Small" /></a>
+I coauthored the book <a href="https://cuttingedge.it/book/">Dependency Injection Principles, Practices, and Patterns</a>. If you're interested to learn more about DI and software design in general, consider reading my book.
+Besides English, the book is available in two other languages as well:
+<a href="https://cuttingedge.it/book/polish/">Polish</a> and 
+<a href="https://cuttingedge.it/book/russian/">Russian</a>.
 </p>
 
 	</div>

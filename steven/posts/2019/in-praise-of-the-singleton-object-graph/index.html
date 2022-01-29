@@ -166,7 +166,7 @@
 	
 	
 	<p id="dynamic_comments" onscroll="loadCommentsWhenVisible()">
-		<noscript class="noprint">
+		<div id="dynamic_comments_noscript" class="noprint">
 			<br />
 			The comments are not loaded because you disabled JavaScript. That's okay—I disable JavaScript myself all the time.
 			The comments for this blog post are loaded dynamically from GitHub. To read these comments,
@@ -174,7 +174,7 @@
 			<br />
 			<br />
 			<hr />
-		</noscript>
+		</div>
 	</p>
 
 	<h2 id="wish-to-comment" class="noprint">Wish to comment?</h2>
@@ -184,6 +184,7 @@
 	<script type="text/javascript">
 		var commentsLoaded = false;
 		var commentsElement = document.getElementById('dynamic_comments');
+		
 		var apiUrl = 'https:\/\/api.github.com\/repos\/dotnetjunkie\/blog\/issues\/6\/comments';
 		var isPrintMode = document.getElementById('wish-to-comment').style.display != 'none';
 
@@ -192,7 +193,7 @@
 			if (commentsLoaded == true)
 				return;
 		
-			if (isElementInViewport(commentsElement) || isPrintMode) {
+			if (isPrintMode || isElementInViewport(commentsElement)) {
 				commentsLoaded = true;
 				commentsElement.innerHTML = '<br />Loading comments...<br /><br /><hr />';
 		
@@ -257,6 +258,8 @@
 		
 		window.onresize = function(){ loadCommentsWhenVisible() };
 		window.onscroll = function(){ loadCommentsWhenVisible() };
+		
+		document.getElementById('dynamic_comments_noscript').remove();
 	</script>	
 
 <hr class="noprint" />

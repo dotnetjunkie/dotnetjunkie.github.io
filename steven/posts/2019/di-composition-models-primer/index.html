@@ -93,21 +93,17 @@
 <li><a href="/steven/p/singleton">In Praise of the Singleton Object Graph</a></li>
 </ul>
 <p>Most of your application code uses runtime data in one form or another. Runtime data flows through the system in many forms. Your application will get its data from and send its data to browsers, databases, queues, services, the filesystem, and many other sources.</p>
-<figure>
-    <img src="/steven/images/compositionmodels/systemdata.svg"
-         alt="Data flowing through the system" width="100%"/> 
+<figure><img src="/steven/images/compositionmodels/systemdata.svg" loading="lazy" decoding="async"
+         alt="Data flowing through the system" width="100%"/>
 </figure>
-
 <p>The data flowing through your application can be categorized in many ways, but for the remainder of this article, I’ll divide it into two groups, as this serves us in the discussion that follows:</p>
 <ul>
 <li><em><strong>Data passing through the public API</strong></em>—Data that is received from or sent to external actors, such as data posted by a web browser or sent to a message queue, defines a system’s public API. Such information becomes the raw data input or output of a use case. This data might be transformed and reshaped when it is sent from layer to layer, but each layer still passes it through the public API of the next layer. The figure following the next bullet depicts this.</li>
 <li><em><strong>Contextual or internally oriented data</strong></em>—This is data that isn’t passed through the system’s public API, but is instead an implementation detail of individual components in the system. Often this data is more contextual in nature, while still influencing business decisions. For instance, an application might decide not to execute a certain operation when the user isn’t in the correct role. Users can’t influence their role directly by clicking “Cancel Order.” Instead, their identity and role are already available as contextual information.</li>
 </ul>
-<figure>
-    <img src="/steven/images/compositionmodels/datapassingpublicapi.svg"
-         alt="Each layer passes runtime data through the public API of the next layer" width="100%"/> 
+<figure><img src="/steven/images/compositionmodels/datapassingpublicapi.svg" loading="lazy" decoding="async"
+         alt="Each layer passes runtime data through the public API of the next layer" width="100%"/>
 </figure>
-
 <p>Note that the two groups are not strictly separated. Consider, for instance, how the user’s role can flow through the system with different use cases:</p>
 <ul>
 <li>The application administrator might change a user’s role by means of the administration screens. This means that the administrator supplies data to the application through the application’s <em>public API</em>.</li>
@@ -118,11 +114,9 @@
 <p>In the next sections, I’ll discuss these two groups of data in more detail, starting with the first group. This will provide the necessary context for the remainder of the article, where I&rsquo;ll describe their significance in the creation of your application components. Finally, building on that, I’ll introduce the two composition models that you can use to create an object graph.</p>
 <h2 id="data-passing-through-the-public-api">Data passing through the public API</h2>
 <p>Let’s focus on the first group for a moment: consider web-request data, posted by a browser. If you’re building an ASP.NET (or ASP.NET Core) MVC application, a browser’s HTTP request is transformed by the framework into a view model object and passed to your MVC controller classes. The following sequence diagram visualizes this process:</p>
-<figure>
-    <img src="/steven/images/compositionmodels/publicdatasequencediagram.svg"
-         alt="Sequence diagram visualizing how a browser&#39;s HTTP request is transformed to public data" width="100%"/> 
+<figure><img src="/steven/images/compositionmodels/publicdatasequencediagram.svg" loading="lazy" decoding="async"
+         alt="Sequence diagram visualizing how a browser&#39;s HTTP request is transformed to public data" width="100%"/>
 </figure>
-
 <p>In this sequence diagram, the user’s request is handled by the framework. The framework then transforms and forwards the call to a controller’s action method—in this case, the <code>AddItem</code> method on <code>ShoppingBasketController</code>. When the controller finishes, it returns an action result that&rsquo;s used to render HTML. The HTML is then sent back to the user.</p>
 <p>ASP.NET will provide the <code>AddItem</code> action method with the runtime data coming from the user. The following code listing shows <code>ShoppingBasketController</code> with its <code>AddItem</code> method:</p>
 

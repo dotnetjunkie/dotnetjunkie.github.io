@@ -98,13 +98,11 @@
 <li>The <a href="/steven/p/acm">Ambient Composition Model</a> (ACM) allows you to compose object graphs that are stateless and immutable. You keep runtime data outside the graph and store it as ambient data—ready to be pulled in on demand.</li>
 </ul>
 <p>If you take a step back and look at the object graphs your current application is composed of, you&rsquo;ll likely find that you are using both models. Most of the object graphs in your system have stored contextual or internal runtime data inside captured variables somewhere. Unit-of-Work-like state bags such as Entity Framework’s <code>DbContext</code> are typically stored inside private fields of a class. These graphs apply the CCM. On the other hand, other parts of a graph might be completely stateless and immutable, where data is retrieved from <code>HttpContext.Current</code> or other ambient constructs, thus applying the ACM.</p>
-<figure>
-    <img src="/steven/images/compositionmodels/exampleobjectgraph.svg"
-         alt="An example of a simple object graph" width="100%"/> <figcaption>
+<figure><img src="/steven/images/compositionmodels/exampleobjectgraph.svg" loading="lazy" decoding="async"
+         alt="An example of a simple object graph" width="100%"/><figcaption>
             <p>An example of a simple object graph</p>
         </figcaption>
 </figure>
-
 <p>The ACM is perhaps less known, but not less interesting, and there are some downsides to consider for both models. So it’s not always obvious which one to use. In the remainder of this article, I will compare both composition models. I’ll start by elaborating the possible technical limitations imposed by the environment in which you build and run your application.</p>
 <h2 id="technical-limitations-imposed-by-the-environment">Technical limitations imposed by the environment</h2>
 <p>I should start with the elephant in the room: there is little reason to try to compare the two composition models when one is technically infeasible in the environment you’re working in. I’ll give an example for each model.</p>

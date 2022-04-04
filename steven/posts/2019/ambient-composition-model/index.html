@@ -156,17 +156,13 @@
     <span class="callout-body">The <em>Ambient Composition Model</em> composes object graphs that do not store runtime data inside captured variables. Instead, runtime data is kept outside the graph and stored as ambient data. This ambient data is managed by the Composition Root and is provided to application components on request, long after those components have been constructed.</span>
 </callout></p>
 <p>The following figure captures the essence of the ACM.</p>
-<figure>
-    <img src="/steven/images/compositionmodels/acmessence.svg"
-         alt="The essence of the Ambient Composition Model" width="100%"/> 
+<figure><img src="/steven/images/compositionmodels/acmessence.svg" loading="lazy" decoding="async"
+         alt="The essence of the Ambient Composition Model" width="100%"/>
 </figure>
-
 <p>The following sequence diagram shows the basic flow of data using the ACM.</p>
-<figure>
-    <img src="/steven/images/compositionmodels/acmflow.svg"
-         alt="The basic flow of the Ambient Composition Model" width="100%"/> 
+<figure><img src="/steven/images/compositionmodels/acmflow.svg" loading="lazy" decoding="async"
+         alt="The basic flow of the Ambient Composition Model" width="100%"/>
 </figure>
-
 <p>The previous example used ASP.NET (classic) to demonstrate the ACM. Although the implementation will be a bit different, you can use this model in a similar fashion with ASP.NET Core, as I’ll show next.</p>
 <h2 id="using-the-ambient-composition-model-in-aspnet-core">Using the Ambient Composition Model in ASP.NET Core</h2>
 <p>When building an ASP.NET Core application, your adapter should be designed differently, but the idea is identical:</p>

@@ -146,18 +146,14 @@
     <span class="callout-body">The <em>Closure Composition Model</em> composes object graphs that capture runtime data in variables of the graph’s components.</span>
 </callout></p>
 <p>The following figure captures the essence of the CCM.</p>
-<figure>
-    <img src="/steven/images/compositionmodels/ccmessence.svg"
-         alt="The essence of the Closure Composition Model" width="100%"/> 
+<figure><img src="/steven/images/compositionmodels/ccmessence.svg" loading="lazy" decoding="async"
+         alt="The essence of the Closure Composition Model" width="100%"/>
 </figure>
-
 <p>You are likely familiar with this model on a conceptual level, as it is the prevalent practice. If you&rsquo;ve been practicing Dependency Injection for some time, you are almost certainly acquainted with injecting <code>DbContext</code>s and other runtime values directly into constructors. This means you are applying the CCM. Perhaps you haven’t even considered there to be alternatives to this ubiquitous model. Even in <a href="https://cuttingedge.it/book/" rel="noreferrer">my book</a>, you’ll find this model to be ever present.</p>
 <p>The following sequence diagram shows the basic flow of data using the CCM.</p>
-<figure>
-    <img src="/steven/images/compositionmodels/cmmflow.svg"
-         alt="The basic flow of the Closure Composition Model" width="100%"/> 
+<figure><img src="/steven/images/compositionmodels/cmmflow.svg" loading="lazy" decoding="async"
+         alt="The basic flow of the Closure Composition Model" width="100%"/>
 </figure>
-
 <p>The complete object graph for the shopping basket feature will likely consist of many more classes. Consider the following, a not unimaginable but still reasonably shallow graph, which will serve us for the duration of this article:</p>
 
 

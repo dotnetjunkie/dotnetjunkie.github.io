@@ -163,7 +163,9 @@
 }
 </code></pre></div>
 <p>This class defines a query operation with two parameters that returns an array of User objects. Just like a command, this query message class is a <a href="https://refactoring.com/catalog/introduceParameterObject.html" rel="noreferrer">Parameter Object</a>.</p>
-<p><img src="/steven/images/smells-refactoring-cards-sample.jpg" alt="Parameter Object Refactoring Cue Card"></p>
+<p><p>
+  <img loading="lazy" decoding="async" src="/steven/images/smells-refactoring-cards-sample.jpg" alt="Parameter Object Refactoring Cue Card"  />
+</p></p>
 <p>The class that handles this message can be defined as follows:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FindUsersBySearchTextQueryHandler</span>
     : IQueryHandler&lt;FindUsersBySearchTextQuery, User[]&gt;

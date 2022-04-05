@@ -32,12 +32,12 @@ gitHubCommentIntegration = function(){
 		commentsElement.appendChild(document.createElement('hr'));		
 	};
   
-	function isElementInViewport(el) {
+	function isElementInViewport(el, bottomMargin) {
 		var rect = el.getBoundingClientRect();
 		return (
 			rect.top >= 0 &&
 			rect.left >= 0 &&
-			rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+			(rect.bottom-bottomMargin) <= (window.innerHeight || document.documentElement.clientHeight) &&
 			rect.right <= (window.innerWidth || document.documentElement.clientWidth)
 		);
 	}  
@@ -45,7 +45,7 @@ gitHubCommentIntegration = function(){
 	function loadCommentsWhenVisible() {
 		if (commentsLoaded == true) return;
 		
-		if (isPrintMode || isElementInViewport(commentsElement)) {
+		if (isPrintMode || isElementInViewport(commentsElement, 400)) {
 			commentsLoaded = true;
 			commentsElement.innerHTML = '<br />Loading comments...<br /><br /><hr />';
 

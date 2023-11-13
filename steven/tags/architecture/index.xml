@@ -99,7 +99,7 @@ I always loved the first edition as it was a game changer for me. I learned a lo
       <pubDate>Sat, 14 Apr 2012 00:00:00 +0000</pubDate>
       
       <guid>https://blogs.cuttingedge.it/steven/posts/2012/returning-data-from-command-handlers/</guid>
-      <description>This article extends the architectural design of command handlers to allow command handlers to return data. UPDATEAlthough the article below might still be very entertaining, my opionion on the subject has changed. The problems described below will go away completely when you stop using use database generated IDs! Instead let the consumer of that command generate an ID (most likely a GUID). In this case, since the client creates the ID, they already have that value, and you don&amp;rsquo;t have to return anything.</description>
+      <description>This article extends the architectural design of command handlers to allow command handlers to return data. UPDATEAlthough the article below might still be very entertaining, my opionion on the subject has changed. The problems described below will go away completely when you stop using database-generated IDs. Instead let consumers of that command generate an ID (most likely a GUID). In this case—since clients create the ID—they already have that value, and you don&amp;rsquo;t have to return anything.</description>
     </item>
     
     <item>

@@ -126,8 +126,8 @@
     <span style="color:#66d9ef">public</span> MoveCustomerHandler(
         IRepository&lt;Customer&gt; repository, ILogger logger)
     {
-        <span style="color:#66d9ef">this</span>.repository = repository ??  <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ArgumentException();
-        <span style="color:#66d9ef">this</span>.logger = logger ??  <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ArgumentException();
+        <span style="color:#66d9ef">this</span>.repository = repository ?? <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ArgumentException();
+        <span style="color:#66d9ef">this</span>.logger = logger ?? <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ArgumentException();
     }
 
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Handle(MoveCustomerCommand command)
